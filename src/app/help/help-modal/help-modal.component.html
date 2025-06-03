@@ -1,0 +1,10 @@
+<div class="help_Title">
+  <h1 class=" pl-10 mb-0"  mat-dialog-title>{{data.title}}</h1>
+  <div class="close">
+    <mat-icon class="help_Close" (click)="onNoClick()" mat-button mat-dialog-close>close</mat-icon>
+  </div>
+</div>
+<mat-dialog-content class="mat-typography mat_Dialog_content">
+  <div [innerHtml]="data.content"></div>
+</mat-dialog-content>
+

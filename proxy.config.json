@@ -1,0 +1,15 @@
+{
+  "/rest": {
+    "target": "https://192.168.29.16",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/rest/ws": {
+    "target": "wss://192.168.29.16",
+    "secure": false,
+    "ws": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

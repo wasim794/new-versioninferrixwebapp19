@@ -1,0 +1,86 @@
+<mat-card class="forms_cards">
+  <mat-toolbar class="mat-toolbar_all">
+    <span class="font_size"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</span>
+    <div class="selectMenuFonts">
+      <mat-form-field class="mat-form-width">
+        <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.dropdown.placeholder.selectDataPoint'): ""}}
+        </mat-label>
+        <mat-select>
+          <mat-option *ngFor="let value of search" [value]="value" (onSelectionChange)="selectDataPoint($event, value)">
+            {{value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-toolbar>
+  <mat-card-content>
+<!--[hidden]="tableData"-->
+    <div class="mat-elevation-z8  mt-10" >
+      <mat-table [dataSource]="selectedItems"  class="table_data setAutoWidth setAutoWidth20">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name" class="table_row">
+          <mat-header-cell *matHeaderCellDef class="cells_title ">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-header-cell>
+          <mat-cell class="table_data httpTableHeight" id="{{element.xid}}_name" *matCellDef="let element"> {{element.deviceName}}: {{element.name}} </mat-cell>
+        </ng-container>
+
+        <!-- Data and Time Column -->
+        <ng-container matColumnDef="time">
+          <mat-header-cell *matHeaderCellDef class="cells_title ">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.table.time'): ""}}</mat-header-cell>
+          <mat-cell *matCellDef="let element" id="{{element.xid}}_time" class="table_data httpTableHeight">
+            {{element.time}} </mat-cell>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef class="cells_title ">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status'): ""}}</mat-header-cell>
+          <mat-cell *matCellDef="let element" id="{{element.xid}}_status" class="table_data httpTableHeight">
+            {{element.status}} </mat-cell>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef class="cells_title ">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="table_data httpTableHeight">
+            <div *ngIf="element.settable===true">
+              <mat-icon *ngIf="element.settable===true" inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.tabs.setPoint').substring(0,3): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.watchlist.value'): ''}}" class="action-icons"
+                (click)="setVal(element, element.xid, element.xid,
+         socketDataPoint.pointLocator.dataType, element.status, socketDataPoint.pointLocator.dataType, socketDataPoint.textRenderer.zeroLabel)"> settings_remote</mat-icon>
+            </div>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="edit icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.datapointDetails').substring(9,16): ''}}"
+              (click)="dataPointDetails(element.xid)">
+              description
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="edit icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+              (click)="deleteDataPoint(element)">
+              delete
+            </mat-icon>
+
+            <div id="popUp"  class="displayNone">
+              <div class="ui flowing popup bottom left transition">
+                <textarea placeholder="Add Comment" #textValue class="minHeight-100 minWidth-200"></textarea>
+                <div>
+                  <button
+                    class="ui primary button">
+                    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.icon.hover.add') | uppercase) : ""}}
+                  </button>
+                  <button class="ui negative button">
+                    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+               </button>
+                </div>
+              </div>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <div class="noRecordData">
+        {{this.nodata}}
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

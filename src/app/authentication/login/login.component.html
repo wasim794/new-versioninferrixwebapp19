@@ -1,0 +1,50 @@
+
+<div class="backgroundCover">
+  <div class="backgroundImage">
+    <img  src="/assets/images/home.png" alt="">
+  </div>
+  <div class="loginContent headinglayoutlogin" fxLayout="column" fxLayout.xs="column"
+       fxLayoutWrap
+       fxLayoutGap="0.5%" fxLayoutAlign="center center">
+    <div fxFlex="50%" fxFlexAlign="center">
+      <img mat-card-image src="/assets/images/logo.png" alt="inferrix Logo" class="inferrixLogo">
+    </div>
+    <div fxFlex="50%" fxFlexAlign="center" class="loginform">
+      <form class="loginPageForm" method="POST" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2 class="fontSignIn">{{UIDICTIONARY ? UIDICTIONARY.get( 'ui.core.common.placeholder.logCount').substring(0,3): ""}} <span class="signIn">{{UIDICTIONARY ? UIDICTIONARY.get( 'ui.core.bacnet.table.instanceNumber').substring(0,2): ""}}</span></h2>
+
+          <mat-form-field class="loginInput">
+            <mat-label class="textLogin">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.username'): ""}}</mat-label>
+            <input matInput class="loginInput " formControlName="username"
+                   placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.username'): ''}}"
+                   [ngClass]="{ 'is-invalid': submitted && f.username.errors }" required/>
+            <mat-icon class="loginIcons" matSuffix>perm_identity</mat-icon>
+            <mat-error *ngIf="submitted && f.username.errors">Username is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="loginInput">
+            <mat-label class="textLogin">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.password'): ""}}</mat-label>
+            <input class="loginInput" matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                   placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.password'): ''}}"
+                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required/>
+            <mat-icon class="loginIcons" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off'
+              : 'visibility'}}</mat-icon>
+            <mat-error *ngIf="submitted && f.password.errors">Password is required</mat-error>
+          </mat-form-field>
+        <div class="button userlogin">
+          <button class="logInButton mt-10" mat-flat-button color="accent">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.login'): ""}}</button>
+        </div>
+
+        <div *ngIf="error" class="login-error">
+          <mat-error> {{error}}</mat-error>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

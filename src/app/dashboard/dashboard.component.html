@@ -1,0 +1,22 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar class="dashToolbar">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.dashboard'): ""}}</span>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="loadermain" id="matSpinderAll"><img src="/assets/images/favicon.ico" alt="loader"/></div>
+<div class="container homeFlexBox">
+  <div fxFlex="25%" class="card_margin" *ngFor="let menu of menuData">
+    <mat-card class="mat-card all_card pb-20 homeWrapper">
+      <a routerLink="{{menu.path}}" class="cardWidth" title="{{UIDICTIONARY ? UIDICTIONARY.get(menu.name): ''}}">
+                <span class="mat-button-wrapper">
+                    <mat-icon class="rightIconsCards tb-mat-96" aria-hidden="false" aria-label="visibility icon">
+                        {{menu.icon}}</mat-icon>
+                    <span class="dashTitle">{{UIDICTIONARY ? UIDICTIONARY.get(menu.name): ""}}</span>
+                </span>
+      </a>
+    </mat-card>
+  </div>
+</div>

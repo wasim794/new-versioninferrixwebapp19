@@ -1,0 +1,60 @@
+<mat-card class="form_cards ">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar_all">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.watchlist.form'): ""}}
+      <small *ngIf="titleHideShow">{{watchList.name}}</small>
+    </mat-card-title>
+  </mat-toolbar>
+  <mat-card-content class="form_edit_card">
+    <div *ngFor="let error of watchListError" [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li>{{error.property}} : {{error.message}}</li>
+      </mat-card>
+    </div>
+    <form class="watchLists">
+      <div class="watchListAlign">
+        <mat-form-field class="form_field w-50 mt-10" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.watchlist.field.name'): ""}}</mat-label>
+          <input matInput  #name="ngModel" (keyup)="deleteInputStream($event)"  [(ngModel)]="watchList.name" [maxLength]="30" class="form-control" id="name"  name="name" required type="text">
+
+          <mat-hint class="mat-text-color-error" *ngIf="nameLength">
+            Enter max-length 30 characters
+          </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field id="inputHide" class="form_field mt-10 w-50 inputHide marginLeft-10" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+          <input  matInput [(ngModel)]="watchList.xid" class=" inputBoxHeight" readonly mat-raised-button #tooltip="matTooltip" matTooltip="This is a readonly" id="xid" name="xid" placeholder="Auto-generated" type="text">
+        </mat-form-field>
+      </div>
+
+        <mat-form-field class="form_field w-50" appearance="fill" >
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
+          <mat-select matInput name="readPermission" [(ngModel)]="readPermission" multiple required>
+            <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.writePermission'): ""}}</mat-label>
+          <mat-select name="editPermission" [(ngModel)]="editPermission" multiple required>
+            <mat-option *ngFor="let write of permissions" [value]="write">{{write}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+         <div class="layout-field">
+          <div *ngIf="!buttonsView else saveButton">
+            <button mat-raised-button class="updateButton" (click)="updateWatchlist()">
+              {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+            </button>
+          </div>
+          <ng-template #saveButton>
+            <button mat-raised-button class="saveButton" (click)="saveWatchList()">
+              {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+            </button>
+          </ng-template>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

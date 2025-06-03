@@ -1,0 +1,34 @@
+[
+  {
+    "name": "None",
+    "val": "NONE"
+  },
+  {
+    "name": "Information",
+    "val": "INFORMATION"
+  },
+  {
+    "name": "Warning",
+    "val": "WARNING"
+  },
+  {
+    "name": "Urgent",
+    "val": "URGENT"
+  },
+  {
+    "name": "Critical",
+    "val": "CRITICAL"
+  },
+  {
+    "name": "Emergency",
+    "val": "EMERGENCY"
+  },
+  {
+    "name": "Do Not Log",
+    "val": "DO_NOT_LOG"
+  },
+  {
+    "name": "Ignore",
+    "val": "IGNORE"
+  }
+]

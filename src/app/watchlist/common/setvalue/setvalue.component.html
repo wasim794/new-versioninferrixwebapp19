@@ -1,0 +1,25 @@
+<!-- <h2 class="setHeadings content-container headingdlt mat-toolbar_all" mat-dialog-title>Enter a value to set:</h2>
+<form>
+  <mat-dialog-content class="dataBinaryAll">
+    <ng-template #otherData>
+      <mat-form-field #otherData class="full-width" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.watchlist.value'): ""}}</mat-label>
+        <input matInput [(ngModel)]="setValueModel.value" name="value">
+      </mat-form-field>
+    </ng-template>
+    <mat-radio-group [(ngModel)]="setValueModel.value" name="value" class="full-width dataBinaryAllRadioMain"
+      *ngIf="data.datatype=='BINARY'; else otherData">
+      <mat-radio-button [checked]="data.value === 'data.zeroLabel'" class="dataBinaryAllRadio" [value]="true">
+        {{data.zeroLabel}}</mat-radio-button>
+      <mat-radio-button [checked]="data.value === 'data.oneLabel'" [value]="false">{{data.oneLabel}}</mat-radio-button>
+    </mat-radio-group>
+  </mat-dialog-content>
+  <mat-dialog-actions class="setActionsvalue">
+    <button class="cancel_button" mat-button mat-dialog-close>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.no') | uppercase) : ""}}
+    </button>
+    <button class="yes-container" (click)="updateSetValues($event)" mat-button [mat-dialog-close]="true">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.yes') | uppercase) : ""}}
+    </button>
+  </mat-dialog-actions>
+</form> -->

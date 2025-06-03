@@ -1,0 +1,39 @@
+<!-- <div class='flex-container flex-center dataPickerMain'>
+  <div id='calendar-container' class='flex-container flex-column'>
+    <div>
+      <form [formGroup]='dateForm' class='flex-container flex-center'>
+        <input type="text" name='dateFrom' formControlName='dateFrom' placeholder='From Date'>
+        <div class="width-5"></div>
+        <input type="text" placeholder='To Date' name='dateTo' formControlName='dateTo'>
+        <div class="width-5"></div>
+        <button class='primary' (click)='reserve()'>Reserve</button>
+      </form>
+    </div>
+    <div *ngIf='isReserved' class='reserved'>
+      {{isReserved}}
+    </div>
+    <div class="height-20px"></div>
+    <div class=' flex-container flex-center-horz '>
+      <div class='fa fa-chevron-left ' (click)='previousMonth() '></div>
+      <div class='width-5 '></div>
+      <div>{{date.format('MMMM ')}} {{date.format('YYYY ')}}</div>
+      <div class='width-5 '></div>
+      <div class='fa fa-chevron-right ' (click)='nextMonth() '></div>
+    </div>
+    <div class='height-20px '></div>
+    <div class='flex-container '>
+      <div class='calendar-days flex-container flex-center '>S</div>
+      <div class='calendar-days flex-container flex-center '>M</div>
+      <div class='calendar-days flex-container flex-center '>T</div>
+      <div class='calendar-days flex-container flex-center '>W</div>
+      <div class='calendar-days flex-container flex-center '>T</div>
+      <div class='calendar-days flex-container flex-center '>F</div>
+      <div class='calendar-days flex-container flex-center '>S</div>
+    </div>
+    <div class='flex-container flex-wrap '>
+      <div *ngFor="let day of daysArr">
+        <div class='calendar-days flex-container flex-center ' (click)='selectedDate(day)'>{{day?.date()}}</div>
+      </div>
+    </div>
+  </div>
+</div> -->

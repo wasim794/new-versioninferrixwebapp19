@@ -1,0 +1,25 @@
+
+<!-- material ui start here -->
+<mat-sidenav-container class="sidenav-container" fixedInViewport>
+  <mat-sidenav  class="sidenav menu" id="sidenav"
+              opened mode="side" position="start" fixedInViewport>
+    <mat-nav-list class="ullist" routerLinkActive="active">
+      <a mat-list-item routerLink="/home"   title="home"><span class="menuspan"><mat-icon aria-hidden="false" aria-label="visibility icon">home</mat-icon></span></a>
+    </mat-nav-list>
+    <mat-nav-list *ngFor="let menu of menuData" class="ullist" routerLinkActive="active">
+      <a mat-list-item [routerLink]="menu.path" title="{{UIDICTIONARY ? UIDICTIONARY.get(menu.name): ''}}">
+        <span class="menuspan">
+          <mat-icon aria-hidden="false" aria-label="visibility icon">{{menu.icon}}</mat-icon>
+        </span>
+      </a>
+    </mat-nav-list>
+    <mat-nav-list class="ullist">
+      <a mat-list-item routerLink="/device-management"   title="device-management"><span class="menuspan"><mat-icon aria-hidden="false" aria-label="visibility icon">important_devices</mat-icon></span></a>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container>
+
+
+
+<!-- end here -->
+

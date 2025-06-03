@@ -1,0 +1,101 @@
+
+<div class="headinglayout"  fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.watchlist'): ""}}</span>
+      <div class="containerInfo">
+        <mat-form-field class="topSearchBoxes">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+          <input (keyup)="filterWatchList()" [(ngModel)]="searchWatchList" matInput name="searchWatchList"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ''}}...">
+          <mat-icon class="Input_search" matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+        <mat-icon aria-hidden="false" class="info_position" aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" (click)="watchListHelp()">
+          error_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="loadermain" id="matSpinderAll"><img src="/assets/images/favicon.ico" alt="loader"/></div>
+<div class="cardlayout " fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.0% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="22%" class="card_margin"  *ngFor="let watchlist of watchLists.items">
+    <mat-card class="all_card matCardAll">
+      <mat-card-header>
+
+        <mat-card-title class="cardTitleName">{{watchlist.name}}</mat-card-title>
+        <mat-card-subtitle class="card_icon_right">
+          <mat-icon class="rightIconsCards" aria-hidden="false" aria-label="visibility icon">
+            visibility
+          </mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+      </mat-card-content>
+      <mat-card-actions class="mat_right_icons">
+        <mat-icon aria-hidden="false" class="allIcons" aria-label="edit icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+                  (click)="editWatchList(watchlist.xid)">
+          edit
+        </mat-icon>
+
+        <mat-icon aria-hidden="false" class="allIcons" aria-label="points icon"
+         (click)="watchlistPoints(watchlist.xid, watchlist_drawer_data_points)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.tab.points'): ''}}"
+                  >
+          view_list
+        </mat-icon>
+         <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon"
+         (click)="deleteWatchList(watchlist)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                 >
+          delete
+        </mat-icon>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<div *ngIf="totalWatchlist > watchListLimit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="totalWatchlist" [pageSizeOptions]="pageSizeOptions" [pageSize]=watchListLimit
+                 (page)="getNext($event)"></mat-paginator>
+</div>
+
+<mat-drawer-container class="container sidebar_position watchListEdit" autosize disableClose>
+  <mat-drawer #watchlist_drawer class="sidenav addnew_drawer_sidebar" mode="push" position="end">
+    <mat-icon aria-hidden="false" class="allCloseOptions" id="sidebarclose" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="sidebarclose(watchsidenav)"
+              aria-label="close icon">
+      close
+    </mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllData top-54" (click) = "sidebarclose(watchsidenav)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+
+    <app-watchlist-edit (saveWatchlistMsg)="updatedListAfterSave($event)"
+                        (updatedWatchlist)="updatedListAfterUpdate($event)"
+                        [buttonsView]=buttons>
+    </app-watchlist-edit>
+  </mat-drawer>
+</mat-drawer-container> 
+
+<mat-drawer-container class="container sidebar_position" autosize disableClose>
+  <mat-drawer #watchlist_drawer_data_points class="drawer_sidebar sidebarWatchlist" mode="push" position="end">
+    <mat-icon aria-hidden="false" class="allCloseOptions" id="sidebarclosetwo" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="sidebarclosetwo(watchsidenavtwo)"
+              aria-label="close icon">
+      close
+    </mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllData" (click) = "sidebarclosetwo(watchsidenavtwo)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+    <template #dynamicLoadComponent>
+    </template>
+  </mat-drawer>
+</mat-drawer-container>
+
+
+<div (click)="addNewWatchlist()" class="addIcon " title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">
+  <mat-icon mat-button (click)="addNewWatchlist()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">library_add</mat-icon>
+</div>
+

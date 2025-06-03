@@ -1,0 +1,55 @@
+<!-- <div class="watchListScroll">
+  <mat-toolbar class="watchListToolbar">
+    <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointsList'): ""}}</span>
+    <span class="spacer"></span>
+    <mat-form-field class="dialogue_search">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+      <input [(ngModel)]="searchDataPoint" matInput name="searchDataPoint" placeholder="Search...">
+      <mat-icon class="Input_search" (click)="FilterDataPoint()" matSuffix>search</mat-icon>
+    </mat-form-field>
+  </mat-toolbar>
+  <mat-dialog-content class="watchListMain">
+    <div class="mat-elevation-z8">
+      <table [dataSource]="dataSource" width="100.5%" mat-table class="table_data_pop_up">
+        <ng-container matColumnDef="select" class="table_row">
+          <mat-header-cell *matHeaderCellDef class="cells_title cellMatcheckboxes">
+            <mat-checkbox class="all_checkbox" (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="table_data cellMatcheckboxes">
+            <mat-checkbox class="all_checkbox" (change)="$event ? addDataPointXid($event, element) : null"
+                          (click)="$event.stopPropagation()" [checked]="isChecked(element)">
+
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Name">
+          <mat-header-cell *matHeaderCellDef class="cells_title">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="table_data"> {{element.dataSourceName}}-{{element.name}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="dataPointsTableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: dataPointsTableColumns;"></mat-row>
+      </table>
+    </div>
+  </mat-dialog-content>
+
+  <div *ngIf="dataPointSize > limit" class="watchlistPositionFixed">
+    <mat-paginator [pageIndex]=0 [length]="dataPointSize" [pageSizeOptions]="pageSizeOptions" [pageSize]=limit
+                   (page)="getNext($event)"></mat-paginator>
+  </div>
+
+  <div mat-dialog-actions class="watchlistDialogBottomActions">
+    <button class="cancel_button" mat-button [mat-dialog-close]>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close')|  uppercase) : ""}}
+    </button>
+    <button (click)="addPointToHttpModule()" mat-button class="Add_button">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+    </button>
+  </div>
+</div> -->

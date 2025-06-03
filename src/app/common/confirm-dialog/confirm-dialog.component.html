@@ -1,0 +1,16 @@
+<div>
+  <div class="mainDialogContainer">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.content.confirmation'): ""}}
+    <mat-icon class="close-container" title=" {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="closeDialog()">close</mat-icon>
+  </div>
+
+  <div class="deleteContainer">
+    <span class="contentSpan fullWidth">{{data.message}} {{data.name}} ?.</span>
+  </div>
+  <div class="deletesButton">
+    <button mat-flat-button class="removeButtons"
+            [mat-dialog-close]="false">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.no'): ""}}</button>
+    <button mat-flat-button class="yesButtons"
+            [mat-dialog-close]="true">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.yes'): ""}}</button>
+  </div>
+</div>

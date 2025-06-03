@@ -1,0 +1,25 @@
+<mat-toolbar class="headermenu" color="primary">
+  <img mat-card-image src="/assets/images/logo.png" alt="logo">
+<div class="userAlls">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.user'): ""}} : {{userName}}</div>
+  <span class="example-spacer"></span>
+  <div class="languageSidebars">
+ <mat-form-field class="field_margin">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.select'): ""}}</mat-label>
+          <mat-select>
+    <mat-option *ngFor="let lang of getLang" [value]="lang.key">
+      {{lang.value}}
+    </mat-option>
+          </mat-select>
+        </mat-form-field>
+  </div>
+  <button  (click)="toggleNotificationSideBar()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.field.notification'): ''}}" mat-icon-button class="icon headericons favorite-icon" aria-label="icon-button with notifications icon">
+    <mat-icon class="top_right_icons">notifications</mat-icon>
+    <span class="mainspan"><span>{{eventLength==='undefined'?'':eventLength}}</span></span>
+  </button>
+  <button  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.button.editProfile'): ''}}" mat-icon-button class="icon headericons favorite-icon" aria-label="icon-button with notifications icon">
+    <mat-icon class="top_right_icons">perm_identity</mat-icon>
+  </button>
+  <button (click)="logout()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.logout'): ''}}" mat-icon-button class="icon headericons" aria-label="icon-button with https icon">
+    <mat-icon class="top_right_icons">exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
