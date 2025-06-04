@@ -1,4 +1,4 @@
-<!-- <div class="watchListScroll">
+<div class="watchListScroll">
   <mat-toolbar class="watchListToolbar">
     <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointsList'): ""}}</span>
     <span class="spacer"></span>
@@ -13,7 +13,7 @@
       <table [dataSource]="dataSource" width="100.5%" mat-table class="table_data_pop_up">
         <ng-container matColumnDef="select" class="table_row">
           <mat-header-cell *matHeaderCellDef class="cells_title cellMatcheckboxes">
-            <mat-checkbox class="all_checkbox" (change)="$event ? masterToggle() : null"
+            <mat-checkbox class="all_checkbox" (change)="selection && $event ? masterToggle() : null"
                           [checked]="selection.hasValue() && isAllSelected()"
                           [indeterminate]="selection.hasValue() && !isAllSelected()">
             </mat-checkbox>
@@ -39,7 +39,7 @@
     </div>
   </mat-dialog-content>
 
-  <div *ngIf="dataPointSize > limit" class="watchlistPositionFixed">
+  <div  class="watchlistPositionFixed">
     <mat-paginator [pageIndex]=0 [length]="dataPointSize" [pageSizeOptions]="pageSizeOptions" [pageSize]=limit
                    (page)="getNext($event)"></mat-paginator>
   </div>
@@ -52,4 +52,4 @@
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
     </button>
   </div>
-</div> -->
+</div>

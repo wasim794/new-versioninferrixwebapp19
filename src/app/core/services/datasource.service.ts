@@ -5,7 +5,7 @@ import {EnvService} from './env.service';
 import {Injectable} from '@angular/core';
 import {AbstractDatasourceModel} from '../models/dataSource';
 import {ArrayWithTotalModel} from "../models";
-// import {DatasourceModel} from "../../datasource/model/datasourceModel";
+import {DatasourceModel} from "../../datasource/model/datasourceModel";
 
 @Injectable({
   providedIn: 'root'
@@ -52,9 +52,9 @@ export class DataSourceService {
     return this.http
       .delete<any>(`${this.env.apiUrl}${this.dataSourceUrl}/${xid}`);
   }
-  // public dataSourceType(): Observable<DatasourceModel[]> {
-  //   return this.http.get<any[]>(this.env.apiUrl + this.dataSourceTypes);
-  // }
+  public dataSourceType(): Observable<DatasourceModel[]> {
+    return this.http.get<any[]>(this.env.apiUrl + this.dataSourceTypes);
+  }
 
   public enableDisable(xid: string, params: boolean): Observable<AbstractDatasourceModel<any>> {
     let url = `${this.env.apiUrl}${this.dataSourceEnableDisableUrl}/${xid}/?enabled=`+ params;

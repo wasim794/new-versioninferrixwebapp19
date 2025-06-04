@@ -22,6 +22,16 @@ export const routes: Routes = [
         loadComponent: () => import('./watchlist/watchlist-list/watchlist-list.component').then(m => m.WatchlistListComponent), }
     ],
   },
+
+  {
+    path: 'datasource',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./datasource/datasource-list/datasource-list.component').then(m => m.DatasourceListComponent),
+    children: [
+      { path: 'list',
+        loadComponent: () => import('./datasource/datasource-list/datasource-list.component').then(m => m.DatasourceListComponent), }
+    ],
+  },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // ... other routes
 ];

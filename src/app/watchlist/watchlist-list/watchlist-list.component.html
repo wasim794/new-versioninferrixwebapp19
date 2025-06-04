@@ -89,8 +89,8 @@
     <button mat-raised-button class="Save_Button cancelAllData" (click) = "sidebarclosetwo(watchsidenavtwo)">
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
     </button>
-    <template #dynamicLoadComponent>
-    </template>
+    <ng-container #dynamicLoadComponent>
+    </ng-container>
   </mat-drawer>
 </mat-drawer-container>
 

@@ -1,0 +1,172 @@
+<div class="container headinglayout"  fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar >
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.Datasource') : ""}}</span>
+      <div class="selectMenuFonts">
+        <mat-form-field class="field_margin datasourceWidth">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.select') : ""}}</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let datasource of datasourceType.items" [value]="datasource.type"
+                        (onSelectionChange)="addNew($event, datasource.type)"
+                        title="{{datasource.name}}">{{datasource.name}}
+            </mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="containerInfo">
+        <button mat-raised-button class="deleteAllButtons" *ngIf="deleteAllButtons">
+          <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon">
+            folder_delete
+          </mat-icon></button>
+        <!--refresh page if session storage function-->
+<!--          <mat-icon class="info_position refreshIcons" *ngIf="removeAllButtons" (click)="refreshData()" title="Refresh Items" aria-hidden="false" aria-label="error_outline icon">-->
+<!--            refresh-->
+<!--          </mat-icon>-->
+        <!--End refresh page if session storage function-->
+
+        <mat-icon class="info_position refreshIcons" *ngIf="removeAllButtons" (click)="refreshItemData()" title="Refresh Items" aria-hidden="false" aria-label="error_outline icon">
+          refresh
+        </mat-icon>
+        <mat-form-field>
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
+          <input (keyup)="filterDatasource($event)"
+                 [(ngModel)]="searchDatasource" matInput name="searchDatasource"
+                 placeholder="Search...">
+          <mat-icon (click)="filterDatasource({ key: 'Click', type: 'click' })" class="Input_search" matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+        <mat-icon class="info_position" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" aria-hidden="false" aria-label="error_outline icon" (click)="dsListHelp()">
+          info_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container cardlayout width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="card_margin">
+    <table  mat-table [dataSource]="dataSources" class="mat-elevation-z8 dataSources"
+            matSort (matSortChange)="sortingData($event)">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell  *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
+                        [checked]="isChecked(element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{ paginator.pageIndex * paginator.pageSize + i + 1 }} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container  matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.oids.sysName'): ""}} </th>
+        <td class="perticularRows" mat-cell *matCellDef="let element"  (click)="dataSourceDetails(element)"> {{element.name}} </td>
+      </ng-container>
+      <ng-container  matColumnDef="enable">
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}} </th>
+        <td  mat-cell *matCellDef="let element"> <div class="toggle_right toggle_change">
+          <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status'): ''}}" [(ngModel)]="element.enabled"
+                            (change)="datasourceStatus($event, element)">
+          </mat-slide-toggle>
+        </div> </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="actions">
+        <th  mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
+
+        <td class="datasourceAction" mat-cell *matCellDef="let element">
+          <mat-card-actions class="mat_right_icons">
+
+            <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+                      (click)="dataSourceDetails(element)">
+              edit
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="points list icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointsList'): ''}}"
+                      (click)="dataPointsList(element)">
+              view_list
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="datapoint icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.addDataPoint'): ''}}"
+                      (click)="addDatapoint(element)">
+              add
+            </mat-icon>
+
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="content copy icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.copy'): ''}}"
+                      (click)="copyDatasource(element)">
+              content_copy
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                      (click)="deleteDatasource(element)">
+              delete
+            </mat-icon>
+          </mat-card-actions>
+        </td>
+
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="selection.toggle(row)">
+      </tr>
+    </table>
+</div>
+</div>
+<div class="pagination_fixed">
+  <mat-paginator
+    class="pagination_all"
+    [length]="totalNoDataSource"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="limit"
+    showFirstLastButtons
+    (page)="getNext($event)"
+  ></mat-paginator>
+</div>
+<div *ngIf="errorMsg">
+  <div class="ui negative message">
+    {{errorMsg}}
+  </div>
+</div>
+<mat-drawer-container class="container sidebar_position" autosize>
+  <mat-drawer #sidebar class="sidenav commonSidebarAlls" mode="push" position="end">
+    <button mat-raised-button class="Save_Button cancelAllDataSource" (click)="dataSourceSideBar(dataFunctionSidebar)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel')) : ""}}
+    </button>
+    <span class="assignVaribaleName">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.deviceName') : ""}}: <b>{{this.eventName}}</b>
+    </span>
+    <!-- <app-event-detector></app-event-detector> -->
+  </mat-drawer>
+</mat-drawer-container>
+
+<mat-drawer-container class="container sidebar_position" autosize>
+
+  <mat-drawer #datasource_sidebar class="sidenav commonSidebarAlls" mode="push" position="end">
+    <mat-icon class="allCloseOptions" aria-hidden="false" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close') : ''}}"
+              (click)="dataSourceSideBar(dataFunctionSidebar)" aria-label="close icon">
+      close
+    </mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllDataSource" (click)="dataSourceSideBar(dataFunctionSidebar)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel')) : ""}}
+    </button>
+
+    <!-- <app-datasource-edit (addedSavedDatasource)="savedDatasource($event)"
+                         (addedUpdatedDatasource)="updatedDatasource($event)"></app-datasource-edit> -->
+
+  </mat-drawer>
+</mat-drawer-container>

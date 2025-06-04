@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef, inject, Injector, EnvironmentInjector } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { WatchlistService } from '../service';
 import { ConfigurationService } from '../../services/configuration.service';
@@ -26,7 +26,6 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   imports: [
     MatModuleModule,
-    RouterLink,
     MatSidenavModule,
     CommonModule,
     FormsModule,
@@ -90,7 +89,7 @@ export class WatchlistListComponent extends UnsubscribeOnDestroyAdapter implemen
   private commonService = inject(CommonService);
   public dictionaryService = inject(DictionaryService);
   private dialog = inject(MatDialog);
-  private resolver = inject(ComponentFactoryResolver);
+  // private resolver = inject(ComponentFactoryResolver);
 
   constructor() {
     super();
@@ -160,8 +159,11 @@ export class WatchlistListComponent extends UnsubscribeOnDestroyAdapter implemen
   /** Method for creating the component dynamically */
   createComponent() {
     this.entry.clear();
-    const factory = this.resolver.resolveComponentFactory(WatchlistDataPointListComponent);
-    this.componentRef = this.entry.createComponent(factory);
+    this.componentRef = this.entry.createComponent(WatchlistDataPointListComponent, {
+      // Optional: Provide the injector of the ViewContainerRef.
+      // This allows the dynamically created component to access providers from the parent component's injector scope.
+      injector: this.entry.injector,
+      });
     this.componentRef.instance.isWatchlist = true;
     this.componentRef.instance.watchList = this.watchlistData;
     this.componentRef.instance.watchListXid = this.watchListXid;
