@@ -5,7 +5,7 @@
     <mat-toolbar>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.watchlist'): ""}}</span>
       <div class="containerInfo">
-        <mat-form-field class="topSearchBoxes">
+        <mat-form-field class="topSearchBoxes mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
           <input (keyup)="filterWatchList()" [(ngModel)]="searchWatchList" matInput name="searchWatchList"
                  placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ''}}...">
@@ -43,6 +43,7 @@
           edit
         </mat-icon>
 
+        
         <mat-icon aria-hidden="false" class="allIcons" aria-label="points icon"
          (click)="watchlistPoints(watchlist.xid, watchlist_drawer_data_points)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.tab.points'): ''}}"
                   >
@@ -95,7 +96,7 @@
 </mat-drawer-container>
 
 
-<div (click)="addNewWatchlist()" class="addIcon " title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">
-  <mat-icon mat-button (click)="addNewWatchlist()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">library_add</mat-icon>
+<div (click)="addNewWatchlist()" class="addIcon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">
+  <mat-icon  mat-button (click)="addNewWatchlist()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">library_add</mat-icon>
 </div>
 

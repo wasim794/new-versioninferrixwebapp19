@@ -3,7 +3,7 @@
 <div class="userAlls">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.user'): ""}} : {{userName}}</div>
   <span class="example-spacer"></span>
   <div class="languageSidebars">
- <mat-form-field class="field_margin">
+ <mat-form-field class="field_margin mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.select'): ""}}</mat-label>
           <mat-select>
     <mat-option *ngFor="let lang of getLang" [value]="lang.key">
@@ -20,6 +20,6 @@
     <mat-icon class="top_right_icons">perm_identity</mat-icon>
   </button>
   <button (click)="logout()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.logout'): ''}}" mat-icon-button class="icon headericons" aria-label="icon-button with https icon">
-    <mat-icon class="top_right_icons">exit_to_app</mat-icon>
+    <mat-icon class="top_right_icons exitToApp">exit_to_app</mat-icon>
   </button>
 </mat-toolbar>

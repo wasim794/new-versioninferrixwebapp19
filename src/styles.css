@@ -1520,6 +1520,7 @@ mat-cell.commonReducesSizesAll.singleData {
 }
 
 .selectMenuFonts {
+  margin-top: 20px;
   margin-left: 20px;
   font-size: 15px !important;
 }
@@ -2764,7 +2765,7 @@ td.mat-footer-cell:last-of-type {
 
 .mat-toolbar_all {
   background: #002349 !important;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .mat-dialog-container {
@@ -2825,6 +2826,12 @@ td.mat-footer-cell:last-of-type {
   width: 100% !important;
 }
 
+.exitToApp{
+position: relative;
+bottom: 4px;
+}
+
+
 /*log in page*/
 
 .loginPageForm {
@@ -2856,7 +2863,7 @@ td.mat-footer-cell:last-of-type {
 
 .loginContent h2 {
   text-align: center;
-  margin: 15px 0;
+  margin: 0px 0;
   text-transform: uppercase;
   font-size: 1.9rem;
 }
@@ -3051,7 +3058,7 @@ mat-header-cell:first-of-type {
 
 .addIcon {
   position: absolute;
-  bottom: 45px;
+  bottom: 55px;
   right: 9px;
   color: #6e0509;
   margin-right: 23px;
@@ -4969,9 +4976,9 @@ dt {
   position: fixed !important;
 }
 
+
 .sidebarWatchlist {
-  width: 100%;
-  max-width: 80%;
+  width: 80% !important;
   padding: 10px;
   position: fixed !important;
 }
