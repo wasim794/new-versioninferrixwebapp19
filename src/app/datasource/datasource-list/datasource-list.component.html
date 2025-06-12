@@ -1,7 +1,7 @@
-<div class="container headinglayout"  fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+<div class="headinglayout"  fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
      fxLayoutAlign="center">
   <div fxFlex="100%">
-    <mat-toolbar >
+    <mat-toolbar>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.Datasource') : ""}}</span>
       <div class="selectMenuFonts">
         <mat-form-field class="field_margin datasourceWidth">
@@ -17,9 +17,10 @@
       </div>
       <div class="containerInfo">
         <button mat-raised-button class="deleteAllButtons" *ngIf="deleteAllButtons">
-          <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon">
+          <mat-icon class="folderDelete" aria-hidden="false" aria-label="error_outline icon">
             folder_delete
-          </mat-icon></button>
+          </mat-icon>
+        </button>
         <!--refresh page if session storage function-->
 <!--          <mat-icon class="info_position refreshIcons" *ngIf="removeAllButtons" (click)="refreshData()" title="Refresh Items" aria-hidden="false" aria-label="error_outline icon">-->
 <!--            refresh-->
@@ -29,7 +30,7 @@
         <mat-icon class="info_position refreshIcons" *ngIf="removeAllButtons" (click)="refreshItemData()" title="Refresh Items" aria-hidden="false" aria-label="error_outline icon">
           refresh
         </mat-icon>
-        <mat-form-field>
+        <mat-form-field class="topSearchBoxes mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
           <input (keyup)="filterDatasource($event)"
                  [(ngModel)]="searchDatasource" matInput name="searchDatasource"
@@ -48,17 +49,17 @@
 <div class="container cardlayout width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
   <div fxFlex="100%" class="card_margin">
-    <table  mat-table [dataSource]="dataSources" class="mat-elevation-z8 dataSources"
+    <table border="1" mat-table [dataSource]="dataSources" class="mat-elevation-z8 dataSources"
             matSort (matSortChange)="sortingData($event)">
 
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select">
-        <th mat-header-cell  *matHeaderCellDef>
+        <th class="perticularHeader" mat-header-cell  *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()">
           </mat-checkbox>
         </th>
-        <td mat-cell *matCellDef="let element">
+        <td class="perticularHeader" mat-cell *matCellDef="let element">
           <mat-checkbox (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
                         [checked]="isChecked(element)">
           </mat-checkbox>
@@ -67,8 +68,8 @@
 
       <!-- Position Column -->
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </th>
-        <td mat-cell *matCellDef="let element; let i = index;">{{ paginator.pageIndex * paginator.pageSize + i + 1 }} </td>
+        <th class="perticularHeader" mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </th>
+        <td class="perticularHeader" mat-cell *matCellDef="let element; let i = index;">{{ paginator.pageIndex * paginator.pageSize + i + 1 }} </td>
       </ng-container>
 
       <!-- Name Column -->
@@ -77,8 +78,8 @@
         <td class="perticularRows" mat-cell *matCellDef="let element"  (click)="dataSourceDetails(element)"> {{element.name}} </td>
       </ng-container>
       <ng-container  matColumnDef="enable">
-        <th mat-header-cell  *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}} </th>
-        <td  mat-cell *matCellDef="let element"> <div class="toggle_right toggle_change">
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header > {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}} </th>
+        <td  mat-cell *matCellDef="let element"> <div class="toggle_right toggle_change perticularRows">
           <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status'): ''}}" [(ngModel)]="element.enabled"
                             (change)="datasourceStatus($event, element)">
           </mat-slide-toggle>
@@ -87,7 +88,7 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="actions">
-        <th  mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
+        <th  mat-header-cell *matHeaderCellDef class="perticularHeader"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
 
         <td class="datasourceAction" mat-cell *matCellDef="let element">
           <mat-card-actions class="mat_right_icons">

@@ -1,8 +1,8 @@
 <div class="watchListScroll">
-  <mat-toolbar class="watchListToolbar">
+  <mat-toolbar class="mat-toolbar_all">
     <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointsList'): ""}}</span>
     <span class="spacer"></span>
-    <mat-form-field class="dialogue_search">
+    <mat-form-field class="watchlistSearch">
       <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
       <input [(ngModel)]="searchDataPoint" matInput name="searchDataPoint" placeholder="Search...">
       <mat-icon class="Input_search" (click)="FilterDataPoint()" matSuffix>search</mat-icon>
@@ -45,10 +45,10 @@
   </div>
 
   <div mat-dialog-actions class="watchlistDialogBottomActions">
-    <button class="cancel_button" mat-button [mat-dialog-close]>
+    <button class="watchlistCloseButton" mat-button [mat-dialog-close]>
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close')|  uppercase) : ""}}
     </button>
-    <button (click)="addPointToHttpModule()" mat-button class="Add_button">
+    <button (click)="addPointToHttpModule()" mat-button class="watchlistAddButton">
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
     </button>
   </div>
