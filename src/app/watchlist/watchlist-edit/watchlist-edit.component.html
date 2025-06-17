@@ -1,4 +1,4 @@
-<mat-card class="form_cards ">
+<mat-card class="form_cards bacnetMainContainer">
   <!-- Title of an Card -->
   <mat-toolbar class="mat-toolbar_all">
     <mat-card-title class="sidebar_form_title">
@@ -6,7 +6,7 @@
       <small *ngIf="titleHideShow">{{watchList.name}}</small>
     </mat-card-title>
   </mat-toolbar>
-  <mat-card-content class="form_edit_card">
+
     <div *ngFor="let error of watchListError" [hidden]="!messageError">
       <mat-card class="validation-error">
         <li>{{error.property}} : {{error.message}}</li>
@@ -45,16 +45,21 @@
 
          <div class="layout-field">
           <div *ngIf="!buttonsView else saveButton">
-            <button mat-raised-button class="updateButton" (click)="updateWatchlist()">
+            <button  class="updateButton saveButton" (click)="updateWatchlist()" matFab>
+              <mat-icon>save_as</mat-icon>
               {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
             </button>
           </div>
           <ng-template #saveButton>
-            <button mat-raised-button class="saveButton" (click)="saveWatchList()">
+
+
+
+            <button class="saveButton" (click)="saveWatchList()" matFab>
+              <mat-icon>save</mat-icon>
               {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
             </button>
           </ng-template>
       </div>
     </form>
-  </mat-card-content>
 </mat-card>
+

@@ -624,6 +624,7 @@ body {
   margin: 0% !important;
 }
 
+
 .headertwo {
   padding: 0 16px !important;
 }
@@ -1566,7 +1567,23 @@ mat-cell.commonReducesSizesAll.singleData {
   background-color: #10425a !important;
   color: #fff !important;
   font-family: "Poppins-SemiBold";
+  border: none;
+  border-radius: 3px;
+  padding: 8px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+mat-icon{
+  font-size: 17px;
+    height: 17px;
+    width: 16px; 
+ margin-right: 4px;
+
 }
+}
+
 
 .updateButton {
   background-color: #0b4a15 !important;
@@ -2492,6 +2509,7 @@ td.mat-footer-cell:last-of-type {
     width: 112px;
   }
 
+
   .headericons > span > mat-icon {
     font-size: 26px;
   }
@@ -2539,6 +2557,8 @@ td.mat-footer-cell:last-of-type {
   .data_fonts {
     font-size: 16px;
   }
+
+
 
   .data_select {
     width: 150px;
@@ -3477,12 +3497,18 @@ mat-dialog-actions.setActionsvalue {
 }
 
 .watchlistAddButton{
+   width: 80px !important;
+  font-family:poppins-Bold !important;
+  border-radius: 2px !important;
    color: #fff !important;
    background-color: #225496 !important;
      box-shadow:rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset !important;
 }
 
 .watchlistCloseButton{
+  width: 80px !important;
+  font-family:poppins-Bold !important;
+  border-radius: 2px !important;
   background-color: #66899a !important;
   color: #fff !important;
   box-shadow:rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset !important;
@@ -3722,6 +3748,10 @@ mat-card.mat-card.mat-focus-indicator.ALERT_LIST\.MENU.all_card .mat-icon {
   text-transform: uppercase;
 }
 
+mat-card{
+  background-color: transparent !important;
+}
+
 .bacnetFormMainContainer {
   .toolbarUpdateButton {
     background: #9ca8b1 !important;
@@ -3768,7 +3798,7 @@ mat-cell.table_data.mat-cell.cdk-column-dataType.mat-column-dataType.ng-star-ins
 }
 
 .table_data_pop_up mat-row:nth-child(odd) {
-  background-color: #968e8e;
+  background-color: #d5d7df80;
 }
 
 .table-sidebar_mat mat-row:nth-child(odd) {
@@ -4225,6 +4255,9 @@ mat-checkbox.singleCheckbox {
 .leftDropdowns {
   padding-left: 14px;
   font-size: 15px;
+}
+.mat-drawer{
+  border-radius: 0px !important;
 }
 
 .headinglayout .leftDropdowns span {
@@ -4812,21 +4845,20 @@ mat-card.data_mat_card.mat-card {
 }
 
 .cancelAllData{
-    color:white;
+    color:white !important;
     position: relative;
+    width: auto;
     z-index: 2;
     top: 65px;
     float: right;
     margin-right: 25px !important;
     padding: 6px !important;
-    border-radius: 4px;
+    border-radius: 4px !important;
     cursor: pointer;
     margin-top: -40px !important;
     background-color: #062a51 !important;
     border: 0px;
-    outline: none !important;
-    line-height: 23px;
-    font-family: "Poppins-SemiBold";
+    font-family: "Poppins-SemiBold" !important;
   }
 
 .Save_Button.cancelAllDataSource {
@@ -6784,10 +6816,11 @@ mat-dialog-actions.Action_div.mat-dialog-actions {
   width: 220px;
 }
 
+
 .stackMainContainer .mat-card {
   width: 100%;
   margin: 7px;
-  background-color: #ffffff;
+  background-color: red;
   color: rgba(0, 0, 0, 0.87);
   background-attachment: fixed;
   background-position: center;
@@ -7172,9 +7205,7 @@ mat-divider.mqqtDividers {
   text-transform: uppercase;
   padding: 2px 0px 2px 0px;
 }
-.saveButton {
-  width: 84px;
-}
+
 
 .dataSources .mat-sort-header-container {
   width: 100%;
@@ -8036,6 +8067,7 @@ mat-divider.mqqtDividers {
 .custom-cross-icon::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
+
 
 .publisherBacnetMain {
   .field_margin {
