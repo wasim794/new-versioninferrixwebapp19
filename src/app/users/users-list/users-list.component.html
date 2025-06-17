@@ -1,0 +1,75 @@
+
+<div class=" headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.user'): ""}}</span>
+      <div class="containerInfo">
+        <mat-icon aria-hidden="false" (click)="userListHelp()" class="info_position" aria-label="error_outline icon">
+          error_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class=" cardlayout " fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="22%" class="card_margin" *ngFor="let user of userList?.items">
+    <mat-card class=" all_card matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName">{{user.username}}</mat-card-title>
+        <mat-card-subtitle class="card_icon_right">
+          <mat-icon aria-hidden="false" aria-label="supervisor_account icon">
+            supervisor_account
+          </mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+
+      </mat-card-content>
+      <mat-card-actions class="mat_right_icons">
+        <mat-icon aria-hidden="false" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+                  (click)="editUser(user.username)" class="allIcons" aria-label="edit icon">
+          edit
+        </mat-icon>
+        <mat-icon aria-hidden="false" class="allIcons"
+                  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                  (click)="deleteUser(user)"
+                  aria-label="delete icon">
+          delete
+        </mat-icon>
+
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="loadermain" id="matSpinderAll"><img src="favicon.ico" alt="loader"/></div>
+</div>
+
+<!-- <div *ngIf="totalUsers.total > limit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="totalUsers" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit (page)="getNext($event)"></mat-paginator>
+</div> -->
+
+<mat-drawer-container class=" sidebar_position" autosize disableClose>
+  <mat-drawer #userdrawer class="sidenav singleSidebars" mode="push" position="end">
+    <mat-icon class=" allCloseOptions" aria-hidden="false" id="datasource_side" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="sidebarclose()"
+              aria-label="close icon">
+      close
+    </mat-icon>
+    <button mat-raised-button class="cancelAllForm top-54" (click)="sidebarclose()">
+      {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+    <app-users-form (updateSavedUser)="updateSavedUser($event)" (updateUpdatedUser)="updateUpdatedUser($event)">
+    </app-users-form>
+  </mat-drawer>
+</mat-drawer-container>
+<!-- end here -->
+
+<div class="addIcon">
+  <mat-icon mat-button  (click)="addUser()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.user'): ''}}" >library_add</mat-icon>
+</div>
+
+<!-- End here -->
