@@ -1,4 +1,3 @@
-
 <div class="headinglayout"  fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
      fxLayoutAlign="center">
   <div fxFlex="100%">
@@ -42,7 +41,6 @@
                   (click)="editWatchList(watchlist.xid)">
           edit
         </mat-icon>
-
         
         <mat-icon aria-hidden="false" class="allIcons" aria-label="points icon"
          (click)="watchlistPoints(watchlist.xid, watchlist_drawer_data_points)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.tab.points'): ''}}"
@@ -70,7 +68,7 @@
               aria-label="close icon">
       close
     </mat-icon>
-    <button mat-raised-button class="Save_Button cancelAllData top-54" (click) = "sidebarclose(watchsidenav)">
+    <button mat-raised-button class="cancelAllData top-54" (click) = "sidebarclose(watchsidenav)">
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
     </button>
 
@@ -94,7 +92,6 @@
     </ng-container>
   </mat-drawer>
 </mat-drawer-container>
-
 
 <div (click)="addNewWatchlist()" class="addIcon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">
   <mat-icon  mat-button (click)="addNewWatchlist()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.watchlist'): ''}}">library_add</mat-icon>
