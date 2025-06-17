@@ -1,4 +1,4 @@
-<mat-card class="form_cards ">
+
   <!-- Title of an Card -->
   <mat-toolbar class="mat-toolbar_all">
     <mat-card-title class="sidebar_form_title">
@@ -6,7 +6,7 @@
       <small *ngIf="titleHideShow">{{watchList.name}}</small>
     </mat-card-title>
   </mat-toolbar>
-  <mat-card-content class="form_edit_card">
+
     <div *ngFor="let error of watchListError" [hidden]="!messageError">
       <mat-card class="validation-error">
         <li>{{error.property}} : {{error.message}}</li>
@@ -56,5 +56,5 @@
           </ng-template>
       </div>
     </form>
-  </mat-card-content>
-</mat-card>
+
+

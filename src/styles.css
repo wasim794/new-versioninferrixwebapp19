@@ -623,6 +623,9 @@ body {
 .mat-card-header-text {
   margin: 0% !important;
 }
+.mat-card{
+height: 20px !important;
+}
 
 .headertwo {
   padding: 0 16px !important;
@@ -4225,6 +4228,9 @@ mat-checkbox.singleCheckbox {
 .leftDropdowns {
   padding-left: 14px;
   font-size: 15px;
+}
+.mat-drawer{
+  border-radius: 0px !important;
 }
 
 .headinglayout .leftDropdowns span {
@@ -8036,6 +8042,7 @@ mat-divider.mqqtDividers {
 .custom-cross-icon::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
+
 
 .publisherBacnetMain {
   .field_margin {
