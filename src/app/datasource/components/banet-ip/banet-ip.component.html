@@ -1,0 +1,222 @@
+<mat-card class="form_cards bacnetMainContainer">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.bacnet.ipBacnetDevice'): ""}}
+      <small *ngIf="isActivePdSmall">{{datasourceTitleName}}</small>
+    </mat-card-title>
+  </mat-toolbar>
+  <div class="mat-content allSensors">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
+      <mat-tab label="Properties">
+
+        <div  *ngFor="let error of dataSourceError" [hidden]="!messageError">
+          <mat-card class="validation-error">
+            <li>{{error.property}}
+              : {{error.message}}</li>
+          </mat-card>
+        </div>
+<br>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+          </mat-label>
+          <input matInput [(ngModel)]="dataSource.name" name="name" type="text" required
+               >
+        </mat-form-field>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}
+          </mat-label>
+          <input matInput [(ngModel)]="dataSource.xid" class="datasourceBoxHeight" name="xid" type="text" readonly
+          >
+        </mat-form-field>
+        <br>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}
+          </mat-label>
+          <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
+            <mat-option *ngFor="let read of readPermission" [value]="read">{{read}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-divider class="dividerAllCommonFields"></mat-divider>
+        <br>
+
+          <mat-form-field class="w-50 bacNetFields" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.localDevice'): ""}}</mat-label>
+            <mat-select [(ngModel)]="dataSource.localDeviceConfig" class="form-control" name="publishType">
+              <!-- <mat-option *ngFor="let model of bacnetModel" [value]="model.id">
+                {{model.deviceName}}
+              </mat-option> -->
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-50 bacNetFields" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.covSubscriptionTimeout'): ""}}</mat-label>
+            <input matInput name="zone" type="text" required [(ngModel)]="dataSource.covSubscriptionTimeoutMinutes">
+          </mat-form-field>
+          <br>
+          <mat-form-field class="w-50 bacNetFields" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="dataSource.timePeriod.timePeriod" class="form-control" name="pollingPeriod" type="text"
+                   required>
+          </mat-form-field>
+
+          <mat-form-field class="w-50" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
+            <mat-select [(ngModel)]="dataSource.timePeriod.timePeriodType" name="timePeriodType" class="form-control"
+            >
+              <mat-option *ngFor="let item of pollingPeriodType" [value]="item.value">{{item.key}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+        <br>
+        <div *ngIf="!isEdit then save else update"></div>
+        <ng-template #save>
+          <button mat-raised-button class="saveButton" (click)="saveDatasource()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+          </button>
+        </ng-template>
+        <ng-template #update>
+          <button mat-raised-button class="updateButton" (click)="updateDatasource()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+          </button>
+        </ng-template>
+
+
+      </mat-tab>
+      <mat-tab label="Points" [disabled]="!datapointForm">
+        <div class="sidebar-form" *ngIf="displayForm">
+          <div  *ngFor="let error of bacNetIpPointError" [hidden]="!messageError">
+            <mat-card class="validation-error">
+              <li>{{error.property}}
+                : {{error.message}}</li>
+            </mat-card>
+          </div>
+         <div class="formDataPoint">
+            <mat-form-field class="form_field  w-50" appearance="fill">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+              <input [(ngModel)]="dataPoint.xid" class="datasourceBoxHeight" readonly matInput name="xid" placeholder="Auto generated">
+            </mat-form-field>
+            <mat-form-field class="form_field w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+              <input matInput [(ngModel)]="dataPoint.name" name="name" type="text" required>
+            </mat-form-field>
+
+
+            <mat-form-field class="form_field  w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
+              <mat-select name="readPermission" [(ngModel)]="readPermission" multiple>
+                <mat-option *ngFor="let read of dropdownData.permissions" [value]="read">{{read}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form_field  w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.writePermission'): ""}}
+              </mat-label>
+              <mat-select name="editPermission" [(ngModel)]="setPermission" multiple>
+                <mat-option *ngFor="let write of dropdownData.permissions" [value]="write">{{write}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpReceiver.field.placeholder.remoteIpWhiteList').substring(0, 6): ""}}
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.noDevices').substring(3, 9): ""}}
+                /{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.field.placeholder.objectInstanceNumber'): ""}}</mat-label>
+              <input matInput [(ngModel)]="bacnetDataPointModel.remoteDeviceInstanceNumber" name="name" type="text">
+            </mat-form-field>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.objectType'): ""}}</mat-label>
+              <mat-select (selectionChange)="selectedObjectType($event)"  name="objectTypeId" [(ngModel)]="bacnetDataPointModel.objectTypeId">
+              <mat-option *ngFor="let objectTypes of objectType" [value]="objectTypes.typeName">{{objectTypes.typeName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.field.placeholder.objectInstanceNumber'): ""}}
+              </mat-label>
+              <input matInput name="ObjectInstanceNumber" [(ngModel)]="bacnetDataPointModel.objectInstanceNumber">
+            </mat-form-field>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.propertiesIdentifier'): ""}}
+              </mat-label>
+              <mat-select name="propertyIdentifierId" [(ngModel)]="bacnetDataPointModel.propertyIdentifierId">
+                <mat-option *ngFor="let property of propertiesIdentifier"
+                            [value]="property"
+                            (onSelectionChange)="selectedPropertiesIdentifier($event, property)">{{property}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}</mat-label>
+              <mat-select name="Select" [(ngModel)]="bacnetDataPointModel.dataType">
+                <mat-option *ngFor="let dataType of dataTypes"
+                            [value]="dataType">{{dataType}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-slide-toggle class="side_form_toggle toggle_change singleToggle"
+                              name="enabled" [(ngModel)]="dataPoint.enabled">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+            </mat-slide-toggle>
+            <mat-slide-toggle *ngIf="setTables" class="toggle_change  dataSourcePointoggle"
+                              name="settable" [(ngModel)]="bacnetDataPointModel.settable">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
+            </mat-slide-toggle>
+
+          <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.writePermission'): ""}}</mat-label>
+            <input matInput name="writePriority" [(ngModel)]="bacnetDataPointModel.writePriority">
+          </mat-form-field>
+          <mat-slide-toggle class="side_form_toggle toggle_change singleToggle"
+                            name="useCovSubscription" [(ngModel)]="bacnetDataPointModel.useCovSubscription">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.covSubscription'): ""}}
+          </mat-slide-toggle>
+
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.multiplier'): ""}}
+              </mat-label>
+              <input matInput name="multiplier" [(ngModel)]="bacnetDataPointModel.multiplier">
+            </mat-form-field>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.additive'): ""}}
+              </mat-label>
+              <input matInput name="additive" [(ngModel)]="bacnetDataPointModel.additive">
+            </mat-form-field>
+
+          <div>
+            <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
+            <ng-template #savePoint>
+              <button mat-raised-button class="allDataPointSaveButton mupdateButton"
+                      (click)="saveDSBacnetDataPoint()"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+            </ng-template>
+            <ng-template #updatePoint>
+              <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDSBacnetDataPoint()">
+                {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+              </button>
+            </ng-template>
+          </div>
+
+          <button mat-raised-button class="cancel_button_new cancelPoint" (click)="cancelDataPoint()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+          </button>
+</div>
+        </div>
+
+        <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
+        </app-datapoint-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>

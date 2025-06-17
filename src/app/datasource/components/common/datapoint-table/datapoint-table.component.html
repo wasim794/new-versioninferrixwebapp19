@@ -1,0 +1,94 @@
+<div class="datapoint_table dataPointsAll">
+  <mat-form-field>
+    <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+    <input (keyup)="filterDatapoint()" [(ngModel)]="searchDatapoint" matInput name="searchDatapoint"
+           placeholder="Search...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  &nbsp;
+ <button  mat-button class="addDatapointsButton" (click)="addNewDatapoint(dataPoints)">
+    <mat-icon inline=true>add_box</mat-icon>
+   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.addNew') | uppercase): ""}}
+  </button>
+
+</div>
+<div class="mat-elevation-z8">
+  <mat-table mat-table [dataSource]="dataPoints" class="table_data dataPointsAllTable setValueWidth setAutoWidth">
+    <!-- name Column -->
+    <ng-container matColumnDef="name" class="table_row">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+      </mat-header-cell>
+      <mat-cell class="table_data" *matCellDef="let element" title="{{element.name}}"> {{element.name}} </mat-cell>
+    </ng-container>
+    <!--data type column-->
+    <ng-container matColumnDef="dataType">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}
+      </mat-header-cell>
+      <mat-cell class="table_data" *matCellDef="let element"> {{element.pointLocator.dataType}} </mat-cell>
+    </ng-container>
+    <!-- -->
+    <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.table.time'): ""}}
+      </mat-header-cell>
+      <mat-cell class="table_data" *matCellDef="let element"
+                id="{{element.xid}}_time"> {{element.webSocketTime}} </mat-cell>
+    </ng-container>
+    <!-- -->
+    <ng-container matColumnDef="value">
+      <mat-header-cell *matHeaderCellDef class="cells_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.value'): ""}}</mat-header-cell>
+      <mat-cell class="table_data" *matCellDef="let element"
+                id="{{element.xid}}_status" title="{{element.websocketStatus}}"> {{element.websocketStatus}} </mat-cell>
+    </ng-container>
+    <!--status column-->
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef  class="cells_title maxWidth-60">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.status'): ""}}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="table_data maxWidth-52">
+        <mat-slide-toggle class="toggle_change"
+                          name="enable" (change)="changeStatus($event, element.xid)"
+                          [(ngModel)]="element.enabled">
+        </mat-slide-toggle>
+      </mat-cell>
+    </ng-container>
+    <!-- action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef
+                       class="cells_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+      <mat-cell *matCellDef="let element;  let i = index" class="table_data">
+        <div *ngIf="element.pointLocator.settable === true" [style.pointer-events]="hideSetValue ? 'auto' : 'none'" [style.opacity]="hideSetValue ? '1' : '0.5'">
+        <mat-icon *ngIf="element.pointLocator.settable==true" inline=true title="Set Value" class="action-icons"
+                    (click)="setVal(element)"> settings_remote
+          </mat-icon>
+<!--          <mat-icon *ngIf="element.pointLocator.settable==true" inline=true title="Set Value" class="action-icons"-->
+<!--                    (click)="setVal(element)"> settings_remote-->
+<!--          </mat-icon>-->
+        </div>
+        <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}" class="action-icons" (click)="edit(element.xid, element)"> edit</mat-icon>
+        <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.datapointDetails').substring(9,16): ''}}" class="action-icons" (click)="dataPointDetails(element.xid)">
+          description
+        </mat-icon>
+        <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.point.remove'): ''}}" class="action-icons" (click)="deleteDatapoint(element)">delete_forever
+        </mat-icon>
+        <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.add'): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.systemSettings').substring(7,15): ''}}"  class="action-icons paddingRight-9"
+                  (click)="addProperties(element, i)">perm_data_setting
+        </mat-icon>
+        <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.eventDetector'): ''}}"  class="action-icons paddingRight-9"
+                  (click)="addEventDetectors(element, i)"><i class="material-icons">event_available</i>
+        </mat-icon>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div class="noRecordData">
+    {{this.nodata}}
+  </div>
+  <div *ngIf="totoalDatapoints > limit" class="ui borderless menu">
+    <mat-paginator [pageIndex]=0 [length]="totoalDatapoints" [pageSizeOptions]="pageSizeOptions" [pageSize]=limit
+                   (page)="getNext($event)"></mat-paginator>
+  </div>
+</div>
