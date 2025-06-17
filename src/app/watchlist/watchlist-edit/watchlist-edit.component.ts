@@ -62,7 +62,7 @@ export class WatchlistEditComponent extends UnsubscribeOnDestroyAdapter {
     this.updateButton = true;
     this.subs.add(this.watchlistService.getWatchListData(xid).subscribe(data => {
       this.watchList = data;
-      // this.displayPermissions();
+      this.displayPermissions();
       this.titleHideShow = true;
     }, err => this.errorMsg = err));
   }
