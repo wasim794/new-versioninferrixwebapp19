@@ -42,6 +42,15 @@ export const routes: Routes = [
         loadComponent: () => import('./users/users-list/users-list.component').then(m => m.UsersListComponent), }
     ],
   },
+  {
+    path: 'stack-monitor',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./stack-monitor/stack-monitor.component').then(m => m.StackMonitorComponent),
+    children: [
+      { path: 'detail',
+        loadComponent: () => import('./stack-monitor/stack-monitor.component').then(m => m.StackMonitorComponent), }
+    ],
+  },
     
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // ... other routes

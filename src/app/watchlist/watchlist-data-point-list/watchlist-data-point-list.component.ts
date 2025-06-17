@@ -15,8 +15,14 @@ import { SetvalueComponent } from '../common';
 import { DictionaryService } from "../../core/services/dictionary.service";
 import { DatePipe } from '@angular/common';
 import {MatModuleModule} from '../../common/mat-module';
+  
 
-
+interface PushDataPoint {
+  xid: string;
+  deviceName: string;
+  name: string;
+}
+ 
 @Component({
   standalone: true,
   imports: [CommonModule, MatModuleModule],
@@ -295,17 +301,21 @@ export class WatchlistDataPointListComponent extends UnsubscribeOnDestroyAdapter
     this.router.navigate(['/datapoint/detail']);
   }
 
-  saveWatchListPoints(XID: string, DataPoints: any[]) {
-    // if (DataPoints) {
-    //   this.pointList = [];
-    //   DataPoints.forEach((dataPoint: { xid: any; deviceName: string; name: string; }) => {
-    //     this.pointList.push({
-    //       'xid': dataPoint.xid, 'name': dataPoint.deviceName + '-' + dataPoint.name
-    //     });
-    //   });
-    //   this.addDatapoints(XID, this.pointList);
-    // } else {
-    //   this._commonService.notification('No data selected');
-    // }
+
+  
+saveWatchListPoints(XID: any, DataPoints: any[]) {
+  if (Array.isArray(DataPoints) && DataPoints.length > 0) {
+    const pointList: any[] = DataPoints.map((dataPoint) => ({
+      xid: dataPoint.xid,
+      name: `${dataPoint.deviceName}-${dataPoint.name}`,
+      // Add other required fields here if needed:
+      // color: dataPoint.color,
+      // type: dataPoint.type
+    }));
+
+    this.addDatapoints(XID, pointList);
+  } else {
+    this._commonService.notification('No data selected');
   }
+}
 }
