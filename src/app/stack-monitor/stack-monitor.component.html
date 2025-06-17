@@ -1,0 +1,108 @@
+<div class="loadermain" *ngIf="showBox" id="matSpinderAll"><img src="/assets/images/favicon.ico" alt="loader"/></div>
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <span>{{dictionaryService.uiDictionary.get('ui.stackMonitor.wirelessQuality')}}</span>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container cardlayout stackMainContainer width-100"  *ngIf="!showBox" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="22%" class="cardpd">
+    <mat-card class="mat-card matCardAll stackCards" (click)="showValue($event)">
+      <mat-card-header>
+        <mat-card-title
+          class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.wirelessQuality')}}</mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content class="mat_all_cantants stackMonitorTexts">
+        <div class="iconPositions">
+          <mat-icon class="" style="color: #ff475d;">wifi
+          </mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="22%" class="cardpd ">
+    <mat-card class="mat-card stackCards matCardAll">
+      <mat-card-header>
+        <mat-card-title
+          class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.systemMetric')}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="mat_all_cantants stackMonitorTexts" (click)="showValue(systemMetrics)">
+        <div class="iconPositions">
+          <mat-icon class=" mat-pointer" style="color: #46ffe7;">memory
+          </mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="22%" class="cardpd">
+    <mat-card class="mat-card stackCards matCardAll">
+      <mat-card-header>
+        <mat-card-title
+          class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.jvmMetrics')}}</mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content class="mat_all_cantants stackMonitorTexts" (click)="showValue(jvmMetrics)">
+        <div class="iconPositions">
+          <mat-icon class=" mat-pointer" style="color: #7cff92;">sd_storage
+          </mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="22%" class="cardpd">
+    <mat-card class="mat-card stackCards matCardAll">
+      <mat-card-header>
+        <mat-card-title
+          class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.databaseMetrics')}}</mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content class="mat_all_cantants stackMonitorTexts" (click)="showValue(stackDbMetrics)">
+        <div class="iconPositions">
+          <mat-icon class=" mat-pointer" style="color: #ab4aff;">backup
+          </mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="22%" class="cardpd">
+    <mat-card class="mat-card stackCards matCardAll">
+      <mat-card-header>
+        <mat-card-title
+          class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.stackThreadMetrics')}}</mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content class="mat_all_cantants stackMonitorTexts" (click)="showValue(stackThreadMetrics)">
+        <div class="iconPositions">
+          <mat-icon class=" mat-pointer" style="color: #3f51b5;">graphic_eq
+          </mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="22%" class="cardpd">
+    <mat-card class="mat-card stackCards matCardAll">
+      <mat-card-header>
+        <mat-card-title
+          class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.moduleMetrics')}}</mat-card-title>
+
+      </mat-card-header>
+      <mat-card-content class="mat_all_cantants stackMonitorTexts" (click)="showValue(stackMonitors)">
+        <div class="iconPositions">
+          <mat-icon class=" mat-pointer" style="color: #ff935e;">folder_open
+          </mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

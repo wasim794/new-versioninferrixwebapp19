@@ -45,13 +45,13 @@
       </mat-card-actions>
     </mat-card>
   </div>
-  <div class="loadermain" id="matSpinderAll"><img src="favicon.ico" alt="loader"/></div>
+  <div class="loadermain" id="matSpinderAll"><img src="/assets/images/favicon.ico" alt="loader"/></div>
 </div>
 
-<!-- <div *ngIf="totalUsers.total > limit" class="pagination_fixed">
+<div *ngIf="totalUsers?.total > limit" class="pagination_fixed">
   <mat-paginator class="pagination_all" [pageIndex]=0 [length]="totalUsers" [pageSizeOptions]="pageSizeOptions"
                  [pageSize]=limit (page)="getNext($event)"></mat-paginator>
-</div> -->
+</div>
 
 <mat-drawer-container class=" sidebar_position" autosize disableClose>
   <mat-drawer #userdrawer class="sidenav singleSidebars" mode="push" position="end">

@@ -37,7 +37,7 @@ export class UsersListComponent extends UnsubscribeOnDestroyAdapter implements O
   isEdit!: boolean;
   info                                               = new commonHelp();
   modal                                              : any = new User();
-  totalUsers!: any[];
+  totalUsers!: any;
   limit                                              = 12;
   offset                                             = 0;
   pageSizeOptions                                    : number[] = [12, 16, 20];
