@@ -51,6 +51,12 @@ export const routes: Routes = [
         loadComponent: () => import('./stack-monitor/stack-monitor.component').then(m => m.StackMonitorComponent), }
     ],
   },
+
+  {
+    path: 'device-management',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./device-management-system/device-management-system.component').then(m => m.DeviceManagementSystemComponent),
+  },
     
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // ... other routes
