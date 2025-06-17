@@ -15,9 +15,6 @@ export interface DialogData {
   imports: [
     MatModuleModule,
     MatButtonModule, // Add MatButtonModule to imports
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
   ],
   providers: [DictionaryService],
   selector: 'app-confirm-dialog',
