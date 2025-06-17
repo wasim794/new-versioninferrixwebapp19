@@ -11,7 +11,7 @@ import { MatModuleModule } from '../common/mat-module';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule, StackDataAllComponent],
+  imports: [CommonModule, MatModuleModule],
   providers: [StackMonitorService, DictionaryService],
   selector: 'app-stack-monitor',
   templateUrl: './stack-monitor.component.html',
@@ -42,6 +42,7 @@ export class StackMonitorComponent extends UnsubscribeOnDestroyAdapter implement
 
 
   showValue(event: any) {
+    console.log(event);
     this.dialog.open(StackDataAllComponent, {
       data: {stackAllData: event,},
       width: '600px',
