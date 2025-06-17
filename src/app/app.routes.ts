@@ -32,6 +32,17 @@ export const routes: Routes = [
         loadComponent: () => import('./datasource/datasource-list/datasource-list.component').then(m => m.DatasourceListComponent), }
     ],
   },
+  
+  {
+    path: 'users',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./users/users-list/users-list.component').then(m => m.UsersListComponent),
+    children: [
+      { path: 'list',
+        loadComponent: () => import('./users/users-list/users-list.component').then(m => m.UsersListComponent), }
+    ],
+  },
+    
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // ... other routes
 ];

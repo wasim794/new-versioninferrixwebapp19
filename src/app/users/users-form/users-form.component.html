@@ -1,0 +1,88 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar
+    class="mat-toolbar_all ">
+    <mat-card-title class="sidebar_form_title">
+      <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.form.heading'): ""}}</span>
+      <small *ngIf="isActivePdSmall">{{user.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="allFormedit">
+  <div *ngFor="let error of usersFormError" [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li>{{error.property}} : {{error.message}}</li>
+    </mat-card>
+  </div>
+  <form class="userFormAlign">
+    <mat-form-field class="form_field  w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.username'): ""}}</mat-label>
+      <input matInput [(ngModel)]="user.username"  class="form-control" name="username" required
+             type="text">
+    </mat-form-field>
+    <span [hidden]="isPasswordHidden">
+         <mat-form-field class="form_field w-50" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.password'): ""}}</mat-label>
+            <input matInput name="password" type="password" required [(ngModel)]="user.password">
+         </mat-form-field>
+      </span>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-label>
+      <input matInput name="name" [(ngModel)]="user.name"  required>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.email'): ""}}</mat-label>
+      <input matInput type="email" name="email" [(ngModel)]="user.email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.groupPermission'): ""}}</mat-label>
+      <mat-select name="permission" [(ngModel)]="selectedPermissions" multiple>
+        <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.placeholder.addGroup'): ""}}</mat-label>
+      <input matInput name="newGroup" [(ngModel)]="newGroup">
+      <mat-icon class="addPlusBtn" (click)="addNewGroup()">add_circle</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.placeholder.sendAlarmEmails'): ""}}</mat-label>
+      <mat-select name="receiveAlarmEmails" [(ngModel)]="user.receiveAlarmEmails">
+        <mat-option *ngFor="let alarm of alarmCodes" [value]="alarm.value">
+          {{alarm.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.phone'): ""}}</mat-label>
+      <input matInput name="phone" [(ngModel)]="user.phone">
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.placeholder.lastLogin'): ""}}</mat-label>
+      <input matInput readonly value="{{user.lastLogin |  date:'dd/MM/yy h:mm a'}}" name="lastlogin"
+             type="text">
+    </mat-form-field>
+    <br>
+    <mat-slide-toggle name="admin" class="toggle_change marginLeft-20" [(ngModel)]="user.admin">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.administrator'): ""}}
+    </mat-slide-toggle>
+    <mat-slide-toggle name="disabled" class="toggle_change marginLeft-10" [(ngModel)]="user.disabled">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}!
+    </mat-slide-toggle>
+    <mat-slide-toggle name="receiveOwnAuditEvents" class="toggle_change marginLeft-10"
+                      [(ngModel)]="user.receiveOwnAuditEvents">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.fields.receiveOwnAuditEvents'): ""}}!
+    </mat-slide-toggle>
+
+    <div class="meshActionsButtons">
+      <button mat-raised-button class="saveButton marginLeft-10 marginTop-20" (click)="saveUser() " *ngIf="!isEdit"
+              >{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+
+      <button mat-raised-button class="updateButton marginLeft-10 marginTop-20" (click)="updateUser()" *ngIf="isEdit"
+             >{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+      </button>
+    </div>
+  </form>
+</mat-card-content>
