@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [MatModuleModule, CommonModule],
+  imports: [MatModuleModule, CommonModule, DatasourceEditComponent],
   providers: [DatasourceService, DataSourceService, DictionaryService],
   selector: 'app-datasource-list',
   templateUrl: './datasource-list.component.html',

@@ -4,60 +4,71 @@ import {
   EventEmitter,
   Output,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
+  Injector,
+  Type,
 } from '@angular/core';
-import {DatasourceModel} from '../model';
-import {AssetTagComponent} from '../components/asset-tag';
+import { DatasourceModel } from '../model';
+import { AssetTagComponent } from '../components/asset-tag';
+import { BanetIpComponent } from '../components/banet-ip';
 
 @Component({
   selector: 'app-datasource-edit',
   templateUrl: './datasource-edit.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class DatasourceEditComponent {
-  datasource: any = DatasourceModel;
-  modal: any = new DatasourceModel();
-  @Output() addedUpdatedDatasource = new EventEmitter<any>();
-  @Output() addedSavedDatasource = new EventEmitter<any>();
-  @ViewChild('dynamicLoadComponent', {
-    read: ViewContainerRef
-  }) entry: ViewContainerRef | undefined;
-  componentRef!: any;
+  datasource: DatasourceModel = new DatasourceModel();
+  modal: DatasourceModel = new DatasourceModel();
+  @Output() addedUpdatedDatasource = new EventEmitter<DatasourceModel>();
+  @Output() addedSavedDatasource = new EventEmitter<DatasourceModel>();
+  @ViewChild('dynamicLoadComponent', { read: ViewContainerRef })
+  entry!: ViewContainerRef;
+  componentRef?: any; // Consider defining a specific interface for component instances
 
-  constructor(private resolver: ComponentFactoryResolver) {
-  }
+  constructor(private resolver: ComponentFactoryResolver) {}
 
-  addNew(datasourceType: any) {
-    // this.entry.clear();
+  addNew(datasourceType: string) {
+    this.entry.clear();
     const factory = this.componentLoaded(datasourceType);
-    // this.componentRef = this.entry.createComponent(factory);
+
+    if (!factory) {
+      console.error('Component factory not found for datasourceType:', datasourceType);
+      return;
+    }
+
+   this.componentRef = this.entry.createComponent(factory, undefined, this.entry.injector);
+
     this.componentRef.instance.addNewDatasource(datasourceType);
-    this.componentRef.instance.addedSavedDatasource.subscribe(($event: any) => {
+    this.componentRef.instance.addedSavedDatasource.subscribe(($event: DatasourceModel) => {
       this.addedSavedDatasource.emit($event);
     });
   }
 
-  getDataSource(datasource: DatasourceModel, index: any, edit: boolean) {
-    // this.entry.clear();
+  getDataSource(datasource: DatasourceModel, index: number, edit: boolean) {
+    this.entry.clear();
     const factory = this.componentLoaded(datasource.modelType);
-    // this.componentRef = this.entry.createComponent(factory);
+
+    if (!factory) {
+      console.error('Component factory not found for modelType:', datasource.modelType);
+      return;
+    }
+
+    this.componentRef = this.entry.createComponent(factory, undefined, this.entry.injector);
+
     this.componentRef.instance.getDataSource(datasource, index, edit);
-    this.componentRef.instance.addedUpdatedDatasource.subscribe(($event: any) => {
+    this.componentRef.instance.addedUpdatedDatasource.subscribe(($event: DatasourceModel) => {
       this.addedUpdatedDatasource.emit($event);
     });
   }
 
-
-  private componentLoaded(dataSourceType: string){
-    const componentMapping: Record<string, any> = {
-      'STUDENT_ASSET_TAG.DS': AssetTagComponent
+  private componentLoaded(dataSourceType: string) {
+    const componentMapping: Record<string, Type<AssetTagComponent | BanetIpComponent>> = {
+      'STUDENT_ASSET_TAG.DS': AssetTagComponent,
+      'BACNET_IP.DS': BanetIpComponent,
     };
 
     const component = componentMapping[dataSourceType];
     return component ? this.resolver.resolveComponentFactory(component) : null;
   }
-
-
-
-
 }
