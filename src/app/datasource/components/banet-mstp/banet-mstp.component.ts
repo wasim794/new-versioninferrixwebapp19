@@ -6,7 +6,7 @@ import {DataPointModel} from '../../../core/models/dataPoint';
 import {DictionaryService} from "../../../core/services";
 import {BacnetDropdownData, BacnetDataSourceModel, BacnetMSTPDatasourceService, BacnetDataPointModel} from '../banet-mstp';
 import {POLLING_PERIOD_TYPE} from "../../../common";
-// import {BacnetService, BacnetLocalDeviceModel} from '../../../bacnet';
+import {BacnetService, BacnetLocalDeviceModel} from '../../../bacnet';
 import { MeshNodesDatasourceModel } from '../../model/sensors/mesh-nodes-datasource.model';
 import { MatModuleModule } from '../../../common/mat-module';
 import { CommonModule } from '@angular/common';
@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
 })
 export class BanetMstpComponent extends DataSourceBase implements OnInit {
   public dropdownData              : BacnetDropdownData;
-  // public bacnetModel               : BacnetLocalDeviceModel<any>[];
+  public bacnetModel!               : BacnetLocalDeviceModel<any>[];
   public override datapointForm             : boolean=false;
   public bacnetDataPointModel      : any    = new BacnetDataPointModel();
   public dataSource                : any    = new BacnetDataSourceModel();
@@ -50,6 +50,7 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
   constructor(  private _bacnetMSTPService  : BacnetMSTPDatasourceService,
                 private datasourceService   : DatasourceService,
                 public  dictionaryService   : DictionaryService,
+                private _rootBacnetService  : BacnetService,
                 private commonService       : CommonService) {
     super();
     this.dropdownData = new BacnetDropdownData(_bacnetMSTPService, commonService);
@@ -66,9 +67,9 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
 
 
   getBacnet() {
-    // this.subs.add(this._rootBacnetService.get().subscribe((data: BacnetLocalDeviceModel<any>[]) => {
-    //   this.bacnetModel = data;
-    // }));
+    this.subs.add(this._rootBacnetService.get().subscribe((data: BacnetLocalDeviceModel<any>[]) => {
+      this.bacnetModel = data;
+    }));
   }
 
   selectedPropertiesIdentifier(event: { source: { selected: any; }; }, property: any) {
@@ -234,7 +235,7 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
         this.displayForm = false;
         this.datapointButtonsView = true;
         this.dataPoint = data;
-        // this.datapointTableComponent.addDatapointToTable(this.dataPoint);
+        this.datapointTableComponent.addDatapointToTable(this.dataPoint);
         this.commonService.notification('Datapoint ' + this.dataPoint.name + ' ' + this.saveSuccess);
       }, err => {
           this.bacnetMastpError = err.result.message
@@ -252,10 +253,9 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
         this.displayForm = false;
         this.datapointButtonsView = true;
         this.dataPoint = data;
-
-        // this.datapointTableComponent.dataPoints.data[this.currentDatapointIndex] = this.dataPoint;
-        // this.datapointTableComponent.dataPoints.filter = '';
-        // this.datapointTableComponent.updatedData(this.dataPoint.xid);
+        this.datapointTableComponent.dataPoints.data[this.currentDatapointIndex] = this.dataPoint;
+        this.datapointTableComponent.dataPoints.filter = '';
+        this.datapointTableComponent.updatedData(this.dataPoint.xid);
         this.commonService.notification('Datapoint ' + this.dataPoint.name + ' ' + this.updateSuccess);
       }, err => {
         this.bacnetMastpError = err.result.message
