@@ -34,8 +34,7 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    WatchlistEditComponent,
-    WatchlistDataPointListComponent,
+    WatchlistEditComponent
   ],
   providers: [CommonService, ConfigurationService, WatchlistService, ObservableWebSocketService],
   selector: 'app-watchlist-list',

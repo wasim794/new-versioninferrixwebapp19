@@ -55,8 +55,10 @@ export const routes: Routes = [
   {
     path: 'device-management',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./device-management-system/device-management-system.component').then(m => m.DeviceManagementSystemComponent),
+    loadComponent: () => import('./device-management-system/device-management-system.component').then(m => m.DeviceManagementSystemComponent),
   },
+  
+
     
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // ... other routes
