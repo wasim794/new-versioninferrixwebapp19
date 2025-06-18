@@ -1,0 +1,67 @@
+<div  *ngFor="let error of dataSourceError" [hidden]="!messageError">
+  <mat-card class="validation-error">
+    <li>{{error.property}}
+      : {{error.message}}</li>
+  </mat-card>
+</div>
+<form class="sidebar-form meshDataSources">
+  <mat-form-field class="commonFormField allInputSidebar" appearance="fill">
+    <mat-label>
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+    </mat-label>
+    <input matInput [(ngModel)]="datasource.name" name="name" type="text" required
+           >
+  </mat-form-field>
+  <mat-form-field class="commonFormField" appearance="fill">
+    <mat-label>
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}
+    </mat-label>
+    <input matInput [(ngModel)]="datasource.xid" name="xid" type="text" readonly
+           >
+  </mat-form-field>
+  <br>
+  <mat-form-field class="commonFormField" appearance="fill">
+    <mat-label>
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}
+    </mat-label>
+    <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
+      <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-divider class="dividerAllCommonFields"></mat-divider>
+  <br>
+  <mat-form-field class="commonFormField" [ngClass]="{inactiveIP: modelType === 'MODBUS_IP.DS'}" *ngIf="hideAddress" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.address'): ""}}</mat-label>
+    <input matInput [(ngModel)]="datasource.address" name="address" type="text" required (keypress)="isNumber($event);">
+  </mat-form-field>
+  <br>
+  <p>
+  <mat-slide-toggle [(ngModel)]="datasource.anchorNode" name="anchorNode" *ngIf="visibility"
+                    (change)="onAnchorMode($event)" class="side_form_toggle toggle_change allToggls">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataSource.field.anchorNode'): ""}}
+  </mat-slide-toggle>
+  <br>
+  <mat-form-field  class="commonFormField conditionalInput" *ngIf="isAnchorOn" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataSource.field.location'): ""}}</mat-label>
+    <input matInput [(ngModel)]="datasource.location" name="location" type="text">
+  </mat-form-field>
+  </p>
+  <br>
+  <mat-form-field *ngIf="modelType === 'ANCHOR_TAG.DS'" class="form_field" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataSource.field.location'): ""}}</mat-label>
+    <input matInput [(ngModel)]="datasource.zone" name="zone" type="text" required>
+  </mat-form-field>
+  <br>
+  <div *ngIf="!isEdit then save else update"></div>
+  <ng-template #save>
+    <button mat-raised-button class="saveButton" (click)="saveDatasource()">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+    </button>
+  </ng-template>
+  <ng-template #update>
+    <button mat-raised-button class="updateButton" (click)="updateDatasource()">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    </button>
+  </ng-template>
+
+</form>

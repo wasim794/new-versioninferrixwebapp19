@@ -1,0 +1,22 @@
+<div *ngIf="dataPoint" class="mat-content">
+  <div class="info-icon">
+    <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" (click)="purgeInfo()">info</mat-icon>
+  </div>
+  <p class="valuePurgeAll">
+      <span class="formTableWidthPerticular">
+        <mat-form-field appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.purge.after'): ""}}</mat-label>
+          <input matInput type="text" name="timePeriod" [(ngModel)]="dataPoint.purgePeriod.timePeriod">
+        </mat-form-field>
+      </span>
+  </p>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-select [(ngModel)]="dataPoint.purgePeriod.timePeriodType">
+        <mat-option [value]="type.key" *ngFor="let type of pollingPeriodType">{{type.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+</div>
+

@@ -1,0 +1,50 @@
+<!-- component.html
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="bacnet-device-browser" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>Bacnet Device Browser</span>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container cardlayout width-100 mainContainerBanetBrowser" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="card_margin">
+    <mat-form-field class="dataSelectDropdown" appearance="fill">
+      <mat-label>Bacnet Device</mat-label>
+      <mat-select>
+        <mat-option value="one">First option</mat-option>
+        <mat-option value="two">Second option</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+    <div class="button-row">
+    <button mat-raised-button (click)="dataHideShow()" color="warn"><mat-icon>search</mat-icon>  Start Who-Is</button>
+      </div>
+
+  </div>
+  <div fxFlex="100%" class="card_margin" [hidden]="!nodeTreeHide">
+    <mat-tree class="matTreeNodes" [dataSource]="dataSource" [treeControl]="treeControl">
+    
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        {{node.name}}
+      </mat-tree-node>
+
+      
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'Toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        {{node.name}}
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+</div> -->

@@ -1,0 +1,86 @@
+<div *ngIf="dataPoint">
+  <div class="info-icon">
+    <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" (click)="pointValueLoggingInfo()">info</mat-icon>
+  </div>
+  <p class="loginProps">
+    <mat-form-field appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.loggingType'): ""}}</mat-label>
+      <mat-select (selectionChange)="changeType(dataPoint.loggingPropertiesModel.loggingType)"
+                  [(ngModel)]="dataPoint.loggingPropertiesModel.loggingType">
+        <mat-option *ngFor="let type of logingType" [value]="type.key">{{type.val}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </p>
+
+  <div *ngIf="interval || dataPoint.loggingPropertiesModel.loggingType == 'INTERVAL'" id="Interval_DATA">
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.intervalLoggingPeriod'): ""}}</mat-label>
+        <input matInput type="text" name="pollingPeriod"
+               [(ngModel)]="dataPoint.loggingPropertiesModel.intervalLoggingPeriod.timePeriod">
+      </mat-form-field>
+
+      <mat-form-field class="loggingMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}</mat-label>
+        <mat-select name="pollingPeriodType"
+                    [(ngModel)]="dataPoint.loggingPropertiesModel.intervalLoggingPeriod.timePeriodType">
+          <mat-option [value]="type.key" *ngFor="let type of pollingPeriodType">{{type.val}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.intervalLoggingType'): ""}}</mat-label>
+        <mat-select [(ngModel)]="dataPoint.loggingPropertiesModel.intervalLoggingType">
+          <mat-option [value]="type.key" *ngFor="let type of intervalLoggingType">{{type.val}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+
+  </div>
+
+
+  <div *ngIf="dataPoint.pointLocator.dataType == 'NUMERIC'" id="toleranceSection">
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.tolerance'): ""}}</mat-label>
+        <input matInput type="text" name="toleranc" [(ngModel)]="dataPoint.loggingPropertiesModel.tolerance">
+      </mat-form-field>
+    </p>
+  </div>
+
+
+  <div *ngIf="dataPoint.pointLocator.dataType == 'NUMERIC'" id="discardSection">
+    <p>
+      <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.discardExtremeValues'): ''}}" class="toggle_change"
+                        [(ngModel)]="dataPoint.loggingPropertiesModel.discardExtremeValues" name="discardExtremeValues">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.discardExtremeValues'): ""}}
+      </mat-slide-toggle>
+    </p>
+    <p>
+      <mat-form-field class="loginDiscardAll" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.discardLowLimit'): ""}}</mat-label>
+        <input matInput type="text" name="discardLowLimit"
+               [(ngModel)]="dataPoint.loggingPropertiesModel.discardLowLimit">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.discardHighLimit'): ""}}</mat-label>
+        <input matInput type="text" name="discardHighLimit"
+               [(ngModel)]="dataPoint.loggingPropertiesModel.discardHighLimit">
+      </mat-form-field>
+    </p>
+  </div>
+
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.logging.defaultCacheSize'): ""}}</mat-label>
+      <input matInput type="text" [(ngModel)]="dataPoint.loggingPropertiesModel.cacheSize">
+    </mat-form-field>
+  </p>
+</div>

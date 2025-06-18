@@ -1,0 +1,439 @@
+<!-- <mat-card class="form_cards publisherBacnetMain">
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.bacnetPublisher'): ""}}
+      <small *ngIf="bacnetTitles">{{bacnetSenderModel.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button (click)="savePublisherBacnet()" align="end" *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate toolbarButton"
+            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
+    </button>
+    <button (click)="updatePublisherBacnet()" align="end" *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate"
+            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    </button>
+  </mat-toolbar>
+
+  <mat-card-content class="form_cards form_edit_card allFormedit">
+    <div *ngFor="let error of bacnetSenderError" [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li>{{error.property}} : {{error.message}}</li>
+      </mat-card>
+    </div>
+
+    <mat-tab-group>
+      <mat-tab label="Basic">
+        <ng-template matTabContent>
+          <form class="allFormsSize bacnetSize">
+              <mat-form-field class="field_margin w-50 mt-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-label>
+                <input [(ngModel)]="bacnetSenderModel.name" matInput name="name" placeholder="Enter Name" type="text"
+                       required>
+              </mat-form-field>
+
+              <mat-form-field class="field_margin w-50 " appearance="fill" >
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input [(ngModel)]="bacnetSenderModel.xid" disabled matInput name="xid" placeholder="Auto generated">
+              </mat-form-field>
+
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheWarningSize'): ""}}
+                </mat-label>
+                <input [(ngModel)]="bacnetSenderModel.cacheWarningSize" matInput name="cacheWarningSize"
+                       placeholder="Enter CacheWarningSize" required>
+              </mat-form-field>
+
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheDiscardSize'): ""}}
+                </mat-label>
+                <input [(ngModel)]="bacnetSenderModel.cacheDiscardSize" matInput name="cacheDiscardSize"
+                       placeholder="Enter CacheDiscardsize" required>
+              </mat-form-field>
+
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.updateEvents'): ""}}
+                </mat-label>
+                <mat-select [(ngModel)]="bacnetSenderModel.publishType" class="form-control" name="publishType">
+                  <mat-option *ngFor="let updateEvent of dropdownData.updateEvents" [value]="updateEvent.key"
+                              title=" {{updateEvent.value}}">
+                    {{updateEvent.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Id'): ""}}</mat-label>
+                <mat-select [(ngModel)]="bacnetSenderModel.localDeviceId" class="form-control" name="localDeviceId">
+                  <mat-option *ngFor="let model of localDeviceModels" [value]="model.id" title="{{model.deviceName}}">
+                    {{model.deviceName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.enterSnapshotSendPeriod'): ""}}
+                </mat-label>
+                <input [(ngModel)]="bacnetSenderModel.snapshotSendPeriod.timePeriod" matInput name="timePeriod"
+                       placeholder="Enter SnapshotSendPeriod" required>
+              </mat-form-field>
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}</mat-label>
+                <mat-select [(ngModel)]="bacnetSenderModel.snapshotSendPeriod.timePeriodType" name="timePeriodType">
+                  <mat-option *ngFor="let timePeriodType of dropdownData.snapShotPeriod" [value]="timePeriodType.key">
+                    {{timePeriodType.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            <mat-slide-toggle [(ngModel)]="bacnetSenderModel.sendSnapshot"
+                              class="side_form_toggle toggle_change publisherAddToggle" name="sendSnapshot">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.sendRegularSnapshot'): ""}}
+            </mat-slide-toggle>
+
+            <mat-slide-toggle [(ngModel)]="bacnetSenderModel.enabled" name="enabled"
+                              class="toggle_change bacnetToggleBtn">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+            </mat-slide-toggle>
+          </form>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab class="bacnetPoints" label="Points" *ngIf="pointValues" >
+        <ng-template matTabContent>
+          <form class="bacnetSize">
+            <mat-form-field class="searchWidth serchInput" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
+              <input type="text"
+                     class="autoSearchInput"
+                     matInput
+                     [formControl]="myControl"
+                     (input)="onInputChange($event)"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+                <mat-option *ngFor="let dataPoint of dataPointModels | slice:0:50; let i=index"
+                            (onSelectionChange)="deviceChange(dataPoint, $event)" [value]="dataPoint.extendedName">
+                  {{dataPoint.extendedName}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <div *ngIf="showDataPointFields" class="changedropDowns" >
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-label>
+                  <input [(ngModel)]="bacnetSenderPointModel.dataPointName" matInput name="dataPointName"
+                         placeholder="Enter Name" type="text">
+                </mat-form-field>
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.instanceNumber'): ""}}</mat-label>
+                  <input [(ngModel)]="bacnetSenderPointModel.instanceNumber" matInput name="instanceNumber"
+                         placeholder="Enter Name" type="text">
+                </mat-form-field>
+
+
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.objectName'): ""}}</mat-label>
+                  <input [(ngModel)]="bacnetSenderPointModel.objectName" matInput name="objectName"
+                         placeholder="Enter Name" type="text" required>
+                </mat-form-field>
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.objectType'): ""}}</mat-label>
+                  <input [(ngModel)]="bacnetSenderPointModel.objectType" matInput name="objectType"
+                         placeholder="Enter Name" type="text" disabled>
+                </mat-form-field>
+
+
+                <mat-slide-toggle class="toggle_change marginBottom-10" [(ngModel)]="bacnetSenderPointModel.enabled" name="enabled" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+                >
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
+                </mat-slide-toggle>
+
+                <mat-slide-toggle class="toggle_change toggleAlignBacnet" [(ngModel)]="bacnetSenderPointModel.useIntrinsicAlarms" name="enabled" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+                >
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.useIntrinsicAlarms'): ""}}
+                </mat-slide-toggle>
+
+              <mat-form-field class="bacNetFields w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.table.time'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.executionDelaySeconds').substring(10,16): ""}}</mat-label>
+                <input
+                  [(ngModel)]="bacnetSenderPointModel?.intrinsicAlarmConfig.timeDelay"
+                  matInput
+                  name="timeDelay"
+                  type="number"
+                  min="0"
+                  step="1"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="bacNetFields w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.notifyType'): ""}}</mat-label>
+
+                <mat-select  [(ngModel)]="bacnetSenderPointModel?.intrinsicAlarmConfig.notifyType" name="notifyType">
+                  <mat-option *ngFor="let NOTIFY of NOTIFY_TYPES" [value]="NOTIFY.value">
+                    {{NOTIFY.key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="bacNetFields w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.table.time'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.executionDelaySeconds').substring(10,16): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.returnToNormalTime').substring(9,16): ""}}</mat-label>
+                <input
+                  [(ngModel)]="bacnetSenderPointModel?.intrinsicAlarmConfig.timeDelayNormal"
+                  matInput
+                  name="timeDelayNormal"
+                  type="number"
+                  min="0"
+                  step="1"
+
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="bacNetFields w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.notificationClass'): ""}}</mat-label>
+                <input
+                  [(ngModel)]="bacnetSenderPointModel?.intrinsicAlarmConfig.notificationClass"
+                  matInput
+                  name="notificationClass"
+                  type="number"
+                  min="0"
+                  step="1"
+
+                  required
+                />
+              </mat-form-field>
+              <br>
+              <br>
+              <mat-slide-toggle  class="toggle_change marginBottom-10"
+                                 [(ngModel)]="bacnetSenderPointModel?.intrinsicAlarmConfig.eventEnable.toOffnormal" name="toOffnormal"
+              >
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.eventToOffNormal'): ""}}
+              </mat-slide-toggle>
+              <mat-slide-toggle  class="toggle_change  bacnetEventToggle"
+                                [(ngModel)]="bacnetSenderPointModel?.intrinsicAlarmConfig.eventEnable.toFault" name="toFault"
+              >
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.eventToFault'): ""}}
+              </mat-slide-toggle>
+              <mat-slide-toggle  class="toggle_change  bacnetEventToggle"
+                                 [(ngModel)]="bacnetSenderPointModel?.intrinsicAlarmConfig.eventEnable.toNormal" name="toNormal"
+              >
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.eventToNormal'): ""}}
+              </mat-slide-toggle>
+              <br>
+              <br>
+              <ng-container *ngIf="bacnetSenderPointModel &&
+                     (bacnetSenderPointModel.objectType === 'ANALOG_INPUT' ||
+                      bacnetSenderPointModel.objectType === 'ANALOG_VALUE'); else otherTemplate">
+
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.highLimit'): ""}}</mat-label>
+                  <input
+                    [(ngModel)]="analogIntrinsicAlarm.highLimit"
+                    matInput
+                    name="highLimit"
+                    type="number"
+                    min="0"
+                    step="1"
+
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.lowLimit'): ""}}</mat-label>
+                  <input
+                    [(ngModel)]="analogIntrinsicAlarm.lowLimit"
+                    matInput
+                    name="lowLimit"
+                    type="number"
+                    min="0"
+                    step="1"
+
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.deadband'): ""}}</mat-label>
+                  <input
+                    [(ngModel)]="analogIntrinsicAlarm.deadband"
+                    matInput
+                    name="deadband"
+                    type="number"
+                    min="0"
+                    step="1"
+
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.missingValueBehavior').substring(2,7): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.highLimit'): ""}}</mat-label>
+                  <input
+                    [(ngModel)]="analogIntrinsicAlarm.faultHighLimit"
+                    matInput
+                    name="faultHighLimit"
+                    type="number"
+                    min="0"
+                    step="1"
+
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field class="bacNetFields w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.missingValueBehavior').substring(2,7): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.lowLimit'): ""}}</mat-label>
+                  <input
+                    [(ngModel)]="analogIntrinsicAlarm.faultLowLimit"
+                    matInput
+                    name="faultLowLimit"
+                    type="number"
+                    min="0"
+                    step="1"
+
+                    required
+                  />
+                </mat-form-field>
+
+                <mat-slide-toggle  class="toggle_change marginBottom-10"
+                                  [(ngModel)]="analogIntrinsicAlarm.limitEnable.lowLimitEnable" name="lowLimitEnable"
+                >
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.lowLimit'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+                </mat-slide-toggle>
+                <br>
+                <mat-slide-toggle  class="toggle_change marginBottom-10"
+                                   [(ngModel)]="analogIntrinsicAlarm.limitEnable.highLimitEnable" name="highLimitEnable"
+                >
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.highLimit'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+                </mat-slide-toggle>
+              </ng-container>
+
+              <ng-template #otherTemplate>
+                <div *ngIf="bacnetSenderPointModel.objectType === 'BINARY_INPUT' ||
+            bacnetSenderPointModel.objectType==='BINARY_VALUE'; else thirdTemplate">
+                  <mat-form-field class="bacNetFields w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.alarmLevel').substring(0,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.value'): ""}}</mat-label>
+                    <input
+                      [(ngModel)]="binaryIntrinsicAlarm.alarmValue"
+                      matInput
+                      name="alarmValue"
+                      type="text"
+                      min="0"
+                      step="1"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+              </ng-template>
+
+              <ng-template #thirdTemplate>
+                <div *ngIf="bacnetSenderPointModel.objectType === 'MULTISTATE_INPUT' || bacnetSenderPointModel.objectType==='MULTISTATE_VALUE'">
+                  <div *ngFor="let faultValue of faultValues; let i = index" class="dynamic-input" style="width:40%; display: inline;">
+                    <mat-form-field  class="example-full-width" appearance="fill" >
+                      <mat-label>faultValues {{ i + 1 }}</mat-label>
+                      <input
+                        [(ngModel)]="faultValues[i]"
+                        matInput
+                        name="faultValues{{ i }}"
+                        type="text"
+                        required
+                      />
+                      <button  mat-icon-button matSuffix (click)="removeInputfaultValue(i)">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                  <button type="button" mat-mini-fab color="primary" aria-label="list icon">
+                    <mat-icon (click)="addInputFaultValues()">add</mat-icon>
+                  </button>
+                  <span style='font-size: 50px;
+    font-weight: 100; margin-right: 10px;position: relative;top: 12px;'>&#921;</span>
+                  <div *ngFor="let alarmValue of alarmValues; let i = index" class="dynamic-input" style="width:40%; display: inline">
+                    <mat-form-field  class="example-full-width" appearance="fill">
+                      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.alarmLevel').substring(0,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.value'): ""}} {{ i + 1 }}</mat-label>
+                      <input
+                        [(ngModel)]="alarmValues[i]"
+                        matInput
+                        name="alarmValue{{ i }}"
+                        type="text"
+                        required
+                      />
+                      <button mat-icon-button matSuffix (click)="removeInput(i)">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </mat-form-field>
+                  </div>
+                  <button type="button" mat-mini-fab color="primary" aria-label="list icon">
+                    <mat-icon (click)="addInputAlarm()">add</mat-icon>
+                  </button>
+
+                </div>
+              </ng-template>
+              <br>
+              <br>
+              <br>
+              <button (click)="saveDataPoint()" *ngIf="isEditDataPoint" align="end" class="Top_Save_Button mt-30"
+                      mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+              </button>
+              <button (click)="updateDataPoints()" *ngIf="!isEditDataPoint" align="end"
+                      class="toolbarUpdateButton updateButton topRightButton"
+                      mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+              </button>
+              <button (click)="cancelButton()" align="end" color="warn" class="cancelButton"
+                      mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+              </button>
+              <br>
+              <br>
+            </div>
+            <mat-divider class="mqqtDividers mt-10"></mat-divider>
+            <div class="mat-elevation-z8">
+              <mat-form-field  class="searchBacnetBox">
+                <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+                <input (keyup)="filtersPublisher($event)" [(ngModel)]="searchDatapoint"  matInput name="searchDatapoint"
+                       placeholder="Search...">
+                <mat-icon  (click)="filtersPublisher($event)" matSuffix>search</mat-icon>
+              </mat-form-field>
+
+              <mat-table style="width:100%" [dataSource]="dataSources"  class="table_data dataPointsAllTable setValueWidth setAutoWidth px-0" mat-table>
+                <ng-container matColumnDef="Name" class="table_row">
+                  <mat-header-cell *matHeaderCellDef class="cells_title">
+                    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="table_data senderTableCell"> {{element.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="InstanceNumber" class="table_row">
+                  <mat-header-cell *matHeaderCellDef class="cells_title paddingRights">
+                    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.instanceNumber'): ""}}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="table_data senderTableCell">
+                    {{element.instanceNumber}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="ObjectName" class="table_row">
+                  <mat-header-cell *matHeaderCellDef class="cells_title httpTableHeight">
+                    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.objectName'): ""}}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="table_data senderTableCell">{{element.objectName}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="ObjectType" class="table_row">
+                  <mat-header-cell *matHeaderCellDef class="cells_title httpTableHeight">
+                    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.objectType'): ""}}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="table_data senderTableCell">{{element.objectType}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Actions" class="table_row">
+                  <mat-header-cell *matHeaderCellDef class="cells_title httpTableHeight">
+                    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="table_data httpTableHeight">
+                    <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon" (click)="editDataPoint(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"> edit </mat-icon>
+
+                    <mat-icon (click)="remove(element)" aria-hidden="false" class="allIcons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"> delete </mat-icon>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="bacnetPointsColumn"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: bacnetPointsColumn;"></mat-row>
+              </mat-table>
+              <div  class="ui borderless menu">
+                <mat-paginator [pageIndex]=0 [length]="bacnetSenderPoint.total" [pageSizeOptions]="pageSizeOptions" [pageSize]=limit
+                               (page)="getNext($event)"></mat-paginator>
+              </div>
+            </div>
+          </form>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card> -->

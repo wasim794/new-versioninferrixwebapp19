@@ -1,0 +1,110 @@
+<mat-toolbar class="mat-toolbar_all newupdate" >
+  <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.eventDetector'): ""}}</span>
+  <span class="spacer"></span>
+  <button class="cancel_button eventClose" (click)="blankDataClose()" mat-button [mat-dialog-close]>
+    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close') | uppercase) : ""}}
+  </button>
+
+  <button  mat-raised-button class="Add_button " (click)="saveBulkEvent()" *ngIf="showSaveButton"
+          >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+  </button>
+
+</mat-toolbar >
+<mat-dialog-content class="all_dialog_content ">
+  <div *ngIf="dataPoint" class="mat-content commonTopSpacing">
+    <div [hidden]="!messageError">
+      <div *ngFor="let msg of error">
+        <!-- <mat-card [ngClass]="{'error-message-card':true}">{{msg.property}}
+          : {{msg.message}}</mat-card> -->
+      </div>
+    </div>
+    <mat-form-field appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.alertsSelect'): ""}}</mat-label>
+      <mat-select [(ngModel)]="selectedOption" [(ngModel)]="dataPoint.purgePeriod.timePeriodType">
+        <!-- <mat-option [value]="eventDetectorTyp.type"
+                    *ngFor="let eventDetectorTyp of eventDetectorTypes"
+                    (onSelectionChange)="addEventDetector($event, eventDetectorTyp.type)">{{eventDetectorTyp.name}}
+        </mat-option> -->
+      </mat-select>
+    </mat-form-field>
+
+    <mat-divider class="matCommomDivide"></mat-divider>
+    <div id="errorMsg">
+      <mat-card class="validation-error">
+        <li *ngFor="let eventError of eventDetectorError">{{eventError.property}}
+          : {{eventError.message}}</li>
+      </mat-card>
+    </div>
+    <template #dynamicLoadComponent>
+    </template>
+  </div>
+</mat-dialog-content>
+
+<!-- <div mat-dialog-actions class="dialogBottomActions" >
+  <button mat-raised-button class="Add_button" (click)="saveEventDetector()"
+      *ngIf="showAddButton"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.add') | uppercase) : ""}}
+  </button>
+  <button  mat-raised-button class="Add_button" (click)="updateEventDetector()"
+           *ngIf="showUpdateButton">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+  </button>
+</div> -->
+
+
+<div class="container cardlayout width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left" >
+  <div fxFlex="100%" class="card_margin">
+<div class="mat-elevation-z8 eventDetectorTable">
+  <table mat-table class="width-100 alignLeftText th.mat-header-cell">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox> -->
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </th>
+      <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}} </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="alarmLevel">
+      <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.alarmType'): ""}} </th>
+      <td mat-cell *matCellDef="let element"> {{element.alarmLevel}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Action'): ""}} </th>
+      <td mat-cell *matCellDef="let element" >
+          <!-- <mat-icon aria-hidden="false" class="all_icons" id="all_icons_one" style="float:none;" aria-label="edit icon" (click)="editEventDetector(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"> edit </mat-icon> -->
+        <!-- <mat-icon (click)="deleteEventDetector(element)" style="float:none;"  aria-hidden="false" class="all_icons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"> delete </mat-icon> -->
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="selection.toggle(row)">
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+  </div>
+</div>

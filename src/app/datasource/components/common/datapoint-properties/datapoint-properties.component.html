@@ -1,0 +1,36 @@
+<mat-toolbar
+  class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+  <mat-card-title class="sidebar_form_title">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.dataPointProperties'): ""}}
+  </mat-card-title>
+  <mat-icon class="close-container" (click)="cancel()">close</mat-icon>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography mat-dialog_contents mat-dialog_contents_mat CustomAddDialog"
+                    id="mat-dialog_contents_mat">
+  <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
+    <div id="pointProperties">
+      <mat-tab label="Text Renderer">
+        <app-text-renderer [dataPoint]="data.content"></app-text-renderer>
+      </mat-tab>
+      <mat-tab label="Logging">
+        <app-logging-properties [dataPoint]="data.content"></app-logging-properties>
+      </mat-tab>
+      <mat-tab label="Purge">
+        <app-value-purge [dataPoint]="data.content"></app-value-purge>
+      </mat-tab>
+
+    </div>
+  </mat-tab-group>
+  <div id="displaySaveMsg">
+    <mat-card class="save-success"><span>{{saveMsg}}</span>
+    </mat-card>
+  </div>
+  <mat-dialog-actions *ngIf="!hideShows" id="hideShows">
+    <button mat-raised-button class="saveButton" (click)="saveProperties()">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+    </button>
+    <button mat-raised-button class="cancel_button" (click)="cancel()">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+  </mat-dialog-actions>
+</mat-dialog-content>

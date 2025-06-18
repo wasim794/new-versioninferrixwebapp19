@@ -1,0 +1,76 @@
+<div>
+  <div  *ngFor="let error of dataSourcePointError" [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li>{{error.property}}
+        : {{error.message}}</li>
+    </mat-card>
+  </div>
+
+  <div class="datapoint-form dataPointForms">
+    <p>
+      <mat-form-field class="datapoint_field" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+        </mat-label>
+        <input [(ngModel)]="dataPoint.name" matInput name="name" placeholder=" {{UIDICTIONARY ? UIDICTIONARY
+.get('ui.core.common.fields.name'): ''}}" required>
+      </mat-form-field>
+
+      <mat-form-field class="datapoint_field" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}
+        </mat-label>
+        <input [(ngModel)]="dataPoint.xid" #tooltip="matTooltip" matTooltip="This section is readonly"
+               matTooltipHideDelay="1000" readonly matInput name="xid" placeholder="Auto generated">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field class="datapoint_field" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}
+        </mat-label>
+        <mat-select placeholder="Data Type" [(ngModel)]="pointLocator.dataType" name="dataTypes" required>
+          <mat-option *ngFor="let item of dataTypes" [value]="item.key">
+            {{item.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="attributeCodes" class="datapoint_field" appearance="fill">
+        <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.attribute'): ""}}</mat-label>
+        <mat-select placeholder="Data Type" [(ngModel)]="pointLocator.attributeId" name="attributeId" required>
+          <mat-option *ngFor="let attr of attributeCode.codes" [value]="attr">
+            {{attr}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="attributeCodesSecond"  class="datapoint_field" appearance="fill">
+        <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.attribute'): ""}}</mat-label>
+        <mat-select placeholder="Data Type" [(ngModel)]="pointLocator.attributeId" name="attributeId" required>
+          <mat-option *ngFor="let attr of attributeCode" [value]="attr">
+            {{attr}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <mat-slide-toggle *ngIf="settable" [(ngModel)]="pointLocator.settable" name="settable"
+                      class="side_form_toggle toggle_change allToggls modbusToggles floatRight">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
+    </mat-slide-toggle>
+
+
+    <div class="meshActionsButtons">
+      <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
+      <ng-template #savePoint>
+        <button mat-raised-button class="allDataPointSaveButton mupdateButton"
+                (click)=" saveDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+      </ng-template>
+      <ng-template #updatePoint>
+        <button mat-raised-button (click)="updateDataPoint()" class="Update_Button mupdateButton" >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+      </ng-template>
+      <button mat-raised-button (click)="cancelDataPoint($event)" class="cancel_button_new marginLeft-10">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+    </div>
+
+  </div>
+</div>
+<mat-divider clas="dividerBorder"></mat-divider>

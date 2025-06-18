@@ -1,0 +1,111 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.localDevice'): ""}}</span>
+      <div class="containerInfo">
+        <mat-form-field class="topSearchBoxes">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+          <input matInput name="searchBacnetList"
+                 (keyup)="applyFilter($event)" placeholder="Ex. ium" #input
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ''}}...">
+          <mat-icon class="Input_search" matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+        <mat-icon class="info_position  toolbarTopCenter" aria-hidden="false"
+                  aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                  (click)="loadBacnetLocalDeviceHelpModel()">
+          info_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+
+<div class="container cardlayout width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="card_margin">
+    <table  mat-table [dataSource]="obs" class="mat-elevation-z8"
+            matSort (matSortChange)="sortingCommissionedNodes($event)">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th style="max-width:0px" mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td style="max-width:0px" mat-cell *matCellDef="let element">
+          <mat-checkbox (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
+                        [checked]="isChecked(element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th style="max-width:10px" mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </th>
+        <td style="max-width:10px" mat-cell *matCellDef="let element; let i = index;">{{i + 1}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container  matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.oids.sysName'): ""}} </th>
+        <td style="cursor: pointer"  mat-cell *matCellDef="let element"  (click)="editLocalDevice(element)"> {{element.deviceName}} </td>
+      </ng-container>
+
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="actions">
+        <th style="max-width:20px" mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
+        <td style="max-width:20px" mat-cell *matCellDef="let element">
+          <mat-card-actions class="mat_right_icons">
+
+            <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+                      (click)="editLocalDevice(element)">
+              edit
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                      (click)="deleteLocalDevice(element)">
+              delete
+            </mat-icon>
+          </mat-card-actions></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="selection.toggle(row)">
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+<div class="pagination_fixed" [hidden]="!displayData">
+  <mat-paginator class="pagination_all" [pageSizeOptions]="[8, 10, 25, 100]" aria-label="Select page">
+
+  </mat-paginator>
+</div>
+
+<mat-drawer-container class="container-size sidebar_position" autosize>
+  <mat-drawer #localDeviceDrawer class="sidenav bacnetSidebars" mode="push" position="end">
+    <mat-icon class="allCloseOptions" aria-hidden="false"
+              title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" aria-label="close icon">close
+    </mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllData top-54" (click)="closeAllSidebar($event)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+    <!-- <app-loadbacnetform (closeAllSidebar)="closeAllSidebar($event)"></app-loadbacnetform> -->
+  </mat-drawer>
+</mat-drawer-container>
+<!-- end here -->
+
+<div class="addIcon iconPositionFixed">
+  <mat-icon mat-button (click)="addLocalDevice()"   title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.localDevice'): ''}}">library_add</mat-icon>
+  </div>

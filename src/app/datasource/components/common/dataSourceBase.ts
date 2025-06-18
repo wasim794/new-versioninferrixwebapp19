@@ -1,5 +1,5 @@
 import {EventEmitter, Output, ViewChild, Component, Input} from '@angular/core';
-// import {DatapointTableComponent} from './datapoint-table';
+import {DatapointTableComponent} from './datapoint-table';
 import {DataPointModel} from '../../model';
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
 // import {MeshNodesDatasourceFormComponent} from './mesh-nodes-datasource-form';
@@ -18,8 +18,8 @@ export abstract class DataSourceBase extends UnsubscribeOnDestroyAdapter {
   // public datapoints: MeshNodesDatapointsFormComponent;
   // @ViewChild(MeshNodesDatasourceFormComponent, {static: true})
   // public datasource: MeshNodesDatasourceFormComponent;
-  // @ViewChild(DatapointTableComponent, {static: true})
-  // public datapointTableComponent: DatapointTableComponent;
+  @ViewChild(DatapointTableComponent, { static: true })
+  public datapointTableComponent!: DatapointTableComponent;
   tabIndex = 0;
   dataPoint: any = new DataPointModel();
   currentDatapointIndex: any;

@@ -46,9 +46,9 @@
           <mat-form-field class="w-50 bacNetFields" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.localDevice'): ""}}</mat-label>
             <mat-select [(ngModel)]="dataSource.localDeviceConfig" class="form-control" name="publishType">
-              <!-- <mat-option *ngFor="let model of bacnetModel" [value]="model.id">
+              <mat-option *ngFor="let model of bacnetModel" [value]="model.id">
                 {{model.deviceName}}
-              </mat-option> -->
+              </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="w-50 bacNetFields" appearance="fill">

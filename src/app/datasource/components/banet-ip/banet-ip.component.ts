@@ -7,7 +7,7 @@ import {CommonService} from '../../../services/common.service';
 import {BacnetDropdownData, BacnetDatasourceService, BacnetIPDataSourceModel} from '../banet-ip';
 import {BacnetDataPointModel} from '../banet-mstp';
 import {DictionaryService} from "../../../core/services";
-// import {BacnetService, BacnetLocalDeviceModel} from '../../../bacnet';
+import {BacnetService, BacnetLocalDeviceModel} from '../../../bacnet';
 import {POLLING_PERIOD_TYPE} from "../../../common";
 import { MeshNodesDatasourceModel } from '../../model/sensors/mesh-nodes-datasource.model';
 import { MatModuleModule } from '../../../common/mat-module';
@@ -30,7 +30,7 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
   override dataPoint                  : any = new DataPointModel();
   bacnetDataPointModel       : any = new BacnetDataPointModel();
   dataSource                 : any = new BacnetIPDataSourceModel();
-  // bacnetModel                : BacnetLocalDeviceModel<any>[];
+  bacnetModel!: BacnetLocalDeviceModel<any>[];
   override tabIndex                   = 0;
   declare currentDatapointIndex      : number;
   saveSuccess                = 'saved successfully';
@@ -40,7 +40,7 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
   editPermission             : any = [];
   isEdit                     : boolean | undefined;
   setPermission              = [];
-  propertiesIdentifier       = [];
+  propertiesIdentifier:any       = [];
   selectedProperty           : any;
   dataTypes                  = [];
   dataSourceError            : any[] | undefined;
@@ -54,6 +54,7 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
 
   constructor(private bacnetDataSource  : BacnetDatasourceService,
               private datasourceService : DatasourceService,
+              private _rootBacnetService: BacnetService,
               public dictionaryService  : DictionaryService,
               private commonService     : CommonService) {
     super();
@@ -110,17 +111,17 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
   }
 
   getBacnet() {
-    // this.subs.add(this._rootBacnetService.get().subscribe(data => {
-    //   this.bacnetModel = data;
-    // }));
+    this.subs.add(this._rootBacnetService.get().subscribe(data => {
+      this.bacnetModel = data;
+    }));
   }
   selectedPropertiesIdentifier(event: { source: { selected: any; }; }, property: any) {
     if (event.source.selected) {
-      this.propertiesIdentifier.forEach(data => {
-        // if (data.propertyId === property) {
-        //   this.selectedProperty = data;
-        //   this.dataTypes = this.selectedProperty.supportedDataTypes;
-        // }
+      this.propertiesIdentifier.forEach((data: { propertyId: any; }) => {
+        if (data.propertyId === property) {
+          this.selectedProperty = data;
+          this.dataTypes = this.selectedProperty.supportedDataTypes;
+        }
       });
     }
   }
@@ -130,7 +131,7 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
   }
 
 
-  // override addNewDatapoint(xid: string, index: number) {
+  //   addNewDatapoint(xid: string, index: number) {
   //   if (!xid) {
   //     alert('Add datasource first');
   //     return false;
@@ -232,7 +233,7 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
         this.displayForm = false;
         this.datapointButtonsView = true;
         this.dataPoint = data;
-        // this.datapointTableComponent.addDatapointToTable(this.dataPoint);
+        this.datapointTableComponent.addDatapointToTable(this.dataPoint);
         this.commonService.notification('Datapoint ' + this.dataPoint.name + ' ' + this.saveSuccess);
       }, error => {
         this.bacNetIpPointError = error.result.message;
@@ -253,9 +254,9 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
         this.displayForm = false;
         this.datapointButtonsView = true;
         this.dataPoint = data;
-        // this.datapointTableComponent.dataPoints.data[this.currentDatapointIndex] = this.dataPoint;
-        // this.datapointTableComponent.dataPoints.filter = '';
-        // this.datapointTableComponent.updatedData(this.dataPoint.xid);
+        this.datapointTableComponent.dataPoints.data[this.currentDatapointIndex] = this.dataPoint;
+        this.datapointTableComponent.dataPoints.filter = '';
+        this.datapointTableComponent.updatedData(this.dataPoint.xid);
         this.commonService.notification('Datapoint ' + this.dataPoint.name + ' ' + this.updateSuccess);
       }, error => {
         this.bacNetIpPointError = error.result.message;

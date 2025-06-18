@@ -1,0 +1,279 @@
+<!-- <mat-card class="form_cards">
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title
+      class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.bacnet.ipBacnetDevice'): ""}}
+      <small *ngIf="localDeviceModelHidesName">{{localDeviceModel.deviceName}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button (click)="saveLocalDevice()"  *ngIf="!isEdit" align="end"
+            class="Top_Save_Button bacnetUpdate topRightButton"
+            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}
+    </button>
+    <button (click)="updateLocalDevice()" *ngIf="isEdit" align="end"
+            class="toolbarUpdateButton bacnetUpdate toolbarButton"
+            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    </button>
+  </mat-toolbar>
+
+  <mat-card-content class="form_cards form_edit_card bacnetFormSize">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
+    <div *ngFor="let err of bacnetError" [hidden]="!bacnetError">
+      <mat-card class="validation-error">
+        <li>{{err.property}}
+          : {{err.message}}</li>
+      </mat-card>
+    </div>
+    <mat-tab label="Device configuration">
+    <form>
+
+      <mat-form-field appearance="fill" class="bacNetFields w-50 marginTop-10">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.id'): ""}}</mat-label>
+        <input class="form-control" id="id" matInput minlength="1" name="id"
+               [(ngModel)]="localDeviceModel.id" readonly
+               type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.deviceId'): ""}}</mat-label>
+        <input class="form-control" id="deviceId" matInput minlength="1"
+               [(ngModel)]="localDeviceModel.deviceId" name="deviceID"
+               required type="text">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.deviceName'): ""}}</mat-label>
+        <input class="form-control" id="deviceName" matInput minlength="1" name="deviceName"
+               [(ngModel)]="localDeviceModel.deviceName" required type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.localNetworkNumber'): ""}}</mat-label>
+        <input class="form-control" id="ln" matInput minlength="1" name="localNetworkNumber"
+               [(ngModel)]="localDeviceModel.localNetworkNumber" required type="text">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.timeOut'): ""}}</mat-label>
+        <input class="form-control" id="timeout" matInput minlength="1" name="timeout"
+               [(ngModel)]="localDeviceModel.timeout"
+               required type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.segTimeOut'): ""}}</mat-label>
+        <input class="form-control" id="setimeout" matInput minlength="1" name="segTimeout"
+               [(ngModel)]="localDeviceModel.segTimeout" required type="text">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.segWindow'): ""}}</mat-label>
+        <input class="form-control" id="sagwindow" matInput minlength="1" name="segWindow"
+               [(ngModel)]="localDeviceModel.segWindow" required type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.retries'): ""}}</mat-label>
+        <input class="form-control" id="retries" matInput minlength="1" name="retries"
+               [(ngModel)]="localDeviceModel.retries"
+               required type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.type'): ""}}</mat-label>
+        <mat-select (selectionChange)="newLocalDevice($event.value)"
+                    [(ngModel)]="localDeviceModel.type" name="types">
+          <mat-option
+            value="IP">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.bacnet.ipBacnetDevice'): ""}}</mat-option>
+          <mat-option
+            value="MSTP">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.bacnet.mstpBacnetDevice'): ""}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-divider></mat-divider>
+
+      <div class="IP" *ngIf="isIpModel">
+
+        <mat-form-field appearance="fill" class="bacNetFields mt-10 w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.localBindAddress'): ""}}</mat-label>
+          <mat-select [(ngModel)]="localDeviceModel.localBindAddress" name="localBindAddress">
+            <mat-option *ngFor="let interface of networkInterfaces;"
+                        [value]="interface.hostAddress">{{interface.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.broadcastAddress'): ""}}</mat-label>
+          <input class="form-control" id="bca" matInput minlength="1" name="broadCastAddress"
+                 [(ngModel)]="localDeviceModel.broadcastAddress" required type="text">
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.subnet'): ""}}</mat-label>
+          <input class="form-control" id="subnet" matInput minlength="1" name="subnet"
+                 [(ngModel)]="localDeviceModel.subnet"
+                 required type="text">
+        </mat-form-field>
+        <mat-slide-toggle class="side_form_toggle toggle_change"
+                          [(ngModel)]="localDeviceModel.reuseAddress"
+                          name="reuseAddress">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.reuseAddress'): ""}}
+        </mat-slide-toggle>
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.port'): ""}}</mat-label>
+          <input class="form-control" id="porp" matInput minlength="1" name="port"
+                 [(ngModel)]="localDeviceModel.port" required
+                 type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.bbmdAddress'): ""}}</mat-label>
+          <input class="form-control" id="fba" matInput minlength="1" name="fba"
+                 [(ngModel)]="localDeviceModel.foreignBBMDAddress" required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.bbmdPort'): ""}}</mat-label>
+          <input class="form-control" id="fbp" matInput minlength="1" name="fbp"
+                 [(ngModel)]="localDeviceModel.foreignBBMDPort"
+                 required type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.bbmdRegistrationInterval'): ""}}</mat-label>
+          <input class="form-control" id="tl" matInput minlength="1" name="tl"
+                 [(ngModel)]="localDeviceModel.foreignBBMDTimeToLive" required type="text">
+        </mat-form-field>
+
+      </div>
+      <div class="SMTP" *ngIf="isMstpModel">
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50 mt-10">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.serialPort'): ""}}
+          </mat-label>
+          <mat-select [(ngModel)]="localDeviceModel.commPortId" name="serialPort">
+            <mat-option *ngFor="let port of serialPorts;" [value]="port">{{port}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.baudRate'): ""}}</mat-label>
+          <mat-select [(ngModel)]="localDeviceModel.baudRate" name="baudRate">
+            <mat-option *ngFor="let baud of baudRate;"
+                        [value]="baud.value">{{baud.value}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.stationId'): ""}}
+          </mat-label>
+          <input class="form-control" id="ts" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.thisStation"
+                 name="thistation" required type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.retryCount'): ""}}
+          </mat-label>
+          <input class="form-control" id="retrycount" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.retryCount"
+                 name="name" required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.maxMaster'): ""}}
+          </mat-label>
+          <input class="form-control" id="max" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.maxMaster" name="maxmsater"
+                 required type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.maxInfoFrames'): ""}}
+          </mat-label>
+          <input class="form-control" id="maxinfoframes" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.maxInfoFrames"
+                 name="maxinfo" required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.usageTimeout'): ""}}
+          </mat-label>
+          <input class="form-control" id="usdre" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.usageTimeout"
+                 name="usdre" required type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.responseTimeout'): ""}}
+          </mat-label>
+          <input class="form-control" id="rt" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.responseTimeoutMs" name="rt"
+                 required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.driverFileLocation'): ""}}
+          </mat-label>
+          <input class="form-control" id="driverfile" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.driverFileLocation"
+                 name="driverfile" required type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="bacNetFields w-50">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.configProgramLocation'): ""}}
+          </mat-label>
+          <input class="form-control" id="cpl" matInput minlength="1"
+                 [(ngModel)]="localDeviceModel.configProgramLocation"
+                 name="cpl" required type="text">
+        </mat-form-field>
+
+        <mat-slide-toggle
+          class="side_form_toggle toggle_change marginRight-100"
+          [(ngModel)]="localDeviceModel.useRealtime" name="useruntime">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.useRuntime'): ""}}
+        </mat-slide-toggle>
+
+      </div>
+    </form>
+    </mat-tab>
+    <mat-tab label="Register as foreign device">
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.bbmdAddress'): ""}}
+        </mat-label>
+        <input class="form-control"  matInput minlength="1"
+
+               name="bbmdHost" [(ngModel)]="bacnetForeignDevice.bbmdHost" required type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.bbmdPort'): ""}}
+        </mat-label>
+        <input class="form-control"  matInput minlength="1"
+
+               name="bbmdport" [(ngModel)]="bacnetForeignDevice.bbmdPort" required type="bbmdPort">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill" class="bacNetFields w-50">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.bbmdRegistrationInterval'): ""}}
+        </mat-label>
+        <input class="form-control"  matInput minlength="1"
+
+               name="bbmd" [(ngModel)]="bacnetForeignDevice.timeToLiveSeconds" required type="timeToLiveSeconds">
+      </mat-form-field>
+      <br>
+      <button (click)="sendForeignDevice()" style="text-transform: uppercase" align="end"
+              color="accent"
+              mat-raised-button> Send foreign device registration
+      </button>
+
+    </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+
+</mat-card> -->

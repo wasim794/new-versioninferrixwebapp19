@@ -1,0 +1,251 @@
+<div *ngIf="dataPoint" class="data-points_icons">
+  <div class="info-icon">
+    <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" (click)="textRendererInfo()">info</mat-icon>
+  </div>
+  <table>
+    <p class="textRendersAll">
+      <mat-form-field appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
+        <mat-select id="type" (selectionChange)="textRendererType(textRenderer.type)" [(ngModel)]="textRenderer.type">
+          <ng-container *ngFor="let textRenderer of types">
+            <ng-container *ngFor="let dt of textRenderer.dataType">
+              <mat-option *ngIf="dt == dataPoint.pointLocator.dataType" [value]="textRenderer.key">
+                {{textRenderer.val}}
+              </mat-option>
+            </ng-container>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </p>
+
+    <div [ngSwitch]="selectedValue" class="mainDivText">
+
+      <div *ngSwitchCase="'textRendererAnalog'">
+        <p>
+          <mat-form-field class="loginDiscardAll" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.format'): ""}}</mat-label>
+            <input matInput type="text" [(ngModel)]="analogTextRenderer.format" id="textRendererAnalogFormat"
+                   name="formant">
+          </mat-form-field>
+          <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" class="mat-pointer textRenderHelpIcon" (click)="numberFormatInfo()">info
+          </mat-icon>
+
+          <mat-form-field appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.suffix'): ""}}</mat-label>
+            <input matInput type="text" id="textRendererAnalogSuffix" name="suffix"
+                   [(ngModel)]="analogTextRenderer.suffix">
+          </mat-form-field>
+        </p>
+
+      </div>
+
+      <div *ngSwitchCase="'textRendererBinary'">
+        <p>
+          <mat-form-field class="loginDiscardAll" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.zero'): ""}}</mat-label>
+            <input matInput [style.color]="binaryTextRenderer.zeroColour" type="text" id="zero"
+                   name="zero" [(ngModel)]="binaryTextRenderer.zeroLabel">
+          </mat-form-field>
+          <button mat-mini-fab [style.background]="binaryTextRenderer.zeroColour"
+                  aria-label="icon button with a color_lens icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.chooseDs').substring(0,6): ''}} color" (click)="getZeroColor()">
+            <mat-icon>color_lens</mat-icon>
+          </button>
+
+        </p>
+
+        <div *ngIf="showZero" class="toggle_color" [class.toggled]="classToggled">
+          <!-- <app-colour-picker (event)="setZeroColor($event)"></app-colour-picker> -->
+        </div>
+
+        <br>
+        <p>
+          <mat-form-field class="loginDiscardAll" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.zero'): ""}}</mat-label>
+            <input matInput [style.color]="binaryTextRenderer.oneColour" type="text" id="one"
+                   name="one" [(ngModel)]="binaryTextRenderer.oneLabel">
+          </mat-form-field>
+          <button title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.chooseDs').substring(0,6): ''}} color" mat-mini-fab aria-label="icon button with a color_lens icon"
+                  [style.background]="binaryTextRenderer.oneColour" (click)="getOneColor()">
+            <mat-icon>color_lens</mat-icon>
+          </button>
+        </p>
+        <div *ngIf="showOne" class="toggle_color" [class.toggled]="classToggled">
+          <!-- <app-colour-picker (event)="setOneColor($event)"></app-colour-picker> -->
+        </div>
+      </div>
+
+
+      <div *ngSwitchCase="'textRendererMultistate'">
+        <p>
+          <mat-form-field class="loginDiscardAll" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.key'): ""}}</mat-label>
+            <input matInput type="text" name="" id="textRendererMultistateKey" [ngModel]="incrementVal" #key
+                   [value]="incrementVal">
+          </mat-form-field>
+
+          <mat-form-field class="loginDiscardAll" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.text'): ""}}</mat-label>
+            <input matInput [style.color]="multistateColor" type="text" id="multiText" name="one"
+                   #text>
+          </mat-form-field>
+
+          <button mat-mini-fab aria-label="icon button with a color_lens icon" [style.background]="multistateColor"
+                  (click)="getOneColor()">
+            <mat-icon>color_lens</mat-icon>
+          </button>
+          <mat-icon class="mat-pointer" (click)="addMultistateValue(key.value, text.value)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}">add</mat-icon>
+        </p>
+
+        <div *ngIf="showOne" class="toggle_color" [class.toggled]="classToggled">
+          <!-- <app-colour-picker (event)="setMultistateColor($event)"></app-colour-picker> -->
+        </div>
+
+        <div *ngIf="multistateTextRenderer.multistateValues.length" class="dataTable">
+          <table>
+            <thead>
+            <tr>
+              <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.key'): ""}}</th>
+              <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.text'): ""}}</th>
+              <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Action'): ""}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let val of multistateTextRenderer.multistateValues">
+              <td>{{val.key}}</td>
+              <td [style.color]="val.colour">{{val.text}}</td>
+              <td>
+                <mat-icon class="remove" inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.point.remove'): ''}}" (click)="removeMultistateValue(val.key)">
+                  remove_circle
+                </mat-icon>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div *ngSwitchCase="'textRendererNone'">
+      </div>
+
+      <div *ngSwitchCase="'textRendererPlain'">
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.suffix'): ""}}</mat-label>
+              <input matInput type="text" id="suffix" name="suffix"
+                     [(ngModel)]="plianTextRenderer.suffix">
+            </mat-form-field>
+          </td>
+        </tr>
+
+      </div>
+
+      <div *ngSwitchCase="'textRendererRange'">
+
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.format'): ""}}</mat-label>
+              <input matInput type="text" id="textRendererRangeFormat" name="suffix"
+                     [(ngModel)]="rangeTextRenderer.format">
+            </mat-form-field>
+          </td>
+
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.text'): ""}}</mat-label>
+              <input matInput [style.color]="rangeColour" type="text" id="text" name="one" #text>
+            </mat-form-field>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.from'): ""}}</mat-label>
+              <input matInput type="text" name="textRendererRangeFrom" id="textRendererRangeFrom"
+                     [ngModel]="incrementFrom" #from
+                     [value]="incrementFrom">
+            </mat-form-field>
+          </td>
+
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.to'): ""}}</mat-label>
+              <input matInput type="text" name="textRendererRangeTo" id="textRendererRangeTo" [ngModel]="incrementTo"
+                     #to [value]="incrementTo">
+            </mat-form-field>
+          </td>
+
+          <td>
+
+
+            <button mat-mini-fab aria-label="icon button with a color_lens icon" [style.background]="rangeColour"
+                    (click)="getOneColor()">
+              <mat-icon>color_lens</mat-icon>
+            </button>
+            <mat-icon class="mat-pointer" (click)="addRangeValue(from.value, to.value, text.value)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}">add
+            </mat-icon>
+          </td>
+        </tr>
+
+
+        <div *ngIf="showOne" class="toggle_color" [class.toggled]="classToggled">
+          <!-- <app-colour-picker (event)="setRangeColor($event)"></app-colour-picker> -->
+        </div>
+
+        <div *ngIf="rangeTextRenderer.rangeValues.length" class="dataTable inTataTable">
+          <table>
+            <thead>
+            <tr>
+              <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.from'): ""}}</th>
+              <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.to'): ""}}</th>
+              <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.text'): ""}}</th>
+              <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Action'): ""}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let val of rangeTextRenderer.rangeValues">
+              <td>{{val.from}}</td>
+              <td>{{val.to}}</td>
+              <td [style.color]="val.colour">{{val.text}}</td>
+              <td>
+                <mat-icon class="remove mat-pointer" inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.point.remove'): ''}}"
+                          (click)="removeRangeValue(val.from, val.to)">remove_circle
+                </mat-icon>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div *ngSwitchCase="'textRendererTime'">
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.format'): ""}}</mat-label>
+              <input matInput type="text" id="textRendererTimeFormat" name="suffix"
+                     [(ngModel)]="timeTextRenderer.format">
+            </mat-form-field>
+            <mat-icon inline=true class="mat-pointer" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" (click)="dateTimeFormatInfo()">info</mat-icon>
+          </td>
+
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.conversionExponent'): ""}}</mat-label>
+              <input matInput type="text" id="textRendererTimeConversionExponent" name="suffix"
+                     [(ngModel)]="timeTextRenderer.conversionExponent">
+            </mat-form-field>
+          </td>
+        </tr>
+      </div>
+
+    </div>
+  </table>
+</div>
