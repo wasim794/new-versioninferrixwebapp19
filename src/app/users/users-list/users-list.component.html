@@ -53,13 +53,13 @@
                  [pageSize]=limit (page)="getNext($event)"></mat-paginator>
 </div>
 
-<mat-drawer-container class=" sidebar_position" autosize disableClose>
+<mat-drawer-container class="sidebar_position" autosize disableClose>
   <mat-drawer #userdrawer class="sidenav singleSidebars" mode="push" position="end">
     <mat-icon class=" allCloseOptions" aria-hidden="false" id="datasource_side" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="sidebarclose()"
               aria-label="close icon">
       close
     </mat-icon>
-    <button mat-raised-button class="cancelAllForm top-54" (click)="sidebarclose()">
+    <button mat-raised-button class="cancelAllData top-54" (click)="sidebarclose()">
       {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
     </button>
     <app-users-form (updateSavedUser)="updateSavedUser($event)" (updateUpdatedUser)="updateUpdatedUser($event)">

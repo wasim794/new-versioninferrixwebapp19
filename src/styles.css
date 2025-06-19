@@ -1991,7 +1991,7 @@ td.mat-footer-cell:last-of-type {
 }
 
 .userFormAlign {
-  .mat-slide-toggle {
+  mat-slide-toggle {
     border-right: 1px solid #352a2a;
     padding-right: 8px;
   }
@@ -4804,9 +4804,10 @@ mat-card.data_mat_card.mat-card {
 .addPlusBtn{
   font-size: 35px !important;
     position: relative;
-    top: -11px;
-    right: 6px;
+   left: 200px;
+  bottom: 40px;
     cursor: pointer;
+    overflow: none !important;
   }
 
 .commonAddMoreAlls {
@@ -5026,7 +5027,7 @@ dt {
 }
 
 .singleSidebars {
-  width: 40%;
+  width: 40% !important;
   max-width: 50%;
   padding: 10px;
   position: fixed !important;
@@ -5134,6 +5135,10 @@ dt {
   font-size: 110px;
 }
 
+.mat-icon{
+  overflow: visible !important;
+}
+
 .eventFirstChildData {
   max-width: 40px !important;
 }
@@ -5146,6 +5151,10 @@ dt {
   max-width: 70px !important;
   padding-left: 25px !important;
   padding-right: 25px !important;
+}
+
+.addInputBox{
+  height: 77px !important;
 }
 
 .right_button {
