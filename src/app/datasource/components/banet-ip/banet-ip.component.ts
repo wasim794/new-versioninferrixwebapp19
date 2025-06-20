@@ -131,19 +131,19 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
   }
 
 
-  //   addNewDatapoint(xid: string, index: number) {
-  //   if (!xid) {
-  //     alert('Add datasource first');
-  //     return false;
-  //   }
-  //   this.displayForm = true;
-  //   this.selectTab(index);
-  //   this.dataPoint = new DataPointModel();
-  //   this.bacnetDataPointModel = new BacnetDataPointModel();
-  //   this.datapointButtonsView = false;
-  //   this.dataPoint.dataSourceXid = xid;
-
-  // }
+//    override addNewDatapoint(xid: string, index: number): boolean { // Explicitly declare return type
+//     if (!xid) {
+//       alert('Add datasource first');
+//       return false;
+//     }
+//     this.displayForm = true;
+//     this.selectTab(index);
+//     this.dataPoint = new DataPointModel();
+//     this.bacnetDataPointModel = new BacnetDataPointModel();
+//     this.datapointButtonsView = false;
+//     this.dataPoint.dataSourceXid = xid;
+//     return true; // <--- Add a return value for this path
+// }
 
   override addNewDatasource(dsType: any) {
     this.setDefaultPermission();

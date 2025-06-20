@@ -78,7 +78,6 @@ export class DatasourceListComponent
   }
 
   constructor(
-    private datasourceService: DatasourceService,
     private router: Router,
     private resolver: ComponentFactoryResolver,
     private commonService: CommonService,
@@ -247,6 +246,7 @@ export class DatasourceListComponent
 
 
   dataSourceDetails(dataSource: any) {
+    console.log(dataSource);
     this.datasourceEdit(dataSource, 0, false);
   }
 
@@ -290,6 +290,7 @@ export class DatasourceListComponent
           this.allDatasourceList = data;
           this.datasourceList = this.allDatasourceList;
           this.dataSources = data;
+          // console.log("get data source", data);
           const savedPageIndex = localStorage.getItem('currentPageIndex');
           const savedPageSize = localStorage.getItem('currentPageSize');
           if (savedPageIndex !== null && savedPageSize !== null) {

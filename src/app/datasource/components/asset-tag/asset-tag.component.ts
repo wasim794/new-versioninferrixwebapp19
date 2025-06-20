@@ -20,7 +20,7 @@ export class AssetTagComponent extends DataSourceBase implements OnInit {
  declare public datapointForm: boolean;
  public  UIDICTIONARY              : any;
  public  datasourceTitleName       : any;
-  datapoints: any;
+  declare datapoints: any;
 
   constructor(public dictionaryService   : DictionaryService,
               private dataPointService   : DataPointService,

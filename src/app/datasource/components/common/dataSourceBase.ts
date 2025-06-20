@@ -2,8 +2,8 @@ import {EventEmitter, Output, ViewChild, Component, Input} from '@angular/core';
 import {DatapointTableComponent} from './datapoint-table';
 import {DataPointModel} from '../../model';
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
-// import {MeshNodesDatasourceFormComponent} from './mesh-nodes-datasource-form';
-// import {MeshNodesDatapointsFormComponent} from './mesh-nodes-datapoints-form';
+import {MeshNodesDatasourceFormComponent} from './mesh-nodes-datasource-form';
+import {MeshNodesDatapointsFormComponent} from './mesh-nodes-datapoints-form';
 import {MeshNodesDatasourceModel} from '../../model/sensors/mesh-nodes-datasource.model';
 
 @Component({
@@ -14,10 +14,10 @@ export abstract class DataSourceBase extends UnsubscribeOnDestroyAdapter {
   @Output() addedUpdatedDatasource = new EventEmitter<any>();
   @Input() datapointForm: any;
   datapointForms: boolean=false;
-  // @ViewChild(MeshNodesDatapointsFormComponent, {static: true})
-  // public datapoints: MeshNodesDatapointsFormComponent;
-  // @ViewChild(MeshNodesDatasourceFormComponent, {static: true})
-  // public datasource: MeshNodesDatasourceFormComponent;
+  @ViewChild(MeshNodesDatapointsFormComponent, {static: true})
+  public datapoints!: MeshNodesDatapointsFormComponent;
+  @ViewChild(MeshNodesDatasourceFormComponent, {static: true})
+  public datasource!: MeshNodesDatasourceFormComponent;
   @ViewChild(DatapointTableComponent, { static: true })
   public datapointTableComponent!: DatapointTableComponent;
   tabIndex = 0;
@@ -31,7 +31,7 @@ export abstract class DataSourceBase extends UnsubscribeOnDestroyAdapter {
   }
 
   addNewDatasource(dsType: any) {
-    // this.datasource.addNew(dsType);
+    this.datasource.addNew(dsType);
   }
 
   selectTab(index: number): void {
@@ -54,31 +54,32 @@ export abstract class DataSourceBase extends UnsubscribeOnDestroyAdapter {
   }
 
   addNewDatapoint(dsXid: any, index: any) {
-    // console.log(dsXid);
-    // if (!dsXid) {
-    //   alert('Add datasource first');
-    //   return false;
-    // }
-    // this.datapointForm = true;
-    // // this.datapoints.datapointButtonsView = false;
-    // this.selectTab(index);
-    // this.dataPoint = new DataPointModel();
-    // this.dataPoint.dataSourceXid = dsXid;
+    console.log(dsXid);
+    if (!dsXid) {
+      alert('Add datasource first');
+       return false;
+    }
+    this.datapointForm = true;
+    this.datapoints.datapointButtonsView = false;
+    this.selectTab(index);
+    this.dataPoint = new DataPointModel();
+    this.dataPoint.dataSourceXid = dsXid;
+    return true;
   }
 
   getDataPoints(datasource: MeshNodesDatasourceModel) {
-    // this.datapointTableComponent.setDatapoints(datasource);
+    this.datapointTableComponent.setDatapoints(datasource);
   }
 
   dpTableAfterSaved(datapoint: any) {
-    // this.datapointTableComponent.addDatapointToTable(this.dataPoint);
+    this.datapointTableComponent.addDatapointToTable(this.dataPoint);
   }
 
   dpTableAfterUpdated(datapoint: any) {
     this.dataPoint = datapoint;
-    // this.datapointTableComponent.dataPoints.data[this.currentDatapointIndex] = this.dataPoint;
-    // this.datapointTableComponent.dataPoints.filter = '';
-    // this.datapointTableComponent.updatedData(this.dataPoint.xid);
+    this.datapointTableComponent.dataPoints.data[this.currentDatapointIndex] = this.dataPoint;
+    this.datapointTableComponent.dataPoints.filter = '';
+    this.datapointTableComponent.updatedData(this.dataPoint.xid);
   }
 
   sendSavedDatasource(data: MeshNodesDatasourceModel) {

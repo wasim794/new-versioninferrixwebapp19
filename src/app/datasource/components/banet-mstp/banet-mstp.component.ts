@@ -151,6 +151,7 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
     return ''; // Return an empty string if there's no underscore
   }
   override getDataSource(datasource: MeshNodesDatasourceModel, index: number, editForm: any) {
+    console.log(datasource);
     this.selectTab(index);
     this.isEdit = true;
     this.datapointForm = true;

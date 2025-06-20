@@ -26,7 +26,7 @@ import { SetvalueComponent } from '../../../../watchlist';
 })
 export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   @Input()
-  dataPoints!: MatTableDataSource<DataPointModel>;
+  dataPoints = new MatTableDataSource<any>();
   @Output() editPoint        = new EventEmitter<any>();
   @Output() addPoint         = new EventEmitter<any>();
   displayedColumns           : string[] = ['dataType', 'name', 'time', 'value', 'status', 'action'];

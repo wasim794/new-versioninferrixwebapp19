@@ -18,7 +18,7 @@ import { BanetIpComponent } from '../components/banet-ip';
   styleUrls: [],
 })
 export class DatasourceEditComponent {
-  datasource: DatasourceModel = new DatasourceModel();
+  datasource: any = DatasourceModel;
   modal: DatasourceModel = new DatasourceModel();
   @Output() addedUpdatedDatasource = new EventEmitter<DatasourceModel>();
   @Output() addedSavedDatasource = new EventEmitter<DatasourceModel>();
@@ -46,6 +46,7 @@ export class DatasourceEditComponent {
   }
 
   getDataSource(datasource: DatasourceModel, index: number, edit: boolean) {
+    console.log(datasource);
     this.entry.clear();
     const factory = this.componentLoaded(datasource.modelType);
 
