@@ -41,7 +41,7 @@
         <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="form_field w-50" appearance="fill">
+    <mat-form-field class="form_field addInputBox w-50" appearance="fill">
       <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.placeholder.addGroup'): ""}}</mat-label>
       <input matInput name="newGroup" [(ngModel)]="newGroup">
       <mat-icon class="addPlusBtn" (click)="addNewGroup()">add_circle</mat-icon>
@@ -76,12 +76,16 @@
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.user.fields.receiveOwnAuditEvents'): ""}}!
     </mat-slide-toggle>
 
-    <div class="meshActionsButtons">
-      <button mat-raised-button class="saveButton marginLeft-10 marginTop-20" (click)="saveUser() " *ngIf="!isEdit"
-              >{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+    <div class="">
+      <button matFab class="saveButton marginLeft-20 marginTop-20" (click)="saveUser() " *ngIf="!isEdit"
+              >
+              <mat-icon>save</mat-icon>
+              {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
 
-      <button mat-raised-button class="updateButton marginLeft-10 marginTop-20" (click)="updateUser()" *ngIf="isEdit"
-             >{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+      <button matFab class="updateButton saveButton marginLeft-10 marginTop-20" (click)="updateUser()" *ngIf="isEdit"
+             >
+             <mat-icon>save_as</mat-icon>
+             {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
       </button>
     </div>
   </form>
