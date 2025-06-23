@@ -167,6 +167,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
 
  getWebSocket(xid: any) {
     const message = {'dataPointXid': xid, 'eventTypes': ['INITIALIZE', 'CHANGE', 'UPDATE', 'SET']};
+    console.log(message);
     this._configurationService.connect(message);
     this._WebSocketService.subscribeWebsocket().subscribe(data => {
       this.dataPointData = JSON.parse(data);
