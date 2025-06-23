@@ -42,7 +42,7 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
   setPermission              = [];
   propertiesIdentifier:any       = [];
   selectedProperty           : any;
-  dataTypes                  = [];
+  dataTypes:any                  = [];
   dataSourceError            : any[] | undefined;
   bacNetIpPointError         : any[] | undefined;
   public messageError        : boolean | undefined;
@@ -99,7 +99,7 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
 
   private fetchSelectedIdentifier(objectName: any) {
     this.bacnetDataSource.getObjectPropertiesUrl(objectName).subscribe(data => {
-      this.propertiesIdentifier = data['properties'];
+      this.propertiesIdentifier = data.properties;
       console.log(this.propertiesIdentifier);
     });
   }
@@ -115,10 +115,10 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
       this.bacnetModel = data;
     }));
   }
-  selectedPropertiesIdentifier(event: { source: { selected: any; }; }, property: any) {
+  selectedPropertiesIdentifier(event: any, property: any) {
     if (event.source.selected) {
-      this.propertiesIdentifier.forEach((data: { propertyId: any; }) => {
-        if (data.propertyId === property) {
+      this.propertiesIdentifier.forEach((data: any) => {
+        if (data.propertyId === property.propertyId) {
           this.selectedProperty = data;
           this.dataTypes = this.selectedProperty.supportedDataTypes;
         }
@@ -131,19 +131,19 @@ export class BanetIpComponent extends DataSourceBase implements OnInit {
   }
 
 
-//    override addNewDatapoint(xid: string, index: number): boolean { // Explicitly declare return type
-//     if (!xid) {
-//       alert('Add datasource first');
-//       return false;
-//     }
-//     this.displayForm = true;
-//     this.selectTab(index);
-//     this.dataPoint = new DataPointModel();
-//     this.bacnetDataPointModel = new BacnetDataPointModel();
-//     this.datapointButtonsView = false;
-//     this.dataPoint.dataSourceXid = xid;
-//     return true; // <--- Add a return value for this path
-// }
+   override addNewDatapoint(xid: string, index: number): boolean { // Explicitly declare return type
+    if (!xid) {
+      alert('Add datasource first');
+      return false;
+    }
+    this.displayForm = true;
+    this.selectTab(index);
+    this.dataPoint = new DataPointModel();
+    this.bacnetDataPointModel = new BacnetDataPointModel();
+    this.datapointButtonsView = false;
+    this.dataPoint.dataSourceXid = xid;
+    return true; // <--- Add a return value for this path
+}
 
   override addNewDatasource(dsType: any) {
     this.setDefaultPermission();
