@@ -26,7 +26,7 @@ import { SetvalueComponent } from '../../../../watchlist';
 })
 export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   @Input()
-  dataPoints = new MatTableDataSource<any>();
+  dataPoints:any = new MatTableDataSource<any>();
   @Output() editPoint        = new EventEmitter<any>();
   @Output() addPoint         = new EventEmitter<any>();
   displayedColumns           : string[] = ['dataType', 'name', 'time', 'value', 'status', 'action'];
@@ -110,7 +110,9 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
         this.nodata = 'No data found';
       }
       this.dataPoints = new MatTableDataSource(data);
-      this.dataPoints.data.forEach(value => {
+      // console.log(this.dataPoints.data);
+      // console.log(this.dataPoints.data['items']);
+      this.dataPoints.data.items.forEach((value: { xid: string; })=> {
         this.updatedData(value.xid);
       });
     });
@@ -165,6 +167,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
 
  getWebSocket(xid: any) {
     const message = {'dataPointXid': xid, 'eventTypes': ['INITIALIZE', 'CHANGE', 'UPDATE', 'SET']};
+    console.log(message);
     this._configurationService.connect(message);
     this._WebSocketService.subscribeWebsocket().subscribe(data => {
       this.dataPointData = JSON.parse(data);
@@ -242,7 +245,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
       .openConfirmDialog('Are you want to delete the datapoint !!! ', datapoint.name).afterClosed().subscribe(response => {
       if (response) {
         this.datasourceService.deleteDatapoint(datapoint.xid).subscribe(data => {
-          this.dataPoints.data = this.dataPoints.data.filter(h => h !== datapoint);
+          this.dataPoints.data = this.dataPoints.data.filter((h: DataPointModel) => h !== datapoint);
           this.dataPoints.filter = '';
         });
       }

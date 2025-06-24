@@ -152,8 +152,8 @@
               </mat-label>
               <mat-select name="propertyIdentifierId" [(ngModel)]="bacnetDataPointModel.propertyIdentifierId">
                 <mat-option *ngFor="let property of propertiesIdentifier"
-                            [value]="property"
-                            (onSelectionChange)="selectedPropertiesIdentifier($event, property)">{{property}}
+                            [value]="property.propertyName"
+                            (onSelectionChange)="selectedPropertiesIdentifier($event, property)">{{property.propertyName}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
