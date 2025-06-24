@@ -11,6 +11,7 @@ import {
 import { DatasourceModel } from '../model';
 import { AssetTagComponent } from '../components/asset-tag';
 import { BanetIpComponent } from '../components/banet-ip';
+import { BanetMstpComponent } from '../components/banet-mstp';
 
 @Component({
   selector: 'app-datasource-edit',
@@ -64,9 +65,10 @@ export class DatasourceEditComponent {
   }
 
   private componentLoaded(dataSourceType: string) {
-    const componentMapping: Record<string, Type<AssetTagComponent | BanetIpComponent>> = {
+    const componentMapping: Record<string, Type<any>> = {
       'STUDENT_ASSET_TAG.DS': AssetTagComponent,
       'BACNET_IP.DS': BanetIpComponent,
+      'BACNET_MSTP.DS': BanetMstpComponent,
     };
 
     const component = componentMapping[dataSourceType];

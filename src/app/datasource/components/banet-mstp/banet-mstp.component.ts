@@ -10,11 +10,12 @@ import {BacnetService, BacnetLocalDeviceModel} from '../../../bacnet';
 import { MeshNodesDatasourceModel } from '../../model/sensors/mesh-nodes-datasource.model';
 import { MatModuleModule } from '../../../common/mat-module';
 import { CommonModule } from '@angular/common';
+import {DatapointTableComponent} from '../common/datapoint-table';
 
 @Component({
-   standalone: true,
-    imports: [MatModuleModule, CommonModule],
-    providers: [CommonService],
+  standalone: true,
+  imports: [MatModuleModule, CommonModule, DatapointTableComponent],
+  providers: [CommonService, DictionaryService],
   selector   : 'app-banet-mstp',
   templateUrl: './banet-mstp.component.html',
   styleUrls  : []
@@ -35,10 +36,10 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
   public dataSourceError           = [];
   public propertiesIdentifier      : any    = [];
   public selectedProperty          : any;
-  public dataTypes                 = [];
-  public editPermission            = [];
+  public dataTypes:any                 = [];
+  public editPermission            : any = [];
   public isEdit!                    : boolean;
-  public objectTypes               = [];
+  public objectTypes:any               = [];
   public setTables!                 : boolean;
   public bacnetMastpError!         : any[];
   public modelType                 = 'BACNET_MSTP.DS';
@@ -72,9 +73,10 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
     }));
   }
 
-  selectedPropertiesIdentifier(event: { source: { selected: any; }; }, property: any) {
+  selectedPropertiesIdentifier(event: any, property: any) {
+    console.log(event, property);
     if (event.source.selected) {
-      this.propertiesIdentifier.forEach((data: { propertyId: any; }) => {
+      this.propertiesIdentifier.forEach((data: any) => {
         if (data.propertyId === property) {
           this.selectedProperty = data;
           this.dataTypes = this.selectedProperty.supportedDataTypes;
@@ -100,6 +102,7 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
   getAllObjectTypes(){
     this._bacnetMSTPService.getObjectTypeUrl().subscribe(data => {
       this.objectTypes= data;
+      console.log(this.objectTypes);
 
     });
   }
@@ -108,19 +111,19 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
     this.tabIndex = index;
   }
 
-  // addNewDatapoint(xid: string, index: number) {
-  //   if (!xid) {
-  //     alert('Add datasource first');
-  //     return false;
-  //   }
-  //   this.displayForm = true;
-  //   this.selectTab(index);
-  //   this.dataPoint = new DataPointModel();
-  //   this.bacnetDataPointModel = new BacnetDataPointModel();
-  //   this.datapointButtonsView = false;
-  //   this.dataPoint.dataSourceXid = xid;
-
-  // }
+  override addNewDatapoint(xid: string, index: number): boolean {
+    if (!xid) {
+      alert('Add datasource first');
+      return false;
+    }
+    this.displayForm = true;
+    this.selectTab(index);
+    this.dataPoint = new DataPointModel();
+    this.bacnetDataPointModel = new BacnetDataPointModel();
+    this.datapointButtonsView = false;
+    this.dataPoint.dataSourceXid = xid;
+   return true;
+  }
 
   override addNewDatasource(dsType: any) {
     this.setDefaultPermission();
@@ -156,7 +159,7 @@ export class BanetMstpComponent extends DataSourceBase implements OnInit {
     this.isEdit = true;
     this.datapointForm = true;
     this.setDefaultPermission();
-    // this.editPermission = datasource.editPermission.split(',');
+    this.editPermission = datasource.editPermission.split(',');
     this._bacnetMSTPService.getByXid(datasource.xid).subscribe(data=>{
       this.dataSource = data;
     })
