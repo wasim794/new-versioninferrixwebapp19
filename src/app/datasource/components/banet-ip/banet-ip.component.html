@@ -28,7 +28,7 @@
           <mat-label>
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}
           </mat-label>
-          <input matInput [(ngModel)]="dataSource.xid" class="datasourceBoxHeight" name="xid" type="text" readonly
+          <input matInput [(ngModel)]="dataSource.xid"  name="xid" type="text" readonly
           >
         </mat-form-field>
         <br>
@@ -76,12 +76,14 @@
         <br>
         <div *ngIf="!isEdit then save else update"></div>
         <ng-template #save>
-          <button mat-raised-button class="saveButton" (click)="saveDatasource()">
+          <button matFab class="saveButton" (click)="saveDatasource()">
+            <mat-icon>save</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
           </button>
         </ng-template>
         <ng-template #update>
-          <button mat-raised-button class="updateButton" (click)="updateDatasource()">
+          <button matFab class="updateButton saveButton" (click)="updateDatasource()">
+            <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
           </button>
         </ng-template>
@@ -97,7 +99,7 @@
             </mat-card>
           </div>
          <div class="formDataPoint">
-            <mat-form-field class="form_field  w-50" appearance="fill">
+            <mat-form-field class="form_field w-50" appearance="fill">
               <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
               <input [(ngModel)]="dataPoint.xid" class="datasourceBoxHeight" readonly matInput name="xid" placeholder="Auto generated">
             </mat-form-field>
@@ -107,13 +109,13 @@
             </mat-form-field>
 
 
-            <mat-form-field class="form_field  w-50" appearance="fill">
+            <mat-form-field class="form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
               <mat-select name="readPermission" [(ngModel)]="readPermission" multiple>
                 <mat-option *ngFor="let read of dropdownData.permissions" [value]="read">{{read}}</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="form_field  w-50" appearance="fill">
+            <mat-form-field class="form_field w-50" appearance="fill">
               <mat-label>
                 {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.writePermission'): ""}}
               </mat-label>
@@ -198,11 +200,14 @@
           <div>
             <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
             <ng-template #savePoint>
-              <button mat-raised-button class="allDataPointSaveButton mupdateButton"
-                      (click)="saveDSBacnetDataPoint()"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+              <button matfab class="allDataPointSaveButton saveButton"
+                      (click)="saveDSBacnetDataPoint()">
+                      <mat-icon class="alignIocns">save</mat-icon>
+                      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
             </ng-template>
             <ng-template #updatePoint>
-              <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDSBacnetDataPoint()">
+              <button matfab class="Update_Button saveButton" (click)="updateDSBacnetDataPoint()">
+                <mat-icon>save_as</mat-icon>
                 {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
               </button>
             </ng-template>

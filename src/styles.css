@@ -652,12 +652,15 @@ mat-drawer-content {
 }
 
 .addDatapointsButton {
-  background-color: #235496;
-  color: #dedede;
-  margin-right: 22px;
-  padding-left: 0.5em;
-  font-family: "Poppins-Regular";
-  font-weight: 600;
+  height: 55px !important;
+  width: 120px !important;
+  background-color: #235496 !important;
+  color: white !important;
+  margin-right: 22px !important;
+  padding-left: 0.5em !important;
+  font-family: "Poppins-Regular" !important;
+  font-weight: 600 !important;
+  border-radius: 5px !important;
 }
 
 .info-icon {
@@ -736,9 +739,10 @@ mat-drawer-content {
 }
 
 .datapoint_table {
+  display: flex;
   text-align: right;
-  padding-right: 18px;
-  padding-left: 380px;
+  justify-content: end;
+  margin-top: 15px;
 }
 
 #sidebarclose,
@@ -1297,7 +1301,7 @@ mat-cell.commonReducesSizesAll.singleData {
 .dataSourcePointoggle {
   float: right;
   margin-top: 14px;
-  margin-right: 30px !important;
+  margin-right: 60px !important;
 }
 
 .stackMonitorTexts {
@@ -1307,8 +1311,9 @@ mat-cell.commonReducesSizesAll.singleData {
 .cancelPoint {
   float: left;
   margin-top: -40px !important;
-  margin-left: 85px !important;
-  background-color: #ff000091;
+  margin-left: 105px !important;
+  box-shadow: 0px 3px 3px #bfbaba !important;
+
 }
 
 .cancelDataPoint {
@@ -2722,6 +2727,7 @@ td.mat-footer-cell:last-of-type {
   border-radius: 4px !important;
   position: relative;
   height: 39px !important;
+  margin-left: 2px !important;
 }
 .mat-raised-button {
   position: relative;
@@ -2737,7 +2743,6 @@ td.mat-footer-cell:last-of-type {
 
 .Update_Button {
   background-color: #065634 !important;
-  border: 2px solid #66899a;
   font-family: "Poppins-Bold";
   font-weight: 700;
 }
@@ -2805,6 +2810,7 @@ td.mat-footer-cell:last-of-type {
 
 .sidebar_position {
   position: static !important;
+  
 }
 
 .mqttCell {
@@ -2889,6 +2895,12 @@ bottom: 4px;
   font-size: 1.9rem;
 }
 
+.mat-mdc-tab.mdc-tab {
+    flex-grow: 0 !important;
+    width: 300px !important;
+    font-weight: 600 !important;
+}
+
 .textLogin {
   font-size: 17px !important;
 }
@@ -2937,6 +2949,7 @@ bottom: 4px;
   position: relative;
   z-index: 0;
 }
+
 .PropertiesForm{
  width: 750px !important;
 }
@@ -3794,7 +3807,7 @@ mat-cell.table_data.mat-cell.cdk-column-dataType.mat-column-dataType.ng-star-ins
 }
 
 .table_data > mat-row:nth-child(even) {
-  background-color: #dad5d5;
+  background-color: #e4e5eb80;
 }
 
 .table_data_pop_up mat-row:nth-child(odd) {
@@ -3834,11 +3847,16 @@ mat-cell.table_data.mat-cell.cdk-column-dataType.mat-column-dataType.ng-star-ins
   left: 230px;
 }
 
+mat-label{
+  font-size: 14px;
+}
+
 button.stackCancel {
   width: 35px !important;
   height: 35px !important;
   position: relative;
   left: 0;
+  top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -5045,6 +5063,7 @@ dt {
 .commonSidebarAlls {
   padding: 10px;
   position: fixed !important;
+  width: 680px !important;
 }
 
 
@@ -5358,7 +5377,7 @@ th {
 }
 
 .formDataPoint{
- width:690px;
+ width:650px;
   }
 
 .allFormCards .mat_dlt {
@@ -6774,6 +6793,10 @@ mat-card.mat-card.all_card.lightSettingsCards.mat-card {
   margin-left: 52px;
 }
 
+.iconsAddPoints{
+  padding-right: 5px;
+}
+
 .switchForms .btn_remove mat-icon.mat-icon.material-icons.mat-icon-no-color {
   position: relative;
   top: -7px;
@@ -6845,12 +6868,28 @@ mat-dialog-actions.Action_div.mat-dialog-actions {
   padding-left: 10px;
   padding-right: 10px;
   border-bottom: 0;
+
+}
+.mat-mdc-dialog-surface{
+
+  border-radius: 2px !important;
+}
+.mat-mdc-table {
+  min-width: 96% !important;
+}
+
+.stackTable{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 10px 10px 10px 10px;
+  width: 50% !important;
+
 }
 
 .stackTable mat-header-cell {
   padding-left: 0;
   padding-left: 10px;
   padding-right: 10px;
+  
 }
 
 .container.schedulers {
@@ -7375,10 +7414,9 @@ mat-divider.mqqtDividers {
 
 .allDataPointSaveButton {
   color: #ffffff !important;
-  background-color: #688b9c;
+  background-color: #688b9c !important;
   text-transform: capitalize;
   border: 2px solid #688b9c !important;
-  color: #fff !important;
   cursor: pointer;
   font-size: 14px;
   font-family: "Poppins-Bold";
@@ -7389,8 +7427,13 @@ mat-divider.mqqtDividers {
   border-radius: 4px !important;
   position: relative;
   text-align: center;
-  width: 91px;
+  width: 83px;
+  padding-right: 10px;
+ 
+ 
 }
+
+
 .copyMainContainer {
   padding-top: 20px;
 }
