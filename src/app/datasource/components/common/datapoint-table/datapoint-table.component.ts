@@ -26,7 +26,7 @@ import { SetvalueComponent } from '../../../../watchlist';
 })
 export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   @Input()
-  dataPoints:any = new MatTableDataSource<any>();
+  dataPoints:any = new MatTableDataSource<any>([]);
   @Output() editPoint        = new EventEmitter<any>();
   @Output() addPoint         = new EventEmitter<any>();
   displayedColumns           : string[] = ['dataType', 'name', 'time', 'value', 'status', 'action'];
@@ -119,8 +119,10 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   }
 
   addDatapointToTable(datapoint: DataPointModel) {
-    this.dataPoints.data.push(datapoint);
+    // console.log(this.dataPoints.data['items']);
+    this.dataPoints.data['items'].push(datapoint);
     this.dataPoints.filter = '';
+    this.getDatapoints(this.limit, this.offset);
     this.updatedData(datapoint.xid);
   }
 
@@ -245,8 +247,14 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
       .openConfirmDialog('Are you want to delete the datapoint !!! ', datapoint.name).afterClosed().subscribe(response => {
       if (response) {
         this.datasourceService.deleteDatapoint(datapoint.xid).subscribe(data => {
-          this.dataPoints.data = this.dataPoints.data.filter((h: DataPointModel) => h !== datapoint);
+              if (Array.isArray(this.dataPoints.data['items'])) {
+         this.dataPoints.data = this.dataPoints.data['items'].filter((h: any) => h.xid !== datapoint.xid);
           this.dataPoints.filter = '';
+           console.log('Datapoint deleted successfully. Updated table data:', this.dataPoints.data);
+           this.getDatapoints(this.limit, this.offset);
+        }else{
+          console.error('this.dataPoints.data is not an array, cannot filter.', this.dataPoints.data);
+        }
         });
       }
     });
