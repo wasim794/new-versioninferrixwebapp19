@@ -5,14 +5,19 @@ import {HelpModalComponent} from '../../../../../help/help-modal/help-modal.comp
 import {MatDialog} from '@angular/material/dialog';
 import {POLLING_PERIOD_TYPE} from '../../../../../common';
 import {DictionaryService} from "../../../../../core/services";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [DictionaryService],
   selector: 'app-value-purge',
   templateUrl: './value-purge.component.html',
   styleUrls: []
 })
 export class ValuePurgeComponent {
-  @Input() dataPoint: DataPointModel;
+  @Input() dataPoint!: DataPointModel;
   title = 'Point value log purging';
   info = new commonHelp();
   pollingPeriodType = POLLING_PERIOD_TYPE;

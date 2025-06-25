@@ -57,6 +57,16 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     loadComponent: () => import('./device-management-system/device-management-system.component').then(m => m.DeviceManagementSystemComponent),
   },
+
+  {
+    path: 'datapoint',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./datasource/components/common/datapoint-properties/datapoint-properties.component').then(m => m.DatapointPropertiesComponent),
+    children: [
+      { path: 'detail',
+        loadComponent: () => import('./datasource/components/common/datapoint-properties/datapoint-properties.component').then(m => m.DatapointPropertiesComponent), }
+    ],
+  },
   
 
     

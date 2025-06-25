@@ -87,24 +87,24 @@ export class TextRendererComponent implements OnInit {
     this.textRendererType(this.textRenderer.type);
   }
 
-  addTextRenderProperties() {
-    switch (this.textRenderer.type) {
-      case 'textRendererAnalog' :
-        return this.analogTextRenderer;
-      case 'textRendererBinary' :
-        return this.binaryTextRenderer;
-      case 'textRendererMultistate' :
-        return this.multistateTextRenderer;
-      case 'textRendererPlain' :
-        return this.plianTextRenderer;
-      case 'textRendererRange' :
-        return this.rangeTextRenderer;
-      case 'textRendererTime' :
-        return this.timeTextRenderer;
-      case 'textRendererNone' :
-        return this.noneTextRenderer;
-    }
-  }
+  // addTextRenderProperties() {
+  //   switch (this.textRenderer.type) {
+  //     case 'textRendererAnalog' :
+  //       return this.analogTextRenderer;
+  //     case 'textRendererBinary' :
+  //       return this.binaryTextRenderer;
+  //     case 'textRendererMultistate' :
+  //       return this.multistateTextRenderer;
+  //     case 'textRendererPlain' :
+  //       return this.plianTextRenderer;
+  //     case 'textRendererRange' :
+  //       return this.rangeTextRenderer;
+  //     case 'textRendererTime' :
+  //       return this.timeTextRenderer;
+  //     case 'textRendererNone' :
+  //       return this.noneTextRenderer;
+  //   }
+  // }
 
   public setZeroColor(color: string) {
     this.binaryTextRenderer.zeroColour = color;

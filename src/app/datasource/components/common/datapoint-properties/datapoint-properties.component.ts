@@ -52,7 +52,7 @@ export class DatapointPropertiesComponent implements OnInit {
   }
   saveProperties() {
     this.dataPoint = new DataPointModel();
-    this.dataPoint.textRenderer = this.textRendererComponent.addTextRenderProperties();
+    // this.dataPoint.textRenderer = this.textRendererComponent.addTextRenderProperties();
     this.dataPoint.loggingPropertiesModel = this.loggingPropertiesComponent.dataPoint.loggingPropertiesModel;
     this.dataPoint.purgePeriod = this.valuePurgeComponent.dataPoint.purgePeriod;
     this.dataPointService.dataPointProperties(this.data.content.xid, this.dataPoint).subscribe(data => {
