@@ -11,7 +11,8 @@ import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule],
+  imports:   [CommonModule, MatModuleModule],
+  providers: [CommonService, PointValueService, ConfigurationService],
   selector: 'app-setvalue',
   templateUrl: './setvalue.component.html',
   styleUrls: []

@@ -13,6 +13,7 @@ import { MatModuleModule } from '../../../../../common/mat-module';
 @Component({
   standalone: true,
   imports: [CommonModule, MatModuleModule, MatDialogModule],
+  providers: [DictionaryService],
   selector: 'app-text-renderer',
   templateUrl: './text-renderer.component.html',
   styleUrls: []
@@ -87,24 +88,25 @@ export class TextRendererComponent implements OnInit {
     this.textRendererType(this.textRenderer.type);
   }
 
-  // addTextRenderProperties() {
-  //   switch (this.textRenderer.type) {
-  //     case 'textRendererAnalog' :
-  //       return this.analogTextRenderer;
-  //     case 'textRendererBinary' :
-  //       return this.binaryTextRenderer;
-  //     case 'textRendererMultistate' :
-  //       return this.multistateTextRenderer;
-  //     case 'textRendererPlain' :
-  //       return this.plianTextRenderer;
-  //     case 'textRendererRange' :
-  //       return this.rangeTextRenderer;
-  //     case 'textRendererTime' :
-  //       return this.timeTextRenderer;
-  //     case 'textRendererNone' :
-  //       return this.noneTextRenderer;
-  //   }
-  // }
+   addTextRenderProperties() {
+    switch (this.textRenderer.type) {
+      case 'textRendererAnalog' :
+        return this.analogTextRenderer;
+      case 'textRendererBinary' :
+        return this.binaryTextRenderer;
+      case 'textRendererMultistate' :
+        return this.multistateTextRenderer;
+      case 'textRendererPlain' :
+        return this.plianTextRenderer;
+      case 'textRendererRange' :
+        return this.rangeTextRenderer;
+      case 'textRendererTime' :
+        return this.timeTextRenderer;
+      case 'textRendererNone' :
+        return this.noneTextRenderer;
+    }
+    return false;
+  }
 
   public setZeroColor(color: string) {
     this.binaryTextRenderer.zeroColour = color;

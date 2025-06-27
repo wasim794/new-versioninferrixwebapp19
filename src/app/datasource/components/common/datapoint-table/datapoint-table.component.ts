@@ -12,8 +12,8 @@ import { CommonService } from '../../../../services/common.service';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatModuleModule } from '../../../../common/mat-module';
-import { SetvalueComponent } from '../../../../watchlist';
-// import {EventDetectorsComponent, DatapointPropertiesComponent, SetvalueComponent} from '../../common';
+// import { SetvalueComponent } from '../../../../watchlist';
+import {EventDetectorsComponent, DatapointPropertiesComponent, SetvalueComponent} from '../../common';
 
 
 @Component({
@@ -233,10 +233,10 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
 
   addProperties(datapoint: DataPointModel, index: any) {
     this.currentDatapointIndex = index;
-    // this.dialog.open(DatapointPropertiesComponent, {
-    //   data: {content: datapoint},
-    //   disableClose: true
-    // });
+    this.dialog.open(DatapointPropertiesComponent, {
+      data: {content: datapoint},
+      disableClose: true
+    });
 
   }
 

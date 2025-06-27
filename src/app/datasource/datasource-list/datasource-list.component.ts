@@ -6,7 +6,7 @@ import {commonHelp} from '../../help/commonHelp';
 import {Router} from '@angular/router';
 import {DataPointModel} from '../../core/models/dataPoint';
 import {DatasourceEditComponent} from '../datasource-edit/datasource-edit.component';
-// import {DatapointPropertiesComponent} from '../components/common';
+import {DatapointPropertiesComponent} from '../components/common';
 import {MatSidenav} from '@angular/material/sidenav';
 import {MatPaginator} from '@angular/material/paginator';
 // import {EventDetectorComponent} from '../../event-detector/components/event-detector/event-detector.component';

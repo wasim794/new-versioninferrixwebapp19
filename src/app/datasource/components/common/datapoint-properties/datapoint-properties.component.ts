@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, OnInit, ViewChild} from '@angular/core';
 import {DataPointModel} from '../../../model';
 import {DataSourceService, DataPointService, DictionaryService} from '../../../../core/services';
 import {ValuePurgeComponent, LoggingPropertiesComponent, TextRendererComponent} from '../../common';
@@ -13,10 +13,9 @@ export interface DialogData {
 
 @Component({
   standalone: true,
-  imports:     [CommonModule, MatDialogModule,  MatModuleModule,  ValuePurgeComponent, LoggingPropertiesComponent, TextRendererComponent],
-  providers:   [DataSourceService, DataPointService, DictionaryService, CommonService,
-    { provide: MAT_DIALOG_DATA, useValue: {} },
-  ],
+  imports:     [CommonModule, MatDialogModule,  MatModuleModule, TextRendererComponent],
+  providers:   [DataSourceService, DataPointService, DictionaryService, CommonService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: 'app-datapoint-properties',
   templateUrl: './datapoint-properties.component.html',
   styleUrls: []
@@ -44,7 +43,6 @@ export class DatapointPropertiesComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.data);
     this.dictionaryService.getUIDictionary('datasource').subscribe(data=>{
      this.UIDICTIONARY = this.dictionaryService.uiDictionary;
      });
@@ -56,7 +54,7 @@ export class DatapointPropertiesComponent implements OnInit {
   }
   saveProperties() {
     this.dataPoint = new DataPointModel();
-    // this.dataPoint.textRenderer = this.textRendererComponent.addTextRenderProperties();
+    this.dataPoint.textRenderer = this.textRendererComponent.addTextRenderProperties();
     this.dataPoint.loggingPropertiesModel = this.loggingPropertiesComponent.dataPoint.loggingPropertiesModel;
     this.dataPoint.purgePeriod = this.valuePurgeComponent.dataPoint.purgePeriod;
     this.dataPointService.dataPointProperties(this.data.content.xid, this.dataPoint).subscribe(data => {
