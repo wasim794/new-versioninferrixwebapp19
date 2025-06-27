@@ -1,0 +1,268 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span class="data_fonts"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.datapointDetails'): ""}}</span>
+      <div class="containerInfo detailsDropdowns">
+        <mat-form-field class="data_select add_data_select" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
+          <input class="form_field" type="text" matInput
+                 matInput matInput (keyup.enter)="autoSearch()"
+                 [(ngModel)]="searchDatasource" matInput>
+
+        </mat-form-field>
+        <mat-selection-list class="selectionList" #xid [multiple]="false" *ngIf="selectionData">
+          <mat-list-option *ngFor="let dataPoint of dataPointsList | slice:0:5; let i=index "
+                           (click)="selectedValue(dataPoint)" [value]="dataPoint" title="{{dataPoint.extendedName}}">
+            {{dataPoint.extendedName}}
+          </mat-list-option>
+        </mat-selection-list>
+
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container layoutContainer" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <mat-card class="data_mat_card detailTabs">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex"
+                   (selectedTabChange)="selectTab($event.index)">
+      <mat-tab label="Detail" class="detailMatCard">
+        <div *ngIf="loadDetails">
+          <form class="tab-form">
+            <mat-form-field class="inputDetailsData" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointXid'): ""}}</mat-label>
+              <input matInput readonly mat-raised-button #tooltip="matTooltip"
+                     matTooltip="This is a readonly" [(ngModel)]="dataPoint.xid" name="xid" type="text">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="inputDetailsData" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointName'): ""}}</mat-label>
+              <input matInput [(ngModel)]="nameDataSourceName" name="nameDataSourceName" type="text">
+            </mat-form-field>
+            <br>
+            <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change allToggls"
+                              [(ngModel)]="dataPoint.enabled">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointEnabled'): ""}}
+            </mat-slide-toggle>
+            <br>
+            <mat-form-field class="inputDetailsData" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.deviceName'): ""}}</mat-label>
+              <input matInput [(ngModel)]="dataPoint.dataSourceName" name="deviceName" type="text">
+            </mat-form-field>
+          </form>
+        </div>
+      </mat-tab>
+      <mat-tab label="Recent Records" class="detailMatCard">
+        <div class="tab-form">
+          <mat-form-field class="common_search_box" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.messages.numberOfRecords'): ""}}</mat-label>
+            <input matInput name="enabled" (keyup.enter)="getHistory(limit.value)" type="text" #limit>
+          </mat-form-field>
+          <mat-icon class="search_icons" (click)="getHistory(limit.value)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}">search</mat-icon>
+          <mat-table [dataSource]="dataPointDetails" class="table_data">
+            <!-- dataType Column -->
+            <ng-container matColumnDef="dataType">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.staticData'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.dataType}} </mat-cell>
+            </ng-container>
+            <!-- value Column -->
+            <ng-container matColumnDef="value">
+              <mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.value'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.value}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+              <mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.httpSender.dateFormat').substring(0, 4)): ""}}  </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.timestamp| date:'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+            <!-- time Column -->
+            <ng-container matColumnDef="time">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.table.time'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.timestamp| date: 'h:mm:ss a'}} </mat-cell>
+            </ng-container>
+            <!-- annotation Column -->
+            <ng-container matColumnDef="annotation">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.annotation'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <div *ngIf="element.annotation; else annotationNull">
+                  {{element.annotation}}
+                </div>
+                <ng-template #annotationNull>
+                  <div>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.null'): ""}}</div>
+                </ng-template>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+      </mat-tab>
+      <mat-tab label="Events" class="detailMatCard">
+        <!--TODO pagination-->
+        <div class="tab-form">
+          <mat-table [dataSource]="eventsLists" class="table_data">
+            <!-- id Column -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Id'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+            <!-- alarm Level Column -->
+            <ng-container matColumnDef="alarmLevel">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.alarmLevel'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.alarmLevel}} </mat-cell>
+            </ng-container>
+            <!-- message Column -->
+            <ng-container matColumnDef="message">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.message'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.message}} </mat-cell>
+            </ng-container>
+            <!-- time Column -->
+            <ng-container matColumnDef="time">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.table.time'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.activeTimestamp | date: 'h:mm:ss a'}} </mat-cell>
+            </ng-container>
+            <!-- acknowledged Column -->
+            <ng-container matColumnDef="acknowledged">
+              <mat-header-cell
+                *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.acknowledged'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <div *ngIf="element.acknowledgedTimestamp; else notAcknowledged">
+                  {{element.acknowledgedTimestamp | date: 'h:mm:ss a' }}
+                </div>
+                <ng-template #notAcknowledged>
+                  <div>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.notLower').substring(0,3): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.acknowledged'): ""}}</div>
+                </ng-template>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedEventsColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedEventsColumns;"></mat-row>
+          </mat-table>
+        </div>
+      </mat-tab>
+      <mat-tab label="User Notes" class="detailMatCard">
+        <form class="form">
+          <mat-form-field class="full-width mat_form_field">
+            <mat-label
+              class="mat_all_label">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.leaveAComment'): ""}}</mat-label>
+            <textarea matInput [(ngModel)]="UserComments.comment" name="comment" class="textarea_field"></textarea>
+          </mat-form-field>
+          <section>
+            <button mat-raised-button class="Add_button add_margin" *ngIf="!isEdit" (click)="addComment()">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ""}}</button>
+            <button mat-raised-button class="Add_button add_margin" *ngIf="isEdit"
+                    (click)="updateComment(UserComments)">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.correction'): ""}}
+            </button>
+            <button class="cancel_button" mat-raised-button
+                    (click)="clearComment()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+          </section>
+        </form>
+        <!--        user comment table here-->
+        <div class="tab-form" [hidden]="!userDatatable">
+          <mat-table [dataSource]="UserCommentLists" class="table_data">
+            <!-- id Column -->
+            <ng-container matColumnDef="S.N">
+              <mat-header-cell
+                *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </mat-cell>
+            </ng-container>
+            <!-- alarm Level Column -->
+            <ng-container matColumnDef="Comments">
+              <mat-header-cell
+                *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.leaveAComment'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.comment}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="DateTime">
+              <mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.heading.dateTime'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.timestamp | date:'dd/MM/yyyy h:mm:ss a'}} </mat-cell>
+            </ng-container>
+            <!-- message Column -->
+            <ng-container matColumnDef="Actions">
+              <mat-header-cell
+                *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <mat-icon (click)="Edit(element)" class="UserActionIcons">edit</mat-icon>
+                <mat-icon class="UserActionIcons" (click)="Delete(element)">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+            <!-- time Column -->
+
+            <!-- acknowledged Column -->
+
+            <mat-header-row *matHeaderRowDef="displayedUserColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedUserColumns;"></mat-row>
+          </mat-table>
+        </div>
+
+        <!--        End Here-->
+      </mat-tab>
+      <mat-tab label="Charts">
+
+
+   <span *ngIf="!isLatest">
+
+ <mat-form-field class="chartInputField" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.chartFrom'): ""}}</mat-label>
+       <input [(ngModel)]="dateFrom" name="dateFrom" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+   <mat-datepicker-toggle class="matToggleDates" [owlDateTimeTrigger]="dt"></mat-datepicker-toggle>
+    <owl-date-time #dt></owl-date-time>
+ </mat-form-field>
+
+
+     <mat-form-field class="chartInputField" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.chartTo'): ""}}</mat-label>
+       <input [(ngModel)]="dateTo" name="dateTo" matInput [owlDateTimeTrigger]="dtT" [owlDateTime]="dtT">
+   <mat-datepicker-toggle class="matToggleDates" [owlDateTimeTrigger]="dtT"></mat-datepicker-toggle>
+    <owl-date-time #dtT></owl-date-time>
+ </mat-form-field>
+   </span>
+
+          <button mat-raised-button (click)="searchDateWise()"
+                  class="Add_button add_margin">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</button>
+
+        <template #dynamicLoadComponent>
+        </template>
+        <div [hidden]="!chartHide">
+          <ngx-charts-bar-vertical
+            [scheme]="colorScheme"
+            [results]="data"
+            [gradient]=true
+            [xAxis]=true
+            [yAxis]=true
+            [legend]=false
+            [showXAxisLabel]=true
+            [showYAxisLabel]=true
+            [showDataLabel]=true
+            [barPadding]=15>
+          </ngx-charts-bar-vertical>
+        </div>
+        <div [hidden]="!chartHideTwo">
+          <ngx-charts-pie-chart
+            [view]="[1000,300]"
+            [scheme]="colorScheme"
+            [results]="pieJsonData"
+            [legend]=false
+            [explodeSlices]=true
+            [labels]=true
+            [doughnut]=true
+            [gradient]=false
+            [arcWidth]=.5>
+          </ngx-charts-pie-chart>
+        </div>
+
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

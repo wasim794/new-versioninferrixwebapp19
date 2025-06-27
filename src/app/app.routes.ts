@@ -61,10 +61,10 @@ export const routes: Routes = [
   {
     path: 'datapoint',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./datasource/components/common/datapoint-properties/datapoint-properties.component').then(m => m.DatapointPropertiesComponent),
+    loadComponent: () => import('./datapoint/datapoint-detail/datapoint-detail.component').then(m => m.DatapointDetailComponent),
     children: [
       { path: 'detail',
-        loadComponent: () => import('./datasource/components/common/datapoint-properties/datapoint-properties.component').then(m => m.DatapointPropertiesComponent), }
+        loadComponent: () => import('./datapoint/datapoint-detail/datapoint-detail.component').then(m => m.DatapointDetailComponent), }
     ],
   },
   

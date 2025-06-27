@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {DataPointModel} from '../../../model';
 import {DataSourceService, DataPointService, DictionaryService} from '../../../../core/services';
 import {ValuePurgeComponent, LoggingPropertiesComponent, TextRendererComponent} from '../../common';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CommonService} from '../../../../services/common.service';
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../../common/mat-module';
@@ -13,7 +13,10 @@ export interface DialogData {
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule, ValuePurgeComponent, LoggingPropertiesComponent, TextRendererComponent],
+  imports:     [CommonModule, MatDialogModule,  MatModuleModule,  ValuePurgeComponent, LoggingPropertiesComponent, TextRendererComponent],
+  providers:   [DataSourceService, DataPointService, DictionaryService, CommonService,
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+  ],
   selector: 'app-datapoint-properties',
   templateUrl: './datapoint-properties.component.html',
   styleUrls: []
@@ -25,12 +28,12 @@ export class DatapointPropertiesComponent implements OnInit {
   private loggingPropertiesComponent!: LoggingPropertiesComponent;
   @ViewChild(ValuePurgeComponent)
   private valuePurgeComponent!: ValuePurgeComponent;
-  public dataPoint                  = new DataPointModel();
-  public saveMsg                    = 'Saved successfully';
-  public tabIndex                   = 0;
-  public hideShows!                  : boolean;
-  public dataPointReloadSuccess     = 'Setting Successfully';
-  public UIDICTIONARY               : any;
+  public  dataPoint                  = new DataPointModel();
+  public  saveMsg                    = 'Saved successfully';
+  public  tabIndex                   = 0;
+  public  hideShows!                  : boolean;
+  public  dataPointReloadSuccess     = 'Setting Successfully';
+  public  UIDICTIONARY               : any;
 
   constructor(private datasourceService           : DataSourceService,
               public dictionaryService            : DictionaryService,
@@ -41,6 +44,7 @@ export class DatapointPropertiesComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
     this.dictionaryService.getUIDictionary('datasource').subscribe(data=>{
      this.UIDICTIONARY = this.dictionaryService.uiDictionary;
      });

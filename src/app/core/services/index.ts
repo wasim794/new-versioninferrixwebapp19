@@ -8,4 +8,6 @@ export * from './point-value.service';
 export * from './dictionary.service';
 export * from './datapoint.service';
 export * from './abstract-datasource.service';
+export * from './events.service';
+export * from './user-comments.service';
 // export * from './abstract-publisher.service';

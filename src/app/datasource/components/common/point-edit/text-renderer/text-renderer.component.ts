@@ -4,7 +4,7 @@ import {NoneTextRendererModel, TimeTextRendererModel, RangeTextRendererModel, Mu
 import {DataPointModel} from '../../../../model';
 import {commonHelp} from '../../../../../help/commonHelp';
 import {HelpModalComponent} from '../../../../../help/help-modal/help-modal.component';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {DictionaryService} from "../../../../../core/services";
 import {newTypes} from "../../../../../common";
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { MatModuleModule } from '../../../../../common/mat-module';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule],
+  imports: [CommonModule, MatModuleModule, MatDialogModule],
   selector: 'app-text-renderer',
   templateUrl: './text-renderer.component.html',
   styleUrls: []

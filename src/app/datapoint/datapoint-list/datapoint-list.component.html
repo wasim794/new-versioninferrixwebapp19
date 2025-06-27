@@ -1,0 +1,65 @@
+<div class="dashboard-wrapper">
+  <div class="ui raised padded container segment">
+    <h2 class="ui dividing header">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.heading.pointList'): ""}}
+    </h2>
+
+    <table class="ui sortable celled table">
+      <thead>
+      <tr>
+        <th class="">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}</th>
+        <th class="sorted descending">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</th>
+        <th class=""> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}</th>
+        <th class="">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.deviceName'): ""}}</th>
+        <th class=""> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let dataPoint of dataPointList">
+        <td class="hidden">{{dataPoint.xid}}</td>
+        <td>{{dataPoint.name}}</td>
+
+
+        <td>
+          <button class="ui violet button"
+                  (click)="getDataPoint(dataPoint)">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+
+  <div *ngIf="dataPointXid" class="ui raised padded container segment">
+    <h2 class="ui dividing header">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.datapointDetails'): ""}}
+    </h2>
+
+    <div class="ui form ">
+      <div class="inline field">
+        <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointXid'): ""}}</label>
+        <input type="text" [(ngModel)]="dataPointXid">
+      </div>
+
+
+      <div class="inline field">
+        <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointName'): ""}}</label>
+        <input type="text" [(ngModel)]="dataPointName">
+      </div>
+
+      <div class="inline field">
+        <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointEnabled'): ""}}</label>
+        <input type="text" [(ngModel)]="dataPointEnable">
+      </div>
+
+
+      <div class="inline field">
+        <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.deviceName'): ""}}</label>
+        <input type="text" [(ngModel)]="dataPointDeviceName">
+      </div>
+    </div>
+  </div>
+</div>
+
+

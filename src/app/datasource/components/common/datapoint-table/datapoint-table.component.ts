@@ -19,7 +19,7 @@ import { SetvalueComponent } from '../../../../watchlist';
 @Component({
   standalone: true,
   imports: [CommonModule, MatModuleModule],
-  providers: [ConfigurationService, DatePipe, MatDialog],
+  providers: [ConfigurationService,PointValueService, WebsocketService, DictionaryService, DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: 'app-datapoint-table',
   templateUrl: './datapoint-table.component.html',
