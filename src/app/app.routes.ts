@@ -34,11 +34,7 @@ export const routes: Routes = [
   {
     path: 'users',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./users/users-list/users-list.component').then(m => m.UsersListComponent),
-    children: [
-      { path: 'list',
-        loadComponent: () => import('./users/users-list/users-list.component').then(m => m.UsersListComponent), }
-    ],
+    loadChildren: () => import('./users/user.routes').then(m => m.usersRoutes),
   },
   {
     path: 'stack-monitor',
