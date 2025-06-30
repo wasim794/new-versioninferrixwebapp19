@@ -2754,6 +2754,33 @@ td.mat-footer-cell:last-of-type {
   font-weight: 700;
 }
 
+/* .mat-mdc-tab-header {
+
+
+} */
+.mat-mdc-tab-group{
+  width: 1450px !important;
+}
+
+.datapointTextButoon{
+display: flex !important;
+justify-content: flex-start !important;
+}
+
+.cancelDataButton{
+  background: #062a51 !important;
+  border: 2px solid #062a51 !important;
+  color: #fff !important;
+  cursor: pointer;
+  -moz-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  border-radius: 4px !important;
+  width: 75px;
+  height: 38px !important;
+  margin-left: 10px;
+}
+
 .cancel_button_new {
   color: #ffffff !important;
   background: #062a51 !important;
