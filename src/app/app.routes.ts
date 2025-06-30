@@ -16,40 +16,30 @@ export const routes: Routes = [
   {
     path: 'watchlist',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./watchlist/watchlist-list/watchlist-list.component').then(m => m.WatchlistListComponent),
-    children: [
-      { path: 'list',
-        loadComponent: () => import('./watchlist/watchlist-list/watchlist-list.component').then(m => m.WatchlistListComponent), }
-    ],
+    loadChildren:() => import('./watchlist/watchlist.routes').then(m => m.watchlistRoutes),
   },
 
   {
     path: 'datasource',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./datasource/datasource-list/datasource-list.component').then(m => m.DatasourceListComponent),
-    children: [
-      { path: 'list',
-        loadComponent: () => import('./datasource/datasource-list/datasource-list.component').then(m => m.DatasourceListComponent), }
-    ],
+    loadChildren: () => import('./datasource/datasource.routes').then(m => m.datasourceRoutes),
   },
+  {
+    path: 'datapoint',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./datapoint/datapoints.routes').then(m => m.datapointsRoutes),
+  },
+  
   
   {
     path: 'users',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./users/users-list/users-list.component').then(m => m.UsersListComponent),
-    children: [
-      { path: 'list',
-        loadComponent: () => import('./users/users-list/users-list.component').then(m => m.UsersListComponent), }
-    ],
+    loadChildren: () => import('./users/user.routes').then(m => m.usersRoutes),
   },
   {
     path: 'stack-monitor',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./stack-monitor/stack-monitor.component').then(m => m.StackMonitorComponent),
-    children: [
-      { path: 'detail',
-        loadComponent: () => import('./stack-monitor/stack-monitor.component').then(m => m.StackMonitorComponent), }
-    ],
+    loadChildren: () => import('./stack-monitor/stackmonitor.routes').then(m => m.stackmonitorRoutes),
   },
 
   {
@@ -58,15 +48,7 @@ export const routes: Routes = [
     loadComponent: () => import('./device-management-system/device-management-system.component').then(m => m.DeviceManagementSystemComponent),
   },
 
-  {
-    path: 'datapoint',
-    canActivate: [AuthGuard],
-    loadComponent: () => import('./datapoint/datapoint-detail/datapoint-detail.component').then(m => m.DatapointDetailComponent),
-    children: [
-      { path: 'detail',
-        loadComponent: () => import('./datapoint/datapoint-detail/datapoint-detail.component').then(m => m.DatapointDetailComponent), }
-    ],
-  },
+  
   
 
     
