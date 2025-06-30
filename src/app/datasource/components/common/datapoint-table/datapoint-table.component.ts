@@ -242,7 +242,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
 
   dataPointDetails(xid: any) {
     localStorage.setItem('dpXid', xid);
-    this.router.navigate(['/datapoint/detail']).then(r => console.log(r));
+   this.router.navigate(['datapoint', 'detail']);
   }
 
   deleteDatapoint(datapoint: DataPointModel) {

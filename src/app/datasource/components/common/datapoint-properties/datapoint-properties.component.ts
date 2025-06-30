@@ -13,7 +13,7 @@ export interface DialogData {
 
 @Component({
   standalone: true,
-  imports:     [CommonModule, MatDialogModule,  MatModuleModule, TextRendererComponent],
+  imports:     [CommonModule, MatDialogModule,  MatModuleModule],
   providers:   [DataSourceService, DataPointService, DictionaryService, CommonService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: 'app-datapoint-properties',
