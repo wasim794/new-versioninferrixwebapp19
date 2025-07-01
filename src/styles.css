@@ -1772,7 +1772,7 @@ td.owl-dt-calendar-cell {
 .matToggleDates {
   position: absolute;
   margin-top: -20px;
-  right: -30px;
+  right: -20px;
 }
 
 .platFormIcons {
@@ -2647,12 +2647,16 @@ td.mat-footer-cell:last-of-type {
 }
 
 /* color common class start */
+
+
 .Add_button,
 .yes-container {
-  background-color: #225496;
+  background-color: #225496 !important;
   color: #ffffff !important;
-  font-family: "Poppins-Bold";
-  font-weight: 700;
+  font-family: "Poppins-Bold" !important;
+  border-radius: 4px !important;
+  margin-left: 20px;
+  margin-bottom: 10px;
 }
 
 .Save_Button {
@@ -2693,7 +2697,7 @@ td.mat-footer-cell:last-of-type {
 .Add_button:hover {
   background-color: #0b3f86;
   font-family: "Poppins-Bold";
-  font-weight: 700;
+
 }
 
 .Create_button:hover {
@@ -2754,7 +2758,19 @@ td.mat-footer-cell:last-of-type {
   font-weight: 700;
 }
 
+.dataPointCancel{
+  background-color: #66899a !important;
+  font-family: "Poppins-Bold";
+  font-weight: 700;
+  color: white !important;
+  border-radius:4px !important;
+  margin-left: 10px;
+  margin-bottom: 12px;
+}
 
+.mainContainerPop{
+  padding: 10px ;
+}
 
 /* .mat-mdc-tab-header {
 
@@ -3655,10 +3671,13 @@ mat-dialog-actions.setActionsvalue {
   height: 150px;
   border: 1px solid #ddd;
   margin-bottom: -6px;
+
 }
 
 .layoutContainer .mat_form_field {
   width: 350px;
+  padding-top: 20px;
+  padding-left: 20px;
 }
 
 .layoutContainer .add_margin {
