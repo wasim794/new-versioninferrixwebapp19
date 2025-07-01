@@ -69,7 +69,7 @@ export class EventDetectorsComponent implements OnInit {
   dataSource: any = new MatTableDataSource<EventDetectorModel>();
   selection = new SelectionModel<string>(true, []);
   componentRef: any;
-  dataArray = [];
+  dataArray: any = [];
   selectedOption!: string | null;
   filteredArray: any = [];
   ids = [1, 2];
@@ -169,7 +169,7 @@ export class EventDetectorsComponent implements OnInit {
     alert('Required to add event-detector help');
   }
 
-  addEventDetector(event: { source: { selected: any; }; }, type: any) {
+  addEventDetector(event: any, type: any) {
     this.selectedOption = null;
     if (event.source.selected) {
 
@@ -182,7 +182,7 @@ export class EventDetectorsComponent implements OnInit {
   }
 
   store(newValue: any) {
-    // this.dataArray.push(newValue);
+    this.dataArray.push(newValue);
   }
 
   componentLoaded(componentType: string, eventDetectorModel: { xid: any; } | null) {
@@ -540,40 +540,40 @@ export class EventDetectorsComponent implements OnInit {
 
   //saving bulk data
   saveBulkEvent() {
-    // const uniqueDataSource = this.dataSource.filter((event, index) => {
-    //   return index === this.dataSource.findIndex(obj => {
-    //     return JSON.stringify(obj) === JSON.stringify(event);
-    //   });
-    // });
-    // const requests = uniqueDataSource.map(event => {
-    //   return {
-    //     action: 'CREATE',
-    //     body: event
-    //   }
-    // });
-    // const bulkEvent = {
-    //   action: 'CREATE',
-    //   body: null,
-    //   requests: requests,
-    // };
+    const uniqueDataSource = this.dataSource.filter((event: any, index: any) => {
+      return index === this.dataSource.findIndex((obj: any) => {
+        return JSON.stringify(obj) === JSON.stringify(event);
+      });
+    });
+    const requests = uniqueDataSource.map((event: any) => {
+      return {
+        action: 'CREATE',
+        body: event
+      }
+    });
+    const bulkEvent = {
+      action: 'CREATE',
+      body: null,
+      requests: requests,
+    };
 
-    // this.eventDetectorService.saveEventDetector(bulkEvent).subscribe(data => {
-    //   this.commonService.notification(this.savedMsg);
-    //   this.entry.clear();
-    //   this.showAddButton = false;
-    // }, err => {
-    // });
+    this.eventDetectorService.saveEventDetector(bulkEvent).subscribe(data => {
+      this.commonService.notification(this.savedMsg);
+      this.entry.clear();
+      this.showAddButton = false;
+    }, err => {
+    });
   }
 
-//   private timeOutFunction() {
-//     this.messageError = true;
-//     setTimeout(() => {
-//       this.messageError = false;
-//     }, 2000);
-//   }
+  private timeOutFunction() {
+    this.messageError = true;
+    setTimeout(() => {
+      this.messageError = false;
+    }, 2000);
+  }
 
   blankDataClose() {
-    // this.addEventDetector(null, null);
+    this.addEventDetector(null, null);
   }
 
   editEventDetector(events: any) {
