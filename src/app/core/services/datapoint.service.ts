@@ -53,7 +53,7 @@ export class DataPointService {
     }));
   }
 
-  public getByXid(xid: String): Observable<DataPointModel> {
+  public getByXid(xid: any): Observable<DataPointModel> {
     return this.http
     .get<DataPointModel>(`${this.env.apiUrl}${this.dataPointUrl}/${xid}`)
     .pipe(map((result) => new DataPointModel(result)));

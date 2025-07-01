@@ -7,8 +7,8 @@ export abstract class AbstractPollingDatasourceModel<T extends AbstractPollingDa
 
   constructor(model?: Partial<T>) {
     super(model);
-    if (this.timePeriod) {
-      this.timePeriod = new TimePeriodModel(model?.timePeriod);
+    if (model && model.timePeriod) {
+      this.timePeriod = new TimePeriodModel(model.timePeriod);
     }
   }
 

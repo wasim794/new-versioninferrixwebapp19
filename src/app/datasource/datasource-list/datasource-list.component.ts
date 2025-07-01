@@ -9,7 +9,7 @@ import {DatasourceEditComponent} from '../datasource-edit/datasource-edit.compon
 import {DatapointPropertiesComponent} from '../components/common';
 import {MatSidenav} from '@angular/material/sidenav';
 import {MatPaginator} from '@angular/material/paginator';
-// import {EventDetectorComponent} from '../../event-detector/components/event-detector/event-detector.component';
+import {EventDetectorComponent} from '../../event-detector/components/event-detector/event-detector.component';
 import {MatDialog} from '@angular/material/dialog';
 import {HelpModalComponent} from '../../help/help-modal/help-modal.component';
 import {CommonService} from '../../services/common.service';
@@ -39,16 +39,16 @@ export class DatasourceListComponent
   layoutSideBarRef!: ElementRef;
   @ViewChild(DatasourceEditComponent)
   private datasourceEditComponent!: DatasourceEditComponent;
-  // @ViewChild(DatapointPropertiesComponent)
-  // private pointProperties!: DatapointPropertiesComponent;
-  // @ViewChild(EventDetectorComponent)
-  // private eventDetector: EventDetectorComponent;
+  @ViewChild(DatapointPropertiesComponent)
+  private pointProperties!: DatapointPropertiesComponent;
+  @ViewChild(EventDetectorComponent)
+  private eventDetector!: EventDetectorComponent;
   @ViewChild('sidebar')
   public sidenav!: MatSidenav;
   @ViewChild('datasource_sidebar')
   public dataFunctionSidebar!: MatSidenav;
   dataPointModel: DataPointModel = new DataPointModel();
-  datasourceList!: DatasourceModel[];
+  datasourceList!: DatasourceModel[] | any;
   searchDatasourceList:any = [];
   allDatasourceList:any = new MatTableDataSource<DatasourceModel>();
   datasource!: DatasourceModel;
@@ -200,7 +200,7 @@ export class DatasourceListComponent
     this.sidenav.close();
   }
 
-  filterDatasource(event: { key: string; type: string; }) {
+  filterDatasource(event: any) {
     if (event.key === "Enter" || event.type === "click") {
       if (this.searchDatasource) {
         const param = 'like(name,%2A' + this.searchDatasource + '%2A)';
@@ -276,7 +276,7 @@ export class DatasourceListComponent
     this.getDatasource(param);
     localStorage.setItem("param", param);
     this.removeAllButtons = true;
-    // this.filterDatasource(event);
+    this.filterDatasource(event);
   }
 
    getDatasource(param: string): void {
@@ -357,9 +357,9 @@ export class DatasourceListComponent
   }
 
   updatedDatasource(dataSource: DatasourceModel) {
-    const updateItem = this.datasourceList.find((x) => x.id === dataSource.id);
-    // const index = this.datasourceList.indexOf(updateItem);
-    // this.datasourceList[index] = dataSource;
+    const updateItem = this.datasourceList.find((x: { id: number; }) => x.id === dataSource.id);
+    const index = this.datasourceList.indexOf(updateItem);
+    this.datasourceList[index] = dataSource;
     //add after this function to long time
     const param = 'limit(' + this.limit + ',' + this.offset + ')';
     this.getDatasource(param);

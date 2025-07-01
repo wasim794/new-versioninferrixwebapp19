@@ -1,0 +1,164 @@
+<mat-card class="form_cards httpJsonRetriever">
+  <mat-toolbar class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.httpJsonRetriever'): ""}}</span>
+      <small *ngIf="isActivePdSmall">{{datasourceTitleName}}</small>
+    </mat-card-title>
+  </mat-toolbar>
+  <div [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.messages.fillAllDetails'): ""}}
+      </li>
+      <li *ngFor="let err of error">{{err.property}}
+        : {{err.message}}
+      </li>
+    </mat-card>
+  </div>
+  <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
+    <mat-tab label="Properties">
+      <form class="sidebar-form">
+      <p>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+          <input matInput [(ngModel)]="datasource.name" name="name" type="text" required>
+        </mat-form-field>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}</mat-label>
+          <input matInput [(ngModel)]="datasource.xid" class="datasourceBoxHeight" name="xid" type="text" readonly>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
+          <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
+            <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+      </p>
+      <p>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}}</mat-label>
+          <input [(ngModel)]="datasource.timePeriod.timePeriod" matInput  class="form-control" name="timePeriod"
+                 type="text" required>
+        </mat-form-field>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}
+           </mat-label>
+          <mat-select [(ngModel)]="datasource.timePeriod.timePeriodType"
+                      class="form-control" name="pollingPeriodType">
+            <mat-option *ngFor="let item of pollingPeriodType" [value]="item.val">{{item.key}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.url'): ""}}</mat-label>
+          <input matInput [(ngModel)]="datasource.url" name="url" type="text" required>
+        </mat-form-field>
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.setPointUrl'): ""}}</mat-label>
+          <input matInput [(ngModel)]="datasource.setPointUrl" name="setPointUrl" type="text" required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-slide-toggle [(ngModel)]="datasource.bearerAuth" (change)="bearerTokenToggle($event.checked)" class="side_form_toggle toggle_change singleToggle marginLeft-10" name="bearerAuth"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.bearerAuth'): ""}} </mat-slide-toggle><br>
+        <mat-form-field *ngIf="bearerToken" class="w-50 " appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.bearerToken'): ""}}</mat-label>
+          <textarea matInput [(ngModel)]="datasource.bearerToken" name="bearerToken"></textarea>
+        </mat-form-field>
+      </p>
+      <div>
+        <div *ngIf="!isEdit then save else update"></div>
+        <ng-template #save>
+          <button mat-raised-button class="saveButton mr-20" (click)="saveDatasource()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+        </ng-template>
+        <ng-template #update>
+          <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDatasource()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+          </button>
+        </ng-template>
+      </div>
+      </form>
+    </mat-tab>
+    <!--Point Section-->
+    <mat-tab label="Points" [disabled]="!datapointFormName">
+      <div class="sidebar-form" *ngIf="displayForm">
+      <p>
+        <mat-form-field class="form_field allInputsMargin marginTop w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+          <input matInput name="name" [(ngModel)]="dataPoint.name" type="text" required>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 " appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}</mat-label>
+          <input matInput name="xid" [(ngModel)]="dataPoint.xid" class="datasourceBoxHeight" type="text" readonly required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
+          <mat-select name="readPermission" [(ngModel)]="readPermission" multiple>
+            <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+      </p>
+      <p>
+        <mat-slide-toggle class="side_form_toggle toggle_change  singleToggle marginLeft-10 "  [(ngModel)]="pointLocator.setPointName"  name="setPointName"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}} </mat-slide-toggle>
+
+        <mat-form-field class="form_field marginLeftAlign w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}</mat-label>
+          <mat-select [(ngModel)]="pointLocator.dataType"
+                      name="DataType">
+            <mat-option *ngFor="let dataType of dataTypes" [value]="dataType.key">
+              {{dataType.value}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field class="form_field allInputsMargin  w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.valuePointer'): ""}}</mat-label>
+          <input matInput [(ngModel)]="pointLocator.valuePointer" name="ValuePointer" type="text" required>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 " appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.valueFormat'): ""}}</mat-label>
+          <input matInput [(ngModel)]="pointLocator.valueFormat" name="ValueFormate" type="text" required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field class="form_field allInputsMargin  w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.timePointer'): ""}}</mat-label>
+          <input [(ngModel)]="pointLocator.timePointer" matInput name="TimePointer" type="text" required>
+        </mat-form-field>
+        <mat-form-field class="form_field allInputsMargin  w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.timeFormat'): ""}}</mat-label>
+          <input [(ngModel)]="pointLocator.timeFormat" matInput name="TimePointer" type="text" required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-slide-toggle class="side_form_toggle toggle_change singleToggle marginLeft-10" [(ngModel)]="pointLocator.ignoreIfMissing" name="ignoreIfMissing"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.ignoreIfMissing'): ""}} </mat-slide-toggle>
+      </p>
+
+      <div class="meshActionsButtons">
+        <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
+        <ng-template #savePoint>
+          <button mat-raised-button class="allDataPointSaveButton mupdateButton mr-20" (click)="saveDataPoint()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+        </ng-template>
+        <ng-template #updatePoint>
+          <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+          </button>
+        </ng-template>
+      </div>
+        <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+
+      </div>
+      <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
+      </app-datapoint-table>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
