@@ -155,16 +155,16 @@
           <mat-form-field class="full-width mat_form_field">
             <mat-label
               class="mat_all_label">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.leaveAComment'): ""}}</mat-label>
-            <textarea matInput [(ngModel)]="UserComments.comment" name="comment" class="textarea_field"></textarea>
+            <textarea matInput [(ngModel)]="UserComments.comment" cols="10" rows="7" name="comment" class="textarea_field"></textarea>
           </mat-form-field>
           <section>
-            <button mat-raised-button class="Add_button add_margin" *ngIf="!isEdit" (click)="addComment()">
+            <button mat-raised-button class="Add_button" *ngIf="!isEdit" (click)="addComment()">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ""}}</button>
             <button mat-raised-button class="Add_button add_margin" *ngIf="isEdit"
                     (click)="updateComment(UserComments)">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.correction'): ""}}
             </button>
-            <button class="cancel_button" mat-raised-button
+            <button class="dataPointCancel" mat-raised-button
                     (click)="clearComment()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
           </section>
         </form>
@@ -213,9 +213,9 @@
 
    <span *ngIf="!isLatest">
 
- <mat-form-field class="chartInputField" appearance="fill">
+ <mat-form-field class="chartInputField marginLeft-20" appearance="fill">
     <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.chartFrom'): ""}}</mat-label>
-       <input [(ngModel)]="dateFrom" name="dateFrom" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+       <input [(ngModel)]="dateFrom"  name="dateFrom" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
    <mat-datepicker-toggle class="matToggleDates" [owlDateTimeTrigger]="dt"></mat-datepicker-toggle>
     <owl-date-time #dt></owl-date-time>
  </mat-form-field>
