@@ -25,11 +25,12 @@
     <mat-card class="save-success"><span>{{saveMsg}}</span>
     </mat-card>
   </div>
-  <mat-dialog-actions *ngIf="!hideShows" id="hideShows">
-    <button mat-raised-button class="saveButton" (click)="saveProperties()">
+  <mat-dialog-actions *ngIf="!hideShows" id="hideShows" class="datapointTextButoon">
+    <button matfab class="saveButton" (click)="saveProperties()">
+       <mat-icon class="alignIocns">save</mat-icon>
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
     </button>
-    <button mat-raised-button class="cancel_button" (click)="cancel()">
+    <button mat-raised-button class="cancelDataButton" (click)="cancel()">
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
     </button>
   </mat-dialog-actions>
