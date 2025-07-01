@@ -1,7 +1,9 @@
 import {Component, CUSTOM_ELEMENTS_SCHEMA, Inject, OnInit, ViewChild} from '@angular/core';
 import {DataPointModel} from '../../../model';
 import {DataSourceService, DataPointService, DictionaryService} from '../../../../core/services';
-import {ValuePurgeComponent, LoggingPropertiesComponent, TextRendererComponent} from '../../common';
+import {ValuePurgeComponent} from '../../common/point-edit/value-purge/value-purge.component';
+import { LoggingPropertiesComponent} from '../../common/point-edit/logging-properties/logging-properties.component';
+import {TextRendererComponent} from '../../common/point-edit/text-renderer/text-renderer.component';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {CommonService} from '../../../../services/common.service';
 import { CommonModule } from '@angular/common';
@@ -13,7 +15,7 @@ export interface DialogData {
 
 @Component({
   standalone: true,
-  imports:     [CommonModule, MatDialogModule,  MatModuleModule],
+  imports:     [CommonModule, MatDialogModule,  MatModuleModule, TextRendererComponent, ValuePurgeComponent, LoggingPropertiesComponent],
   providers:   [DataSourceService, DataPointService, DictionaryService, CommonService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: 'app-datapoint-properties',

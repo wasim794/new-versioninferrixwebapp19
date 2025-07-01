@@ -1,4 +1,4 @@
 export class MessageTranslation {
-  key: string;
-  args: [any];
+  key!: string;
+  args!: [any];
 }
