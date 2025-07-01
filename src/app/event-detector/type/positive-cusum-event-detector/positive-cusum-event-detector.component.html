@@ -1,0 +1,63 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar allCommonMatoolbar">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.positiveCusum'): ""}}
+    </mat-card-title>
+  </mat-toolbar>
+</mat-card>
+  <form>
+
+          <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+            <input disabled matInput name="xid" [(ngModel)]="positiveCusum.xid" placeholder="Auto generated">
+          </mat-form-field>
+
+          <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+            <input class="form-control" id="name" matInput [(ngModel)]="positiveCusum.name"
+                   name="name" type="text">
+
+          </mat-form-field>
+
+        <div>
+          <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.alarmType'): ""}}</mat-label>
+            <mat-select class="form-control" name="alertType" [(ngModel)]="positiveCusum.alarmLevel">
+              <mat-option *ngFor="let alertType of alarmTypes" [value]="alertType.value">
+                {{alertType.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.positiveLimit'): ""}}</mat-label>
+            <input class="form-control" id="positiveLimit" matInput
+                   name="positiveLimit" type="text" [(ngModel)]="positiveCusum.limit">
+          </mat-form-field>
+        </div>
+
+          <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.weight'): ""}}</mat-label>
+            <input class="form-control" id="Weight" matInput [(ngModel)]="positiveCusum.weight"
+                   name="Weight" type="text">
+          </mat-form-field>
+
+          <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.field.duration'): ""}}</mat-label>
+            <input matInput name="timePeriod"  [(ngModel)]= duration.timePeriod
+                   placeholder="Enter Duration">
+          </mat-form-field>
+
+        <div>
+          <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}</mat-label>
+            <mat-select  name="timePeriodType" [(ngModel)]="duration.timePeriodType">
+              <mat-option *ngFor="let timePeriodType of timePeriodTypes"
+                          [value]="timePeriodType.value">{{timePeriodType.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  </form>
+<mat-divider class="matCommomDivide"></mat-divider>

@@ -1,0 +1,116 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar allCommonMatoolbar">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.rateOfChange'): ""}}
+    </mat-card-title>
+  </mat-toolbar>
+</mat-card>
+  <form>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+        <input disabled matInput name="xid" [(ngModel)]="rateOfChange.xid" placeholder="Auto generated">
+      </mat-form-field>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+        <input class="form-control" id="name" matInput
+               name="name"[(ngModel)]="rateOfChange.name" type="text">
+      </mat-form-field>
+
+    <div>
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.rateOfChangeThreshold'): ""}}</mat-label>
+        <input class="form-control" id="rateOfChangeThreshold" matInput
+               name="rateOfChangeThreshold" [(ngModel)]="rateOfChange.rateOfChangeThreshold" type="text">
+      </mat-form-field>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.rateOfChangeThresholdPeriodType'): ""}}</mat-label>
+        <mat-select class="form-control" name="rateOfChangeThresholdPeriodType" [(ngModel)]="rateOfChange.rateOfChangeThresholdPeriodType">
+          <mat-option *ngFor="let periodType of rateOfChangeThresholdPeriodType" [value]="periodType.value">
+            {{periodType.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.rateOfChangePeriod'): ""}}</mat-label>
+        <input class="form-control" id="rateOfChangePeriods" matInput
+               name="rateOfChangePeriod" [(ngModel)]="rateOfChangePeriod.timePeriod" type="text">
+      </mat-form-field>
+      <mat-form-field class="field_margin form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.rateOfChangePeriodType'): ""}}</mat-label>
+        <mat-select  name="rateOfChangePeriodType" [(ngModel)]="rateOfChangePeriod.timePeriodType">
+          <mat-option *ngFor="let thresholdPeriodType of rateOfChangeThresholdPeriodType"
+                      [value]="thresholdPeriodType.value">{{thresholdPeriodType.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <div>
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.comparisonMode'): ""}}</mat-label>
+        <mat-select class="form-control" name="comparisonMode" [(ngModel)]="rateOfChange.comparisonMode">
+          <mat-option *ngFor="let mode of comparisonMode" [value]="mode.key">
+            {{mode.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.calculationMode'): ""}}</mat-label>
+        <mat-select class="form-control" name="calculationMode" [(ngModel)]="rateOfChange.calculationMode">
+          <mat-option *ngFor="let mode of calculationMode" [value]="mode.key">
+            {{mode.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.useResetThreshold'): ""}}</mat-label>
+        <input class="form-control" id="resetThreshold" matInput
+               name="resetThreshold" type="text" [(ngModel)] = rateOfChange.resetThreshold>
+      </mat-form-field>
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.alarmType'): ""}}</mat-label>
+        <mat-select class="form-control" name="alertType" [(ngModel)]="rateOfChange.alarmLevel">
+          <mat-option *ngFor="let alertType of alarmTypes" [value]="alertType.key">
+            {{alertType.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <div>
+      <mat-form-field class="field_margin form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.field.duration'): ""}}</mat-label>
+        <input matInput name="timePeriod"  [(ngModel)]= duration.timePeriod
+               placeholder="Enter Duration">
+      </mat-form-field>
+
+      <mat-form-field class="field_margin form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}</mat-label>
+        <mat-select  name="timePeriodType" [(ngModel)]="duration.timePeriodType">
+          <mat-option *ngFor="let timePeriodType of timePeriodTypes"
+                      [value]="timePeriodType.value">{{timePeriodType.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+      <mat-slide-toggle (change)="useResetThreshold($event)" [(ngModel)]="isUseResetThreshold" class="side_form_toggle toggle_change marginRight-8"
+                        name=useResetThreshold>
+                        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.useResetThreshold'): ""}}
+      </mat-slide-toggle>
+
+      <mat-slide-toggle (change)="useAbsoluteValue($event)" [(ngModel)]="isUseAbsoluteValue" class="side_form_toggle toggle_change"
+                        name=useAbsoluteValue>
+                        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.useAbsoluteValue'): ""}}
+      </mat-slide-toggle>
+
+  </form>
+<mat-divider class="matCommomDivide"></mat-divider>
+

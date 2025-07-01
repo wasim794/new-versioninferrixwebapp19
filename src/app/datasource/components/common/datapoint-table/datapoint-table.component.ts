@@ -264,13 +264,13 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   }
 
   addEventDetectors(datapoint: DataPointModel, index: any) {
-    // this.dialog.open(EventDetectorsComponent, {
-    //   data: {content: datapoint},
-    //   width:'80%',
-    //   height:'600px',
-    //   panelClass:['eventModal'],
-    //   disableClose: true
-    // });
+    this.dialog.open(EventDetectorsComponent, {
+      data: {content: datapoint},
+      width:'80%',
+      height:'600px',
+      panelClass:['eventModal'],
+      disableClose: true
+    });
   }
 
 

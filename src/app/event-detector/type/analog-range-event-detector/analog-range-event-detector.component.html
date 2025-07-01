@@ -1,0 +1,77 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar allCommonMatoolbar">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.analogRange'): ""}}
+    </mat-card-title>
+  </mat-toolbar>
+</mat-card>
+  <form>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+        <input #tooltip="matTooltip"
+               matTooltip="This section is readonly"
+               matTooltipHideDelay="1000" readonly matInput name="xid" placeholder="Auto generated" [(ngModel)]="analogRange.xid">
+      </mat-form-field>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+        </mat-label>
+        <input class="form-control" id="name" matInput [(ngModel)]="analogRange.name"
+               name="name" type="text">
+
+      </mat-form-field>
+
+    <div>
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.alarmType'): ""}}</mat-label>
+        <mat-select class="form-control" name="alertType" [(ngModel)]="analogRange.alarmLevel">
+          <mat-option *ngFor="let alertType of alarmTypes" [value]="alertType.value">
+            {{alertType.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.low'): ""}}</mat-label>
+        <input class="form-control" id="low" matInput [(ngModel)]="analogRange.low"
+               name="low" type="text">
+
+      </mat-form-field>
+    </div>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.high'): ""}}</mat-label>
+        <input class="form-control" id="high" matInput [(ngModel)]="analogRange.high"
+               name="high" type="text">
+
+      </mat-form-field>
+
+      <mat-slide-toggle  name=withinRange (change)="enableWithinRange($event)" [(ngModel)]="withinRange" withinRange
+                        class="side_form_toggle toggle_change">
+                        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.withInRange'): ""}}
+      </mat-slide-toggle>
+
+    <div>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.field.duration'): ""}}</mat-label>
+        <input matInput name="timePeriod" [(ngModel)]= duration.timePeriod
+               placeholder="Enter Duration">
+      </mat-form-field>
+
+      <mat-form-field class="datapoint_field form_field allFormFieldMargin" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}
+        </mat-label>
+        <mat-select  name="timePeriodType" [(ngModel)]="duration.timePeriodType">
+          <mat-option *ngFor="let timePeriodType of timePeriodTypes"
+                      [value]="timePeriodType.value">{{timePeriodType.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+<mat-divider class="matCommomDivide"></mat-divider>

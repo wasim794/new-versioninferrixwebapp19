@@ -1,0 +1,22 @@
+<mat-toolbar class="mat-toolbar_all">
+  <span class="font_size">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.eventDetector'): ""}}</span>
+  <div class="container-select eventDetectors">
+    <mat-form-field class="mat-form-width selectBoxes">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.addDataPoint'): ""}}</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let datapoint of dataPointsList" [value]="datapoint"
+                    (onSelectionChange)="selectDataPoint($event, datapoint)">
+          {{ datapoint.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <span class="spacer"></span>
+</mat-toolbar>
+<div class="commonTopSpacing commonTopSpacingSidebar">
+  <mat-card-content>
+    <template #dynamicLoadComponent>
+    </template>
+  </mat-card-content>
+</div>
+
