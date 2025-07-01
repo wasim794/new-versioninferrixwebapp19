@@ -19,7 +19,7 @@
       <mat-table [dataSource]="selectedItems"  class="table_data setAutoWidth setAutoWidth20">
         <!-- Name Column -->
         <ng-container matColumnDef="name" class="table_row">
-          <mat-header-cell *matHeaderCellDef class="cells_title ">
+          <mat-header-cell *matHeaderCellDef class="cells_title">
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-header-cell>
           <mat-cell class="table_data httpTableHeight" id="{{element.xid}}_name" *matCellDef="let element"> {{element.deviceName}}: {{element.name}} </mat-cell>
         </ng-container>

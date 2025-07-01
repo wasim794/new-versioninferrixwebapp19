@@ -3291,6 +3291,9 @@ mat-header-cell:first-of-type {
   min-height: 32px;
   border: 1px solid #dddddd;
 }
+.mdc-data-table__row:last-child>.mat-mdc-cell {
+    border-bottom:ridge !important;
+}
 
 .table_data > mat-header-row > mat-header-cell {
   border: 1px solid #dddddd;
