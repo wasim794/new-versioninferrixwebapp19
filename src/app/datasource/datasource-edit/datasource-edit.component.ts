@@ -13,6 +13,7 @@ import { AssetTagComponent } from '../components/asset-tag';
 import { BanetIpComponent } from '../components/banet-ip';
 import { BanetMstpComponent } from '../components/banet-mstp';
 import { HttpJsonRetrieverComponent } from '../components/http-json-retriever';
+import { HttpReceiverDatasourceComponent } from '../components/http-receiver-datasource';
 
 @Component({
   selector: 'app-datasource-edit',
@@ -70,7 +71,8 @@ export class DatasourceEditComponent {
       'STUDENT_ASSET_TAG.DS': AssetTagComponent,
       'BACNET_IP.DS': BanetIpComponent,
       'BACNET_MSTP.DS': BanetMstpComponent,
-      'HTTP_JSON_RETRIEVER.DS': HttpJsonRetrieverComponent
+      'HTTP_JSON_RETRIEVER.DS': HttpJsonRetrieverComponent,
+      'HTTP_RECEIVER.DS': HttpReceiverDatasourceComponent,
     };
 
     const component = componentMapping[dataSourceType];
