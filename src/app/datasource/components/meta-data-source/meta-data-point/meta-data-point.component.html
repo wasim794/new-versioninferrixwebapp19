@@ -1,0 +1,69 @@
+<mat-toolbar class="mat-toolbar_all watchListToolbar">
+  <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints').substring(0,10): ""}}</span>
+  <span class="spacer"></span>
+  <button class="cancel_button" mat-button (click)="closeModel()">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ""}}
+  </button>
+</mat-toolbar>
+<mat-dialog-content class="mainContainerMeta">
+  <div class="mat-elevation-z8 ">
+    <span *ngIf="visibles">
+              <mat-form-field class="" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+                </mat-label>
+                 <input   matInput [(ngModel)]="name" name="name">
+                <input hidden  matInput [(ngModel)]="xid" name="xid">
+              </mat-form-field>
+
+              <mat-form-field   appearance="fill">
+                <mat-label>   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.cols.variableSyntax').substring(0, 8): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.oids.sysName'): ""}}
+                </mat-label>
+                <input matInput   [(ngModel)]="variableName"  name="variableName">
+              </mat-form-field>
+    <mat-slide-toggle [(ngModel)]="contextUpdate"  name="contextUpdate"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}" class="side_form_toggle toggle_change allToggls">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.contextUpdate'): ""}}</mat-slide-toggle>
+    <button (click)="savePublish()" mat-raised-button class="Update_Button mupdateButton" *ngIf="!edits">
+     {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.save'): ""}}
+    </button>
+    <button *ngIf="edits" (click)="updatePublish()" mat-raised-button class="Update_Button mupdateButton">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.update'): ""}}
+    </button>
+</span>
+    <table [dataSource]="dataSource" width="100%" mat-table class="table_data_pop_up">
+      <ng-container matColumnDef="DeviceName">
+        <mat-header-cell *matHeaderCellDef class="cells_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.deviceName'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="table_data">{{element.extendedName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="DataType">
+        <mat-header-cell *matHeaderCellDef class="cells_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="table_data">{{element.pointLocator.dataType}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="dataPointName">
+        <mat-header-cell *matHeaderCellDef class="cells_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.dataPointName'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="table_data">{{element.deviceName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="variableName">
+        <mat-header-cell *matHeaderCellDef class="cells_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.cols.variableSyntax').substring(0, 8): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.oids.sysName'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="table_data">{{element.variableName}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef class="cells_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Action'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="table_data">  <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}" class="action-icons" (click)="edit(element)"> edit</mat-icon>
+          <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}" class="action-icons" (click)="removeData()"> delete</mat-icon> </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="dataPointsTableColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: dataPointsTableColumns;"></mat-row>
+    </table>
+  </div>
+</mat-dialog-content>
+

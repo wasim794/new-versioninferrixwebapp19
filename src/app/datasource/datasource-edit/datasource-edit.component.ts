@@ -14,6 +14,7 @@ import { BanetIpComponent } from '../components/banet-ip';
 import { BanetMstpComponent } from '../components/banet-mstp';
 import { HttpJsonRetrieverComponent } from '../components/http-json-retriever';
 import { HttpReceiverDatasourceComponent } from '../components/http-receiver-datasource';
+import { InternalDatasourceComponent } from '../components/internal-datasource';
 
 @Component({
   selector: 'app-datasource-edit',
@@ -73,6 +74,7 @@ export class DatasourceEditComponent {
       'BACNET_MSTP.DS': BanetMstpComponent,
       'HTTP_JSON_RETRIEVER.DS': HttpJsonRetrieverComponent,
       'HTTP_RECEIVER.DS': HttpReceiverDatasourceComponent,
+      'INTERNAL.DS': InternalDatasourceComponent,
     };
 
     const component = componentMapping[dataSourceType];

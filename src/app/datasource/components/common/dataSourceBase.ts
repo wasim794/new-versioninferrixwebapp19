@@ -47,7 +47,7 @@ export abstract class DataSourceBase extends UnsubscribeOnDestroyAdapter {
 
     }
     this.dataPoint.dataSourceXid = datasource.xid;
-    // this.datasource.setData(datasource);
+    this.datasource.setData(datasource);
     this.getDataPoints(datasource);
      this.addCommonDataSourceName = datasource.name;
 

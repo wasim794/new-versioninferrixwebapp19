@@ -10,4 +10,6 @@ export * from './datapoint.service';
 export * from './abstract-datasource.service';
 export * from './events.service';
 export * from './user-comments.service';
+export * from './scripts.service';
+export * from './script-utils.service';
 // export * from './abstract-publisher.service';
