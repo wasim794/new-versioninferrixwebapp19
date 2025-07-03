@@ -1,0 +1,126 @@
+<div class="mainContainerTools">
+  <div  *ngFor="let error of modbusIpScannerError" [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li>{{error.property}}
+        : {{error.message}}</li>
+    </mat-card>
+  </div>
+  <p>
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.deviceName').substring(0,6): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.showScanSettings').substring(4, 9): ""}}
+  </p>
+  <button mat-raised-button color="primary" [disabled]="!hideScan" (click)="startScan()"  class="scannerButton">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.showScanSettings').substring(4, 9): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.noDevices').substring(2, 10): ""}}
+  </button>
+  <button mat-raised-button color="accent" (click)="clearInput()"  *ngIf="!hideClear"  class="scannerButton clearButtons">
+    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.clear') | uppercase) : ""}}
+  </button>
+  <button mat-raised-button color="warn" (click)="cancelInput()"  *ngIf="!hideCancel"  class="scannerButton clearButtons">
+    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+  </button>
+  <mat-progress-bar *ngIf="!hideProgressBar"
+                    class="example-margin"
+                    [color]="color"
+                    [mode]="mode"
+                    [value]="value"
+                    [bufferValue]="bufferValue">
+  </mat-progress-bar>
+  <mat-divider  class="dividerAllCommonFields marginBottom-10"></mat-divider>
+  <p>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.readCommunity').substring(0,4): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.dataBit').substring(0,4): ""}}</p>
+  <p> <mat-form-field class="form_field allInputsMargin" appearance="fill">
+    <mat-label>
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.slaveMonitor').substring(0,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.id'): ""}}
+    </mat-label>
+    <input matInput [(ngModel)]="_modbusReadRequest.slaveId" name="slaveId" >
+  </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.range'): ""}}</mat-label>
+      <mat-select name="range" [(ngModel)]="_modbusReadRequest.range"
+                  (selectionChange)="rangeChange($event.value)">
+        <mat-option *ngFor="let range of dropdownData.range" [value]="range.code">{{range.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+
+    <mat-form-field class="form_field allInputsMargin" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.offset').substring(0, 7): ""}}
+      </mat-label>
+      <input matInput [(ngModel)]="_modbusReadRequest.offset" name="offset" >
+    </mat-form-field>
+    <mat-form-field class="form_field"  appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxReadRegisterCount').substring(8, 23): ""}}
+      </mat-label>
+      <input  matInput [(ngModel)]="_modbusReadRequest.length" (ngModelChange)="updateRange()"  name="registerCount"
+      >
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="form_field allInputsMargin" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.modbus.modbusIP').substring(0, 6): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}
+      </mat-label>
+      <mat-select (selectionChange)="dataTypeChange($event.value)"
+                  name="modbusDataType" [disabled]="!isModbusDataType" [(ngModel)]="_modbusPointLocator.modbusDataType">
+        <mat-option *ngFor="let dataType of dropdownData.modbusDataTypes" [value]="dataType.code">
+          {{dataType.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.bit'): ""}}
+      </mat-label>
+      <input  matInput name="bit" [(ngModel)]="_modbusPointLocator.bit" [disabled]="!isBit">
+    </mat-form-field>
+  </p>
+  <p><mat-form-field class="form_field allInputsMargin" appearance="fill">
+    <mat-label>
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.multiplier'): ""}}
+    </mat-label>
+    <input  matInput name="multiplier" [(ngModel)]="_modbusPointLocator.multiplier"
+            [disabled]="!isMultiplier">
+  </mat-form-field>
+
+    <mat-form-field class="form_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.additive'): ""}}</mat-label>
+      <input  matInput name="additive" [(ngModel)]="_modbusPointLocator.isAdditive" [disabled]="!isAdditive">
+    </mat-form-field>
+
+  </p>
+  <button mat-raised-button (click) ="readData()" color="accent"  class="scannerButton readButtons">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.readCommunity').substring(0,4): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.dataBit').substring(0,4): ""}}
+  </button>
+  <mat-divider style="margin-top: 5px;margin-bottom: 10px;" class="dividerAllCommonFields"></mat-divider>
+  <mat-table mat-table [dataSource]="dataSource" class="table_data dataPointsAllTable setValueWidth setAutoWidth">
+    <!-- name Column -->
+    <ng-container matColumnDef="Offset" class="table_row">
+      <mat-header-cell *matHeaderCellDef class="cells_title" style="width: 80px !important;">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.offset').substring(0, 7): ""}}
+      </mat-header-cell>
+      <mat-cell class="table_data" style="min-width: 80px !important;" *matCellDef="let element; let i = index;">{{i + 1}}  </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Raw value" class="table_row">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.rawValue').substring(0, 9): ""}}
+      </mat-header-cell>
+      <mat-cell class="table_data" *matCellDef="let element" > {{element.value}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="value" class="table_row">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.value'): ""}}
+      </mat-header-cell>
+      <mat-cell class="table_data" *matCellDef="let element" > {{element.value}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Write data" class="table_row">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.writeType').substring(0, 5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.dataBit').substring(0,4): ""}}
+      </mat-header-cell>
+      <mat-cell class="table_data" *matCellDef="let element" > {{element.value}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+

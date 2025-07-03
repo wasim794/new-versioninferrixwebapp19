@@ -76,7 +76,8 @@ export class DatasourceEditComponent {
       'HTTP_JSON_RETRIEVER.DS': HttpJsonRetrieverComponent,
       'HTTP_RECEIVER.DS': HttpReceiverDatasourceComponent,
       'INTERNAL.DS': InternalDatasourceComponent,
-      'META.DS': MetaDataSourceComponent
+      'META.DS': MetaDataSourceComponent,
+      'MODBUS_IP.DS': BanetIpComponent,
     };
 
     const component = componentMapping[dataSourceType];

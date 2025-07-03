@@ -12,4 +12,6 @@ export * from './events.service';
 export * from './user-comments.service';
 export * from './scripts.service';
 export * from './script-utils.service';
+export * from './serial-ports.service';
+export * from './modbus-tool.service';
 // export * from './abstract-publisher.service';

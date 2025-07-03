@@ -1,0 +1,322 @@
+<mat-card class="form_cards modbusMainContainer">
+  <mat-toolbar class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.modbus.modbusIP'): ""}}
+      <small *ngIf="isActivePdSmall">{{datasourceTitleName}}</small>
+    </mat-card-title>
+  </mat-toolbar>
+  <div class="mat-content allSensors">
+    <div  *ngFor="let error of modbusIpError" [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li>{{error.property}}
+          : {{error.message}}</li>
+      </mat-card>
+    </div>
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
+      <mat-tab label="Properties">
+        <p>
+          <mat-form-field class="w-50 marginTop" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.name" name="name" type="text" placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ''}}" required>
+          </mat-form-field>
+          <mat-form-field class="w-50" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}
+            </mat-label>
+            <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
+              <mat-option *ngFor="let read of dropdownData.permissions" [value]="read">{{read}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <input type="hidden" name="xid" [(ngModel)]="modbusIpModel.xid" class="datasourceBoxHeight">
+        </p>
+        <p>
+          <mat-form-field class="w-50" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.timePeriod.timePeriod" class="form-control" name="pollingPeriod"
+                   type="text" required>
+          </mat-form-field>
+          <mat-form-field class="w-50" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}
+            </mat-label>
+            <mat-select [(ngModel)]="modbusIpModel.timePeriod.timePeriodType" class="form-control"
+                        name="pollingPeriodType">
+              <mat-option *ngFor="let item of dropdownData.pollingPeriodType" [value]="item.value">{{item.key}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <mat-divider class="dividerAllCommonFields"></mat-divider>
+        <p>
+          <mat-form-field class="w-50 marginTop" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.timeout'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.timeout" name="timeout" type="text" value="500" required>
+          </mat-form-field>
+          <mat-form-field class="w-50" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.retries'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.retries" name="retries" type="text" value="2" required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-slide-toggle [(ngModel)]="modbusIpModel.multipleWritesOnly" name="multipleWritesOnly"
+                            class="side_form_toggle toggle_change allToggls modbusToggles">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.multipleWritesOnly'): ""}}
+          </mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="modbusIpModel.contiguousBatches" name="contiguousBatches"
+                            class="side_form_toggle toggle_change allToggls">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.contiguousBatches'): ""}}
+          </mat-slide-toggle>
+        </p>
+        <p>
+          <mat-slide-toggle [(ngModel)]="modbusIpModel.createSlaveMonitorPoints" name="createSlaveMonitorPoints"
+                            class="side_form_toggle toggle_change allToggls modbusToggles">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.slaveMonitor'): ""}}
+          </mat-slide-toggle>
+          <mat-form-field class="w-50 modbusInputField singleInputsM" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxReadBitCount'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.maxReadBitCount" name="maxReadBitCount" type="text" value="2000"
+                   required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="w-50 modbusInputField" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxReadRegisterCount'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.maxReadRegisterCount" name="maxReadRegisterCount" type="text"
+                   value="125" required>
+          </mat-form-field>
+          <mat-form-field class="w-50 modbusInputField" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxWriteRegisterCount'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.maxWriteRegisterCount" name="maxWriteRegisterCount" type="text"
+                   value="120" required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="w-50 modbusInputField" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.discardDataDelay'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.discardDataDelay" name="discardDataDelay" type="text" required>
+          </mat-form-field>
+          <mat-slide-toggle [(ngModel)]="modbusIpModel.logIO" name="logIO"
+                            class="side_form_toggle toggle_change allToggls">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.logIO'): ""}}
+          </mat-slide-toggle>
+        </p>
+        <p>
+          <mat-form-field class="w-50 modbusInputField" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.logIOFileSize'): ""}}
+            </mat-label>
+            <input matInput name="iofilesize" type="text" value="1" required>
+          </mat-form-field>
+          <mat-form-field class="w-50 modbusInputField" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxHistoricalIOLogs'): ""}}</mat-label>
+            <input matInput name="maxhistoricaliologs" type="text" value="1" required>
+          </mat-form-field>
+        </p>
+        <mat-divider class="dividerAllCommonFields"></mat-divider>
+        <p>
+          <mat-form-field class="w-50 modbusInputField marginTop" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusIp.transportType'): ""}}
+            </mat-label>
+            <mat-select name="transportType" [(ngModel)]="modbusIpModel.transportType">
+              <mat-option *ngFor="let item of dropdownData.transportType" [value]="item">{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-50 " appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusIp.host'): ""}}
+            </mat-label>
+            <input matInput  [(ngModel)]="modbusIpModel.host" name="host" type="text" required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="w-50 modbusInputField" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusIp.port'): ""}}
+            </mat-label>
+            <input matInput [(ngModel)]="modbusIpModel.port" name="port" type="text" required>
+          </mat-form-field>
+          <mat-slide-toggle [(ngModel)]="modbusIpModel.encapsulated" name="encapsulated"
+                            class="side_form_toggle toggle_change allToggls modbusToggles ">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusIp.encapsulated'): ""}}
+          </mat-slide-toggle>
+        </p>
+        <div *ngIf="!isEdit then save else update"></div>
+        <ng-template #save>
+          <button mat-raised-button class="saveButton" (click)="saveDatasource()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+          </button>
+        </ng-template>
+        <ng-template #update>
+          <button mat-raised-button class="updateButton" (click)="updateDatasource()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+          </button>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Points" [disabled]="!datapointForm">
+        <div class="sidebar-form" *ngIf="displayForm">
+          <p>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}
+              </mat-label>
+              <input [(ngModel)]="dataPointModel.xid" readonly matInput name="xid" placeholder="Auto generated" class="datasourceBoxHeight">
+            </mat-form-field>
+            <mat-form-field class="form_field w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+              </mat-label>
+              <input matInput [(ngModel)]="dataPointModel.name" name="name" type="text" required>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}
+              </mat-label>
+              <mat-select name="readPermission" [(ngModel)]="readPermission" multiple>
+                <mat-option *ngFor="let read of dropdownData.permissions" [value]="read">{{read}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.writePermission'): ""}}</mat-label>
+              <mat-select name="editPermission" [(ngModel)]="setPermission" multiple>
+                <mat-option *ngFor="let write of dropdownData.permissions" [value]="write">{{write}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </p>
+          <mat-divider class="dividerAllCommonFields"></mat-divider>
+          <p class="afterStartDivideBar">
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.range'): ""}}</mat-label>
+              <mat-select name="range" [(ngModel)]="modbusPointLocatorModel.range"
+                          (selectionChange)="rangeChange($event.value)">
+                <mat-option *ngFor="let range of dropdownData.range" [value]="range.code">{{range.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusDataType'): ""}}
+              </mat-label>
+              <mat-select (selectionChange)="dataTypeChange($event.value)" [disabled]="!isModbusDataType"
+                          name="modbusDataType" [(ngModel)]="modbusPointLocatorModel.modbusDataType">
+                <mat-option *ngFor="let dataType of dropdownData.modbusDataTypes" [value]="dataType.code">
+                  {{dataType.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.slaveId'): ""}}
+              </mat-label>
+              <input matInput name="slaveId" [(ngModel)]="modbusPointLocatorModel.slaveId">
+            </mat-form-field>
+            <mat-slide-toggle class="side_form_toggle toggle_change singleToggle" name="slavemonitor"
+                              [(ngModel)]="modbusPointLocatorModel.slaveMonitor">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.slaveMonitor'): ""}}
+            </mat-slide-toggle>
+          </p>
+          <p>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.offset'): ""}}
+              </mat-label>
+              <input matInput name="offset" [(ngModel)]="modbusPointLocatorModel.offset">
+            </mat-form-field>
+            <mat-form-field class="form_field w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.bit'): ""}}
+              </mat-label>
+              <input [disabled]="!isBit" matInput name="bit" [(ngModel)]="modbusPointLocatorModel.bit">
+            </mat-form-field>
+
+          </p>
+          <p>
+            <mat-divider class="dividerAllCommonFields"></mat-divider>
+          </p>
+          <mat-form-field class="form_field allInputsMargin w-50 marginTop-20" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.registerCount'): ""}}
+            </mat-label>
+            <input matInput [disabled]="!isRegisterCount" name="registerCount"
+                   [(ngModel)]="modbusPointLocatorModel.registerCount">
+          </mat-form-field>
+          <mat-form-field class="form_field allInputsMargin w-50 " appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.charset'): ""}}
+            </mat-label>
+            <mat-select [disabled]="!isCharset" name="charset" [(ngModel)]="modbusPointLocatorModel.charset">
+              <mat-option
+                value="ASCII">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.dropdown.modbusSerial.encoding.ascii'): ""}}</mat-option>
+              <mat-option
+                value="RTU">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.dropdown.modbusSerial.encoding.rtu'): ""}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <p>
+            <mat-form-field class="form_field allInputsMargin w-50 marginTop-20" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.writeType'): ""}}
+              </mat-label>
+              <mat-select [disabled]="!isWrite" name="writeType" [(ngModel)]="modbusPointLocatorModel.writeType">
+                <mat-option *ngFor="let writeType of dropdownData.writeTypes" [value]="writeType.code">
+                  {{writeType.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.multiplier'): ""}}
+              </mat-label>
+              <input [disabled]="!isMultiplier" matInput name="multiplier"
+                     [(ngModel)]="modbusPointLocatorModel.multiplier">
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="form_field allInputsMargin w-50 mt-10" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.additive'): ""}}</mat-label>
+              <input [disabled]="!isAdditive" matInput name="additive" [(ngModel)]="modbusPointLocatorModel.additive">
+            </mat-form-field>
+            <mat-slide-toggle class="side_form_toggle toggle_change singleToggle" name="multistateNumeric"
+                              [(ngModel)]="modbusPointLocatorModel.multistateNumeric">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.multistateNumeric'): ""}}
+            </mat-slide-toggle>
+          </p>
+          <p>
+          </p>
+          <div class="meshActionsButtons">
+            <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
+            <ng-template #savePoint>
+              <button mat-raised-button class="allDataPointSaveButton mupdateButton" (click)="saveDataPoint()">
+                {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+            </ng-template>
+            <ng-template #updatePoint>
+              <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">
+                {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+              </button>
+            </ng-template>
+          </div>
+          <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+        </div>
+        <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
+        </app-datapoint-table>
+      </mat-tab>
+      <mat-tab label="Tools" [disabled]="!datapointForm">
+        <app-scandevicetool [valueFromParent]="parentValue" *ngIf="childLoaded"></app-scandevicetool>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>
