@@ -81,8 +81,8 @@
           </ng-template>
         </form>
       </mat-tab>
-      <mat-tab label="Points" >
-        <div class="sidebar-form" >
+      <mat-tab label="Points" [disabled]="!datapointFormName">
+        <div class="sidebar-form" *ngIf="displayForm">
           <p>
             <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
               <mat-label>
