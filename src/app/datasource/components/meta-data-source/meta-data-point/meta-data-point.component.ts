@@ -7,22 +7,26 @@ import { DataPointService } from '../../../../core/services';
 import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { UnsubscribeOnDestroyAdapter } from '../../../../common';
 import {DictionaryService} from "../../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
   selector: 'app-meta-data-point',
   templateUrl: './meta-data-point.component.html',
   styleUrls: []
 })
 export class MetaDataPointComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable) table!: MatTable<any>;
   dataPointsTableColumns: string[] = ['DeviceName','DataType', 'dataPointName', 'variableName', 'action'];
   dataSource:any=[];
-  xid:string;
-  name:string;
-  variableName:string;
-  contextUpdate:boolean;
-  edits:boolean;
-  visibles:boolean;
+  xid!:string;
+  name!:string;
+  variableName!:string;
+  contextUpdate!:boolean;
+  edits!:boolean;
+  visibles!:boolean;
   closeData:any;
   public metaPointLocatorModels=[];
   UIDICTIONARY : any;
@@ -47,7 +51,7 @@ export class MetaDataPointComponent extends UnsubscribeOnDestroyAdapter implemen
   }
 
 
-  getDataPointByID(xid){
+  getDataPointByID(xid: string){
     this.subs.add(this._dataPointService.getByXid(xid).subscribe(data=>{
       this.name = data.extendedName;
 
@@ -57,8 +61,8 @@ export class MetaDataPointComponent extends UnsubscribeOnDestroyAdapter implemen
   dataAddonMatchValue (){
     let existingArray = this.data.allDataPoints;
     let idsToAddData = this.data.datapointAdded;
-    idsToAddData.forEach(idData => {
-      let matchedObject = existingArray.find(obj => obj.xid === idData.xid);
+    idsToAddData.forEach((idData: { xid: any; variableName: any; }) => {
+      let matchedObject = existingArray.find((obj: { xid: any; }) => obj.xid === idData.xid);
       if (matchedObject) {
         matchedObject['variableName'] = idData.variableName;
       }
@@ -99,9 +103,9 @@ export class MetaDataPointComponent extends UnsubscribeOnDestroyAdapter implemen
     this.dataSource.pop();
     this.table.renderRows();
   }
-  edit(element){
-    const matched = this.data.datapointAdded.filter(h => h.xid == element.xid);
-    matched.forEach(element=>{
+  edit(element: { xid: any; }){
+    const matched = this.data.datapointAdded.filter((h: { xid: any; }) => h.xid == element.xid);
+    matched.forEach((element: { variableName: string; contextUpdate: boolean; xid: string; })=>{
       this.variableName = element.variableName;
       this.contextUpdate = element.contextUpdate;
       this.xid = element.xid;
@@ -116,8 +120,8 @@ export class MetaDataPointComponent extends UnsubscribeOnDestroyAdapter implemen
     this.dialogRef.close(this.closeData);
   }
   updatePublish() {
-    const elementsToUpdate = this.data.datapointAdded.filter(h => h.xid == this.xid);
-    elementsToUpdate.forEach(element => {
+    const elementsToUpdate = this.data.datapointAdded.filter((h: { xid: string; }) => h.xid == this.xid);
+    elementsToUpdate.forEach((element: any) => {
       element.variableName = this.variableName;
     });
     this.dialogRef.close(this.data.datapointAdded);

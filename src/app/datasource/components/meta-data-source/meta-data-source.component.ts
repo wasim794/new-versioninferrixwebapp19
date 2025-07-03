@@ -17,10 +17,13 @@ import { HelpModalComponent } from "../../../help/help-modal/help-modal.componen
 import { commonHelp } from "../../../help/commonHelp";
 import { CommonModule } from "@angular/common";
 import { MatModuleModule } from "../../../common/mat-module";
+import { DatapointTableComponent } from "../common";
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule, HelpModalComponent],
+  imports: [CommonModule, MatModuleModule, DatapointTableComponent, ReactiveFormsModule],
+  providers: [DataPointService,ScriptsService, ScriptUtilsService, DictionaryService],
   selector: "app-meta-data-source",
   templateUrl: "./meta-data-source.component.html",
   styleUrls: [],
@@ -148,10 +151,11 @@ export class MetaDataSourceComponent extends DataSourceBase implements OnInit {
         width: "900px",
         disableClose: true,
       });
+      
       dialogRef.afterClosed().subscribe((result) => {
         if (result == "close") {
           if (this.metaPointLocatorModel.context === undefined) {
-            return false;
+             console.warn("metaPointLocatorModel.context is undefined.");
           }
           let ds:any = [];
           this.metaPointLocatorModel.context.forEach((data) => {
@@ -159,7 +163,7 @@ export class MetaDataSourceComponent extends DataSourceBase implements OnInit {
           });
           // Now d contains all the appended strings
           this.selectedItems = ds;
-          return false;
+          console.warn("metaPointLocatorModel.context is undefined.");
         }
         if (this.metaPointLocatorModel.context === undefined) {
           this.metaPointLocatorModel.context = result;
@@ -197,7 +201,7 @@ export class MetaDataSourceComponent extends DataSourceBase implements OnInit {
           this.buttonViews = true;
         }
       });
-      return true
+      return true;
     }
   }
 
