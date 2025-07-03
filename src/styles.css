@@ -4200,12 +4200,15 @@ label.values-label {
   color: #ffffff !important;
 }
 
+.helpTollbar{
+  padding: 10px;
+}
+
 .help_Title  {
   background-color: #213a57;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 8px;
   margin-bottom: 15px;
   gap: 20px;
 }
@@ -4220,7 +4223,8 @@ label.values-label {
 
 .help_Close {
   color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
+  margin-right: 10px;
 }
 
 button.icon.headericons.favorite-icon.mat-mdc-icon-button {
