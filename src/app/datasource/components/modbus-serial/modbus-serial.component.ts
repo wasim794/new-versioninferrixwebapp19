@@ -1,10 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DataSourceBase} from '../common/dataSourceBase';
 import {CommonService} from '../../../services/common.service';
-import {ModbusDropdownData, ModbusPointLocatorModel, ModbusIpModel} from '../modbus-ip';
-import {ScandevicetoolComponent} from '../modbus-ip/scandevicetool/scandevicetool.component';
-import {ModbusAttributeIpService} from '../modbus-ip/service/modbus-attribute.service';
-import { ModbusDatasourceIpService,} from '../modbus-ip/service/modbus-datasource.service';
+import {ModbusPointLocatorModel} from '../modbus-ip';
+import {ModbusDropdownData, ModbusAttributeService, ModbusDatasourceService, ModbusSerialModel, ScandevicetoolSerialComponent} from '../modbus-serial';
 import {DataPointService, SerialPortsService, DictionaryService} from '../../../core/services';
 import {DataPointModel} from '../../../core/models/dataPoint';
 import {TimePeriodModel} from '../../../core/models/timePeriod';
@@ -12,29 +10,29 @@ import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
 import { DatapointTableComponent } from '../common';
 
-
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule, DatapointTableComponent, ScandevicetoolComponent],
-  providers: [DataPointService, SerialPortsService, DictionaryService, ModbusAttributeIpService, ModbusDatasourceIpService],
-  selector: 'app-modbus-ip',
-  templateUrl: './modbus-ip.component.html',
-  styleUrls: []
+  imports: [CommonModule, MatModuleModule, DatapointTableComponent, ScandevicetoolSerialComponent],
+  providers: [ModbusAttributeService, ModbusDatasourceService, CommonService],
+  selector: 'app-modbus-serial',
+  templateUrl: './modbus-serial.component.html',
+  styleUrls: [],
 })
-export class ModbusIpComponent extends DataSourceBase implements OnInit {
+export class ModbusSerialComponent extends DataSourceBase implements OnInit {
   public override datapointForm:boolean=false;
-  public displayForm!: boolean;
+  displayForm!: boolean;
+  parentValue: any;
   @Output() override addedSavedDatasource = new EventEmitter<any>();
   @Output() override addedUpdatedDatasource = new EventEmitter<any>();
-  public datapointButtonsView: boolean | undefined;
-  public override tabIndex = 0;
-  declare public currentDatapointIndex: number;
-  public saveSuccess   = 'saved successfully';
-  public updateSuccess = 'updated successfully';
-  public dsId!:any;
-  public isEdit!: boolean;
+  datapointButtonsView!: boolean;
+  override tabIndex = 0;
+  declare currentDatapointIndex: any;
+  saveSuccess = 'saved successfully';
+  updateSuccess = 'updated successfully';
+  dsId!: any;
+  isEdit!: boolean;
   public dropdownData: ModbusDropdownData;
-  public modbusIpModel: any = new ModbusIpModel();
+  public modbusSerialModel: ModbusSerialModel = new ModbusSerialModel();
   public modbusPointLocatorModel: ModbusPointLocatorModel = new ModbusPointLocatorModel();
   public dataPointModel: DataPointModel = new DataPointModel();
   public editPermission: any = [];
@@ -48,20 +46,19 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
   public isAdditive!: boolean;
   public isWrite!: boolean;
   public messageError!: boolean;
+  modbusSerialError!: any[];
+  datapointFormName: boolean=false;
   childLoaded: boolean=false;
-  public modbusIpError!: any[];
-  public valueNumber='Value must be a number';
-  public Property='updatePeriods';
-  parentValue: any;
   UIDICTIONARY : any;
-  datasourceTitleName : any;
+  datasourceTitleName: any;
   isActivePdSmall!:boolean;
 
+
   constructor(
-    private datasourceService: ModbusDatasourceIpService,
+    private datasourceService: ModbusDatasourceService,
     private datapointService: DataPointService,
     private commonService: CommonService,
-    attributeService: ModbusAttributeIpService,
+    attributeService: ModbusAttributeService,
     serialPortService: SerialPortsService,
     public dictionaryService: DictionaryService
   ) {
@@ -72,28 +69,28 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
   ngOnInit() {
     this.dictionaryService.getUIDictionary('core').subscribe(data=>{
       this.UIDICTIONARY = this.dictionaryService.uiDictionary;
-        });
+       });
     this.dropdownData.setArrays();
   }
 
-  public override selectTab(index: number): void {
+  override selectTab(index: number): void {
     this.tabIndex = index;
     this.tabIndex===2?this.childLoaded = true : this.childLoaded = false;
   }
 
   override addNewDatasource(dsType: any) {
-    this.modbusIpModel = new ModbusIpModel();
-    this.modbusIpModel.timePeriod = new TimePeriodModel();
-    this.modbusIpModel.timeout = 500;
-    this.modbusIpModel.retries = 2;
-    this.modbusIpModel.maxReadBitCount = 2000;
-    this.modbusIpModel.maxReadRegisterCount = 125;
-    this.modbusIpModel.maxWriteRegisterCount = 120;
-    this.modbusIpModel.ioLogFileSizeMBytes = 1.0;
-    this.modbusIpModel.maxHistoricalIOLogs = 1;
+    this.modbusSerialModel = new ModbusSerialModel();
+    this.modbusSerialModel.timePeriod = new TimePeriodModel();
+    this.modbusSerialModel.timeout = 500;
+    this.modbusSerialModel.retries = 2;
+    this.modbusSerialModel.maxReadBitCount = 2000;
+    this.modbusSerialModel.maxReadRegisterCount = 125;
+    this.modbusSerialModel.maxWriteRegisterCount = 120;
+    this.modbusSerialModel.ioLogFileSizeMBytes = 1.0;
+    this.modbusSerialModel.maxHistoricalIOLogs = 1;
   }
 
-  override addNewDatapoint(xid: string, index: number) {
+  override addNewDatapoint(xid: any, index: any) {
     if (!xid) {
       alert('Add datasource first');
       return false;
@@ -121,17 +118,17 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
     this.currentDatapointIndex = dataPoint['index'];
     this.subs.add(
       this.datapointService
-        .getByXid(dataPointXid)
-        .subscribe((data) => {
-          this.displayForm = true;
-          this.dataPointModel = new DataPointModel(data);
-          this.modbusPointLocatorModel = new ModbusPointLocatorModel(data.pointLocator);
-          this.readPermission = data.readPermission.split(',');
-          this.setPermission = data.setPermission.split(',');
-          this.datapointButtonsView = true;
-          this.rangeChange(this.modbusPointLocatorModel.range);
-          this.dataTypeChange(this.modbusPointLocatorModel.modbusDataType);
-        })
+      .getByXid(dataPointXid)
+      .subscribe((data) => {
+        this.displayForm = true;
+        this.dataPointModel = new DataPointModel(data);
+        this.modbusPointLocatorModel = new ModbusPointLocatorModel(data.pointLocator);
+        this.readPermission = data.readPermission.split(',');
+        this.setPermission = data.setPermission.split(',');
+        this.datapointButtonsView = true;
+        this.rangeChange(this.modbusPointLocatorModel.range);
+        this.dataTypeChange(this.modbusPointLocatorModel.modbusDataType);
+      })
     );
   }
 
@@ -139,33 +136,36 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
     this.selectTab(index);
     this.isEdit = true;
     this.datapointForm = true;
+    this.datapointFormName = true;
+    this.modbusSerialModel.timePeriod = new TimePeriodModel();
+    this.modbusSerialModel.purgePeriod = this.modbusSerialModel.timePeriod;
     this.subs.add(
       this.datasourceService.getByXid(datasource.xid).subscribe(
         (data) => {
-          this.modbusIpModel = new ModbusIpModel(data);
-          this.parentValue = this.modbusIpModel;
+          this.modbusSerialModel = new ModbusSerialModel(data);
+          this.parentValue = this.modbusSerialModel;
           this.dsId = data.id;
           this.editPermission = data.editPermission.split(',');
         }, error => {
-          this.modbusIpError = error.result.message;
+          this.modbusSerialError = error.result.message;
           this.timeOutFunction();
         }));
     if (editForm) {
       this.addNewDatapoint(datasource.xid, index);
     }
     this.getDataPoints(datasource);
-     this.datasourceTitleName = datasource.name;
-     this.isActivePdSmall = true;
+    this.datasourceTitleName = datasource.name;
+    this.isActivePdSmall = true;
   }
 
 
   validateTimePeriod() {
-    if (isNaN(this.modbusIpModel.timePeriod.timePeriod)) {
+    if (isNaN(this.modbusSerialModel.timePeriod.timePeriod)) {
       const prop = {
-        message: this.valueNumber,
-        property: this.Property,
+        message: 'Value must be a number',
+        property: 'updatePeriods',
       };
-       this.modbusIpError.push(prop);
+      this.modbusSerialError.push(prop);
        this.timeOutFunction();
     }
   }
@@ -175,50 +175,50 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
     this.subs.add(
       this.datasourceService.getByXid(dataSource.xid).subscribe(
         (data) => {
-          this.modbusIpModel = new ModbusIpModel(data);
+          this.modbusSerialModel = new ModbusSerialModel(data);
           if (data.editPermission) {
             this.editPermission = data.editPermission.split(',');
           }
         }, error => {
-          this.modbusIpError = error.result.message;
+          this.modbusSerialError = error.result.message;
           this.timeOutFunction();
         }));
   }
 
   saveDatasource() {
     if (this.editPermission) {
-      this.modbusIpModel.editPermission = this.editPermission.toString();
+      this.modbusSerialModel.editPermission = this.editPermission.toString();
     }
-    this.modbusIpModel.timePeriod = this.modbusIpModel.purgePeriod;
+    this.modbusSerialModel.purgePeriod = this.modbusSerialModel.timePeriod;
     this.subs.add(
       this.datasourceService
-        .create(this.modbusIpModel)
-        .subscribe((data) => {
-          this.isEdit = true;
-          this.commonService.notification(
-            'Datasource ' + this.modbusIpModel.name + ' ' + this.saveSuccess
-          );
-          this.addedSavedDatasource.emit(data);
-        }, error => {
-          this.modbusIpError = error.result.message;
-          this.timeOutFunction();
-        }));
+      .create(this.modbusSerialModel)
+      .subscribe((data) => {
+        this.isEdit = true;
+        this.commonService.notification(
+          'Datasource ' + this.modbusSerialModel.name + ' ' + this.saveSuccess
+        );
+        this.addedSavedDatasource.emit(data);
+      }, error => {
+        this.modbusSerialError = error.result.message;
+        this.timeOutFunction();
+      }));
   }
 
   updateDatasource() {
     this.validateTimePeriod();
     if (this.editPermission) {
-      this.modbusIpModel.editPermission = this.editPermission.toString();
+      this.modbusSerialModel.editPermission = this.editPermission.toString();
     }
     this.subs.add(
-      this.datasourceService.update(this.modbusIpModel).subscribe(
+      this.datasourceService.update(this.modbusSerialModel).subscribe(
         (data) => {
           this.addedUpdatedDatasource.emit(data);
           this.commonService.notification(
-            'Datasource ' + this.modbusIpModel.name + ' ' + this.updateSuccess
+            'Datasource ' + this.modbusSerialModel.name + ' ' + this.updateSuccess
           );
         }, error => {
-          this.modbusIpError = error.result.message;
+          this.modbusSerialError = error.result.message;
           this.timeOutFunction();
         }));
   }
@@ -228,7 +228,7 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
     this.messageError = true;
     setTimeout(() => {
       this.messageError = false;
-    }, 3000);
+    }, 10000);
   }
 
   private setDataPointPermissions() {
@@ -254,7 +254,7 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
           this.displayForm = false;
           this.commonService.notification('Datapoint ' + this.dataPoint.name + ' ' + this.updateSuccess);
         }, error => {
-          this.modbusIpError = error.result.message;
+          this.modbusSerialError = error.result.message;
           this.timeOutFunction();
         }));
   }
@@ -271,7 +271,7 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
           this.datapointTableComponent.addDatapointToTable(this.dataPoint);
           this.commonService.notification('Datapoint ' + this.dataPoint.name + ' ' + this.saveSuccess);
         }, error => {
-          this.modbusIpError = error.result.message;
+          this.modbusSerialError = error.result.message;
           this.timeOutFunction();
         }));
   }
@@ -374,11 +374,11 @@ export class ModbusIpComponent extends DataSourceBase implements OnInit {
     } else if (dataType === 'BINARY' && this.modbusPointLocatorModel.range === 'INPUT_REGISTER') {
       this.inputRegisterBinarySettings();
     } else if (dataType === 'CHAR' || dataType === 'VARCHAR') {
-      if (this.modbusPointLocatorModel.range === 'HOLDING_REGISTER') {
-        this.holdingRegisterStringSettings();
-      } else if (this.modbusPointLocatorModel.range === 'INPUT_REGISTER') {
-        this.inputRegisterStringSettings();
-      }
+        if (this.modbusPointLocatorModel.range === 'HOLDING_REGISTER') {
+          this.holdingRegisterStringSettings();
+        } else if (this.modbusPointLocatorModel.range === 'INPUT_REGISTER') {
+          this.inputRegisterStringSettings();
+        }
     } else {
       if (this.modbusPointLocatorModel.range === 'HOLDING_REGISTER') {
         this.holdingRegisterSettings();

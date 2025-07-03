@@ -16,6 +16,8 @@ import { HttpJsonRetrieverComponent } from '../components/http-json-retriever';
 import { HttpReceiverDatasourceComponent } from '../components/http-receiver-datasource';
 import { InternalDatasourceComponent } from '../components/internal-datasource';
 import { MetaDataSourceComponent } from '../components/meta-data-source';
+import { ModbusIpComponent } from '../components/modbus-ip';
+import { ModbusSerialComponent } from '../components/modbus-serial';
 
 @Component({
   selector: 'app-datasource-edit',
@@ -77,7 +79,8 @@ export class DatasourceEditComponent {
       'HTTP_RECEIVER.DS': HttpReceiverDatasourceComponent,
       'INTERNAL.DS': InternalDatasourceComponent,
       'META.DS': MetaDataSourceComponent,
-      'MODBUS_IP.DS': BanetIpComponent,
+      'MODBUS_IP.DS': ModbusIpComponent,
+      'MODBUS_SERIAL.DS': ModbusSerialComponent
     };
 
     const component = componentMapping[dataSourceType];
