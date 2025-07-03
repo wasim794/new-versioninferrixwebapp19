@@ -72,11 +72,13 @@
       <div>
         <div *ngIf="!isEdit then save else update"></div>
         <ng-template #save>
-          <button mat-raised-button class="saveButton mr-20" (click)="saveDatasource()">
+          <button matfab class="saveButton mr-20" (click)="saveDatasource()">
+            <mat-icon>save</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
         </ng-template>
         <ng-template #update>
-          <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDatasource()">
+          <button matfab class="updateButton saveButton" (click)="updateDatasource()">
+             <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
           </button>
         </ng-template>
@@ -142,19 +144,21 @@
         <mat-slide-toggle class="side_form_toggle toggle_change singleToggle marginLeft-10" [(ngModel)]="pointLocator.ignoreIfMissing" name="ignoreIfMissing"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpJsonRetriever.field.placeholder.ignoreIfMissing'): ""}} </mat-slide-toggle>
       </p>
 
-      <div class="meshActionsButtons">
+      <div class="">
         <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
         <ng-template #savePoint>
-          <button mat-raised-button class="allDataPointSaveButton mupdateButton mr-20" (click)="saveDataPoint()">
+          <button matfab class="allDataPointSaveButton saveButton" (click)="saveDataPoint()">
+            <mat-icon>save</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
         </ng-template>
         <ng-template #updatePoint>
-          <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">
+          <button matfab class="Update_Button saveButton" (click)="updateDataPoint()">
+              <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
           </button>
         </ng-template>
       </div>
-        <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+        <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
 
       </div>
       <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">

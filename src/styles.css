@@ -1111,6 +1111,9 @@ mat-card.mat-card.mat-focus-indicator.example-card {
 button.SibarCommonAddmoreButtons {
   margin-left: 12px;
   margin-right: 12px;
+  border-radius: 100px;
+  background-color: black;
+  color: white;
 }
 
 .gradeTopButton {
@@ -1347,7 +1350,7 @@ mat-cell.commonReducesSizesAll.singleData {
 }
 .marginLeftAlign {
   position: relative !important;
-  left: 175px !important;
+  left: 135px !important;
 }
 .dataBinaryAll {
   margin: 0 auto !important;
