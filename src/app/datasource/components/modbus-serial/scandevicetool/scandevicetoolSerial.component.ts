@@ -6,7 +6,8 @@ import {ModbusReadRequestModel, ModbusReadResponseModel} from '../../../../core/
 import {ConfigurationService} from "../../../../services/configuration.service";
 import {UnsubscribeOnDestroyAdapter} from "../../../../common";
 import {ModbusToolService} from '../../../../core/services';
-import {ModbusSerialConfigurationModel, ModbusAttributeService} from '../../modbus-serial';
+import {ModbusSerialConfigurationModel} from '../../modbus-serial';
+import {ModbusAttributeService} from "../../modbus-serial/service/modbus-attribute.service";
 import {ModbusPointLocatorModel} from '../../modbus-ip';
 import {MatTableDataSource} from "@angular/material/table";
 import {DictionaryService} from "../../../../core/services/dictionary.service";
