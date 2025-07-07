@@ -20,6 +20,7 @@ import { ModbusIpComponent } from '../components/modbus-ip';
 import { ModbusSerialComponent } from '../components/modbus-serial';
 import { MqttDatasourceComponent } from '../components/mqtt-datasource';
 import { OpcDaComponent } from '../components/opc-da';
+import { PingDatasourceComponent } from '../components/ping-datasource';
 
 @Component({
   selector: 'app-datasource-edit',
@@ -84,7 +85,8 @@ export class DatasourceEditComponent {
       'MODBUS_IP.DS': ModbusIpComponent,
       'MODBUS_SERIAL.DS': ModbusSerialComponent,
       'MQTT.DS': MqttDatasourceComponent,
-      'OPC.DS': OpcDaComponent
+      'OPC.DS': OpcDaComponent,
+      'PING.DS' : PingDatasourceComponent,
     };
 
     const component = componentMapping[dataSourceType];
