@@ -15,7 +15,7 @@ import { MatModuleModule } from '../../common/mat-module';
 import { WatchlistEditComponent } from '../../watchlist/watchlist-edit/watchlist-edit.component';
 import { WatchlistDataPointListComponent } from '../../watchlist/watchlist-data-point-list/watchlist-data-point-list.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
     MatSidenavModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MatPaginatorModule,
     MatIconModule,
     MatButtonModule,
