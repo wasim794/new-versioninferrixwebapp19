@@ -18,6 +18,8 @@ import { InternalDatasourceComponent } from '../components/internal-datasource';
 import { MetaDataSourceComponent } from '../components/meta-data-source';
 import { ModbusIpComponent } from '../components/modbus-ip';
 import { ModbusSerialComponent } from '../components/modbus-serial';
+import { MqttDatasourceComponent } from '../components/mqtt-datasource';
+import { OpcDaComponent } from '../components/opc-da';
 
 @Component({
   selector: 'app-datasource-edit',
@@ -80,7 +82,9 @@ export class DatasourceEditComponent {
       'INTERNAL.DS': InternalDatasourceComponent,
       'META.DS': MetaDataSourceComponent,
       'MODBUS_IP.DS': ModbusIpComponent,
-      'MODBUS_SERIAL.DS': ModbusSerialComponent
+      'MODBUS_SERIAL.DS': ModbusSerialComponent,
+      'MQTT.DS': MqttDatasourceComponent,
+      'OPC.DS': OpcDaComponent
     };
 
     const component = componentMapping[dataSourceType];

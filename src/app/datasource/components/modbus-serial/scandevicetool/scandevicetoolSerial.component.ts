@@ -208,7 +208,7 @@ export class ScandevicetoolSerialComponent extends UnsubscribeOnDestroyAdapter i
   }
 
   updateRange(){
-
+  
   }
 
 }
