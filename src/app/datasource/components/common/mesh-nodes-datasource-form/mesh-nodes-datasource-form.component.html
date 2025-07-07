@@ -54,12 +54,14 @@
   <br>
   <div *ngIf="!isEdit then save else update"></div>
   <ng-template #save>
-    <button mat-raised-button class="saveButton" (click)="saveDatasource()">
+    <button matfab class="saveButton" (click)="saveDatasource()">
+      <mat-icon>save</mat-icon>
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
     </button>
   </ng-template>
   <ng-template #update>
-    <button mat-raised-button class="updateButton" (click)="updateDatasource()">
+    <button matfab class="updateButton saveButton" (click)="updateDatasource()">
+      <mat-icon>save_as</mat-icon>
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </ng-template>

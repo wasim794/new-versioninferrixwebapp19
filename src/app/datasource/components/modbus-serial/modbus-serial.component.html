@@ -15,13 +15,13 @@
     <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
       <mat-tab label="Properties">
         <p>
-          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+          <mat-form-field class="w-50" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
             </mat-label>
             <input matInput [(ngModel)]="modbusSerialModel.name" name="name" type="text" required>
           </mat-form-field>
-          <mat-form-field class="form_field" appearance="fill">
+          <mat-form-field class="w-50 marginLeft-10" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}
             </mat-label>
@@ -31,14 +31,14 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field class="modbusInputField form_field" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}}
             </mat-label>
             <input matInput [(ngModel)]="modbusSerialModel.timePeriod.timePeriod" class="form-control"
                    name="pollingPeriod" type="text" required>
           </mat-form-field>
-          <mat-form-field class="form_field" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
             <mat-select [(ngModel)]="modbusSerialModel.timePeriod.timePeriodType" class="form-control"
                         name="pollingPeriodType">
@@ -49,13 +49,13 @@
         </p>
         <mat-divider class="dividerAllCommonFields"></mat-divider>
         <p>
-          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.timeout'): ""}}
             </mat-label>
             <input matInput [(ngModel)]="modbusSerialModel.timeout" name="timeout" type="text" value="500" required>
           </mat-form-field>
-          <mat-form-field class="form_field" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.retries'): ""}}
             </mat-label>
@@ -68,16 +68,16 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.multipleWritesOnly'): ""}}
           </mat-slide-toggle>
           <mat-slide-toggle [(ngModel)]="modbusSerialModel.contiguousBatches" name="contiguousBatches"
-                            class="side_form_toggle toggle_change allToggls">
+                            class="side_form_toggle contiguousBatchesToggle">
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.contiguousBatches'): ""}}
           </mat-slide-toggle>
         </p>
         <p>
           <mat-slide-toggle [(ngModel)]="modbusSerialModel.createSlaveMonitorPoints" name="createSlaveMonitorPoints"
-                            class="side_form_toggle toggle_change allToggls modbusToggles">
+                            class="side_form_toggle toggle_change allToggls modbusToggles w-50">
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.slaveMonitor'): ""}}
           </mat-slide-toggle>
-          <mat-form-field class="form_field modbusInputField singleInputsM" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxReadBitCount'): ""}}
             </mat-label>
@@ -86,14 +86,14 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxReadRegisterCount'): ""}}
             </mat-label>
             <input matInput [(ngModel)]="modbusSerialModel.maxReadRegisterCount" name="maxReadRegisterCount" type="text"
                    value="125" required>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxWriteRegisterCount'): ""}}
             </mat-label>
@@ -102,7 +102,7 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.discardDataDelay'): ""}}
             </mat-label>
@@ -115,27 +115,27 @@
           </mat-slide-toggle>
         </p>
         <p>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.logIOFileSize'): ""}}
             </mat-label>
             <input matInput name="iofilesize" type="text" value="1" required>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxHistoricalIOLogs'): ""}}</mat-label>
             <input matInput name="maxhistoricaliologs" type="text" value="1" required>
           </mat-form-field>
         </p>
         <mat-divider class="dividerAllCommonFields"></mat-divider>
         <p>
-          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+          <mat-form-field class="form_field w-50 marginTop" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.commPort'): ""}}</mat-label>
             <mat-select name="commPortId" [(ngModel)]="modbusSerialModel.commPortId">
               <mat-option *ngFor="let serialPorts of dropdownData.serialPorts" [value]="serialPorts">{{serialPorts}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.baudRate'): ""}}</mat-label>
             <mat-select [(ngModel)]="modbusSerialModel.baudRate" name="baudRate">
               <mat-option *ngFor="let item of dropdownData.baudRate" [value]="item.value">{{item.value}}</mat-option>
@@ -143,14 +143,14 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.flowControlIn'): ""}}</mat-label>
             <mat-select name="flowControlIn" [(ngModel)]="modbusSerialModel.flowControlIn">
               <mat-option *ngFor="let flowControls of dropdownData.flowControls" [value]="flowControls">{{flowControls}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.flowControlOut'): ""}}</mat-label>
             <mat-select name="flowControlOut" [(ngModel)]="modbusSerialModel.flowControlOut">
               <mat-option *ngFor="let flowControls of dropdownData.flowControls" [value]="flowControls">{{flowControls}}
@@ -159,13 +159,13 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.dataBit'): ""}}</mat-label>
             <mat-select name="dataBits" [(ngModel)]="modbusSerialModel.dataBits">
               <mat-option *ngFor="let databit of dropdownData.dataBits" [value]="databit">{{databit}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.stopBit'): ""}}</mat-label>
             <mat-select name="stopBits" [(ngModel)]="modbusSerialModel.stopBits">
               <mat-option *ngFor="let stopBit of dropdownData.stopBits" [value]="stopBit">{{stopBit}}</mat-option>
@@ -173,13 +173,13 @@
           </mat-form-field>
         </p>
         <p>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.parity'): ""}}</mat-label>
             <mat-select name="parity" [(ngModel)]="modbusSerialModel.parity">
               <mat-option *ngFor="let Parity of dropdownData.parity" [value]="Parity">{{Parity}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.encoding'): ""}}
             </mat-label>
@@ -196,12 +196,14 @@
         </p>
         <div *ngIf="!isEdit then save else update"></div>
         <ng-template #save>
-          <button mat-raised-button class="saveButton" (click)="saveDatasource()">
+          <button matfab class="saveButton" (click)="saveDatasource()">
+            <mat-icon>save</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
           </button>
         </ng-template>
         <ng-template #update>
-          <button mat-raised-button class="updateButton" (click)="updateDatasource()">
+          <button matfab class="updateButton saveButton" (click)="updateDatasource()">
+            <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
           </button>
         </ng-template>
@@ -317,19 +319,21 @@
           </p>
           <p>
           </p>
-          <div class="meshActionsButtons">
+          <div class="">
             <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
             <ng-template #savePoint>
-              <button mat-raised-button class="allDataPointSaveButton mupdateButton" (click)="saveDataPoint()">
+              <button matfab class="allDataPointSaveButton saveButton" (click)="saveDataPoint()">
+                 <mat-icon>save</mat-icon>
                 {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
             </ng-template>
             <ng-template #updatePoint>
-              <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">
+              <button matfab class="Update_Button saveButton" (click)="updateDataPoint()">
+                 <mat-icon>save_as</mat-icon>
                 {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
               </button>
             </ng-template>
           </div>
-          <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+          <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
         </div>
         <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
         </app-datapoint-table>
