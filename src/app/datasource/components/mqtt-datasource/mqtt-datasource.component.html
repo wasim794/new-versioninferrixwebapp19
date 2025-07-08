@@ -15,7 +15,7 @@
     <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
       <mat-tab label="Properties" class="tab_Properties">
         <ng-template matTabContent>
-          <form class="sidebar-form">
+          <form class="formDataPoint">
             <p>
               <mat-form-field class="w-50 allInputSidebar" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name') : ""}}</mat-label>
@@ -83,7 +83,7 @@
                               [(ngModel)]="datasource.autoReconnect" name="autoReconnect">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.autoReconnect'): ""}}
             </mat-slide-toggle>
-            <mat-slide-toggle class="toggle_change rightSliderToggle sideToggleMargin"
+            <mat-slide-toggle class="toggle_change rightSliderToggle sideToggleMargin marginLeft-20"
                               [(ngModel)]="datasource.cleanSession" name="cleanSession">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.cleanSession'): ""}}
             </mat-slide-toggle>
@@ -100,12 +100,16 @@
           </form>
           <div *ngIf="!isEdit then save else update"></div>
           <ng-template #save>
-            <button mat-raised-button class="saveButton"
-                    (click)="saveDatasource()"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+            <button matfab class="saveButton"
+                    (click)="saveDatasource()">
+                    <mat-icon>save</mat-icon>
+                    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
           </ng-template>
           <ng-template #update>
-            <button mat-raised-button class="updateButton"
-                    (click)="updateDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+            <button matfab class="updateButton saveButton"
+                    (click)="updateDatasource()">
+                    <mat-icon>save_as</mat-icon>
+                    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
           </ng-template>
         </ng-template>
       </mat-tab>
@@ -183,13 +187,17 @@
             <div>
               <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
               <ng-template #savePoint>
-                <button mat-raised-button class="allDataPointSaveButton mupdateButton" (click)="saveDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+                <button matfab class="allDataPointSaveButton saveButton" (click)="saveDataPoint()">
+                   <mat-icon class="alignIocns">save</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
               </ng-template>
               <ng-template #updatePoint>
-                <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+                <button matfab class="Update_Button saveButton" (click)="updateDataPoint()">
+                  <mat-icon>save_as</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
               </ng-template>
             </div>
-            <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+            <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
           </div>
         </div>
         <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">

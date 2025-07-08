@@ -1668,6 +1668,10 @@ select:-webkit-autofill:focus {
   text-align: left;
 }
 
+.dataSaverOn{
+  margin-top: 7PX !important;
+}
+
 .conditionalInput {
   margin-right: 12px !important;
 }
@@ -3232,6 +3236,7 @@ mat-header-cell:first-of-type {
 
 .saveReloadServer{
   width:50px !important;
+  border-radius: 8px !important;
   }
 
 .datapointSelectItem{

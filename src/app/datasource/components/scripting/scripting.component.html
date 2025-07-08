@@ -14,7 +14,7 @@
               : {{error.message}}</li>
           </mat-card>
         </div>
-
+ <div class="formDataPoint">
           <mat-form-field class="datapoint_field dataSourceAllInputs w-50 mt-10" appearance="fill">
             <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
             <input class="w-50" matInput [(ngModel)]="scriptingDatasource.xid"
@@ -100,16 +100,16 @@
             </mat-select>
           </mat-form-field>
           <button [disabled]="!buttonViews"   (click)="viewSelectedItems()" mat-raised-button color="primary"
-                  class="viewSelectedItems">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.viewSelectedItems'): ""}}</button>
+                  class="viewButton">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.viewSelectedItems'): ""}}</button>
         </div>
         <div>
-          <mat-form-field class="form_field modbusInputField marginTop w-50" appearance="fill">
+          <mat-form-field class="form_field  w-50" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.logSize'): ""}}
             </mat-label>
             <input matInput name="Execution Delays" type="text" [(ngModel)]="scriptingDatasource.logSize">
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField marginTop w-50" appearance="fill">
+          <mat-form-field class="form_field  w-50 marginLeft-20" appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.logCount'): ""}}
             </mat-label>
@@ -151,6 +151,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          </div>
         </div>
 
           <mat-slide-toggle name="quantize" [(ngModel)]="scriptingDatasource.quantize" *ngIf="scriptingDatasource.polling===true"
@@ -160,10 +161,15 @@
 
         <br>
 
-          <button #updateButton mat-raised-button class="updateButton" (click)="updateDatasource()"
-                  *ngIf="datasourceIsEdit">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
-          <button #saveButton mat-raised-button class="saveButton" (click)="saveDatasource()"
-                  *ngIf="!datasourceIsEdit">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+        
+          <button #updateButton matfab class="updateButton saveButton" (click)="updateDatasource()"
+                  *ngIf="datasourceIsEdit">
+                   <mat-icon>save_as</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+          <button #saveButton matfab class="saveButton" (click)="saveDatasource()"
+                  *ngIf="!datasourceIsEdit">
+                   <mat-icon>save</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
 
       </mat-tab>
 
@@ -213,17 +219,19 @@
             <div class="meshActionsButtons">
               <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
               <ng-template #savePoint>
-                <button mat-raised-button class="allDataPointSaveButton mupdateButton" (click)="saveDataPoint()">
+                <button matfab class="allDataPointSaveButton saveButton" (click)="saveDataPoint()">
+                   <mat-icon>save</mat-icon>
                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
               </ng-template>
               <ng-template #updatePoint>
-                <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">
+                <button matfab class="Update_Button saveButton" (click)="updateDataPoint()">
+                   <mat-icon>save_as</mat-icon>
                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
                 </button>
               </ng-template>
             </div>
             <button mat-raised-button (click)="cancelDataPoint()"
-                    class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+                    class="cancel_button_new cancelPoint">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
 
           </div>
 
