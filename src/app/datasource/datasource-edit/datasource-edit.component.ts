@@ -28,6 +28,7 @@ import { ThermostatComponent } from '../components/thermostat';
 import { VirtualDatasourceComponent } from '../components/virtual-datasource';
 import { DistanceSensorComponent } from '../components/distance-sensor';
 import { PeopleCounterComponent } from '../components/people-counter';
+import { MeshModbusControllerComponent } from '../components/mesh-modbus-controller';
 
 
 @Component({
@@ -101,7 +102,8 @@ export class DatasourceEditComponent {
       'THERMOSTAT.DS': ThermostatComponent,
       'VIRTUAL.DS': VirtualDatasourceComponent,
       'DISTANCE_SENSOR.DS': DistanceSensorComponent,
-      'PEOPLE_COUNTER.DS': PeopleCounterComponent
+      'PEOPLE_COUNTER.DS': PeopleCounterComponent,
+      'MODBUS_CONTROLLER.DS': MeshModbusControllerComponent
     };
 
     const component = componentMapping[dataSourceType];
