@@ -39,8 +39,12 @@
         <mat-divider class="dividerAllCommonFields"></mat-divider>
         <br>
         <p>
-          <button #updateButton mat-raised-button class="updateButton"  (click)="updateDatasource()"  *ngIf="datasourceIsEdit">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
-          <button #saveButton mat-raised-button class="saveButton"  (click)="saveDatasource()" *ngIf="!datasourceIsEdit" >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+          <button #updateButton matfab class="updateButton saveButton"  (click)="updateDatasource()"  *ngIf="datasourceIsEdit">
+            <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+          <button #saveButton matfab class="saveButton"  (click)="saveDatasource()" *ngIf="!datasourceIsEdit" >
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
         </p>
       </mat-tab>
       <mat-tab label="Points" [disabled]="!dataPointHide" >
@@ -129,10 +133,10 @@
                     class="viewButton">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.viewSelectedItems'): ""}}</button>
             <p >
 
-              <mat-form-field class="globalScript" >
+       
                 <mat-label> </mat-label>
                 <textarea matInput autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="terminal"  rows="10" class="terminal" [(ngModel)]="metaPointLocatorModel.script" name="script"></textarea>
-              </mat-form-field>
+          
 
             </p>
             <mat-error class="errorAllMSG"><div  *ngFor="let error of scriptError" [hidden]="!messageError">
@@ -208,19 +212,21 @@
               </mat-form-field>
             </p>
 
-            <div class="meshActionsButtons">
+            <div class="">
               <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
               <ng-template #savePoint>
-                <button mat-raised-button class="allDataPointSaveButton mupdateButton" (click)="saveDataPoint()">
+                <button matfab class="allDataPointSaveButton saveButton" (click)="saveDataPoint()">
+                  <mat-icon class="alignIocns">save</mat-icon>
                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
               </ng-template>
               <ng-template #updatePoint>
-                <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">
+                <button mat-raised-button class="Update_Button saveButton" (click)="updateDataPoint()">
+                   <mat-icon>save_as</mat-icon>
                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
                 </button>
               </ng-template>
             </div>
-            <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+            <button mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new cancelPoint">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
 
           </div>
         </div>

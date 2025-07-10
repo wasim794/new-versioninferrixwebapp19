@@ -13,7 +13,7 @@
 
 </div>
 <div class="mat-elevation-z8">
-  <mat-table mat-table [dataSource]="dataPoints.data.items" class="table_data dataPointsAllTable setValueWidth setAutoWidth">
+  <mat-table mat-table [dataSource]="dataPoints.data.items" class="table_data setValueWidth setAutoWidth">
     <!-- name Column -->
     <ng-container matColumnDef="name" class="table_row">
       <mat-header-cell *matHeaderCellDef class="cells_title">
@@ -63,11 +63,11 @@
         <mat-icon *ngIf="element.pointLocator.settable==true" inline=true title="Set Value" class="action-icons"
                     (click)="setVal(element)"> settings_remote
           </mat-icon>
-<!--          <mat-icon *ngIf="element.pointLocator.settable==true" inline=true title="Set Value" class="action-icons"-->
-<!--                    (click)="setVal(element)"> settings_remote-->
-<!--          </mat-icon>-->
+        <mat-icon *ngIf="element.pointLocator.settable==true" inline=true title="Set Value" class="action-icons"
+                   (click)="setVal(element)"> settings_remote
+         </mat-icon>
         </div>
-        <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}" class="action-icons" (click)="edit(element.xid, element)"> edit</mat-icon>
+          <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}" class="action-icons" (click)="edit(element.xid, element)"> edit</mat-icon>
         <mat-icon inline=true title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.datapointDetails').substring(9,16): ''}}" class="action-icons" (click)="dataPointDetails(element.xid)">
           description
         </mat-icon>

@@ -59,18 +59,22 @@
     </mat-slide-toggle>
 
 
-    <div class="meshActionsButtons">
+    <div class="">
       <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
       <ng-template #savePoint>
-        <button mat-raised-button class="allDataPointSaveButton mupdateButton"
-                (click)=" saveDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+        <button matfab class="allDataPointSaveButton saveButton"
+                (click)=" saveDataPoint()">
+                <mat-icon>save</mat-icon>
+                {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
       </ng-template>
       <ng-template #updatePoint>
-        <button mat-raised-button (click)="updateDataPoint()" class="Update_Button mupdateButton" >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+        <button matfab (click)="updateDataPoint()" class="Update_Button saveButton" >
+          <mat-icon>save-as</mat-icon>
+          {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
       </ng-template>
-      <button mat-raised-button (click)="cancelDataPoint($event)" class="cancel_button_new marginLeft-10">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+      <button mat-raised-button (click)="cancelDataPoint($event)" class="cancel_button_new cancelPoint">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
     </div>
 
   </div>
 </div>
-<mat-divider clas="dividerBorder"></mat-divider>
+
