@@ -8,18 +8,18 @@
   <div class="mat-content">
     <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
       <mat-tab label="Properties">
-        <!-- <app-sensor-datasource-form (savedDatasource)="sendSavedDatasource($event)"
-                                    (updatedDatasource)="sendUpdatedDatasource($event)"></app-sensor-datasource-form> -->
+        <app-sensor-datasource-form (savedDatasource)="sendSavedDatasource($event)"
+                                    (updatedDatasource)="sendUpdatedDatasource($event)"></app-sensor-datasource-form>
       </mat-tab>
       <mat-tab label="Points">
         <div [hidden]="!datapointForm" class="sidebar-form">
-          <!-- <app-sensor-datapoints-form [dataPoint]="dataPoint" [pointLocator]="pointLocator"
+          <app-sensor-datapoints-form [dataPoint]="dataPoint" [pointLocator]="pointLocator"
                                       [attributeCode]="attributeCode" (saveTable)="dpTableAfterSaved($event)"
                                       (updateTable)="dpTableAfterUpdated($event)"
-                                      (hideShow)="hideShow($event)"></app-sensor-datapoints-form> -->
+                                      (hideShow)="hideShow($event)"></app-sensor-datapoints-form>
         </div>
-        <!-- <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
-        </app-datapoint-table> -->
+        <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
+        </app-datapoint-table>
       </mat-tab>
     </mat-tab-group>
   </div>

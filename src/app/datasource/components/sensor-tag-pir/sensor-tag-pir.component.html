@@ -1,0 +1,31 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.sensorTag.pir'): ""}}
+      <small>{{datasourceTitleName}}</small>
+    </mat-card-title>
+  </mat-toolbar>
+
+  <div class="mat-content">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex"
+                   (selectedTabChange)="selectTab($event.index)">
+      <mat-tab label="Properties">
+        <app-sensor-datasource-form (savedDatasource)="sendSavedDatasource($event)"
+                                    (updatedDatasource)="sendUpdatedDatasource($event)"></app-sensor-datasource-form>
+      </mat-tab>
+      <mat-tab label="Points">
+        <div [hidden]="!datapointForm" class="sidebar-form">
+          <app-sensor-datapoints-form [dataPoint]="dataPoint" [pointLocator]="pointLocator"
+                                      [attributeCode]="attributeCode"
+                                      (saveTable)="dpTableAfterSaved($event)"
+                                      (updateTable)="dpTableAfterUpdated($event)" (hideShow)="hideShow($event)">
+          </app-sensor-datapoints-form>
+        </div>
+        <app-datapoint-table (editPoint)="editDataPoint($event)"
+                             (addPoint)="addNewDatapoint($event, 1)">
+        </app-datapoint-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>

@@ -5,10 +5,12 @@ import {DataPointService, DictionaryService} from '../../../core/services';
 import {DataSourceBase} from '../common/dataSourceBase';
 import {AssetTagDatasourceService} from '../../components/asset-tag';
 import { MatModuleModule } from '../../../common/mat-module';
+import { CommonModule } from '@angular/common';
+import { DatapointTableComponent, MeshNodesDatapointsFormComponent, MeshNodesDatasourceFormComponent } from '../common';
 
 @Component({
   standalone: true,
-  imports: [MatModuleModule],
+  imports: [MatModuleModule, CommonModule, MeshNodesDatapointsFormComponent, MeshNodesDatasourceFormComponent, DatapointTableComponent],
   providers: [DataPointService, DictionaryService],
   selector: 'app-asset-tag',
   templateUrl: './asset-tag.component.html',

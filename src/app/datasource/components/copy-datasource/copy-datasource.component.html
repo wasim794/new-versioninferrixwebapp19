@@ -1,0 +1,46 @@
+<mat-card class="form_cards copyDataSource">
+  <mat-toolbar class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.copy'): ""}}
+    </mat-card-title>
+  </mat-toolbar>
+  <div class="mat-content">
+    <form>
+
+        <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+          <input matInput name="name" type="text" [(ngModel)]="copyName" required>
+        </mat-form-field>
+
+      <div>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.datasource'): ""}}  : &nbsp;
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.tab.points'): ""}}  &nbsp;
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.no'): ""}}
+        <span class="arrowIconCopy">
+          <i class="material-icons">arrow_back</i>
+        <i class="material-icons">arrow_forward</i>
+      </span>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.yes'): ""}}
+
+        <mat-slide-toggle [(ngModel)]="model.points" name="points" class="side_form_toggle toggle_change allToggls">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.tab.points'): ""}}
+        </mat-slide-toggle>
+        <br>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.datasource'): ""}}  : &nbsp;&nbsp;
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}
+        <span class="arrowIconCopy"><i class="material-icons">arrow_back</i>
+          <i class="material-icons">arrow_forward</i></span>
+        {{"Enabled"}}
+        <mat-slide-toggle [(ngModel)]="model.enabled" name="enabled" class="side_form_toggle toggle_change allToggls">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
+        </mat-slide-toggle>
+      </div>
+      <div class="actionButtonsAll ">
+        <button mat-raised-button class="saveButton datasourceCopyButton" (click)="saveCopyData(xid)">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.copy') | uppercase) : ""}}</button>
+        <button mat-raised-button class="Save_Button cancelAllButtons datasourceCancelButton" mat-dialog-close>
+          {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+        </button>
+      </div>
+    </form>
+  </div>
+</mat-card>
