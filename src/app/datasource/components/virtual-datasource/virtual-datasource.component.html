@@ -1,0 +1,346 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row" [class.activeID]="isActivePd">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.heading'): ""}}
+      <small *ngIf="isActivePdSmall">{{datasourceTitleName}}</small>
+    </mat-card-title>
+
+      <mat-icon class="helpInformation " aria-hidden="false" aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                (click)="virtualDSModal(title_ds)">
+        info_outline
+      </mat-icon>
+
+  </mat-toolbar>
+  <div class="mat-content allSensors">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
+      <mat-tab label="Properties" class="tab_Properties">
+        <form class="sidebar-form">
+          <div [hidden]="!messageError">
+            <mat-card class="validation-error">
+              <li *ngFor="let err of error">{{err.property}}
+                : {{err.message}}
+              </li>
+            </mat-card>
+          </div>
+
+            <mat-form-field class="form_field form_field allInputsMargin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+              <input matInput [(ngModel)]="datasource.name" name="name" type="text" required>
+            </mat-form-field>
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
+              <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
+                <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          <div>
+            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}}</mat-label>
+              <input matInput [(ngModel)]="datasource.timePeriod.timePeriod" class="form-control" name="timePeriod"
+                     type="text" required>
+            </mat-form-field>
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
+              <mat-select [(ngModel)]="datasource.timePeriod.timePeriodType" [formControl]="timePeriodType"
+                          class="form-control" name="pollingPeriodType">
+                <mat-option *ngFor="let item of pollingPeriodType" [value]="item.val">{{item.key}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div *ngIf="!isEdit then save else update"></div>
+          <ng-template #save>
+            <button mat-raised-button class="saveButton"
+                    (click)="saveDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+          </ng-template>
+          <ng-template #update>
+            <button mat-raised-button class="updateButton"
+                    (click)="updateDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+          </ng-template>
+        </form>
+      </mat-tab>
+      <mat-tab label="Points" class="tab_points" [disabled]="!datapointForm">
+        <div class="sidebar-form" *ngIf="displayForm">
+          <div id="pointErrorMsg">
+            <div [hidden]="!messageError">
+              <mat-card class="validation-error">
+                <li *ngFor="let err of error">{{err.property}}
+                  : {{err.message}}
+                </li>
+              </mat-card>
+            </div>
+          </div>
+          <div class="datapoint-form">
+
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+                <input [(ngModel)]="dataPoint.name" matInput name="name" placeholder="Enter Name" required>
+              </mat-form-field>
+              <mat-form-field class="datapoint_field w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input [(ngModel)]="dataPoint.xid" disabled matInput class="datasourceBoxHeight" name="xid" placeholder="Auto generated">
+              </mat-form-field>
+
+            <div>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}</mat-label>
+                <mat-select placeholder="Data Type" [(ngModel)]="pointLocator.dataType" name="dataTypes"
+                            (selectionChange)="dataType($event.value)">
+                  <mat-option *ngFor="let item of dataTypes" [value]="item.value">
+                    {{item.key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.changeType'): ""}}</mat-label>
+                <mat-select name="changeType" (selectionChange)="changeType(pointLocator.changeType, true)"
+                            [(ngModel)]="pointLocator.changeType">
+                  <mat-option *ngFor="let item of allDataTypes;" [value]="item.val">{{item.key}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div [ngSwitch]="changeValueType">
+              <div *ngSwitchCase="'ALTERNATE_BOOLEAN'" class="datapoint-form">
+                <mat-form-field class="datapoint_field w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                  <mat-select name="startValue" [(ngModel)]="pointLocator.startValue">
+                    <mat-option *ngFor="let val of startValue" [value]="val.key">{{val.val}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div *ngSwitchCase="'RANDOM_BOOLEAN'" class="datapoint-form">
+                <mat-form-field class="datapoint_field w-50" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                  <mat-select name="startValue" [(ngModel)]="pointLocator.startValue">
+                    <mat-option *ngFor="let val of startValue" [value]="val.key">{{val.val}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div *ngSwitchCase="'MULTISTATE'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.values'): ""}}</mat-label>
+                    <input matInput type="text" name="" [ngModel]="incrementVal" #incrementMul [value]="incrementVal">
+                  </mat-form-field>
+                  <mat-icon (click)="addListValue(incrementMul.value)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}">add</mat-icon>
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.roll'): ""}}</mat-label>
+                    <input matInput type="text" name="roll" [(ngModel)]="pointLocator.roll">
+                  </mat-form-field>
+
+                <div>
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <mat-select name="startValue" [(ngModel)]="pointLocator.startValue">
+                      <mat-option *ngFor="let item of pointLocator.values;" [value]="item">{{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let val of pointLocator.values">
+                      {{val}}
+                      <mat-icon (click)="removeListValue(val)" title="{{UIDICTIONARY ? UIDICTIONARY.get('i.core.httpSender.point.remove'): ''}}">remove</mat-icon>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </div>
+              <div *ngSwitchCase="'RANDOM_MULTISTATE'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.values'): ""}}</mat-label>
+                    <input matInput type="text" name="" [ngModel]="incrementVal" #randomMul [value]="incrementVal">
+                  </mat-form-field>
+                  <mat-icon (click)="addListValue(randomMul.value)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}">add</mat-icon>
+
+                <div>
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <mat-select name="startValue" [(ngModel)]="pointLocator.startValue">
+                      <mat-option *ngFor="let item of pointLocator.values;" [value]="item">{{item}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let val of pointLocator.values">
+                      {{val}}
+                      <mat-icon (click)="removeListValue(val)" title="{{UIDICTIONARY ? UIDICTIONARY.get('i.core.httpSender.point.remove'): ''}}">remove</mat-icon>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </div>
+              <div *ngSwitchCase="'BROWNIAN'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.minimum'): ""}}</mat-label>
+                    <input matInput type="text" name="min" [(ngModel)]="pointLocator.min">
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.maximum'): ""}}</mat-label>
+                    <input matInput type="text" name="max" [(ngModel)]="pointLocator.max">
+                  </mat-form-field>
+
+                <div>
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.maximum'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.change'): ""}}
+                    </mat-label>
+                    <input matInput type="text" name="maxChange" [(ngModel)]="pointLocator.maxChange">
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <input matInput type="text" name="startValue" [(ngModel)]="pointLocator.startValue">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngSwitchCase="'INCREMENT_ANALOG'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.minimum'): ""}}</mat-label>
+                    <input matInput type="text" name="min" [(ngModel)]="pointLocator.min">
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.maximum'): ""}}</mat-label>
+                    <input matInput type="text" name="max" [(ngModel)]="pointLocator.max">
+                  </mat-form-field>
+
+                <div>
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.change'): ""}}</mat-label>
+                    <input matInput type="text" name="change" [(ngModel)]="pointLocator.change">
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.roll'): ""}}</mat-label>
+                    <input matInput type="text" name="roll" [(ngModel)]="pointLocator.roll">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <input matInput type="text" name="start" [(ngModel)]="pointLocator.startValue">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngSwitchCase="'DECREMENT_ANALOG'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.minimum'): ""}}</mat-label>
+                    <input matInput type="text" name="min" [(ngModel)]="pointLocator.min">
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.maximum'): ""}}</mat-label>
+                    <input matInput type="text" name="max" [(ngModel)]="pointLocator.max">
+                  </mat-form-field>
+
+                <div>
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs"  appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.change'): ""}}</mat-label>
+                    <input matInput type="text" name="change" [(ngModel)]="pointLocator.change">
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.roll'): ""}}</mat-label>
+                    <input matInput type="text" name="roll" [(ngModel)]="pointLocator.roll">
+                  </mat-form-field>
+                </div>
+
+                  <mat-form-field class="datapoint_field" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <input matInput type="text" name="start" [(ngModel)]="pointLocator.startValue">
+                  </mat-form-field>
+
+              </div>
+              <div *ngSwitchCase="'RANDOM_ANALOG'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.minimum'): ""}}</mat-label>
+                    <input matInput type="text" name="min" [(ngModel)]="pointLocator.min">
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.maximum'): ""}}</mat-label>
+                    <input matInput type="text" name="max" [(ngModel)]="pointLocator.max">
+                  </mat-form-field>
+
+                <div>
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <input matInput type="text" name="start" [(ngModel)]="pointLocator.startValue">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngSwitchCase="'ANALOG_ATTRACTOR'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.minimum'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.change'): ""}}</mat-label>
+                    <input matInput type="text" name="maxChange" [(ngModel)]="pointLocator.maxChange">
+                  </mat-form-field>
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.volatility'): ""}}</mat-label>
+                    <input matInput type="text" name="volatility" [(ngModel)]="pointLocator.volatility">
+                  </mat-form-field>
+
+                <div>
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.attractionPoint'): ""}}</mat-label>
+                    <mat-select name="attractionPoint" [(ngModel)]="pointLocator.attractionPointXid">
+                      <mat-option *ngFor="let points of dataPointsByTypes.items" [value]="points.xid">{{points.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="datapoint_field w-50 dataSourceAllInputs" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <input matInput type="text" name="start" [(ngModel)]="pointLocator.startValue">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div *ngSwitchCase="'NO_CHANGE'" class="datapoint-form">
+
+                  <mat-form-field class="datapoint_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.virtual.placeholder.startValue'): ""}}</mat-label>
+                    <mat-select *ngIf="noChanges" name="startValue" [(ngModel)]="pointLocator.startValue">
+                      <mat-option *ngFor="let val of startValue" [value]="val.key">{{val.val}}
+                      </mat-option>
+                    </mat-select>
+                    <input *ngIf="!noChanges" matInput type="text" name="startValue" [(ngModel)]="pointLocator.startValue">
+                  </mat-form-field>
+
+              </div>
+            </div>
+            <div class="meshActionsButtons">
+              <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
+              <ng-template #savePoint>
+                <button mat-raised-button class="allDataPointSaveButton mupdateButton" (click)="saveDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+              </ng-template>
+              <ng-template #updatePoint>
+                <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+              </ng-template>
+              <i class="small circular black info icon pointer" (click)="virtualDSModal(title_dp)"
+                 title="Help"></i>
+              <mat-slide-toggle class="toggle_change  dataSourcePointoggle"
+                                name="settable" [(ngModel)]="pointLocator.settable">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
+              </mat-slide-toggle>
+            </div>
+            <button mat-raised-button class="cancel_button_new cancelPoint marginLeft-88" (click)="cancelDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+          </div>
+        </div>
+        <mat-divider class="dividerBorder"></mat-divider>
+        <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
+        </app-datapoint-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>
+
+

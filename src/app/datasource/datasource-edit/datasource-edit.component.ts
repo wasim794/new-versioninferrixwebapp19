@@ -22,6 +22,13 @@ import { MqttDatasourceComponent } from '../components/mqtt-datasource';
 import { OpcDaComponent } from '../components/opc-da';
 import { PingDatasourceComponent } from '../components/ping-datasource';
 import { ScriptingComponent } from '../components/scripting';
+import { SlBusComponent } from '../components/sl-bus';
+import { SnmpComponent } from '../components/snmp';
+import { ThermostatComponent } from '../components/thermostat';
+import { VirtualDatasourceComponent } from '../components/virtual-datasource';
+import { DistanceSensorComponent } from '../components/distance-sensor';
+import { PeopleCounterComponent } from '../components/people-counter';
+
 
 @Component({
   selector: 'app-datasource-edit',
@@ -88,7 +95,13 @@ export class DatasourceEditComponent {
       'MQTT.DS': MqttDatasourceComponent,
       'OPC.DS': OpcDaComponent,
       'PING.DS' : PingDatasourceComponent,
-      'SCRIPTING.DS': ScriptingComponent
+      'SCRIPTING.DS': ScriptingComponent,
+      'SL_BUS.DS': SlBusComponent,
+      'SNMP.DS': SnmpComponent,
+      'THERMOSTAT.DS': ThermostatComponent,
+      'VIRTUAL.DS': VirtualDatasourceComponent,
+      'DISTANCE_SENSOR.DS': DistanceSensorComponent,
+      'PEOPLE_COUNTER.DS': PeopleCounterComponent
     };
 
     const component = componentMapping[dataSourceType];

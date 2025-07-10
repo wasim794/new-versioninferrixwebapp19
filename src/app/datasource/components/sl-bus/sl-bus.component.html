@@ -1,0 +1,161 @@
+  <mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row" [class.activeID]="isActivePd">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.slBus'): ""}}<small *ngIf="isActivePdSmall">{{datasourceTitleName}}</small>
+    </mat-card-title>
+    <mat-icon class="helpInformation" > <i class="material-icons">help_outline</i></mat-icon>
+  </mat-toolbar>
+  <div class="mat-content allSensors">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">
+      <mat-tab label="Properties" class="tab_Properties">
+        <form class="sidebar-form">
+          <div [hidden]="!messageError">
+            <mat-card class="validation-error">
+              <li>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.messages.fillAllDetails'): ""}}
+              </li>
+              <li *ngFor="let err of error">{{err.property}}
+                : {{err.message}}
+              </li>
+            </mat-card>
+          </div>
+
+            <mat-form-field class="form_field form_field allInputsMargin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+              <input matInput [(ngModel)]="datasource.name" name="name" type="text" required>
+            </mat-form-field>
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
+              <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
+                <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          <div>
+            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}}</mat-label>
+              <input [(ngModel)]="datasource.timePeriod.timePeriod" matInput  class="form-control" name="timePeriod"
+                     type="text" required>
+            </mat-form-field>
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
+              <mat-select [(ngModel)]="datasource.timePeriod.timePeriodType"
+                          class="form-control" name="pollingPeriodType">
+                <mat-option *ngFor="let item of pollingPeriodType" [value]="item.val">{{item.key}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.username'): ""}}</mat-label>
+              <input [(ngModel)]="datasource.username" matInput  class="form-control" name="username"
+                     type="text" required>
+            </mat-form-field>
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.password'): ""}}</mat-label>
+              <input [(ngModel)]="datasource.password" matInput  class="form-control" name="password"
+                     type="password" required>
+            </mat-form-field>
+
+
+          <div>
+            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.dlmAccessToken'): ""}}</mat-label>
+              <input [(ngModel)]="datasource.dlmAccessToken" matInput  class="form-control" name="dlmAccessToken"
+                     type="text" required>
+            </mat-form-field>
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.uUID'): ""}}</mat-label>
+              <input [(ngModel)]="datasource.uuid" matInput  class="form-control" name="uuid"
+                     type="text" required>
+            </mat-form-field>
+          </div>
+
+            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.localAddress'): ""}}</mat-label>
+              <input [(ngModel)]="datasource.localUrl" matInput  class="form-control" name="localUrl"
+                     type="text" required>
+            </mat-form-field>
+          <br>
+          <div *ngIf="!isEdit then save else update"></div>
+          <ng-template #save>
+            <button mat-raised-button class="saveButton"
+                    (click)="saveDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+          </ng-template>
+          <ng-template #update>
+            <button mat-raised-button class="updateButton"
+                    (click)="updateDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+          </ng-template>
+        </form>
+      </mat-tab>
+      <mat-tab label="Points"  class="tab_points" [disabled]="!datapointForm">
+        <div class="sidebar-form" *ngIf="displayForm">
+          <div id="pointErrorMsg" class="displayNone">
+          </div>
+          <div class="datapoint-form">
+
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+                <input [(ngModel)]="dataPoint.name" matInput name="name" placeholder="Enter Name" required>
+              </mat-form-field>
+              <mat-form-field class="datapoint_field w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input [(ngModel)]="dataPoint.xid" disabled class="datasourceBoxHeight" matInput name="xid" placeholder="Auto generated">
+              </mat-form-field>
+
+            <div>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.attribute'): ""}}</mat-label>
+                <mat-select [(ngModel)]="pointLocator.attributeId"
+                            class="form-control" name="attributeId">
+                  <mat-option  *ngFor="let attr of dropDownData.attributes"  [value]="attr.key">{{attr.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="datapoint_field w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.deviceType'): ""}}</mat-label>
+                <mat-select [(ngModel)]="pointLocator.slBusDeviceType"
+                  class="form-control" name="slBusDeviceType">
+                  <mat-option  *ngFor="let deviceType of dropDownData.deviceType"  [value]="deviceType.key">{{deviceType.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusDataType').substring(6, 16): ""}}</mat-label>
+                <mat-select [(ngModel)]="pointLocator.dataType"
+                  class="form-control" name="dataType" >
+                  <mat-option *ngFor="let dataType of dataTypes"  [value]="dataType.key">{{dataType.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress'): ""}}</mat-label>
+                <input [(ngModel)]="pointLocator.nodeAddress" matInput name="nodeAddress" placeholder="Enter Address" required>
+              </mat-form-field>
+
+            <div class="meshActionsButtons">
+              <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
+              <ng-template #savePoint>
+                <button mat-raised-button class="allDataPointSaveButton mupdateButton"  (click)="saveDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase) : ""}}</button>
+              </ng-template>
+              <ng-template #updatePoint>
+                <button mat-raised-button (click)="updateDataPoint()" class="Update_Button mupdateButton" >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+              </ng-template>
+              <i class="small circular black info icon pointer"
+                 title="Help"></i>
+              <mat-slide-toggle class="toggle_change  dataSourcePointoggle"
+                                name="settable" [(ngModel)]="pointLocator.settable">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
+              </mat-slide-toggle>
+            </div>
+            <button mat-raised-button (click)="cancel()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+          </div>
+        </div>
+        <mat-divider class="dividerBorder"></mat-divider>
+        <app-datapoint-table (editPoint)="editDataPoint($event)" (addPoint)="addNewDatapoint($event, 1)">
+        </app-datapoint-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>

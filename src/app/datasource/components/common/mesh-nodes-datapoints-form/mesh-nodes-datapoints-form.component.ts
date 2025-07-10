@@ -20,7 +20,7 @@ import { MatModuleModule } from '../../../../common/mat-module';
 })
 export class MeshNodesDatapointsFormComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   @Input() dataPoint!     : DataPointModel;
-  @Input() pointLocator!  : MeshNodesPointLocatorModel;
+  @Input() pointLocator:any  = MeshNodesPointLocatorModel;
   @Input() attributeCode : any= new AttributeCode();
   @Output() updateTable  = new EventEmitter<any>();
   @Output() saveTable    = new EventEmitter<any>();
@@ -49,6 +49,7 @@ export class MeshNodesDatapointsFormComponent extends UnsubscribeOnDestroyAdapte
   });
   this.setSettable();
   this.allAttribute();
+  console.log(this.dataTypes);
             }
 
   allAttribute(){
