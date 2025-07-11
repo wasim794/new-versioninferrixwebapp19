@@ -61,6 +61,12 @@ body {
 .w-23 {
   width: 23% !important;
 }
+
+.cdk-overlay-pane.mat-mdc-dialog-panel {
+     max-width: var(--mat-dialog-container-max-width, 1450px) !important; 
+    /* min-width: var(--mat-dialog-container-min-width, 280px); */
+}
+
 .globalValidate {
   font-family: "Poppins-SemiBold";
   margin-top: 7px !important;
@@ -6946,6 +6952,7 @@ mat-dialog-actions.Action_div.mat-dialog-actions {
 .mat-mdc-dialog-surface{
 
   border-radius: 2px !important;
+ 
 }
 .mat-mdc-table {
   min-width: 96% !important;
@@ -7680,6 +7687,10 @@ mat-divider.mqqtDividers {
   .allResponsiveCard {
     cursor: pointer;
   }
+}
+
+.dataPointClose{
+border-radius: 8px !important;
 }
 
 .firmWareCard {
