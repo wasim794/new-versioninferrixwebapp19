@@ -7,6 +7,7 @@ import { Keepalive } from '@ng-idle/keepalive';
 import { CommonService } from './services/common.service';
 import { fromEvent, interval, Observable, Subscription } from 'rxjs';
 import {NgIdleKeepaliveModule} from '@ng-idle/keepalive';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from './authentication/service';
 
@@ -16,7 +17,7 @@ import { AuthenticationService } from './authentication/service';
   imports: [RouterOutlet, HeaderComponent, FooterComponent, SidebarComponent, NgIf, NgIdleKeepaliveModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [Idle, Keepalive], // Provide the services here
+  providers: [Idle, Keepalive, JwtHelperService], // Provide the services here
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'inferrix-web-app-version19';
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private idle = inject(Idle);
   private keepalive = inject(Keepalive);
   private commonService = inject(CommonService);
+  private jwtHelper = inject(JwtHelperService);
   private authenticationService = inject(AuthenticationService);
 
   constructor() {
@@ -67,6 +69,12 @@ export class AppComponent implements OnInit, OnDestroy {
         this.idle.stop();
       }
     });
+
+const tokenCheckInterval = interval(60000); // Check every minute
+    this.subscriptions.push(
+      tokenCheckInterval.subscribe(() => this.checkTokenExpiration())
+    );
+
   }
 
   reset() {
@@ -98,12 +106,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.internetOnlineOffline();
   }
 
-  refreshToken() {
-    this.authenticationService.refreshToken()
-      .pipe(first())
-      .subscribe(data => {
-      });
-  }
+  // refreshToken() {
+  //   this.authenticationService.refreshToken()
+  //     .pipe(first())
+  //     .subscribe(data => {
+  //     });
+  // }
 
   internetOnlineOffline() {
     this.subscriptions.push(
@@ -131,4 +139,30 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+private checkTokenExpiration(): void {
+    const token = this.authenticationService.getToken();
+    if (token && this.jwtHelper.isTokenExpired(token)) {
+      this.authenticationService.logout();
+      this.commonService.setUserLoggedIn(false);
+      this.router.navigate(['/login']);
+    }
+  }
+
+  refreshToken() {
+    this.authenticationService.refreshToken()
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          // Token refreshed successfully
+        },
+        error: (err) => {
+          this.authenticationService.logout();
+          this.commonService.setUserLoggedIn(false);
+          this.router.navigate(['/login']);
+        }
+      });
+  }
+
+  
 }

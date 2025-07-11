@@ -30,6 +30,8 @@ import { DistanceSensorComponent } from '../components/distance-sensor';
 import { PeopleCounterComponent } from '../components/people-counter';
 import { MeshModbusControllerComponent } from '../components/mesh-modbus-controller';
 import { SensorTagPirComponent } from '../components/sensor-tag-pir';
+import { DiDoCardSensorComponent } from '../components/di-do-card-sensor';
+import { DoorSensorComponent } from '../components/door-sensor';
 
 
 
@@ -106,7 +108,9 @@ export class DatasourceEditComponent {
       'DISTANCE_SENSOR.DS': DistanceSensorComponent,
       'PEOPLE_COUNTER.DS': PeopleCounterComponent,
       'MODBUS_CONTROLLER.DS': MeshModbusControllerComponent,
-      'SENSOR_TAG_PIR.DS': SensorTagPirComponent
+      'SENSOR_TAG_PIR.DS': SensorTagPirComponent,
+      '4DI_2DO_CARD.DS': DiDoCardSensorComponent,
+      'DOOR_SENSOR.DS': DoorSensorComponent
     };
 
     const component = componentMapping[dataSourceType];
