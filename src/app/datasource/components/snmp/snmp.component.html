@@ -18,11 +18,11 @@
           </mat-card>
         </div>
 
-          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+          <mat-form-field class="form_field w-50 marginTop-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.name" name="name" type="text" required>
           </mat-form-field>
-          <mat-form-field class="form_field" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
             <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
               <mat-option *ngFor="let read of dropdownData.permissions" [value]="read">{{read}}</mat-option>
@@ -30,13 +30,13 @@
           </mat-form-field>
 
         <div>
-          <mat-form-field class="modbusInputField form_field" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.updatePeriod'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.timePeriod.timePeriod"
                    class="form-control" name="timePeriod"
                    type="text" required>
           </mat-form-field>
-          <mat-form-field class="form_field" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.updatePeriodType'): ""}}</mat-label>
             <mat-select [(ngModel)]="snmpDataSourceModel.timePeriod.timePeriodType"
                         class="form-control" name="timePeriodType">
@@ -48,19 +48,19 @@
         <mat-divider class="dividerAllCommonFields"></mat-divider>
         <br>
 
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.host'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.host" name="host" type="text"
                    value="127.0.0.1" required>
           </mat-form-field>
-          <mat-form-field class="form_field" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.port'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.port" name="port" type="text"
                    value="161" required>
           </mat-form-field>
 
         <div>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.version'): ""}}</mat-label>
             <mat-select [(ngModel)]="snmpDataSourceModel.snmpVersion" (selectionChange)="versionChange($event.value)"
                         class="form-control" name="snmpVersions">
@@ -68,95 +68,95 @@
                           [value]="item.value">{{item.key}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.readCommunity'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.readCommunity"
                    name="readCommunity" type="text" value="public" required>
           </mat-form-field>
         </div>
 
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.writeCommunity'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.writeCommunity" name="writeCommunity"
                    type="text" value="public" required>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.maxRequestVars'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.maxRequestVars" name="maxRequestVars"
                    type="text">
           </mat-form-field>
 
         <div *ngIf="snmpV3">
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.engineId'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.engineId" name="engineId"
                    type="text">
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.contextEngine'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.contextEngineId" name="contextEngineId"
                    type="text">
           </mat-form-field>
         </div>
         <div *ngIf="snmpV3">
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.contextName'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.contextName" name="contextName"
                    type="text">
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.securityName'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.securityName" name="securityName"
                    type="text">
           </mat-form-field>
         </div>
         <div *ngIf="snmpV3">
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.authProtocol'): ""}}</mat-label>
             <mat-select name="authProtocol" [(ngModel)]="snmpDataSourceModel.authProtocol">
               <mat-option *ngFor="let authProtocol of dropdownData.authProtocols"
                           [value]="authProtocol.key">{{authProtocol.value}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.authPassphrase'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.authPassphrase" name="authPassphrase"
                    type="text">
           </mat-form-field>
         </div>
         <div *ngIf="snmpV3">
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.privProtocol'): ""}}</mat-label>
             <mat-select name="privProtocol" [(ngModel)]="snmpDataSourceModel.privProtocol">
               <mat-option *ngFor="let protocol of dropdownData.privateProtocols"
                           [value]="protocol.key">{{protocol.value}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.privPassphrase'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.privPassphrase" name="privPassphrase"
                    type="text">
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.retries'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.retries" name="retries"
                    type="text">
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.timeout'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.timeout" name="timeout"
                    type="text">
           </mat-form-field>
         </div>
 
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.trapPort'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.trapPort" name="trapPort"
                    type="text">
           </mat-form-field>
-          <mat-form-field class="form_field modbusInputField" appearance="fill">
+          <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.localAddress'): ""}}</mat-label>
             <input matInput [(ngModel)]="snmpDataSourceModel.localAddress" name="localAddress"
                    type="text" value="127.0.0.1">
@@ -164,36 +164,41 @@
          <br>
         <div *ngIf="!isEdit then save else update"></div>
         <ng-template #save>
-          <button mat-raised-button class="saveButton"
-                  (click)="saveDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+          <button matfab class="saveButton"
+                  (click)="saveDatasource()">
+                  <mat-icon>save</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
         </ng-template>
         <ng-template #update>
-          <button mat-raised-button class="updateButton"
-                  (click)="updateDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+          <button matfab class="updateButton saveButton"
+                  (click)="updateDatasource()">
+                  <mat-icon>save_as</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
         </ng-template>
       </mat-tab>
 
       <mat-tab label="Points" [disabled]="!datapointForm">
         <div class="sidebar-form" *ngIf="displayForm">
 
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
-              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
-              <input [(ngModel)]="dataPointModel.xid" class="datasourceBoxHeight" readonly matInput name="xid"
-                     placeholder="Auto generated">
-            </mat-form-field>
+         
             <mat-form-field class="form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.oids.sysName'): ""}}</mat-label>
               <input matInput [(ngModel)]="dataPointModel.name" name="name" type="text" required>
             </mat-form-field>
+               <mat-form-field class="form_field  w-50 marginLeft-20" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+              <input [(ngModel)]="dataPointModel.xid" class="" readonly matInput name="xid"
+                     placeholder="Auto generated">
+            </mat-form-field>
 
           <div>
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-form-field class="form_field  w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
               <mat-select name="readPermission" [(ngModel)]="readPermission" multiple>
                 <mat-option *ngFor="let read of dropdownData.permissions" [value]="read">{{read}}</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-form-field class="form_field  w-50 marginLeft-20" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.writePermission'): ""}}</mat-label>
               <mat-select name="editPermission" [(ngModel)]="setPermission" multiple>
                 <mat-option *ngFor="let write of dropdownData.permissions"
@@ -201,13 +206,14 @@
               </mat-select>
             </mat-form-field>
           </div>
+
           <mat-divider class="dividerAllCommonFields"></mat-divider>
 
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-form-field class="form_field  w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.foundXOids'): ""}}</mat-label>
               <input matInput name="oid" [(ngModel)]="snmpPointLocatorModel.oid">
             </mat-form-field>
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-form-field class="form_field  w-50 marginLeft-20" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.columnFor.dataType'): ""}}</mat-label>
               <mat-select name="dataType"
                           [(ngModel)]="snmpPointLocatorModel.dataType" (selectionChange)="dataTypeChange($event.value)">
@@ -217,7 +223,7 @@
             </mat-form-field>
 
           <div>
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-form-field class="form_field  w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.setType'): ""}}</mat-label>
               <mat-select name="dataType"
                           [(ngModel)]="snmpPointLocatorModel.setType">
@@ -225,17 +231,17 @@
                             [value]="setType.key">{{setType.value}}</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill" *ngIf="binary">
+            <mat-form-field class="form_field  w-50 marginLeft-20" appearance="fill" *ngIf="binary">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.binary0Value'): ""}}</mat-label>
               <input matInput name="binary0Value" [(ngModel)]="snmpPointLocatorModel.binary0Value">
             </mat-form-field>
           </div>
           <div *ngIf="numeric">
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-form-field class="form_field  w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.multiplicand'): ""}}</mat-label>
               <input matInput name="multiplicand" [(ngModel)]="snmpPointLocatorModel.multiplicand">
             </mat-form-field>
-            <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
+            <mat-form-field class="form_field  w-50 marginLeft-20" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.additive'): ""}}</mat-label>
               <input matInput name="augend" [(ngModel)]="snmpPointLocatorModel.augend">
             </mat-form-field>
@@ -250,18 +256,22 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="meshActionsButtons">
+          <div class="">
             <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
             <ng-template #savePoint>
-              <button mat-raised-button class="allDataPointSaveButton mupdateButton"
-                      (click)="saveDataPoint()"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+              <button matfab class="allDataPointSaveButton saveButton"
+                      (click)="saveDataPoint()">
+                      <mat-icon class="alignIocns">save</mat-icon>
+                      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
             </ng-template>
             <ng-template #updatePoint>
-              <button mat-raised-button class="Update_Button mupdateButton"
-                      (click)="updateDataPoint()"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+              <button matfab class="Update_Button saveButton"
+                      (click)="updateDataPoint()">
+                         <mat-icon>save_as</mat-icon>
+                      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
             </ng-template>
           </div>
-          <button mat-raised-button class="cancel_button_new cancelPoint marginLeft-88" (click)="cancelDataPoint()">
+          <button mat-raised-button class="cancel_button_new cancelPoint" (click)="cancelDataPoint()">
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
           </button>
         </div>

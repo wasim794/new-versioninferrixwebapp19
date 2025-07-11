@@ -1309,7 +1309,8 @@ mat-cell.commonReducesSizesAll.singleData {
 
 .dataSourcePointoggle {
   float: right;
-  margin-top: 14px;
+  position: relative;
+  bottom: 23px;
   margin-right: 60px !important;
 }
 
