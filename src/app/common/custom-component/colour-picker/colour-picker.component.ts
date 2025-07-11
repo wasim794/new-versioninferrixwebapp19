@@ -1,6 +1,10 @@
+import { CommonModule } from '@angular/common';
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { MatModuleModule } from '../../mat-module';
 
 @Component({
+  standalone:true,
+  imports:[CommonModule, MatModuleModule],
   selector: 'app-colour-picker',
   templateUrl: './colour-picker.component.html',
   styleUrls: []
