@@ -37,6 +37,7 @@ import { InjectionMouldCountComponent } from '../components/injection-mould-coun
 import { LeakageDetectorComponent } from '../components/leakage-detector';
 import { LightControllerV4Component } from '../components/light-controller-v4';
 import { LightDiControllerComponent } from '../components/light-di-controller';
+import { PeopleCountCameraComponent } from '../components/people-count-camera';
 
 
 
@@ -122,6 +123,7 @@ export class DatasourceEditComponent {
       'WATER_LEAKAGE_DETECTOR.DS': LeakageDetectorComponent,
       'LIGHT_CONTROLLER_V4.DS': LightControllerV4Component,
       'LIGHT_RELAY_CONTROLLER.DS': LightDiControllerComponent,
+      'PEOPLE_COUNT_CAMERA': PeopleCountCameraComponent
     };
 
     const component = componentMapping[dataSourceType];
