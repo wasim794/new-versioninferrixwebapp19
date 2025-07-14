@@ -1,7 +1,8 @@
+
 <mat-toolbar class="mat-toolbar_all watchListToolbar">
   <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints').substring(0,10): ""}}</span>
   <span class="spacer"></span>
-  <button class="cancel_button" mat-button (click)="closeModel()">
+  <button class="Save_Button dataPointClose" mat-button (click)="closeModel()">
     {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ""}}
   </button>
 </mat-toolbar>

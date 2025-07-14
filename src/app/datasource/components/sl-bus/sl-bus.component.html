@@ -21,11 +21,11 @@
             </mat-card>
           </div>
 
-            <mat-form-field class="form_field form_field allInputsMargin" appearance="fill">
+            <mat-form-field class="form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
               <input matInput [(ngModel)]="datasource.name" name="name" type="text" required>
             </mat-form-field>
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
               <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
                 <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
@@ -33,12 +33,12 @@
             </mat-form-field>
 
           <div>
-            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+            <mat-form-field class="field_margin w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}}</mat-label>
               <input [(ngModel)]="datasource.timePeriod.timePeriod" matInput  class="form-control" name="timePeriod"
                      type="text" required>
             </mat-form-field>
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbusControllerSlaveDevice.fields.pollingInterval'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
               <mat-select [(ngModel)]="datasource.timePeriod.timePeriodType"
                           class="form-control" name="pollingPeriodType">
@@ -47,12 +47,12 @@
             </mat-form-field>
           </div>
 
-            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+            <mat-form-field class="field_margin w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.username'): ""}}</mat-label>
               <input [(ngModel)]="datasource.username" matInput  class="form-control" name="username"
                      type="text" required>
             </mat-form-field>
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.password'): ""}}</mat-label>
               <input [(ngModel)]="datasource.password" matInput  class="form-control" name="password"
                      type="password" required>
@@ -60,19 +60,19 @@
 
 
           <div>
-            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+            <mat-form-field class="field_margin w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.dlmAccessToken'): ""}}</mat-label>
               <input [(ngModel)]="datasource.dlmAccessToken" matInput  class="form-control" name="dlmAccessToken"
                      type="text" required>
             </mat-form-field>
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.uUID'): ""}}</mat-label>
               <input [(ngModel)]="datasource.uuid" matInput  class="form-control" name="uuid"
                      type="text" required>
             </mat-form-field>
           </div>
 
-            <mat-form-field class="field_margin form_field allInputsMargin" appearance="fill">
+            <mat-form-field class="field_margin w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.localAddress'): ""}}</mat-label>
               <input [(ngModel)]="datasource.localUrl" matInput  class="form-control" name="localUrl"
                      type="text" required>
@@ -80,12 +80,16 @@
           <br>
           <div *ngIf="!isEdit then save else update"></div>
           <ng-template #save>
-            <button mat-raised-button class="saveButton"
-                    (click)="saveDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+            <button matfab class="saveButton"
+                    (click)="saveDatasource()">
+                     <mat-icon>save</mat-icon>
+                    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
           </ng-template>
           <ng-template #update>
-            <button mat-raised-button class="updateButton"
-                    (click)="updateDatasource()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+            <button matfab class="updateButton saveButton"
+                    (click)="updateDatasource()">
+                    <mat-icon>save_as</mat-icon>
+                    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
           </ng-template>
         </form>
       </mat-tab>
@@ -101,8 +105,9 @@
               </mat-form-field>
               <mat-form-field class="datapoint_field w-50" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
-                <input [(ngModel)]="dataPoint.xid" disabled class="datasourceBoxHeight" matInput name="xid" placeholder="Auto generated">
+                <input [(ngModel)]="dataPoint.xid"  class="datasourceBoxHeight" matInput name="xid" placeholder="Auto generated" readonly>
               </mat-form-field>
+              
 
             <div>
               <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
@@ -134,13 +139,17 @@
                 <input [(ngModel)]="pointLocator.nodeAddress" matInput name="nodeAddress" placeholder="Enter Address" required>
               </mat-form-field>
 
-            <div class="meshActionsButtons">
+            <div class="">
               <div *ngIf="!datapointButtonsView then savePoint else updatePoint"></div>
               <ng-template #savePoint>
-                <button mat-raised-button class="allDataPointSaveButton mupdateButton"  (click)="saveDataPoint()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase) : ""}}</button>
+                <button matfab class="allDataPointSaveButton saveButton"  (click)="saveDataPoint()">
+                   <mat-icon class="alignIocns">save</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase) : ""}}</button>
               </ng-template>
               <ng-template #updatePoint>
-                <button mat-raised-button (click)="updateDataPoint()" class="Update_Button mupdateButton" >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+                <button matfab (click)="updateDataPoint()" class="Update_Button saveButton" >
+                  <mat-icon>save_as</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
               </ng-template>
               <i class="small circular black info icon pointer"
                  title="Help"></i>
@@ -149,7 +158,7 @@
                 {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
               </mat-slide-toggle>
             </div>
-            <button mat-raised-button (click)="cancel()" class="cancel_button_new cancelPoint marginLeft-88">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+            <button mat-raised-button (click)="cancel()" class="cancel_button_new cancelPoint">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
           </div>
         </div>
         <mat-divider class="dividerBorder"></mat-divider>

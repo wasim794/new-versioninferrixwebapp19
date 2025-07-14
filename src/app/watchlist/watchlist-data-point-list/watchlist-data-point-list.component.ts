@@ -250,7 +250,7 @@ export class WatchlistDataPointListComponent extends UnsubscribeOnDestroyAdapter
       if (value === 'DataPoint') {
         const dialogRef = this.dialog.open(WatchlistDatapointDialogComponent, {
           data: { watchListXid: this.watchListXid },
-          width: '700px',
+          width: '400px',
           height: '530px',
           disableClose: true,
           panelClass:['dataPointAllWatclist']

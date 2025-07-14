@@ -235,6 +235,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
     this.currentDatapointIndex = index;
     this.dialog.open(DatapointPropertiesComponent, {
       data: {content: datapoint},
+         width:'40%',
       disableClose: true
     });
 

@@ -148,7 +148,7 @@ export class MetaDataSourceComponent extends DataSourceBase implements OnInit {
           allDataPoints: filteredDataArray,
           datapointAdded: this.metaPointLocatorModel.context,
         },
-        width: "900px",
+        width: "1000px",
         disableClose: true,
       });
       
