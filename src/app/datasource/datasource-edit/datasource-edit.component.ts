@@ -32,6 +32,9 @@ import { MeshModbusControllerComponent } from '../components/mesh-modbus-control
 import { SensorTagPirComponent } from '../components/sensor-tag-pir';
 import { DiDoCardSensorComponent } from '../components/di-do-card-sensor';
 import { DoorSensorComponent } from '../components/door-sensor';
+import { IaqSensorComponent } from '../components/iaq-sensor';
+import { InjectionMouldCountComponent } from '../components/injection-mould-count-sensor';
+
 
 
 
@@ -110,7 +113,9 @@ export class DatasourceEditComponent {
       'MODBUS_CONTROLLER.DS': MeshModbusControllerComponent,
       'SENSOR_TAG_PIR.DS': SensorTagPirComponent,
       '4DI_2DO_CARD.DS': DiDoCardSensorComponent,
-      'DOOR_SENSOR.DS': DoorSensorComponent
+      'DOOR_SENSOR.DS': DoorSensorComponent,
+      'SENSOR_TAG_IAQ_V.DS': IaqSensorComponent,
+      'SENSOR_TAG_INJECTION_MOULD_COUNT.DS': InjectionMouldCountComponent,
     };
 
     const component = componentMapping[dataSourceType];
