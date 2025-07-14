@@ -1,0 +1,151 @@
+<form>
+  <mat-card class="form_cards">
+    <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+      <mat-card-title class="sidebar_form_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.form.heading.setPoint'): ""}}
+      </mat-card-title>
+      <span class="spacer"></span>
+      <button mat-raised-button class="Top_Save_Button bacnetUpdate topSaveSidbarButton" (click)="eventHandlerSave() "
+              *ngIf="!isEdit">
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+      </button>
+      <button mat-raised-button class="Top_Update_Button bacnetUpdate toolbarUpdateButton" (click)="eventHandlerUpdate()"
+              *ngIf="isEdit">
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+      </button>
+    </mat-toolbar>
+    <mat-card-content class="form_cards form_edit_card">
+      <div *ngIf="isSaveSuccessful">
+        <mat-card class="validation-error">
+          <li>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.messages.fillMandatoryFields'): ""}}</li>
+        </mat-card>
+      </div>
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Basic">
+          <div data-tab="first" class="messegesAll">
+
+            <app-basic-form [handlerModel]="setPointModel"></app-basic-form>
+          </div>
+        </mat-tab>
+        <mat-tab label="Set point">
+          <div data-tab="second">
+            <div class="allParagraph eventBasicForms marginTop-20">
+              <mat-form-field class="field_margin form_field w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.target'): ""}}
+                  :
+                </mat-label>
+                <mat-select [(ngModel)]="setPointModel.targetPointXid" name="targetPointXid">
+                  <mat-option *ngFor="let dataPoint of targetDataPoints" [value]="dataPoint.xid">{{dataPoint.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-divider></mat-divider>
+            </div>
+
+            <div class="allParagraph eventBasicForms marginTop-20">
+              <mat-form-field class="field_margin form_field  w-50" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.activeAction'): ""}}
+                  :
+                </mat-label>
+                <mat-select [(ngModel)]="setPointModel.activeAction" name="activeAction"
+                            (selectionChange)="dropdownChange($event.value, false)" id="activeAction">
+                  <mat-option *ngFor='let action of activeAction' [value]="action.val">{{action.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="field_margin form_field w-50 marginLeft-10" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.InactiveAction'): ""}}
+                  :
+                </mat-label>
+                <mat-select [(ngModel)]="setPointModel.inactiveAction" name="inactiveAction"
+                            (selectionChange)="dropdownChange($event.value, true)" id="inactiveAction">
+                  <mat-option *ngFor='let action of activeAction' [value]="action.val">{{action.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="allParagraph eventBasicForms">
+<!--              <mat-form-field class="form_field mat_margin w-50" *ngIf="isActiveAction" appearance="fill">-->
+<!--                <mat-label>-->
+<!--                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.source'): ""}}-->
+<!--                </mat-label>-->
+<!--                <mat-select [(ngModel)]="setPointModel.activePointXid" name="activePointXid">-->
+<!--                  <mat-option *ngFor="let dataPoint of dataPoints" data-value="{{dataPoint.xid}}">{{dataPoint.name}}-->
+<!--                  </mat-option>-->
+<!--                </mat-select>-->
+<!--              </mat-form-field>-->
+              <mat-form-field class="form_field mat_margin w-50" *ngIf="isActiveAction"  appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.source'): ""}}</mat-label>
+                <mat-select [(ngModel)]="setPointModel.activePointXid" name="activePointXid" #selectPanel (openedChange)="onDropdownOpen()" >
+                  <mat-option>
+                    <ngx-mat-select-search [(ngModel)]="searchTerm" placeholderLabel="Search..." noEntriesFoundLabel="No matching points"></ngx-mat-select-search>
+                  </mat-option>
+                  <div class="scroll-panel" (scroll)="onScroll($event)">
+                    <mat-option *ngFor="let point of dataPoints " [title]="point.name" [value]="point.xid">
+                      {{point.name }}
+                    </mat-option>
+                    <mat-option *ngIf="isLoading" class="loading-option">Loading...</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="form_field mat_margin w-50" *ngIf="activeActionSelectedValue" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.valueToSet'): ""}}
+                </mat-label>
+                <input [(ngModel)]="setPointModel.activeValueToSet" matInput name="activeValueToSet" type="text">
+              </mat-form-field>
+
+<!--              <mat-form-field class="form_field mat_margin w-50 " *ngIf="isInActiveAction" appearance="fill">-->
+<!--                <mat-label>  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.source'): ""}}</mat-label>-->
+<!--                <mat-select [(ngModel)]="setPointModel.inactivePointXid" name="inactivePointXid">-->
+<!--                  <mat-option *ngFor="let dataPoint of dataPoints" data-value="{{dataPoint.xid}}">{{dataPoint.name}}-->
+<!--                  </mat-option>-->
+<!--                </mat-select>-->
+<!--              </mat-form-field>-->
+
+
+              <mat-form-field class="" *ngIf="isInActiveAction"  appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.source'): ""}}</mat-label>
+                <mat-select [(ngModel)]="setPointModel.inactivePointXid" name="inactivePointXid" #selectPanel (openedChange)="onDropdownOpen()" >
+                  <mat-option>
+                    <ngx-mat-select-search [(ngModel)]="searchTerm"></ngx-mat-select-search> <!-- optional search -->
+                  </mat-option>
+                  <div class="scroll-panel" (scroll)="onScroll($event)">
+                    <mat-option *ngFor="let point of dataPoints" [title]="point.name" [value]="point.xid">
+                      {{point.name }}
+                    </mat-option>
+                    <mat-option *ngIf="isLoading" class="loading-option">Loading...</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="form_field mat_margin w-50 " *ngIf="inactiveActionSelectedValue" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.setPoint.fields.placeholder.valueToSet'): ""}}</mat-label>
+                <input [(ngModel)]="setPointModel.inactiveValueToSet" name="inactiveValueToSet" matInput type="text">
+              </mat-form-field>
+            </div>
+
+          </div>
+        </mat-tab>
+        <mat-tab label="Events Type">
+          <div data-tab="third">
+            <app-event-type-tree-view [events]="setPointModel.eventTypes"></app-event-type-tree-view>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</form>
+
+<style>
+  .scroll-panel {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .loading-option {
+    text-align: center;
+    font-style: italic;
+  }
+</style>

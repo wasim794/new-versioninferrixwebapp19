@@ -1,0 +1,417 @@
+<form>
+  <mat-card class="form_cards smsUi">
+    <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+      <mat-card-title class="sidebar_form_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.form.heading.SMS'): ""}}
+      </mat-card-title>
+      <span class="spacer"></span>
+      <button mat-raised-button class="Top_Save_Button bacnetUpdate topSaveSidbarButton"
+              (click)="eventHandlerSave() "
+              *ngIf="!isEdit">
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+      </button>
+      <button mat-raised-button class="Top_Update_Button bacnetUpdate toolbarUpdateButton"
+              (click)="eventHandlerUpdate()"
+              *ngIf="isEdit">
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+      </button>
+    </mat-toolbar>
+    <mat-card-content class="form_cards form_edit_card">
+      <div *ngIf="isSaveSuccessful">
+        <mat-card class="validation-error">
+          <li>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.messages.fillMandatoryFields'): ""}}</li>
+        </mat-card>
+      </div>
+      <mat-divider></mat-divider>
+
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Basic">
+          <div data-tab="first" class="messegesAll">
+            <app-basic-form [handlerModel]="smsEvent"></app-basic-form>
+          </div>
+        </mat-tab>
+        <mat-tab label="SMS">
+          <div class="addSecondTabs" data-tab="second">
+            <div class="emailEventValue">
+              <svg id="Layer_1" style="enable-background:new 0 0 24 24;" version="1.1" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><style type="text/css">
+                .st0{fill:#5BDEF4;}
+                .st1{fill:#7AED8C;}
+                .st2{fill:#5CC7F2;}
+                .st3{fill:#FF5F5F;}
+                .st4{fill:#527BFF;}
+                .st5{fill:#EF7F5E;}
+                .st6{fill:#37415E;}
+                .st7{fill:#5CF2CA;}
+                .st8{fill:#9076FF;}
+                .st9{fill:url(#SVGID_1_);}
+                .st10{fill:url(#SVGID_2_);}
+                .st11{fill:url(#SVGID_3_);}
+                .st12{fill:url(#SVGID_4_);}
+                .st13{fill:url(#SVGID_5_);}
+                .st14{fill:#ED5887;}
+              </style><path class="st0" d="M21.974,3.116c-0.218-0.184-0.519-0.236-0.786-0.13L2.244,10.413c-0.298,0.117-0.492,0.399-0.494,0.719  c-0.001,0.32,0.189,0.605,0.486,0.725l4.3,1.738l2.082,5.709c0.076,0.197,0.229,0.356,0.417,0.434  c0.04,0.018,0.082,0.016,0.123,0.026c0.034,0.017,0.064,0.043,0.105,0.043c0.013,0,0.021-0.012,0.033-0.014  c0.021,0.002,0.042,0.014,0.063,0.014c0.193,0,0.38-0.072,0.529-0.212l2.492-2.363l5.159,3.69c0.134,0.096,0.292,0.145,0.451,0.145  c0.096,0,0.191-0.018,0.283-0.053c0.245-0.096,0.424-0.307,0.478-0.565l3.481-16.582C22.292,3.589,22.192,3.3,21.974,3.116z   M7.041,13.521l8.226-4.535l-6.172,5.523c-0.001,0.001,0,0.003-0.001,0.003c-0.048,0.046-0.08,0.108-0.08,0.18v0.014  c0,0.001-0.002,0.002-0.001,0.004c0,0.001,0.001,0.002,0.001,0.003v4.216L7.041,13.521z M9.545,19.232  c-0.011,0.01-0.022,0.013-0.033,0.021v-4.071l2.453,1.754L9.545,19.232z M18.263,20.348c-0.02,0.093-0.082,0.167-0.17,0.202  c-0.088,0.034-0.183,0.023-0.262-0.033l-5.286-3.78c-0.001-0.001,0-0.002-0.001-0.003c-0.002-0.002-0.005-0.001-0.008-0.003  L9.66,14.673l7.581-6.783c0.095-0.085,0.111-0.228,0.038-0.331c-0.074-0.105-0.214-0.136-0.325-0.074L6.716,13.129l-4.293-1.736  c-0.162-0.065-0.173-0.214-0.173-0.258c0-0.044,0.014-0.193,0.176-0.256l18.945-7.427c0.097-0.038,0.201-0.021,0.28,0.046  c0.079,0.067,0.113,0.167,0.092,0.269L18.263,20.348z"/></svg>
+              {{UIDICTIONARY ? UIDICTIONARY.get(
+              'ui.core.eventHandler.sms.titlePara.smsRecipients'): ""}}
+            </div>
+            <!--active start here-->
+            <div class="marginTop mb-0 allParagraph eventBasicForms">
+              <mat-form-field class="form_field emailInput" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                  'ui.core.recipients.fields.placeholder.recipientType'): ""}}</mat-label>
+                <mat-select (selectionChange)="recipientType($event, 'ACTIVE')"
+                            [(ngModel)]="activeAlertRecipientType" name="activeAlertRecipientType">
+                  <mat-option *ngFor="let recipientListEntryType of RecipientListEntryTypes;"
+                              [value]="recipientListEntryType.key">{{recipientListEntryType.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="activeAlertRecipientType === 'PHONE_NUMBER'" class="inline fields allParagraph eventBasicForms">
+              <mat-form-field class="inputFieldMargin form_field w-80" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                  'ui.core.recipients.fields.placeholder.phone'): ""}}
+                </mat-label>
+                <input [(ngModel)]="phoneNumber" name="phoneNumber"
+                       matInput placeholder="Enter Phone">
+              </mat-form-field>
+              <button mat-mini-fab aria-label="icon-button with a add icon"
+                      (click)="addPhoneNumberToMap('PHONE_NUMBER', 'ACTIVE')"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="activeAlertRecipientType === 'USER_PHONE_NUMBER'" class="inline fields allParagraph eventBasicForms">
+              <mat-form-field class="inputFieldMargin form_field w-80" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                  'ui.core.recipients.fields.placeholder.user'): ""}}</mat-label>
+                <mat-select id="user" [(ngModel)]="userSelection" name="userSelection">
+                  <mat-option *ngFor="let user of userList;"
+                              [value]="user.username">{{user.username}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-mini-fab aria-label="icon-button with a add icon"
+                      (click)="addPhoneNumberToMap('USER_PHONE_NUMBER', 'ACTIVE')"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <div class="inline fields" *ngIf="isActiveAlertRecipients">
+              <div class="three wide field"></div>
+              <div class="eight wide field">
+                <div *ngIf="smsEvent.activeRecipients?.length === 0 else other_content"
+                     class="ui pointing label">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.messages'): ""}}
+                </div>
+                <ng-template #other_content>
+                  <mat-table [dataSource]="smsEvent.activeRecipients" class="form_table mat-elevation-z8 smsTable">
+                    <ng-container matColumnDef="User/Phone">
+                      <mat-header-cell *matHeaderCellDef class="mat_spaces">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.user'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.phone'): ""}}
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let element index as i" class="mat_spaces">
+                        <div
+                          *ngIf="element.recipientType === 'PHONE_NUMBER'">{{element.number}}</div>
+                        <div
+                          *ngIf="element.recipientType === 'USER_PHONE_NUMBER'">{{element.username}}</div>
+                      </mat-cell>
+
+                    </ng-container>
+                    <ng-container matColumnDef="Delete">
+                      <mat-header-cell *matHeaderCellDef
+                                       class="mat_dlt"> {{UIDICTIONARY ? UIDICTIONARY.get(
+                        'ui.core.common.icon.hover.delete'): ""}}</mat-header-cell>
+                      <mat-cell class="justifyContentCenter"
+                                *matCellDef="let element  index as i">
+                        <mat-icon *ngIf="element.recipientType === 'PHONE_NUMBER'"
+                                  (click)="removePhoneFromMap(element.number, 'ACTIVE')"
+                                  class="mat-pointer mat_dlt">delete
+                        </mat-icon>
+                        <mat-icon *ngIf="element.recipientType === 'USER_PHONE_NUMBER'"
+                                  (click)="removePhoneFromMap(element.username, 'ACTIVE')"
+                                  class="mat-pointer mat_dlt">delete
+                        </mat-icon>
+                      </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="userListColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: userListColumns;"></mat-row>
+                  </mat-table>
+                </ng-template>
+              </div>
+            </div>
+            <mat-slide-toggle [(ngModel)]="!smsEvent.disabled" name="disabled"
+                              class="side_form_toggle toggle_change allToggls">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
+            </mat-slide-toggle>
+
+            <!--End here-->
+            <mat-divider class="emailEventDivider"></mat-divider>
+
+            <section class="section all_checkboxs">
+              <mat-slide-toggle (change)="sendEscalations($event)"
+                                class="side_form_toggle toggle_change allToggls"
+                                [(ngModel)]="smsEvent.sendEscalation" name="sendEscalation">
+                {{UIDICTIONARY ? UIDICTIONARY.get(
+                'ui.core.eventHandler.sms.fields.sendEscalation'): ""}}
+              </mat-slide-toggle>
+            </section>
+
+            <div *ngIf="isEscalation">
+              <div class="emailEventValue escalations">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="100%" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                  <path fill="#FFFFFF" opacity="1.000000" stroke="none" d=" M35.999996,513.000000   C24.407816,513.000000 12.815631,513.000000 1.000000,513.000000   C1.000000,501.980103 1.000000,490.958710 1.358079,479.572510   C3.128240,482.472931 4.540321,485.738190 6.011089,489.139160   C20.906569,476.069305 35.242901,463.543579 49.517845,450.948303   C61.588020,440.298340 73.621895,429.606659 85.608452,418.862701   C99.329430,406.564117 112.960670,394.165436 126.674629,381.858978   C130.444244,378.476227 134.436035,375.341278 138.211166,371.964386   C147.212006,363.912964 156.144409,355.785034 165.402924,347.418274   C162.337875,344.912415 159.735504,342.918427 157.281631,340.755920   C145.579269,330.443146 133.914673,320.087433 122.241493,309.741516   C107.494354,296.671204 92.755074,283.592041 78.006462,270.523407   C66.456787,260.289307 54.877274,250.088730 43.349117,239.830460   C31.078318,228.911362 18.852365,217.941864 6.326715,206.743958   C4.442841,210.371155 2.721421,213.685577 1.000000,217.000000   C1.000000,145.072296 1.000000,73.144585 1.000000,1.000000   C74.020752,1.000000 147.041718,1.000000 220.440399,1.345618   C214.655930,4.608973 211.850250,9.188681 211.898071,16.286741   C212.125778,50.096474 212.000000,83.908585 212.000000,117.719849   C212.000000,119.462547 212.000000,121.205246 212.000000,123.000000   C196.279678,123.000000 181.283112,123.266747 166.304047,122.870506   C160.195602,122.708908 156.019211,125.674011 153.675705,130.159775   C151.061340,135.164032 150.265976,141.201752 154.008026,146.404663   C160.620560,155.598633 167.420670,164.659363 174.232559,173.707886   C186.707504,190.278854 199.259979,206.791397 211.757980,223.345032   C223.178741,238.471878 234.619507,253.584076 245.949432,268.778778   C250.240540,274.533661 263.959534,274.498657 268.176788,268.605896   C273.458862,261.225342 279.135193,254.127686 284.608215,246.882904   C308.238770,215.602432 331.885010,184.333740 355.451843,153.005310   C359.231445,147.980911 363.116455,143.107803 362.138458,135.876007   C361.187592,128.844971 355.653351,123.013023 348.483429,123.002350   C341.321442,122.991684 334.159424,123.000000 326.997437,123.000000   C318.735840,123.000000 310.474243,123.000000 302.000000,123.000000   C302.000000,120.790535 302.000000,119.147530 302.000000,117.504532   C302.000000,84.859177 301.735840,52.210194 302.183167,19.570965   C302.297028,11.263575 300.217651,5.145217 293.000000,1.000000   C366.260040,1.000000 439.520050,1.000000 513.000000,1.000000   C513.000000,73.354080 513.000000,145.708374 512.625244,218.408142   C511.439789,215.985596 510.788300,213.157150 509.768280,210.468521   C508.938629,208.281570 507.803314,206.888947 505.211151,209.197601   C491.621002,221.301483 477.875061,233.230316 464.241150,245.285446   C457.217865,251.495422 450.365326,257.898407 443.347046,264.114105   C429.472443,276.402039 415.524200,288.606812 401.630981,300.873749   C395.351562,306.418121 389.171326,312.075226 382.874512,317.599579   C371.569458,327.517822 360.210297,337.374481 348.666809,347.437286   C349.776459,348.431763 350.521332,349.099335 351.266174,349.766876   C364.114838,361.282684 376.971771,372.789276 389.808868,384.317963   C396.784210,390.582367 403.665253,396.953033 410.694824,403.155640   C426.922394,417.474182 443.267487,431.659790 459.461884,446.015533   C470.171814,455.509491 480.672058,465.239594 491.329163,474.793762   C495.832672,478.831177 500.588043,482.589569 505.052429,486.667999   C507.313690,488.733795 508.649994,488.376923 509.691101,485.720734   C510.825623,482.826172 511.899597,479.907928 513.000000,477.000000   C513.000000,488.925568 513.000000,500.851105 513.000000,513.000000   C501.646759,513.000000 490.292023,513.000000 478.583527,512.632324   C480.871613,511.384003 483.513489,510.503296 486.665924,509.452362   C485.501038,508.155212 484.923950,507.370148 484.210480,506.739410   C473.030640,496.855713 461.811768,487.016022 450.645538,477.117035   C438.359619,466.225433 426.124634,455.276459 413.855804,444.365601   C401.959656,433.786072 390.009460,423.266998 378.154541,412.641541   C364.442841,400.351776 350.826569,387.955566 337.129456,375.649445   C333.758942,372.621246 330.235626,369.763153 326.832001,366.868927   C315.732178,376.891632 305.076141,386.949799 293.916626,396.414307   C287.940674,401.482574 281.485779,406.273285 274.564545,409.879333   C260.608765,417.150513 246.224991,415.872406 233.744797,406.922302   C221.702759,398.286438 210.949631,387.848419 199.673660,378.151703   C195.345505,374.429718 191.137344,370.568176 186.880447,366.775513   C181.538956,371.713379 176.538589,376.514923 171.347107,381.100037   C158.082413,392.815521 144.684692,404.380493 131.434982,416.112732   C123.671112,422.987396 116.149155,430.134766 108.411690,437.039917   C93.843590,450.040924 79.226616,462.987610 64.573006,475.892242   C57.451744,482.163513 50.130703,488.208527 43.033707,494.506531   C37.788361,499.161316 32.759064,504.059540 27.305752,509.155579   C30.677027,510.646301 33.338509,511.823151 35.999996,513.000000  M61.440109,216.962952   C67.454460,222.309601 73.465088,227.660446 79.483902,233.002060   C94.344070,246.190262 109.203079,259.379791 124.071999,272.558136   C135.618469,282.791809 147.183731,293.004272 158.732437,303.235443   C173.479675,316.300262 188.254883,329.333771 202.950531,342.456390   C216.319351,354.394226 229.625336,366.402863 242.905884,378.438934   C250.900589,385.684509 260.200714,388.332123 268.384460,380.287262   C273.640656,375.120331 279.383301,370.446930 284.926849,365.573883   C298.600586,353.554016 312.314423,341.579559 325.953522,329.520538   C332.978485,323.309387 339.825836,316.897461 346.845734,310.680450   C360.723877,298.389709 374.687653,286.195679 388.572662,273.912659   C395.346863,267.920074 401.984131,261.772736 408.752686,255.773651   C422.874695,243.256973 437.014221,230.759705 451.204163,218.320221   C458.093323,212.280884 465.183075,206.469711 472.048706,200.404358   C476.926910,196.094727 481.582245,191.532806 487.151001,186.321899   C482.262970,185.023758 478.458557,183.158508 474.641968,183.133316   C440.153992,182.905609 405.663818,182.978424 371.174683,183.086655   C369.919647,183.090591 368.289032,184.070908 367.477051,185.102692   C362.065002,191.979721 356.793823,198.968872 351.541351,205.969955   C339.004333,222.680771 326.605865,239.496689 313.952087,256.118347   C305.093506,267.754700 296.644745,279.831360 286.692474,290.476929   C271.619965,306.599335 242.637756,306.372711 227.359711,290.612976   C220.266357,283.295990 214.344864,274.807068 208.180832,266.631744   C189.264359,241.542923 170.366562,216.437805 151.747879,191.128357   C147.500687,185.354919 143.180191,182.610718 135.461578,182.754242   C103.815506,183.342682 72.151276,182.888885 40.496136,183.132187   C36.252529,183.164795 32.022678,184.987259 26.520630,186.277786   C35.778313,194.567596 43.802254,201.810928 51.898960,208.971970   C54.826393,211.561111 57.928238,213.953049 61.440109,216.962952  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M36.468655,513.000000   C33.338509,511.823151 30.677027,510.646301 27.305752,509.155579   C32.759064,504.059540 37.788361,499.161316 43.033707,494.506531   C50.130703,488.208527 57.451744,482.163513 64.573006,475.892242   C79.226616,462.987610 93.843590,450.040924 108.411690,437.039917   C116.149155,430.134766 123.671112,422.987396 131.434982,416.112732   C144.684692,404.380493 158.082413,392.815521 171.347107,381.100037   C176.538589,376.514923 181.538956,371.713379 186.880447,366.775513   C191.137344,370.568176 195.345505,374.429718 199.673660,378.151703   C210.949631,387.848419 221.702759,398.286438 233.744797,406.922302   C246.224991,415.872406 260.608765,417.150513 274.564545,409.879333   C281.485779,406.273285 287.940674,401.482574 293.916626,396.414307   C305.076141,386.949799 315.732178,376.891632 326.832001,366.868927   C330.235626,369.763153 333.758942,372.621246 337.129456,375.649445   C350.826569,387.955566 364.442841,400.351776 378.154541,412.641541   C390.009460,423.266998 401.959656,433.786072 413.855804,444.365601   C426.124634,455.276459 438.359619,466.225433 450.645538,477.117035   C461.811768,487.016022 473.030640,496.855713 484.210480,506.739410   C484.923950,507.370148 485.501038,508.155212 486.665924,509.452362   C483.513489,510.503296 480.871613,511.384003 478.114868,512.632324   C330.979095,513.000000 183.958206,513.000000 36.468655,513.000000  z"/>
+                  <path fill="#228222" opacity="1.000000" stroke="none" d=" M292.531342,1.000000   C300.217651,5.145217 302.297028,11.263575 302.183167,19.570965   C301.735840,52.210194 302.000000,84.859177 302.000000,117.504532   C302.000000,119.147530 302.000000,120.790535 302.000000,123.000000   C310.474243,123.000000 318.735840,123.000000 326.997437,123.000000   C334.159424,123.000000 341.321442,122.991684 348.483429,123.002350   C355.653351,123.013023 361.187592,128.844971 362.138458,135.876007   C363.116455,143.107803 359.231445,147.980911 355.451843,153.005310   C331.885010,184.333740 308.238770,215.602432 284.608215,246.882904   C279.135193,254.127686 273.458862,261.225342 268.176788,268.605896   C263.959534,274.498657 250.240540,274.533661 245.949432,268.778778   C234.619507,253.584076 223.178741,238.471878 211.757980,223.345032   C199.259979,206.791397 186.707504,190.278854 174.232559,173.707886   C167.420670,164.659363 160.620560,155.598633 154.008026,146.404663   C150.265976,141.201752 151.061340,135.164032 153.675705,130.159775   C156.019211,125.674011 160.195602,122.708908 166.304047,122.870506   C181.283112,123.266747 196.279678,123.000000 212.000000,123.000000   C212.000000,121.205246 212.000000,119.462547 212.000000,117.719849   C212.000000,83.908585 212.125778,50.096474 211.898071,16.286741   C211.850250,9.188681 214.655930,4.608973 220.909058,1.345618   C244.687561,1.000000 268.375122,1.000000 292.531342,1.000000  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M1.000000,217.468658   C2.721421,213.685577 4.442841,210.371155 6.326715,206.743958   C18.852365,217.941864 31.078318,228.911362 43.349117,239.830460   C54.877274,250.088730 66.456787,260.289307 78.006462,270.523407   C92.755074,283.592041 107.494354,296.671204 122.241493,309.741516   C133.914673,320.087433 145.579269,330.443146 157.281631,340.755920   C159.735504,342.918427 162.337875,344.912415 165.402924,347.418274   C156.144409,355.785034 147.212006,363.912964 138.211166,371.964386   C134.436035,375.341278 130.444244,378.476227 126.674629,381.858978   C112.960670,394.165436 99.329430,406.564117 85.608452,418.862701   C73.621895,429.606659 61.588020,440.298340 49.517845,450.948303   C35.242901,463.543579 20.906569,476.069305 6.011089,489.139160   C4.540321,485.738190 3.128240,482.472931 1.358079,479.103821   C1.000000,391.979095 1.000000,304.958221 1.000000,217.468658  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M513.000000,476.531342   C511.899597,479.907928 510.825623,482.826172 509.691101,485.720734   C508.649994,488.376923 507.313690,488.733795 505.052429,486.667999   C500.588043,482.589569 495.832672,478.831177 491.329163,474.793762   C480.672058,465.239594 470.171814,455.509491 459.461884,446.015533   C443.267487,431.659790 426.922394,417.474182 410.694824,403.155640   C403.665253,396.953033 396.784210,390.582367 389.808868,384.317963   C376.971771,372.789276 364.114838,361.282684 351.266174,349.766876   C350.521332,349.099335 349.776459,348.431763 348.666809,347.437286   C360.210297,337.374481 371.569458,327.517822 382.874512,317.599579   C389.171326,312.075226 395.351562,306.418121 401.630981,300.873749   C415.524200,288.606812 429.472443,276.402039 443.347046,264.114105   C450.365326,257.898407 457.217865,251.495422 464.241150,245.285446   C477.875061,233.230316 491.621002,221.301483 505.211151,209.197601   C507.803314,206.888947 508.938629,208.281570 509.768280,210.468521   C510.788300,213.157150 511.439789,215.985596 512.625244,218.876801   C513.000000,304.687561 513.000000,390.375122 513.000000,476.531342  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M61.195305,216.698959   C57.928238,213.953049 54.826393,211.561111 51.898960,208.971970   C43.802254,201.810928 35.778313,194.567596 26.520630,186.277786   C32.022678,184.987259 36.252529,183.164795 40.496136,183.132187   C72.151276,182.888885 103.815506,183.342682 135.461578,182.754242   C143.180191,182.610718 147.500687,185.354919 151.747879,191.128357   C170.366562,216.437805 189.264359,241.542923 208.180832,266.631744   C214.344864,274.807068 220.266357,283.295990 227.359711,290.612976   C242.637756,306.372711 271.619965,306.599335 286.692474,290.476929   C296.644745,279.831360 305.093506,267.754700 313.952087,256.118347   C326.605865,239.496689 339.004333,222.680771 351.541351,205.969955   C356.793823,198.968872 362.065002,191.979721 367.477051,185.102692   C368.289032,184.070908 369.919647,183.090591 371.174683,183.086655   C405.663818,182.978424 440.153992,182.905609 474.641968,183.133316   C478.458557,183.158508 482.262970,185.023758 487.151001,186.321899   C481.582245,191.532806 476.926910,196.094727 472.048706,200.404358   C465.183075,206.469711 458.093323,212.280884 451.204163,218.320221   C437.014221,230.759705 422.874695,243.256973 408.752686,255.773651   C401.984131,261.772736 395.346863,267.920074 388.572662,273.912659   C374.687653,286.195679 360.723877,298.389709 346.845734,310.680450   C339.825836,316.897461 332.978485,323.309387 325.953522,329.520538   C312.314423,341.579559 298.600586,353.554016 284.926849,365.573883   C279.383301,370.446930 273.640656,375.120331 268.384460,380.287262   C260.200714,388.332123 250.900589,385.684509 242.905884,378.438934   C229.625336,366.402863 216.319351,354.394226 202.950531,342.456390   C188.254883,329.333771 173.479675,316.300262 158.732437,303.235443   C147.183731,293.004272 135.618469,282.791809 124.071999,272.558136   C109.203079,259.379791 94.344070,246.190262 79.483902,233.002060   C73.465088,227.660446 67.454460,222.309601 61.195305,216.698959  z"/>
+                  </svg>
+                {{UIDICTIONARY ? UIDICTIONARY.get(
+                'ui.core.eventHandler.sms.titlePara.escalationRecipients'): ""}}
+              </div>
+              <div class="marginTop mb-0 allParagraph eventBasicForms">
+              <mat-form-field class="form-field mat_margin marginRightAll w-50" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get(
+                  'ui.core.eventHandler.sms.fields.placeholder.escalateIfActiveFor'): ""}}
+                </mat-label>
+                <input [(ngModel)]="smsEvent.escalationPeriod.timePeriod" name="timePeriod" matInput
+                       type="text">
+              </mat-form-field>
+              <mat-form-field class="form-field mat_margin w-50 smsSelect" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}
+                </mat-label>
+                <mat-select [(ngModel)]="smsEvent.escalationPeriod.timePeriodType"
+                            name="timePeriodType">
+                  <mat-option *ngFor="let timePeriodType of timePeriodTypes;"
+                              [value]="timePeriodType.value">
+                    {{timePeriodType.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+              <div class="allParagraph eventBasicForms">
+                <mat-form-field class="form_field emailInput" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                    'ui.core.recipients.fields.placeholder.recipientType'): ""}}</mat-label>
+                  <mat-select (selectionChange)="recipientType($event, 'ESCALATION')"
+                              [(ngModel)]="escalationAlertRecipientType"
+                              name="escalationAlertRecipientType">
+                    <mat-option *ngFor="let RecipientListEntryType of RecipientListEntryTypes;"
+                                [value]="RecipientListEntryType.key">{{RecipientListEntryType.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div *ngIf="escalationAlertRecipientType === 'PHONE_NUMBER'" class="inline fields allParagraph eventBasicForms">
+                <mat-form-field class="inputFieldMargin form_field w-80" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                    'ui.core.recipients.fields.placeholder.phone'): ""}}</mat-label>
+                  <input [(ngModel)]="escalationPhoneNumber" matInput name="escalationPhoneNumber"
+                         placeholder="Enter Phone Number">
+                </mat-form-field>
+                <button mat-mini-fab aria-label="icon-button with a add icon"
+                        (click)="addPhoneNumberToMap('PHONE_NUMBER', 'ESCALATION')"
+                        title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div *ngIf="escalationAlertRecipientType === 'USER_PHONE_NUMBER'"
+                   class="inline fields allParagraph eventBasicForms">
+                <mat-form-field class="inputFieldMargin form_field w-80 smsSelect" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                    'ui.core.recipients.fields.placeholder.user'): ""}}</mat-label>
+                  <mat-select [(ngModel)]="escalationUser" name="escalationUser">
+                    <mat-option *ngFor="let user of userList" [value]="user.username">{{user.username}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button mat-mini-fab aria-label="icon-button with a add icon"
+                        (click)="addPhoneNumberToMap('USER_PHONE_NUMBER', 'ESCALATION')"
+                        title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div class="inline fields " *ngIf="isEscalationAlertRecipients">
+                <div class="three wide field"></div>
+                <div class="eight wide field">
+                  <div *ngIf="smsEvent.escalationRecipients?.length === 0 else other_content"
+                       class="ui pointing label pb-20">
+                    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.messages'): ""}}
+                  </div>
+                  <ng-template #other_content>
+                    <mat-table [dataSource]="smsEvent.escalationRecipients" class="form_table mat-elevation-z8 smsTable">
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="User/Phone">
+                        <mat-header-cell *matHeaderCellDef class="mat_spaces">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.user'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.phone'): ""}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element index as i" class="mat_spaces">
+                          <div
+                            *ngIf="element.recipientType === 'PHONE_NUMBER'">{{element.number}}</div>
+                          <div
+                            *ngIf="element.recipientType === 'USER_PHONE_NUMBER'">{{element.username}}</div>
+
+                        </mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="Delete">
+                        <mat-header-cell *matHeaderCellDef
+                                         class="mat_dlt"> {{UIDICTIONARY ? UIDICTIONARY.get(
+                          'ui.core.common.icon.hover.delete'): ""}}</mat-header-cell>
+                        <mat-cell class="justifyContentCenter"
+                                  *matCellDef="let element  index as i">
+                          <mat-icon *ngIf="element.recipientType === 'PHONE_NUMBER'"
+                                    (click)="removePhoneFromMap(element.number, 'ESCALATION')"
+                                    class="mat-pointer mat_dlt">delete
+                          </mat-icon>
+                          <mat-icon *ngIf="element.recipientType === 'USER_PHONE_NUMBER'"
+                                    (click)="removePhoneFromMap(element.username, 'ESCALATION')"
+                                    class="mat-pointer mat_dlt">delete
+                          </mat-icon>
+                        </mat-cell>
+                      </ng-container>
+                      <mat-header-row *matHeaderRowDef="userListColumns"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: userListColumns;"></mat-row>
+                    </mat-table>
+                  </ng-template>
+                </div>
+              </div>
+
+            </div>
+            <mat-divider class="emailEventDivider"></mat-divider>
+            <section class="section">
+              <mat-slide-toggle (change)="sendInactiveNotification($event)"
+                                [(ngModel)]="smsEvent.sendInactive"
+                                name="sendInactive"
+                                class="side_form_toggle toggle_change allToggls">
+                {{UIDICTIONARY ? UIDICTIONARY.get(
+                'ui.core.eventHandler.sms.fields.sendInactiveNotification'): ""}}
+              </mat-slide-toggle>
+
+              <mat-slide-toggle (change)="overrideInactiveRecipients($event)"
+                                [disabled]="!isInactiveNotification"
+                                [(ngModel)]="smsEvent.inactiveOverride" name="inactiveOverride"
+                                class="side_form_toggle toggle_change allToggls">
+                {{UIDICTIONARY ? UIDICTIONARY.get(
+                'ui.core.eventHandler.sms.fields.OverrideInactiveRecipients'): ""}}
+              </mat-slide-toggle>
+            </section>
+            <div *ngIf="isOverrideInactiveRecipients">
+
+              <div class="emailEventValue escalations pb-20">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="100%" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                  <path fill="#FFFFFF" opacity="1.000000" stroke="none" d=" M513.000000,403.000000   C513.000000,439.644745 513.000000,476.289459 513.000000,512.967102   C342.457336,512.967102 171.914673,512.967102 1.000000,512.967102   C1.000000,476.646606 1.000000,440.291962 1.366596,403.467194   C21.555529,389.111206 41.371952,375.216858 61.201611,361.341431   C88.839005,342.002716 116.432739,322.600250 144.223618,303.484497   C146.639542,301.822723 147.023224,300.362366 147.019867,297.980347   C146.986908,274.653198 147.073624,251.325348 146.875717,227.999817   C146.857727,225.878815 145.657684,223.084946 144.051468,221.771866   C134.124176,213.656296 123.908264,205.894577 113.817001,197.978638   C102.307388,188.950104 90.828156,179.882858 79.335091,170.833221   C69.247620,162.890366 59.167744,154.937836 49.069088,147.009216   C37.443813,137.882019 25.869158,128.688080 14.130443,119.708855   C9.968360,116.525177 5.388912,113.887138 1.000000,111.000000   C1.000000,74.355247 1.000000,37.710491 1.000000,1.032868   C171.542755,1.032868 342.085541,1.032868 513.000000,1.032868   C513.000000,37.353382 513.000000,73.708031 512.625732,110.531410   C511.122345,111.541687 509.847870,111.898315 508.886688,112.653664   C500.317719,119.387589 491.849091,126.249535 483.262939,132.961243   C471.888184,141.852707 460.375427,150.568161 449.030548,159.497162   C437.140533,168.855209 425.455719,178.474457 413.541565,187.801132   C399.237091,198.999008 384.738556,209.949310 370.461548,221.181595   C368.851868,222.447998 367.164215,224.837036 367.146912,226.720551   C366.924652,250.875092 366.967316,275.032562 367.091827,299.188538   C367.098419,300.469879 368.126099,302.166626 369.202301,302.953522   C376.240265,308.099548 383.423859,313.046295 390.557739,318.061218   C415.253998,335.422089 439.959930,352.769226 464.640472,370.152435   C476.126923,378.242706 487.502411,386.492004 499.053436,394.488312   C503.524017,397.583099 508.340912,400.177582 513.000000,403.000000  M448.351532,123.970093   C463.532043,111.904465 478.712555,99.838829 494.549469,87.251465   C335.780975,87.251465 178.111343,87.251465 19.293715,87.251465   C67.068855,124.747665 114.011047,161.590118 161.027527,198.490875   C177.591827,181.920395 193.674927,165.730408 209.940018,149.725372   C211.469330,148.220520 214.140228,147.128128 216.289307,147.114258   C243.284882,146.940079 270.282562,146.922226 297.277618,147.132675   C299.703094,147.151581 302.702850,148.435959 304.440033,150.144943   C320.587250,166.030075 336.516022,182.137253 352.569946,198.242004   C353.910309,197.530167 355.161987,197.086136 356.148773,196.306702   C364.446899,189.752151 372.654114,183.082123 380.970795,176.551422   C392.976654,167.123779 405.089386,157.832169 417.084961,148.391602   C427.317810,140.338287 437.449799,132.156830 448.351532,123.970093  M43.532562,408.980316   C35.451027,414.754639 27.369492,420.528961 18.823732,426.634949   C177.848373,426.634949 336.222839,426.634949 495.212341,426.634949   C476.931305,413.828735 459.224823,401.445831 441.540070,389.031921   C411.274292,367.786774 380.986267,346.572845 350.815704,325.193268   C347.526306,322.862335 345.556427,322.737244 342.608337,325.761383   C329.931061,338.765778 317.052032,351.576508 304.062805,364.269775   C302.525757,365.771820 299.864044,366.871796 297.715515,366.885590   C270.552582,367.059631 243.387711,367.060455 216.224792,366.883636   C214.083176,366.869690 211.438049,365.731628 209.897308,364.225555   C196.909958,351.530243 184.043610,338.707458 171.345474,325.722900   C168.634720,322.950989 166.710358,322.605042 163.512360,324.902740   C148.954834,335.362152 134.229828,345.588196 119.581680,355.921783   C107.043015,364.767242 94.582848,373.725128 81.985199,382.485504   C69.404083,391.234406 56.695354,399.799774 43.532562,408.980316  M239.502045,177.000000   C235.503754,177.000000 231.487122,177.237305 227.512604,176.929977   C223.895767,176.650299 221.418381,177.881393 218.884460,180.471100   C205.955246,193.685028 192.753723,206.632553 179.827377,219.849228   C178.316895,221.393631 177.140900,224.015289 177.120209,226.150223   C176.919937,246.804184 176.943085,267.461304 177.096069,288.116058   C177.109970,289.994110 177.985565,292.340057 179.283127,293.661285   C192.818924,307.443420 206.478104,321.105927 220.252121,334.650024   C221.579529,335.955292 223.904633,336.886871 225.774826,336.900970   C246.596115,337.057983 267.419464,337.058228 288.240753,336.900574   C290.109833,336.886414 292.431915,335.946838 293.760254,334.640442   C307.533081,321.095154 321.191833,307.432190 334.726410,293.648895   C336.022919,292.328522 336.890503,289.979645 336.904388,288.100433   C337.056702,267.445679 337.065796,246.788803 336.896271,226.134293   C336.879669,224.110718 335.939331,221.585724 334.542633,220.161499   C321.133423,206.487778 307.585754,192.947815 293.911865,179.538666   C292.480255,178.134766 289.989044,177.133743 287.975037,177.108780   C272.152374,176.912628 256.326202,177.000000 239.502045,177.000000  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M513.000000,402.531342   C508.340912,400.177582 503.524017,397.583099 499.053436,394.488312   C487.502411,386.492004 476.126923,378.242706 464.640472,370.152435   C439.959930,352.769226 415.253998,335.422089 390.557739,318.061218   C383.423859,313.046295 376.240265,308.099548 369.202301,302.953522   C368.126099,302.166626 367.098419,300.469879 367.091827,299.188538   C366.967316,275.032562 366.924652,250.875092 367.146912,226.720551   C367.164215,224.837036 368.851868,222.447998 370.461548,221.181595   C384.738556,209.949310 399.237091,198.999008 413.541565,187.801132   C425.455719,178.474457 437.140533,168.855209 449.030548,159.497162   C460.375427,150.568161 471.888184,141.852707 483.262939,132.961243   C491.849091,126.249535 500.317719,119.387589 508.886688,112.653664   C509.847870,111.898315 511.122345,111.541687 512.625732,111.000069   C513.000000,208.020889 513.000000,305.041779 513.000000,402.531342  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M1.000000,111.468658   C5.388912,113.887138 9.968360,116.525177 14.130443,119.708855   C25.869158,128.688080 37.443813,137.882019 49.069088,147.009216   C59.167744,154.937836 69.247620,162.890366 79.335091,170.833221   C90.828156,179.882858 102.307388,188.950104 113.817001,197.978638   C123.908264,205.894577 134.124176,213.656296 144.051468,221.771866   C145.657684,223.084946 146.857727,225.878815 146.875717,227.999817   C147.073624,251.325348 146.986908,274.653198 147.019867,297.980347   C147.023224,300.362366 146.639542,301.822723 144.223618,303.484497   C116.432739,322.600250 88.839005,342.002716 61.201611,361.341431   C41.371952,375.216858 21.555529,389.111206 1.366596,402.998535   C1.000000,305.979095 1.000000,208.958206 1.000000,111.468658  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M447.988953,124.001076   C437.449799,132.156830 427.317810,140.338287 417.084961,148.391602   C405.089386,157.832169 392.976654,167.123779 380.970795,176.551422   C372.654114,183.082123 364.446899,189.752151 356.148773,196.306702   C355.161987,197.086136 353.910309,197.530167 352.569946,198.242004   C336.516022,182.137253 320.587250,166.030075 304.440033,150.144943   C302.702850,148.435959 299.703094,147.151581 297.277618,147.132675   C270.282562,146.922226 243.284882,146.940079 216.289307,147.114258   C214.140228,147.128128 211.469330,148.220520 209.940018,149.725372   C193.674927,165.730408 177.591827,181.920395 161.027527,198.490875   C114.011047,161.590118 67.068855,124.747665 19.293715,87.251465   C178.111343,87.251465 335.780975,87.251465 494.549469,87.251465   C478.712555,99.838829 463.532043,111.904465 447.988953,124.001076  z"/>
+                  <path fill="#5BDEF4" opacity="1.000000" stroke="none" d=" M43.787567,408.712952   C56.695354,399.799774 69.404083,391.234406 81.985199,382.485504   C94.582848,373.725128 107.043015,364.767242 119.581680,355.921783   C134.229828,345.588196 148.954834,335.362152 163.512360,324.902740   C166.710358,322.605042 168.634720,322.950989 171.345474,325.722900   C184.043610,338.707458 196.909958,351.530243 209.897308,364.225555   C211.438049,365.731628 214.083176,366.869690 216.224792,366.883636   C243.387711,367.060455 270.552582,367.059631 297.715515,366.885590   C299.864044,366.871796 302.525757,365.771820 304.062805,364.269775   C317.052032,351.576508 329.931061,338.765778 342.608337,325.761383   C345.556427,322.737244 347.526306,322.862335 350.815704,325.193268   C380.986267,346.572845 411.274292,367.786774 441.540070,389.031921   C459.224823,401.445831 476.931305,413.828735 495.212341,426.634949   C336.222839,426.634949 177.848373,426.634949 18.823732,426.634949   C27.369492,420.528961 35.451027,414.754639 43.787567,408.712952  z"/>
+                  <path fill="#FF0000" opacity="1.000000" stroke="none" d=" M240.001587,177.000000   C256.326202,177.000000 272.152374,176.912628 287.975037,177.108780   C289.989044,177.133743 292.480255,178.134766 293.911865,179.538666   C307.585754,192.947815 321.133423,206.487778 334.542633,220.161499   C335.939331,221.585724 336.879669,224.110718 336.896271,226.134293   C337.065796,246.788803 337.056702,267.445679 336.904388,288.100433   C336.890503,289.979645 336.022919,292.328522 334.726410,293.648895   C321.191833,307.432190 307.533081,321.095154 293.760254,334.640442   C292.431915,335.946838 290.109833,336.886414 288.240753,336.900574   C267.419464,337.058228 246.596115,337.057983 225.774826,336.900970   C223.904633,336.886871 221.579529,335.955292 220.252121,334.650024   C206.478104,321.105927 192.818924,307.443420 179.283127,293.661285   C177.985565,292.340057 177.109970,289.994110 177.096069,288.116058   C176.943085,267.461304 176.919937,246.804184 177.120209,226.150223   C177.140900,224.015289 178.316895,221.393631 179.827377,219.849228   C192.753723,206.632553 205.955246,193.685028 218.884460,180.471100   C221.418381,177.881393 223.895767,176.650299 227.512604,176.929977   C231.487122,177.237305 235.503754,177.000000 240.001587,177.000000  M225.500015,267.999939   C221.008667,272.457458 216.517303,276.915009 212.035538,281.363007   C218.934860,288.255798 225.746719,295.061249 233.279770,302.587158   C241.289932,294.487152 249.330887,286.356049 257.738373,277.854248   C264.537598,284.771606 271.603302,291.807281 278.469391,299.032654   C280.715851,301.396698 282.211548,301.482788 284.499023,299.068512   C290.174042,293.078918 296.095367,287.322723 302.818176,280.568085   C294.571106,272.377899 286.469269,264.331879 278.301453,256.220367   C286.008087,248.596100 294.053833,240.636337 301.955719,232.818909   C294.988586,225.810501 288.201294,218.982971 280.643402,211.380325   C272.607239,219.486404 264.559906,227.603699 256.035461,236.202301   C248.272766,228.394104 240.263855,220.338242 232.288361,212.315994   C225.531326,219.056946 218.811859,225.760437 211.459427,233.095367   C219.619812,241.119354 227.770828,249.134125 236.220810,257.442871   C232.844223,260.765381 229.422134,264.132660 225.500015,267.999939  z"/>
+                  <path fill="#FFFFFF" opacity="1.000000" stroke="none" d=" M225.750031,267.749939   C229.422134,264.132660 232.844223,260.765381 236.220810,257.442871   C227.770828,249.134125 219.619812,241.119354 211.459427,233.095367   C218.811859,225.760437 225.531326,219.056946 232.288361,212.315994   C240.263855,220.338242 248.272766,228.394104 256.035461,236.202301   C264.559906,227.603699 272.607239,219.486404 280.643402,211.380325   C288.201294,218.982971 294.988586,225.810501 301.955719,232.818909   C294.053833,240.636337 286.008087,248.596100 278.301453,256.220367   C286.469269,264.331879 294.571106,272.377899 302.818176,280.568085   C296.095367,287.322723 290.174042,293.078918 284.499023,299.068512   C282.211548,301.482788 280.715851,301.396698 278.469391,299.032654   C271.603302,291.807281 264.537598,284.771606 257.738373,277.854248   C249.330887,286.356049 241.289932,294.487152 233.279770,302.587158   C225.746719,295.061249 218.934860,288.255798 212.035538,281.363007   C216.517303,276.915009 221.008667,272.457458 225.750031,267.749939  z"/>
+                  </svg>
+                {{UIDICTIONARY ? UIDICTIONARY.get(
+                'ui.core.eventHandler.sms.titlePara.inactiveRecipients'): ""}}
+              </div>
+              <!--active start here-->
+              <div class="marginTop allParagraph eventBasicForms">
+                <mat-form-field class="form_field emailInput" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                    'ui.core.recipients.fields.placeholder.recipientType'): ""}}</mat-label>
+                  <mat-select (selectionChange)="recipientType($event, 'INACTIVE')"
+                              [(ngModel)]="inactiveAlertRecipientType" name="recipientList">
+                    <mat-option *ngFor="let RecipientListEntryType of RecipientListEntryTypes;"
+                                [value]="RecipientListEntryType.key">{{RecipientListEntryType.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div *ngIf="inactiveAlertRecipientType === 'PHONE_NUMBER'" class="inline fields allParagraph eventBasicForms">
+                <mat-form-field class="inputFieldMargin form_field w-80" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                    'ui.core.recipients.fields.placeholder.phone'): ""}}</mat-label>
+                  <input [(ngModel)]="inactivePhoneNumber" matInput name="inactivePhoneNumber"
+                         placeholder="Enter email">
+                </mat-form-field>
+                <button mat-mini-fab aria-label="icon-button with a add icon"
+                        (click)="addPhoneNumberToMap('PHONE_NUMBER', 'INACTIVE')"
+                        title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <div *ngIf="inactiveAlertRecipientType === 'USER_PHONE_NUMBER'"
+                   class="inline fields allParagraph eventBasicForms">
+                <mat-form-field class="inputFieldMargin form_field w-80 smsSelect" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
+                    'ui.core.recipients.fields.placeholder.user'): ""}}</mat-label>
+                  <mat-select [(ngModel)]="inactiveUser" name="inactiveUser">
+                    <mat-option *ngFor="let user of userList;"
+                                [value]="user.username">{{user.username}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button mat-mini-fab aria-label="icon-button with a add icon"
+                        (click)="addPhoneNumberToMap('USER_PHONE_NUMBER', 'INACTIVE')"
+                        title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+
+              <div class="inline fields" *ngIf="isInactiveAlertRecipients">
+                <div class="three wide field"></div>
+                <div class="eight wide field">
+                  <div *ngIf="smsEvent.inactiveRecipients?.length === 0 else other_content"
+                       class="ui pointing label pb-20">
+                    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.messages'): ""}}
+                  </div>
+                  <ng-template #other_content>
+                    <mat-table [dataSource]="smsEvent.inactiveRecipients" class="form_table mat-elevation-z8 smsTable">
+                      <!-- Position Column -->
+                      <ng-container matColumnDef="User/Phone">
+                        <mat-header-cell *matHeaderCellDef class="mat_spaces">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.user'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.phone'): ""}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let elementInactive index as i" class="mat_spaces">
+                          <div *ngIf="elementInactive.recipientType === 'PHONE_NUMBER'">{{elementInactive.number}}</div>
+                          <div
+                            *ngIf="elementInactive.recipientType === 'USER_PHONE_NUMBER'">{{elementInactive.username}}</div>
+                        </mat-cell>
+
+                      </ng-container>
+                      <ng-container matColumnDef="Delete">
+                        <mat-header-cell *matHeaderCellDef
+                                         class="mat_dlt"> {{UIDICTIONARY ? UIDICTIONARY.get(
+                          'ui.core.common.icon.hover.delete'): ""}}</mat-header-cell>
+                        <mat-cell class="justifyContentCenter"
+                                  *matCellDef="let element  index as i">
+                          <mat-icon *ngIf="element.recipientType === 'PHONE_NUMBER'"
+                                    (click)="removePhoneFromMap(element.number, 'INACTIVE')"
+                                    class="mat-pointer mat_dlt">delete
+                          </mat-icon>
+                          <mat-icon *ngIf="element.recipientType === 'USER_PHONE_NUMBER'"
+                                    (click)="removePhoneFromMap(element.username, 'INACTIVE')"
+                                    class="mat-pointer mat_dlt">delete
+                          </mat-icon>
+                        </mat-cell>
+                      </ng-container>
+                      <mat-header-row *matHeaderRowDef="userListColumns"></mat-header-row>
+                      <mat-row *matRowDef="let row; columns: userListColumns;"></mat-row>
+                    </mat-table>
+                  </ng-template>
+                </div>
+              </div>
+
+
+              <!--End Here-->
+            </div>
+            <mat-divider class="emailEventDivider"></mat-divider>
+          </div>
+        </mat-tab>
+        <mat-tab label="Event Types">
+          <div data-tab="third">
+            <app-event-type-tree-view [events]="smsEvent.eventTypes"></app-event-type-tree-view>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</form>

@@ -1,0 +1,141 @@
+<mat-toolbar class="mat-toolbar_all">
+  <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.heading'): ""}}
+  </span>
+  <mat-icon class="close-container" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" mat-raised-button mat-dialog-close>close</mat-icon>
+</mat-toolbar>
+<mat-dialog-content class="mat-typography all_dialog_content searchEventMain">
+  <form class="formDataPoint">
+
+      <mat-form-field class="searchEventInput w-50" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Id'): ""}}
+        </mat-label>
+        <input matInput name="eventId" placeholder="Enter Id" #eventId>
+      </mat-form-field>
+      <mat-form-field class="searchEventInput w-50 mr-0" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.status'): ""}}
+        </mat-label>
+        <mat-select [(ngModel)]="selected" name="dateFormat">
+          <mat-option *ngFor="let status of eventStatus" [value]="status.value">{{status.key}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field class="searchEventInput w-50" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.eventSourceType'): ""}}
+        </mat-label>
+        <mat-select [(ngModel)]="eventSourceTypesSelected" name="eventSourceTypesSelected">
+          <mat-option *ngFor="let eventSourceType of eventSourceTypes" [value]="eventSourceType.value">
+            {{eventSourceType.key}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="searchEventInput w-50 mr-0" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.alarmLevel'): ""}}
+        </mat-label>
+        <mat-select [(ngModel)]="alarmLevelSelected" name="alarmLevelSelected">
+          <mat-option *ngFor="let alarmLevel of eventAlarmLevel" [value]="alarmLevel.value">{{alarmLevel.key}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field class="searchEventInput w-50" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.dateTimeFrom'): ""}}
+        </mat-label>
+        <input matInput type="datetime-local" name="dateFrom" #dateFrom>
+      </mat-form-field>
+      <mat-form-field class="searchEventInput w-50 mr-0" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.dateTimeTo'): ""}}
+        </mat-label>
+        <input matInput type="datetime-local" name="dateTo" #dateTo>
+      </mat-form-field>
+
+    <button mat-raised-button class="Search_button" (click)="searchEvent(eventId.value,dateFrom.value,dateTo.value)">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.searchEvents'): ""}}
+    </button>
+  </form>
+  <br>
+  <div *ngIf="searchEvents">
+    <mat-table mat-table [dataSource]="searchEvents" class="mat-elevation-z8 searchTable table_data">
+      <ng-container matColumnDef="Id">
+        <mat-header-cell *matHeaderCellDef>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Id'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Alarm Level">
+        <mat-header-cell *matHeaderCellDef>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.alarmLevel'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div *ngIf="element.alarmLevel === 'INFORMATION'" class=" center aligned">
+            <mat-icon class="blue-icon" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+          </div>
+          <div *ngIf="element.alarmLevel === 'WARNING'" class=" center aligned">
+            <mat-icon class="olive-icon" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+          </div>
+          <div *ngIf="element.alarmLevel === 'URGENT'" class=" center aligned">
+            <mat-icon class="yellow-icon" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+          </div>
+          <div *ngIf="element.alarmLevel === 'CRITICAL'" class=" center aligned">
+            <mat-icon class="brown-icon" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+          </div>
+          <div *ngIf="element.alarmLevel === 'EMERGENCY'" class=" center aligned">
+            <mat-icon class="red-icon" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Time">
+        <mat-header-cell *matHeaderCellDef>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.table.time'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.activeTimestamp | date: 'MMM d, h:mm:ss a' }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Message">
+        <mat-header-cell *matHeaderCellDef>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Message'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.message }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Inactive Time">
+        <mat-header-cell *matHeaderCellDef>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.inActiveTime'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div *ngIf="element.active" class="event_active"> Active</div>
+          <div *ngIf="!element.rtnApplicable ; else elsePart">
+            No Rtn
+          </div>
+          <ng-template #elsePart>
+            {{ element.rtnTimestamp | date: 'MMM d, h:mm a'}} - Returned to normal
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="Action">
+        <mat-header-cell *matHeaderCellDef>
+          {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.Action'): ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-icon aria-hidden="false" class="action-icons" title="{{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.dataPoint.acknowledged'): ''}}" (click)="ackSearchEvent(element)">
+            check_circle
+          </mat-icon>
+          <mat-icon aria-hidden="false" class=" action-icons" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.datapointDetails').substring(9,16): ''}}"
+                    (click)="dataPointDetails(element.eventType.dataPointXid)">
+            details
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="eventsTableColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: eventsTableColumns;"></mat-row>
+    </mat-table>
+  </div>
+</mat-dialog-content>
+

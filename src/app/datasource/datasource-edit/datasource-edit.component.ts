@@ -34,6 +34,9 @@ import { DiDoCardSensorComponent } from '../components/di-do-card-sensor';
 import { DoorSensorComponent } from '../components/door-sensor';
 import { IaqSensorComponent } from '../components/iaq-sensor';
 import { InjectionMouldCountComponent } from '../components/injection-mould-count-sensor';
+import { LeakageDetectorComponent } from '../components/leakage-detector';
+import { LightControllerV4Component } from '../components/light-controller-v4';
+import { LightDiControllerComponent } from '../components/light-di-controller';
 
 
 
@@ -116,6 +119,9 @@ export class DatasourceEditComponent {
       'DOOR_SENSOR.DS': DoorSensorComponent,
       'SENSOR_TAG_IAQ_V.DS': IaqSensorComponent,
       'SENSOR_TAG_INJECTION_MOULD_COUNT.DS': InjectionMouldCountComponent,
+      'WATER_LEAKAGE_DETECTOR.DS': LeakageDetectorComponent,
+      'LIGHT_CONTROLLER_V4.DS': LightControllerV4Component,
+      'LIGHT_RELAY_CONTROLLER.DS': LightDiControllerComponent,
     };
 
     const component = componentMapping[dataSourceType];

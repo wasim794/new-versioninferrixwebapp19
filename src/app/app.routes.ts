@@ -24,6 +24,13 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./datasource/datasource.routes').then(m => m.datasourceRoutes),
   },
+ 
+   {
+    path: 'events',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./event/event.routes').then(m => m.eventRoutes),
+  },
+
   {
     path: 'datapoint',
     canActivate: [AuthGuard],

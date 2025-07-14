@@ -1,0 +1,83 @@
+<form>
+  <mat-card class="form_cards">
+    <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+      <mat-card-title class="sidebar_form_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.form.heading.process'): ""}}
+      </mat-card-title>
+      <span class="spacer"></span>
+
+      <button mat-raised-button class="Top_Save_Button bacnetUpdate topSaveSidbarButton" (click)="eventHandlerSave() "
+              *ngIf="!isEdit">
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+      </button>
+      <button mat-raised-button class="Top_Update_Button bacnetUpdate toolbarUpdateButton" (click)="eventHandlerUpdate()"
+              *ngIf="isEdit">
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+      </button>
+
+    </mat-toolbar>
+
+    <mat-card-content class="form_cards form_edit_card">
+      <div *ngIf="isSaveSuccessful">
+        <mat-card class="validation-error">
+          <li>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.messages.fillMandatoryFields'): ""}}</li>
+        </mat-card>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Basic">
+          <div data-tab="first" class="messegesAll">
+            <app-basic-form [handlerModel]="processEvent"></app-basic-form>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Process">
+          <div data-tab="second">
+            <div class="allParagraph eventBasicForms marginTop-20">
+              <mat-form-field class="form_field w-50" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.process.fields.placeholder.activeProcessCommand'): ""}}
+                  :
+                </mat-label>
+                <input matInput [(ngModel)]="processEvent.activeProcessCommand" name="activeProcessCommand" type="text">
+              </mat-form-field>
+
+              <mat-form-field class="form_field  w-50 marginLeft-10" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.process.fields.placeholder.activeProcessTimeout'): ""}}
+                  :
+                </mat-label>
+                <input matInput name="activeProcessTimeout" [(ngModel)]="processEvent.activeProcessTimeout" type="text">
+              </mat-form-field>
+
+            </div>
+            <div class="allParagraph eventBasicForms">
+              <mat-form-field class="form_field w-50" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.process.fields.placeholder.InactiveProcessCommand'): ""}}
+                  :
+                </mat-label>
+                <input matInput [(ngModel)]="processEvent.inactiveProcessCommand" name="inactiveProcessCommand"
+                       type="text">
+              </mat-form-field>
+
+              <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.process.fields.placeholder.InactiveProcessCommand'): ""}}
+                  :
+                </mat-label>
+                <input matInput name="inactiveProcessTimeout" [(ngModel)]="processEvent.inactiveProcessTimeout"
+                       type="text">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Event Types">
+          <div data-tab="third">
+            <app-event-type-tree-view [events]="processEvent.eventTypes"></app-event-type-tree-view>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</form>

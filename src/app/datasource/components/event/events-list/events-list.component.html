@@ -1,0 +1,122 @@
+<div class="loadermain" id="matSpinderAll"><img src="favicon.ico" alt="loader"/></div>
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <span>{{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.common.heading.events'): ""}}</span>
+      <div class="containerInfo">
+        <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.acknowledgeAll'): ''}}" class="right_button check_icon"
+                aria-label="icon button with a check icon">
+          <mat-icon class="event_right_icon" aria-hidden="false" aria-label="error_outline icon"
+                    (click)="ackEvent('all')">check
+          </mat-icon>
+        </button>
+        <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.silenceAll'): ''}}" class="right_button valume_icon"
+                aria-label="icon button with a volume_off icon">
+          <mat-icon class="event_right_icon" aria-hidden="false" aria-label="error_outline icon"
+                    (click)="toggleSilence()">volume_off
+          </mat-icon>
+        </button>
+        <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.searchEvent'): ''}}" class="right_button search_icons"
+                aria-label="icon button with a check icon">
+          <mat-icon class="event_right_icon event_right_search" aria-hidden="false" aria-label="error_outline icon"
+                    (click)="search()">
+            search
+          </mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+
+<div class="container cardlayout" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%">
+    <div class="container-size mainContainerEvent">
+      <mat-table mat-table [dataSource]="eventModels" class="mat-elevation-z8 evenTable">
+        <ng-container matColumnDef="Id">
+          <mat-header-cell class="eventFirstChildData" *matHeaderCellDef [ngClass]="'column-width'">
+            {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.Id'): ""}}
+          </mat-header-cell>
+          <mat-cell class="eventFirstChildData" *matCellDef="let element" [ngClass]="'column-width'"> {{ element.id }}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Event Type">
+          <mat-header-cell class="widthEventType" *matHeaderCellDef [ngClass]="'column-width'">
+            {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.eventHandler.tabs.eventTypes'): ""}}
+          </mat-header-cell>
+          <mat-cell class="widthEventType" *matCellDef="let element" [ngClass]="'column-width'"> {{
+            element.eventType.eventType }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Message">
+          <mat-header-cell
+            *matHeaderCellDef>{{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.Message'): ""}}</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.message }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Alarm Level">
+          <mat-header-cell class="eventMidData" *matHeaderCellDef [ngClass]="'column-width_level'">
+            {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.alarmLevel'): ""}}
+          </mat-header-cell>
+          <mat-cell class="eventMidData" *matCellDef="let element" [ngClass]="'column-width_level'">
+            <div *ngIf="element.alarmLevel === 'INFORMATION'" class=" center aligned">
+              <mat-icon class="alarmFlag-info" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+            </div>
+            <div *ngIf="element.alarmLevel === 'WARNING'" class=" center aligned">
+              <mat-icon class="alarmFlag-warning" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+            </div>
+            <div *ngIf="element.alarmLevel === 'URGENT'" class=" center aligned">
+              <mat-icon class="alarmFlag-urgent" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+            </div>
+            <div *ngIf="element.alarmLevel === 'CRITICAL'" class=" center aligned">
+              <mat-icon class="alarmFlag-critical" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+            </div>
+            <div *ngIf="element.alarmLevel === 'EMERGENCY'" class=" center aligned">
+              <mat-icon class="alarmFlag-emergency" aria-hidden="false" title="{{element.alarmLevel}}">flag</mat-icon>
+            </div>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Active Time">
+          <mat-header-cell class="widthActiveTime" *matHeaderCellDef>
+            {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.activeTime'): ""}}
+          </mat-header-cell>
+          <mat-cell class="widthActiveTime" *matCellDef="let element">{{ element.activeTimestamp | date: 'MMM d, h:mm:ss
+            a' }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Rtn Time">
+          <mat-header-cell class="withReturns" *matHeaderCellDef>
+            {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.returnToNormalTime'): ""}}
+          </mat-header-cell>
+          <mat-cell class="withReturns" *matCellDef="let element">
+            <div *ngIf="element.active" class="event_active"> Active</div>
+            <div *ngIf="!element.rtnApplicable ; else elsePart">
+              No Rtn
+            </div>
+            <ng-template #elsePart>
+              {{ element.rtnTimestamp | date: 'MMM d, h:mm:ss a'}} - Returned to normal
+            </ng-template>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Action">
+          <mat-header-cell class="eventLastChildData" *matHeaderCellDef [ngClass]="'column-width'">
+            {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.Action'): ""}}
+          </mat-header-cell>
+          <mat-cell class="eventLastChildData" *matCellDef="let element" [ngClass]="'column-width'">
+            <mat-icon aria-hidden="false" class="event_acknoledge" title="{{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.dataPoint.acknowledged'): ''}}" (click)="ackEvent(element)">
+              check_circle
+            </mat-icon>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="eventsTableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: eventsTableColumns;"></mat-row>
+
+      </mat-table>
+
+
+    </div>
+  </div>
+</div>
+<div *ngIf="_service.total > limit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="_service.total" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit (page)="getEventsNextPage($event)"></mat-paginator>
+</div>

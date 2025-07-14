@@ -1,0 +1,72 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+  fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.eventHandler'): ""}}</span>
+      <div class="commonLeftMargin">
+        <mat-form-field>
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.dropDown.placeholder'): ""}}</mat-label>
+          <mat-select>
+            <mat-option (onSelectionChange)="addEventHandler($event)" *ngFor="let type of handlerTypes"
+              [value]="type.type">
+              {{type.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+
+<div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+  fxLayoutAlign="left">
+  <div fxFlex="22%" class="card_margin" *ngFor="let handler of handlers">
+    <mat-card class="mat-card all_card increaseIconsCard matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName"> {{handler.name}}</mat-card-title>
+        <div class="toggle_right toggle_change">
+          <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.status'): ''}}"
+            [(ngModel)]="!handler.disabled" (change)="eventHandlerStatus($event, handler)">
+          </mat-slide-toggle>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+      <mat-card-actions class="mat_right_icons">
+        <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"
+          title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+          (click)="editHandler(handler)">
+          edit
+        </mat-icon>
+        <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon"
+          title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+          (click)="deleteHandler(handler)">
+          delete
+        </mat-icon>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<div *ngIf="eventHandlerService.total > limit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="eventHandlerService.total"
+    [pageSizeOptions]="pageSizeOptions" [pageSize]=limit (page)="getNext($event)"></mat-paginator>
+</div>
+
+<mat-drawer-container class="container sidebar_position" autosize [hasBackdrop]="'true'">
+  <mat-drawer #eventHandlerSideNav class="drawer_sidebar matdrawerSidebars" mode="push" position="end">
+    <mat-icon (click)="eventHandlerClose('close')" class=" allCloseOptions" aria-hidden="false" id="EventHandlerClose"
+      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" aria-label="close icon">
+      Close
+    </mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllData top-54" (click)="eventHandlerClose('dlt')">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+    <app-event-handler-edit (eventHandlerClose)="eventHandlerClose('close')"
+      [selectedHandlerType]="selectedHandlerType"></app-event-handler-edit>
+  </mat-drawer>
+</mat-drawer-container>

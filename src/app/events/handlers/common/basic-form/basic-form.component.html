@@ -1,0 +1,13 @@
+<div class="allParagraph eventBasicForms marginTop-20">
+  <mat-form-field class="field_margin form_field w-100" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}:</mat-label>
+    <input matInput id="name" [(ngModel)]="handlerModel.name" name="name" type="text">
+  </mat-form-field>
+
+  <mat-form-field class="field_margin form_field  w-100" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}:</mat-label>
+    <input name="xid" [(ngModel)]="handlerModel.xid" matInput id="xid" disabled name="Xid" type="text">
+  </mat-form-field>
+</div>
+
+
