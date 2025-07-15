@@ -1,49 +1,42 @@
-import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnvService {
 
-  public apiUrl: string = '';
-  public wssUrl: string = '';
+  public apiUrl: string;
+  public wssUrl: string;
   public enableDebug = true;
 
-  private readonly apiPath = '/rest';
-  private readonly wsPath = '/rest/ws';
-  private readonly localDevHostname = 'localhost';
+  constructor() {
+    const window = this.getWindow();
+    let port = window.location.port;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (isPlatformBrowser(this.platformId)) {
-      const hostname = window.location.hostname;
-
-      if (hostname === this.localDevHostname) {
-        // Use proxy (relative URL) during development
-        this.apiUrl = this.apiPath;
-        this.wssUrl = this.wsPath;
-      } else {
-        // Production or other environment: use full URLs
-        const protocol = window.location.protocol;
-        const port = window.location.port || (protocol === 'https:' ? '443' : '80');
-
-        this.apiUrl = `${protocol}//${hostname}:${port}${this.apiPath}`;
-        this.wssUrl = `${protocol === 'https:' ? 'wss:' : 'ws:'}//${hostname}:${port}${this.wsPath}`;
+    // Determine protocol and default port
+    if (window.location.protocol === 'https:') {
+      if (!port) {
+        port = '443';
       }
-
-      if (this.enableDebug) {
-        console.log('EnvService (browser) apiUrl:', this.apiUrl);
-        console.log('EnvService (browser) wssUrl:', this.wssUrl);
-      }
+      this.apiUrl = 'https:';
+      this.wssUrl = 'wss:';
     } else {
-      // Server-side: fallback to backend IP directly (for SSR, if used)
-      this.apiUrl = 'http://192.168.29.16/rest';
-      this.wssUrl = 'wss://192.168.29.16/rest/ws';
-
-      if (this.enableDebug) {
-        console.log('EnvService (server) apiUrl:', this.apiUrl);
-        console.log('EnvService (server) wssUrl:', this.wssUrl);
+      if (!port) {
+        port = '80';
       }
+      this.apiUrl = 'http:';
+      this.wssUrl = 'ws:';
     }
+
+    // Construct URLs
+    this.apiUrl += `//${window.location.hostname}:${port}/rest`;
+    this.wssUrl += `//${window.location.hostname}:${port}/rest/ws`;
+  }
+
+  private getWindow(): Window {
+    return window;
   }
 }
+
+
+//end here

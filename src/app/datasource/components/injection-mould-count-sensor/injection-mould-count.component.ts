@@ -13,7 +13,7 @@ import { DatapointTableComponent, MeshNodesDatasourceFormComponent } from "../co
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule, MeshNodesDatasourceFormComponent, MeshNodesDatasourceFormComponent, DatapointTableComponent],
+  imports: [CommonModule, MatModuleModule, DatapointTableComponent],
   providers: [InjectionMouldCountSensorDatasourceService, DataPointService, DictionaryService, CommonService],
   selector: 'app-injection-mould-count',
   templateUrl: './injection-mould-count.component.html'
