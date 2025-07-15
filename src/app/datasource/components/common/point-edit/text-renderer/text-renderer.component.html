@@ -46,7 +46,7 @@
             <input matInput [style.color]="binaryTextRenderer.zeroColour" type="text" id="zero"
                    name="zero" [(ngModel)]="binaryTextRenderer.zeroLabel">
           </mat-form-field>
-          <button mat-mini-fab [style.background]="binaryTextRenderer.zeroColour"
+          <button mat-mini-fab class="choseColor" [style.background]="binaryTextRenderer.zeroColour"
                   aria-label="icon button with a color_lens icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.chooseDs').substring(0,6): ''}} color" (click)="getZeroColor()">
             <mat-icon>color_lens</mat-icon>
           </button>
@@ -57,14 +57,14 @@
           <!-- <app-colour-picker (event)="setZeroColor($event)"></app-colour-picker> -->
         </div>
 
-        <br>
+     
         <p>
           <mat-form-field class="loginDiscardAll" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.zero'): ""}}</mat-label>
             <input matInput [style.color]="binaryTextRenderer.oneColour" type="text" id="one"
                    name="one" [(ngModel)]="binaryTextRenderer.oneLabel">
           </mat-form-field>
-          <button title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.chooseDs').substring(0,6): ''}} color" mat-mini-fab aria-label="icon button with a color_lens icon"
+          <button  class="choseColor"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.chooseDs').substring(0,6): ''}} color" mat-mini-fab aria-label="icon button with a color_lens icon"
                   [style.background]="binaryTextRenderer.oneColour" (click)="getOneColor()">
             <mat-icon>color_lens</mat-icon>
           </button>

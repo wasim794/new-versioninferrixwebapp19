@@ -58,13 +58,13 @@ export class AuthenticationService {
 
   get loggedIn(): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
-    
+
     const token = this.getToken();
     return !!token && !this.jwtHelper.isTokenExpired(token);
   }
 
   getToken(): string | null {
-    if (!isPlatformBrowser(this.platformId)) return null;
+    if (isPlatformBrowser(this.platformId)) return null;
     const token = localStorage.getItem('access_token');
     return token ? JSON.parse(token) : null;
   }
@@ -72,20 +72,20 @@ export class AuthenticationService {
   private setToken(token: string): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('access_token', JSON.stringify(token));
-      this.setTokenRefreshTimer(token);
+//       this.setTokenRefreshTimer(token);
     }
   }
 
-  private setTokenRefreshTimer(token: string): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    const expiration = this.jwtHelper.getTokenExpirationDate(token);
-    if (!expiration) return;
-
-    const timeout = expiration.getTime() - Date.now() - (60 * 1000); // Refresh 1 minute before expiration
-    
-    setTimeout(() => {
-      this.refreshToken().subscribe();
-    }, timeout);
-  }
+//   private setTokenRefreshTimer(token: string): void {
+//     if (!isPlatformBrowser(this.platformId)) return;
+//
+//     const expiration = this.jwtHelper.getTokenExpirationDate(token);
+//     if (!expiration) return;
+//
+//     const timeout = expiration.getTime() - Date.now() - (60 * 1000); // Refresh 1 minute before expiration
+//
+//     setTimeout(() => {
+//       this.refreshToken().subscribe();
+//     }, timeout);
+//   }
 }

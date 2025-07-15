@@ -4226,6 +4226,7 @@ label.values-label {
 
 .helpTollbar{
   padding: 10px;
+  width: 700px;
 }
 
 .help_Title  {
@@ -5518,6 +5519,12 @@ th {
 
 .addDn mat-row {
   min-height: 65px !important;
+}
+
+
+.choseColor{
+  border-radius: 100% !important;
+  color: white !important;
 }
 
 .addDescover .commonReducesSizesNode {
