@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs/index';
+import {Observable} from 'rxjs';
 import {DataPoint} from '../model/dataPoint';
 import {DataPointDetail} from '../model/dataPointDetail';
 import {EnvService} from '../../core/services';

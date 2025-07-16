@@ -1,0 +1,49 @@
+<div style="position: fixed">
+<mat-toolbar class="mat-toolbar_all">
+  <span class="font_size">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.dataPoint'): ""}}</span>
+  <span class="spacer"></span>
+  <mat-form-field class="dialogue_search">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
+    <input (keyup)="filterDataPoints()" [(ngModel)]="searchDataPoint" matInput name="searchDataSource"
+      placeholder="Search...">
+    <mat-icon class="Input_search" matSuffix>search</mat-icon>
+  </mat-form-field>
+</mat-toolbar>
+<mat-dialog-content class="all_dialog_content dataPointDialogMain watchListMain">
+  <table [dataSource]="dataSource" class="table_data_pop_up " width="100%" mat-table>
+    <ng-container matColumnDef="select" class="table_row">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="table_data">
+        <mat-checkbox (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
+          [checked]="isChecked(element)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="Name">
+      <mat-header-cell *matHeaderCellDef class="cells_title">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="table_data"> {{element.deviceName}}-{{element.name}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="dataPointsTableColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: dataPointsTableColumns;"></mat-row>
+  </table>
+  <div *ngIf="totalDataPoints > limit" class="ui borderless menu">
+    <mat-paginator [pageIndex]=0 [length]="totalDataPoints" [pageSizeOptions]="pageSizeOptions" [pageSize]=limit
+      (page)="getNext($event)"></mat-paginator>
+  </div>
+</mat-dialog-content>
+<div mat-dialog-actions class="httpButtonsCenter">
+  <button class="cancel_button " mat-button
+    [mat-dialog-close]>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close') |  uppercase): ""}}</button>
+  <button (click)="addPointToHttpModule()" class="Add_button " mat-raised-button>
+    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.add') |  uppercase): ""}}
+  </button>
+</div>
+</div>

@@ -55,6 +55,12 @@ export const routes: Routes = [
     loadComponent: () => import('./device-management-system/device-management-system.component').then(m => m.DeviceManagementSystemComponent),
   },
 
+
+  {
+    path: 'publisher',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./publisher/publisher-routes').then(m => m.publisherRoutes),
+  },
   
   
 

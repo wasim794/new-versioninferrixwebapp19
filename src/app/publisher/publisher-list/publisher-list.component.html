@@ -1,0 +1,135 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+  fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.publisher'): ""}}</span>
+      <div class="selectMenuFonts">
+        <mat-form-field class="field_margin">
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.select'): ""}}
+          </mat-label>
+          <mat-select>
+            <mat-option *ngFor="let module of publisherModules" [value]="module"
+              (onSelectionChange)="addPublisher($event, module.type)">{{module.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="containerInfo">
+        <button mat-raised-button class="deleteAllButtons" *ngIf="deleteAllButtons">
+          <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon">
+            folder_delete
+          </mat-icon></button>
+        <mat-icon class="refreshIcons" (click)="refreshItemData()">refresh</mat-icon>
+        <mat-form-field>
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
+          <input (keyup)="filterPublisher($event)" [(ngModel)]="searchPublisher" matInput name="searchPublisher">
+          <mat-icon class="Input_search" (click)="filterPublisher($event)" matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+        <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon"
+          (click)="publisherHelpModel()">
+          info_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+
+<div class="container cardlayout width-100 matMaintainableContains publisherTableContainer" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="card_margin">
+    <table  mat-table [dataSource]="dataSources" class="mat-elevation-z8"
+            matSort (matSortChange)="sortingData($event)">
+
+      <!-- Checkbox Column -->
+      <ng-container  matColumnDef="select">
+        <th  mat-header-cell *matHeaderCellDef>
+          <mat-checkbox class="containerAlign" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox class="containerAlign" (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
+                        [checked]="isChecked(element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{ paginator.pageIndex * paginator.pageSize + i + 1 }} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container  matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}} </th>
+        <td  mat-cell *matCellDef="let element" class="cursorPointer" (click)="showPublisherDetails(element)"> {{element.name}} </td>
+      </ng-container>
+      <ng-container  matColumnDef="enable">
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}  </th>
+        <td  mat-cell *matCellDef="let element"> <div class="toggle_right toggle_change">
+          <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}" [(ngModel)]="element.enabled"
+                            (change)="changePublisherStatus(element, $event.checked)">
+          </mat-slide-toggle>
+        </div> </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
+        <td  mat-cell *matCellDef="let element">
+          <mat-card-actions class="mat_right_icons iconAlignItem">
+
+            <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+                      (click)="showPublisherDetails(element)">
+              edit
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons"  aria-label="copy icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.copy'): ''}}"
+                      (click)="copyPublishers(element)">
+              content_copy
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                      (click)="deletePublisher(element)">
+              delete
+            </mat-icon>
+          </mat-card-actions></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="selection.toggle(row)">
+      </tr>
+    </table>
+  </div>
+</div>
+<div  class="pagination_fixed">
+  <mat-paginator
+    class="pagination_all"
+    [length]="totalPublisher"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="limit"
+    showFirstLastButtons
+    (page)="getPublisherNextPage($event)"
+  ></mat-paginator>
+</div>
+
+<mat-drawer-container class="container sidebar_position" autosize>
+  <mat-drawer #publisherSideNav id="increaseValue" class="sidebarCommonAll" mode="push" position="end">
+    <mat-icon class=" allCloseOptions" aria-hidden="false" id="datasource_side" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}"
+      (click)="sidebarclose(publisherSideNav)" aria-label="close icon">
+      close
+    </mat-icon>
+    <button  mat-raised-button class="Save_Button cancelAllData top-56"
+      (click)="sidebarclose(publisherSideNav)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+    <app-publisher-edit class="margin_up" (responsePublisherSave)="publisherSavedAction($event)"
+      (responsePublisherUpdate)="publisherUpdateAction($event)"></app-publisher-edit>
+  </mat-drawer>
+</mat-drawer-container>

@@ -1,5 +1,5 @@
 export class DataPoint {
-  xid: string;
-  name: string;
+  xid!: string;
+  name!: string;
 }
 

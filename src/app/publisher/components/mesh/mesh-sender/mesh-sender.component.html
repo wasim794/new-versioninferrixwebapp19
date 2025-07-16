@@ -1,0 +1,236 @@
+<mat-card class="form_cards httpBlock meshSendersContainer">
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{"Mesh Sender"}} <small *ngIf="meshSenderTitle">{{meshSenderModel.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button (click)="saveMeshSender()" align="end" *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate toolbarButton"
+            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
+    </button>
+    <button (click)="updateMeshSender()" align="end" *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate toolbarButton"
+            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    </button>
+  </mat-toolbar>
+
+  <mat-card-content class="form_cards form_edit_card">
+    <div [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li *ngFor="let er of error">{{er.property}}
+          : {{er.message}}</li>
+      </mat-card>
+    </div>
+    <mat-tab-group>
+      <mat-tab label="Basic">
+        <ng-template matTabContent>
+          <br>
+          <form>
+            <p>
+              <mat-form-field class="field_margin form_field " appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+                <input  matInput name="name" [(ngModel)]="meshSenderModel.name" placeholder="Enter Name" type="text"
+                        required>
+              </mat-form-field>
+
+              <mat-form-field class="form_field " appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input [(ngModel)]="meshSenderModel.xid"  class="inputBoxHeight"  disabled matInput name="xid" >
+              </mat-form-field>
+            </p>
+            <mat-form-field class="field_margin form_field " appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheWarningSize'): ""}}
+              </mat-label>
+              <input [(ngModel)]="meshSenderModel.cacheWarningSize"  matInput name="cacheWarningSize" required>
+            </mat-form-field>
+
+            <mat-form-field class=" form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheDiscardSize'): ""}}
+              </mat-label>
+              <input [(ngModel)]="meshSenderModel.cacheDiscardSize"  matInput name="cacheDiscardSize"
+                     placeholder="Enter CacheDiscardsize" required>
+            </mat-form-field>
+            <p>
+              <mat-form-field class="field_margin form_field meshSenderInput mt-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.updateEvents'): ""}}
+                </mat-label>
+                <mat-select [(ngModel)]="meshSenderModel.publishType"  class="form-control" name="publishType">
+                  <mat-option *ngFor="let updateEvent of dropdownData.updateEvents" [value]="updateEvent.key">
+                    {{updateEvent.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+            <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
+              <mat-grid-tile class="httpToggles">
+
+                <mat-slide-toggle [(ngModel)]="meshSenderModel.sendSnapshot" name="sendSnapshot" class="side_form_toggle toggle_change allToggls"
+                >
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.sendRegularSnapshot'): ""}}
+                </mat-slide-toggle>
+              </mat-grid-tile>
+              <mat-grid-tile class="httpToggles">
+                <mat-slide-toggle [(ngModel)]="meshSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change allToggls httpSenderToggle">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+                </mat-slide-toggle>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <br>
+            <mat-form-field class="field_margin form_field " appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.enterSnapshotSendPeriod'): ""}}
+              </mat-label>
+              <input [(ngModel)]="meshSenderModel.snapshotSendPeriod.timePeriod"  matInput name="timePeriod"
+                     placeholder="Enter SnapshotSendPeriod" required>
+            </mat-form-field>
+
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}
+              </mat-label>
+              <mat-select [(ngModel)]="meshSenderModel.snapshotSendPeriod.timePeriodType"  name="timePeriodType">
+                <mat-option *ngFor="let timePeriodType of dropdownData.snapShotPeriod" [value]="timePeriodType.key">
+                  {{timePeriodType.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Points" *ngIf="pointValues">
+        <div [hidden]=!viewDataPoint>
+          <mat-form-field class="searchWidth serchInput" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
+            <input type="text"
+                   class="autoSearchInput"
+                   matInput
+                   [formControl]="myControl"
+                   (input)="onInputChange($event)"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+              <mat-option *ngFor="let dataPoint of dataPointModels | slice:0:50; let i=index"
+                          (onSelectionChange)="deviceChange(dataPoint, $event)" [value]="dataPoint.extendedName">
+                {{dataPoint.extendedName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <!--          End here-->
+
+          <span *ngIf="showDataPointFields" class="changedropDowns" >
+          <p>
+            <mat-form-field class="field_margin form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-label>
+              <input [(ngModel)]="meshSenderPointModel.name"   matInput name="name"
+                     placeholder="Enter Name" type="text">
+            </mat-form-field>
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}</mat-label>
+              <input  matInput  [(ngModel)]="meshSenderPointModel.xid" name="xid"
+                      type="text"  class="inputBoxHeight" >
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="field_margin form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.attributeId'): ""}}</mat-label>
+             <input  matInput [(ngModel)]="meshSenderPointModel.attributeId" name="attributeId"
+                     type="text">
+            </mat-form-field>
+           <mat-form-field class="field_margin form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
+             <mat-select  [(ngModel)]="meshSenderPointModel.type" name="type">
+                <mat-option *ngFor="let attr of dropdownData.attributeType" [value]="attr.key">
+                    {{attr.value}}
+                  </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-slide-toggle [(ngModel)]="meshSenderPointModel.enabled" class="toggle_change marginBottom-10 marginRight"  name="enabled" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+            >
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+            </mat-slide-toggle>
+              <mat-slide-toggle [(ngModel)]="meshSenderPointModel.settable" class="toggle_change marginBottom-10"  name="settable" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ''}}"
+              >
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
+            </mat-slide-toggle>
+          </p>
+          <button  *ngIf="dataPointActions" (click)="saveDataPoint()"  align="end" class="Top_Save_Button mt-30"
+                   mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+          </button>
+          <button *ngIf="!dataPointActions" (click)="updateDataPoint()"
+                  class="Top_Update_Button updateButton topRightButton"
+                  mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+          </button>
+          <button (click)="cancel()"    align="end" color="warn" class="cancelButton"
+                  mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+          </button>
+          <br>
+          <br>
+        </span>
+        </div>
+        <mat-divider class="mqqtDividers"></mat-divider>
+        <div class="datapoint_table dataPointsAll">
+          <mat-form-field>
+            <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+            <input (keyup)="applyFilter($event)" [(ngModel)]="searchDatapoint" matInput name="searchDatapoint"
+                   placeholder="Search...">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          &nbsp;
+          <button  mat-button class="addDatapointsButton" (click)="addNewDatapoint()">
+            <mat-icon inline=true>add_box</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.addNew') | uppercase): ""}}
+          </button>
+        </div>
+
+        <div class="mat-elevation-z8">
+
+          <mat-table mat-table class="table_data dataPointsAllTable setValueWidth setAutoWidth px-0"
+                     [dataSource]="dataSources">
+            <ng-container matColumnDef="position">
+              <mat-header-cell *matHeaderCellDef class="max50">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index;" class="httpTableHeight">{{i + 1}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name" class="table_row">
+              <mat-header-cell *matHeaderCellDef class="cells_title">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+              </mat-header-cell>
+              <mat-cell class="table_data httpTableHeight" *matCellDef="let element"
+                        title="{{element.name}}"> {{element.name}} </mat-cell>
+            </ng-container>
+            <!-- name Column -->
+            <ng-container matColumnDef="enabled" class="table_row">
+              <mat-header-cell *matHeaderCellDef class="cells_title paddingRights">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+              </mat-header-cell>
+              <mat-cell class="table_data httpTableHeight" *matCellDef="let element"
+                        title="{{element.enabled}}"> <mat-slide-toggle [(ngModel)]="element.enabled" class="toggle_change "  name="enabled" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+              >
+
+              </mat-slide-toggle> </mat-cell>
+            </ng-container>
+            <!--data type column-->
+            <ng-container matColumnDef="type">
+              <mat-header-cell *matHeaderCellDef class="cells_title paddingRights">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.attribute'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}
+
+              </mat-header-cell>
+              <mat-cell class="table_data paddingRights" *matCellDef="let element"> {{element.type}} </mat-cell>
+            </ng-container>
+
+            <!-- action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef
+                               class="cells_title paddingRights">  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element;  let i = index" class="table_data httpTableHeight">
+
+                <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon" (click)="edit(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"> edit </mat-icon>
+
+                <mat-icon (click)="removeData(element)" aria-hidden="false" class="allIcons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"> delete </mat-icon>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

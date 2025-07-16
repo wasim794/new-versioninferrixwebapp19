@@ -1,6 +1,6 @@
 export class DataPointDetail {
-  dataType: string;
+  dataType!: string;
   value: any;
-  timestamp: number;
+  timestamp!: number;
   annotation: any;
 }
