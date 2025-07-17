@@ -14,4 +14,6 @@ export * from './scripts.service';
 export * from './script-utils.service';
 export * from './serial-ports.service';
 export * from './modbus-tool.service';
-// export * from './abstract-publisher.service';
+export * from './abstract-publisher.service';
+export * from './abstract-published-point.service';
+export * from './publisher.service';

@@ -9,7 +9,7 @@ export class BacnetForeignDeviceModel {
     }
   }
 
-  public toJson(): any {
+  public  toJson(): any {
     return JSON.parse(JSON.stringify(this));
   }
 }

@@ -1,0 +1,402 @@
+<mat-card class="form_cards mqttMainContainer">
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.mqttSender'): ""}}
+      <small *ngIf="mqttSenderTitle">{{mqttSender.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button  class="toolbarSaveButton bacnetUpdate toolbarButton" (click)="saveMqttPublisher() " *ngIf="!isEdit"
+            align="end" mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+    </button>
+    <button mat-raised-button class="toolbarUpdateButton bacnetUpdate" (click)="updateMqttPublisher()" *ngIf="isEdit"
+            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    </button>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card allFormedit">
+    <div [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li *ngFor="let err of error">{{err.property}}
+          : {{err.message}}</li>
+      </mat-card>
+    </div>
+
+    <mat-tab-group [selectedIndex]="tabIndex"
+                   (selectedTabChange)="selectTab($event.index)">
+      <mat-tab label="Basic">
+        <ng-template matTabContent>
+          <br>
+          <form class="allFormsSize mqttFormProperties">
+            <p>
+              <mat-form-field class="w-50 mqttInputAlign" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+                <input [(ngModel)]="mqttSender.name" matInput name="name" placeholder="Enter Name" type="text" required>
+              </mat-form-field>
+              <mat-form-field class="w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input [(ngModel)]="mqttSender.xid" readonly matInput name="xid"  class="inputBoxHeight"  placeholder="Auto generated">
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="w-50 mqttInputAlign" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheWarningSize'): ""}}
+                </mat-label>
+                <input [(ngModel)]="mqttSender.cacheWarningSize" matInput name="cacheWarningSize"
+                       placeholder="Enter CacheWarningSize" (keypress)="isNumber($event);" required>
+              </mat-form-field>
+
+              <mat-form-field class="w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheDiscardSize'): ""}}
+                </mat-label>
+                <input [(ngModel)]="mqttSender.cacheDiscardSize" matInput name="cacheDiscardSize"
+                       placeholder="Enter CacheDiscardsize" (keypress)="isNumber($event);" required>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="meshSenderInput mt-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.updateEvents'): ""}}
+                </mat-label>
+                <mat-select [(ngModel)]="mqttSender.publishType" class="form-control" name="publishType">
+                  <mat-option *ngFor="let updateEvent of updateEvents" [value]="updateEvent.key">
+                    {{updateEvent.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+            <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
+              <mat-grid-tile class="mqttToggles ">
+                <mat-slide-toggle name="sendSnapshot"
+                                  class="side_form_toggle toggle_change allToggls"
+                                  [(ngModel)]="mqttSender.sendSnapshot">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.sendRegularSnapshot'): ""}}
+                </mat-slide-toggle>
+              </mat-grid-tile>
+              <mat-grid-tile class="mqttToggles marginLeft-30">
+                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change allToggls marginLeft-88"
+                                  [(ngModel)]="mqttSender.enabled">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
+                </mat-slide-toggle>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <br>
+            <mat-form-field class="w-50 mqttInputAlign" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.enterSnapshotSendPeriod'): ""}}
+              </mat-label>
+              <input [(ngModel)]="sendPeriod.timePeriod" matInput name="timePeriod" required>
+            </mat-form-field>
+            <mat-form-field class="w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}</mat-label>
+              <mat-select [(ngModel)]="sendPeriod.timePeriodType" name="timePeriodType">
+                <mat-option *ngFor="let timePeriodType of timePeriodTypes" [value]="timePeriodType.value">
+                  {{timePeriodType.key}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Mqtt">
+        <ng-template matTabContent>
+          <form class="allFormsSize marginTop-20 publisherMqttTabs">
+            <div [hidden]="!messageError">
+            </div>
+            <mat-form-field class="field_margin w-50  mqttInputAlign" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.brokerUrl'): ""}}</mat-label>
+              <input matInput [(ngModel)]="mqttSender.brokerUri" name="brokerUri" type="text" placeholder="wss://XXXXX">
+            </mat-form-field>
+            <mat-slide-toggle appearance="fill" class="toggle_change singlerightToggle" [(ngModel)]="mqttSender.awsIot"
+                              name="useCertificate" (change)="useCertificate($event)">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.useCertificate'): ""}}
+            </mat-slide-toggle>
+            <div *ngIf="!showCertificate else certificates">
+              <mat-form-field class="field_margin w-50 mqttInputAlign" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.username'): ""}}</mat-label>
+                <input matInput [(ngModel)]="mqttSender.userName" name="userName" type="text">
+              </mat-form-field>
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.password'): ""}}</mat-label>
+                <input matInput [(ngModel)]="mqttSender.userPassword" name="userPassword" type="password">
+              </mat-form-field>
+            </div>
+            <ng-template #certificates>
+              <p>
+                <mat-form-field class="field_margin w-50 mqttInputAlign" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.x509CaCert'): ""}}</mat-label>
+                  <textarea matInput [(ngModel)]="mqttSender.x509CaCrt" name="x509CaCrt" rows="10" cols="50"
+                            type="text"></textarea>
+                </mat-form-field>
+
+                <mat-form-field class="field_margin w-50 " appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.x509ClientCert'): ""}}</mat-label>
+                  <textarea matInput [(ngModel)]="mqttSender.x509ClientCrt" name="x509ClientCrt" type="text" rows="10"
+                            cols="50"></textarea>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field class="field_margin w-50 mqttInputAlign" appearance="fill">
+                  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.privateKey'): ""}}</mat-label>
+                  <textarea matInput [(ngModel)]="mqttSender.privateKey" name="privateKey" type="text" rows="10"
+                            cols="50"></textarea>
+                </mat-form-field>
+              </p>
+            </ng-template>
+            <p>
+              <mat-form-field class="field_margin w-50 mqttInputAlign" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.clientId'): ""}}</mat-label>
+                <input matInput [(ngModel)]="mqttSender.clientId" name="clientId" type="text">
+              </mat-form-field>
+              <mat-form-field class="field_margin w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.topicFilter'): ""}}</mat-label>
+                <input matInput [(ngModel)]="mqttSender.topicFilters" name="topicFilters" type="text">
+              </mat-form-field>
+            </p>
+            <mat-form-field class="field_margin w-50 mqttInputAlign" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.keepAliveInterval'): ""}}</mat-label>
+              <input matInput [(ngModel)]="mqttSender.keepAliveInterval" name="keepAliveInterval" type="text"
+                     (keypress)="isNumber($event);">
+            </mat-form-field>
+
+            <mat-form-field class="field_margin w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.connectionTimeOut'): ""}}</mat-label>
+              <input matInput [(ngModel)]="mqttSender.connectionTimeout" name="connectionTimeout" type="text"
+                     (keypress)="isNumber($event);">
+            </mat-form-field>
+            <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
+              <mat-grid-tile class="mqttConnect mqttInputAlign">
+                <mat-slide-toggle appearance="fill" class="toggle_change marginLeft-10" [(ngModel)]="mqttSender.autoReconnect"
+                                  name="autoReconnect">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.autoReconnect'): ""}}
+                </mat-slide-toggle>
+              </mat-grid-tile>
+              <mat-grid-tile class="mqttConnect">
+
+
+                <mat-slide-toggle appearance="fill" class="toggle_change singlerightToggle marginLeft-10" [(ngModel)]="mqttSender.cleanSession"
+                                  name="cleanSession">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.cleanSession'): ""}}
+                </mat-slide-toggle>
+
+              </mat-grid-tile>
+            </mat-grid-list>
+
+            <mat-form-field class="field_margin w-50 mqttInputAlign" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.dropdown.qosType'): ""}}</mat-label>
+              <mat-select [(ngModel)]="mqttSender.qosType" class="form-control" name="qosType">
+                <mat-option *ngFor="let item of qosType" [value]="item.key">{{item.value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <br>
+
+            <mat-slide-toggle [(ngModel)]="mqttSender.enableDiagnosticPublish"  (change)="enableDignostic($event)" appearance="fill" class="toggle_change marginLeft-10"
+                              name="enableDiagnosticPublish">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.mqtt.placeholder.diagnosticEnable').substring(0,16): ""}}
+            </mat-slide-toggle>
+
+            <div [hidden]="!hideAndShowDignostic">
+              <br>
+              <mat-form-field class="form_field mqttInputAlign" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.mqtt.placeholder.diagnosticPublishTopic'): ""}}</mat-label>
+                <input matInput  [(ngModel)]="mqttSender.diagnosticPublishTopic" name="diagnosticPublishTopic" type="text"
+                       >
+              </mat-form-field>
+              <mat-form-field class="form_field" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.mqtt.placeholder.diagnosticPublishTopicType'): ""}}</mat-label>
+                <mat-select [(ngModel)]="mqttSender.diagnosticPublishTopicType" class="form-control" name="diagnosticPublishTopicType">
+                  <mat-option *ngFor="let publishTopicType of publisherTopicType"
+                              [value]="publishTopicType.key">
+                    {{publishTopicType.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <mat-form-field class="form_field mqttInputAlign" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.mqtt.placeholder.diagnosticPublishTopicType').substring(0,24): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.qosType').substring(0,3): ""}}</mat-label>
+                <mat-select [(ngModel)]="mqttSender.diagnosticPublishQosType" class="form-control" name="diagnosticPublishQosType">
+                  <mat-option *ngFor="let item of qosType" [value]="item.key">{{item.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </form>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Points" *ngIf="pointValues">
+        <ng-template matTabContent>
+          <div class="sidebar-form px-0 mqttPointForm">
+            <form [formGroup]="form">
+              <div formArrayName="publish">
+                <div *ngFor="let contact of publishFormGroup.controls; let i = index;">
+                  <div [formGroupName]="i" class="row addMoreRows">
+                    <p class="m-0">
+                      <mat-form-field class="field_margin form_field m-0 w-50 pl" appearance="fill">
+                        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.publishTopic'): ""}}
+                        </mat-label>
+                        <input formControlName="publishTopic" matInput>
+                      </mat-form-field>
+
+                      <mat-form-field class="form_field w-50" appearance="fill">
+                        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.publishTopicType'): ""}}
+                        </mat-label>
+                        <mat-select class="form-control" formControlName="publishTopicType">
+                          <mat-option *ngFor="let publishTopicType of publisherTopicType"
+                                      [value]="publishTopicType.key">
+                            {{publishTopicType.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </p>
+                    <p class="m-0">
+                      <mat-form-field class="form_field m-0 w-50 pl" appearance="fill">
+                        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.subscribeTopic'): ""}}
+                        </mat-label>
+                        <input matInput formControlName="subscribeTopic">
+                      </mat-form-field>
+
+                      <mat-form-field class="form_field w-50" appearance="fill">
+                        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.subscribeTopicType'): ""}}
+                        </mat-label>
+                        <mat-select class="form-control" formControlName="subscribeTopicType">
+                          <mat-option *ngFor="let subscribeTopicType of subscriberTopicType"
+                                      [value]="subscribeTopicType.key">
+                            {{subscribeTopicType.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </p>
+                      <p class="m-0">
+                    <mat-form-field class="form_field m-0 w-50 pl" appearance="fill">
+                      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+                      <input matInput formControlName="name">
+                    </mat-form-field>
+
+                  <mat-form-field class="form_field w-50" appearance="fill">
+               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.qosType'): ""}}</mat-label>
+              <mat-select class="form-control" formControlName="publishQosType">
+                 <mat-option *ngFor="let publishQosType of qosType" [value]="publishQosType.key">
+                 {{publishQosType.value}}
+                     </mat-option>
+                      </mat-select>
+                        </mat-form-field>
+                            </p>
+
+
+                    <mat-form-field class="form_field m-0 w-50 pl" appearance="fill">
+                      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
+                      <input type="text" matInput (keyup.enter)="autoSearch($event)"
+                             matInput formControlName="dataPointXid" value="{{selectionValue}}">
+                    </mat-form-field>
+                    <mat-selection-list class="selectionList w-50" #xid [multiple]="false" *ngIf="selectionData">
+                      <mat-list-option *ngFor="let dataPoint of dataPointModels | slice:0:50; let i=index "
+                                       (click)="selectedValue(dataPoint)" [value]="dataPoint">
+                        {{dataPoint.name}} - {{dataPoint.dataSourceName}}
+                      </mat-list-option>
+                    </mat-selection-list>
+                    <div class="form_field m-0 w-50 pl">
+                    <mat-slide-toggle class="toggle_change marginLeft-20" formControlName="enabled" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+                                     >
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+                    </mat-slide-toggle>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </form>
+            <button #updateButton mat-raised-button class="Top_Update_Button marginLeft-20 " (click)="updatePublish()"
+                    *ngIf="isupdate">
+              {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+            </button>
+            <button #saveButton mat-raised-button class="Top_Save_Button marginLeft-20 mt-30" (click)="savePublish()" *ngIf="!isupdate">
+              {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+            </button>
+            <button   mat-raised-button class="cancelButton" align="end" color="warn" (click)="cancelPublish()">
+              {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+            </button>
+          </div>
+          <mat-divider class="mqqtDividers"></mat-divider>
+          <div class="mat-elevation-z8">
+            <mat-form-field class="mqttPublisherSearch">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+              <input (keyup)="filterPublisher($event)" [(ngModel)]="searchDatapoint"  matInput name="searchDatapoint"
+                      placeholder="Search...">
+              <mat-icon  (click)="filterPublisher($event)" matSuffix>search</mat-icon>
+            </mat-form-field>
+            &nbsp;
+
+            <mat-table mat-table class="table_data dataPointsAllTable setValueWidth setAutoWidth px-0"
+                       [dataSource]="dataSource">
+              <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef class="max50">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index;" class="max50">{{i + 1}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="name" class="table_row">
+                <mat-header-cell *matHeaderCellDef class="cells_title">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+                </mat-header-cell>
+                <mat-cell class="table_data" *matCellDef="let element"
+                          title="{{element.name}}"> {{element.name}} </mat-cell>
+              </ng-container>
+              <!-- name Column -->
+              <ng-container matColumnDef="publish_Topic" class="table_row">
+                <mat-header-cell *matHeaderCellDef class="cells_title">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.publishTopic'): ""}}
+                </mat-header-cell>
+                <mat-cell class="table_data" *matCellDef="let element"
+                          title="{{element.publishTopic}}"> {{element.publishTopic}} </mat-cell>
+              </ng-container>
+              <!--data type column-->
+              <ng-container matColumnDef="publish_Topic_type">
+                <mat-header-cell *matHeaderCellDef class="cells_title">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.publishTopicType'): ""}}
+                </mat-header-cell>
+                <mat-cell class="table_data" *matCellDef="let element"> {{element.publishTopicType}} </mat-cell>
+              </ng-container>
+              <!-- -->
+              <ng-container matColumnDef="subscribe_Topic">
+                <mat-header-cell *matHeaderCellDef class="cells_title">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.subscribeTopic'): ""}}
+                </mat-header-cell>
+                <mat-cell class="table_data" *matCellDef="let element"> {{element.subscribeTopic}} </mat-cell>
+              </ng-container>
+              <!-- -->
+              <ng-container matColumnDef="subscribe_Topic_type">
+                <mat-header-cell *matHeaderCellDef class="cells_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.placeHolder.subscribeTopicType'): ""}}</mat-header-cell>
+                <mat-cell class="table_data" *matCellDef="let element"
+                          title="{{element.subscribeTopicType}}"> {{element.subscribeTopicType}} </mat-cell>
+              </ng-container>
+              <!--status column-->
+              <ng-container matColumnDef="qos_Type">
+                <mat-header-cell *matHeaderCellDef  class="cells_title maxWidth-60">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.dropdown.qosType'): ""}}
+                </mat-header-cell>
+                <mat-cell class="table_data" *matCellDef="let element"> {{element.publishQosType}} </mat-cell>
+              </ng-container>
+              <!-- action Column -->
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef
+                                 class="cells_title">  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+                <mat-cell *matCellDef="let element;  let i = index" class="table_data mqttCell">
+
+                  <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon" (click)="edit(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"> edit </mat-icon>
+
+                  <mat-icon (click)="removeData(element)" aria-hidden="false" class="allIcons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"> delete </mat-icon>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <div class="noRecordData">
+              {{this.nodata}}
+            </div>
+            <div  class="ui borderless menu">
+
+              <mat-paginator class="" [pageIndex]=0 [length]="mqttSenderPointService.total" [pageSizeOptions]="pageSizeOptions"
+                             [pageSize]=limit (page)="getNext($event)"></mat-paginator>
+            </div>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

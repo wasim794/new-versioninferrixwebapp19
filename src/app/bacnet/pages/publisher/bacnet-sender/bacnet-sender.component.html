@@ -1,14 +1,14 @@
-<!-- <mat-card class="form_cards publisherBacnetMain">
+<mat-card class="form_cards publisherBacnetMain">
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title matCardTitles">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.bacnetPublisher'): ""}}
       <small *ngIf="bacnetTitles">{{bacnetSenderModel.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button (click)="savePublisherBacnet()" align="end" *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate toolbarButton"
+    <button (click)="savePublisherBacnet()"  *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate toolbarButton"
             mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
     </button>
-    <button (click)="updatePublisherBacnet()" align="end" *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate"
+    <button (click)="updatePublisherBacnet()"  *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate"
             mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </mat-toolbar>
@@ -436,4 +436,4 @@
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>
-</mat-card> -->
+</mat-card>

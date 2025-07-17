@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
+
 
 interface BacnetNode {
   name: string;
@@ -15,7 +19,12 @@ interface FlatNode {
 }
 
 
+
+
+
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule, ReactiveFormsModule],
   selector: 'app-bacnet-device-browser',
   templateUrl: './bacnet-device-browser.component.html'
 })

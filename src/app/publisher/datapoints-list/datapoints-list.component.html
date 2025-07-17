@@ -1,0 +1,60 @@
+<mat-form-field class="mat-form-width dataPonitListOnly" appearance="fill">
+  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let value of search" [value]="value" (onSelectionChange)="selectDataPoint($event, value)">
+      {{value}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-divider></mat-divider>
+<mat-divider class="matDividerVertical" inset vertical></mat-divider>
+<mat-form-field class="httpSearch">
+  <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+  <input (keyup)="applyFilter($event)" [(ngModel)]="searchDatapoint"  matInput name="searchDatapoint"
+         placeholder="Search...">
+  <mat-icon  (click)="filterPublisher($event)" matSuffix>search</mat-icon>
+</mat-form-field>
+<mat-table mat-table [dataSource]="obs" class="table_data dataPointsAllTable setAutoWidth ">
+  <ng-container matColumnDef="Name" class="">
+    <mat-header-cell *matHeaderCellDef class="">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="table_data httpTableHeight"> {{element.parameterName}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="Status" class="table_row">
+    <mat-header-cell *matHeaderCellDef class="cells_title paddingRights">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status'): ""}}</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="table_data httpTableHeight">
+      <div class="toggle_change">
+      <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}" [(ngModel)]="element.enabled"
+             (change)="changePublisherStatus(element, $event.checked)">
+    </mat-slide-toggle> </div></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Include Timestamp" class="table_row">
+    <mat-header-cell *matHeaderCellDef class="cells_title paddingRights">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.includeTimestamp'): ""}}</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="table_data httpTableHeight">
+      <mat-slide-toggle name="includeTimestamp" [(ngModel)]="element.includeTimestamp"
+        class="toggle_change">
+      </mat-slide-toggle>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="Action" class="table_row">
+    <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+    <mat-cell *matCellDef="let element" class="table_data httpTableHeight">
+
+        <mat-icon title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.description'): ''}}" (click)="dataPointDetails(element)" aria-hidden="false" class="allIcons">description</mat-icon>
+      <mat-icon (click)="remove(element)" aria-hidden="false" class="allIcons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"> delete </mat-icon>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="selectedDataPointsColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: selectedDataPointsColumns;"></mat-row>
+</mat-table>
+
+<div  class="ui borderless menu">
+  <div  class="">
+    <mat-paginator class="" [pageIndex]=0 [length]="httpSenderPointService.total" [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]=limit (page)="getPublisherNextPage($event)"></mat-paginator>
+  </div>
+</div>

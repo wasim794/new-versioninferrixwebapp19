@@ -1,0 +1,255 @@
+<mat-card class="form_cards httpBlock httpMainBlock">
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.edit'): ""}}
+      <small *ngIf="httpTitle">{{httpSenderModel.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button mat-raised-button class="toolbarSaveButton bacnetUpdate toolbarButton" (click)="saveHttpSender() " *ngIf="!isEdit"
+            >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+    <button mat-raised-button class="toolbarUpdateButton bacnetUpdate toolbarButton" (click)="updateHttpSender()" *ngIf="isEdit"
+            >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card">
+    <div [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li *ngFor="let er of error">{{er.property}}
+          : {{er.message}}</li>
+      </mat-card>
+    </div>
+    <mat-tab-group>
+      <mat-tab label="Basic">
+        <ng-template matTabContent>
+          <br>
+          <form>
+            <p>
+              <mat-form-field class="field_margin form_field w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+                <input [(ngModel)]="httpSenderModel.name" matInput name="name" placeholder="Enter Name" type="text"
+                       required>
+              </mat-form-field>
+
+              <mat-form-field class="form_field w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input [(ngModel)]="httpSenderModel.xid"  class="inputBoxHeight"  disabled matInput name="xid" >
+              </mat-form-field>
+            </p>
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheWarningSize'): ""}}
+              </mat-label>
+              <input [(ngModel)]="httpSenderModel.cacheWarningSize" matInput name="cacheWarningSize" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-50 form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheDiscardSize'): ""}}
+              </mat-label>
+              <input [(ngModel)]="httpSenderModel.cacheDiscardSize" matInput name="cacheDiscardSize"
+                     placeholder="Enter CacheDiscardsize" required>
+            </mat-form-field>
+            <p>
+              <mat-form-field class="field_margin form_field httpSenderInput mt-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.updateEvents'): ""}}
+                </mat-label>
+                <mat-select [(ngModel)]="httpSenderModel.publishType" class="form-control" name="publishType">
+                  <mat-option *ngFor="let updateEvent of dropdownData.updateEvents" [value]="updateEvent.key">
+                    {{updateEvent.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+            <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
+              <mat-grid-tile class="httpToggles">
+
+                <mat-slide-toggle name="sendSnapshot" class="side_form_toggle toggle_change allToggls"
+                                  [(ngModel)]="httpSenderModel.sendSnapshot">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.sendRegularSnapshot'): ""}}
+                </mat-slide-toggle>
+              </mat-grid-tile>
+              <mat-grid-tile class="httpToggles">
+
+                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change  httpSenderToggle"
+                                  [(ngModel)]="httpSenderModel.enabled">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
+                </mat-slide-toggle>
+
+              </mat-grid-tile>
+            </mat-grid-list>
+            <br>
+
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.enterSnapshotSendPeriod'): ""}}
+              </mat-label>
+              <input [(ngModel)]="httpSenderModel.snapshotSendPeriod.timePeriod" matInput name="timePeriod"
+                     placeholder="Enter SnapshotSendPeriod" required>
+            </mat-form-field>
+
+            <mat-form-field class="w-50 form_field" appearance="fill">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}
+              </mat-label>
+              <mat-select [(ngModel)]="httpSenderModel.snapshotSendPeriod.timePeriodType" name="timePeriodType">
+                <mat-option *ngFor="let timePeriodType of dropdownData.snapShotPeriod" [value]="timePeriodType.key">
+                  {{timePeriodType.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Http Sender">
+        <ng-template matTabContent>
+          <br>
+          <form>
+            <p>
+              <mat-form-field class="field_margin form_field w-50" appearance="fill">
+                <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.method'): ""}}</mat-label>
+                <mat-select [(ngModel)]="httpSenderModel.usePost" class="form-control" name="usePost">
+                  <mat-option *ngFor="let method of dropdownData.httpMethods" [value]="method.key">{{method.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="w-50 form_field" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.url'): ""}}</mat-label>
+                <input [(ngModel)]="httpSenderModel.url" matInput name="url" placeholder="Enter URL" required>
+              </mat-form-field>
+            </p>
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.staticHeaders'): ""}}</mat-label>
+              <input [(ngModel)]="staticHeadersKey" matInput name="staticHeadersKey" placeholder="Key">
+            </mat-form-field>
+
+            <mat-form-field class="w-40 form_field field_margin" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.staticHeaders'): ""}}</mat-label>
+              <input [(ngModel)]="staticHeadersValue " matInput name="staticHeadersValue" placeholder="value">
+            </mat-form-field>
+
+            <mat-icon
+              (click)="addStaticHeader()" class="mat-pointer  commonAddMoreAlls">add_circle
+            </mat-icon>
+
+            <mat-card class="getvalueCards" *ngIf="this.httpSenderModel.staticHeaders?.length == 0">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.noStaticHeaders'): ""}}</mat-card>
+            <table mat-table [dataSource]="this.httpSenderModel.staticHeaders" class="mat-elevation-z8 keyValues"
+                   *ngIf="this.httpSenderModel.staticHeaders?.length">
+              <ng-container matColumnDef="Key">
+                <mat-header-cell
+                  *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.headerKey'): ""}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.key + ' = '}}{{element.value}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="Value">
+                <mat-header-cell
+                  *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.headerValue'): ""}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element let i = index;">
+                  <mat-icon (click)="removeStaticHeader(i)" aria-hidden="false" class="mat-pointer">remove_circle
+                  </mat-icon>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="staticHeadersColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: staticHeadersColumns;"></mat-row>
+            </table>
+
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.staticParams'): ""}}</mat-label>
+              <input [(ngModel)]="staticParametersKey" matInput name="staticParametersKey" placeholder="Key">
+            </mat-form-field>
+
+            <mat-form-field class="field_margin form_field w-40" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.staticParams'): ""}}</mat-label>
+              <input [(ngModel)]="staticParametersValue" matInput name="staticParametersValue" placeholder="value">
+            </mat-form-field>
+
+            <mat-icon (click)="addStaticParameter()" aria-hidden="false" class="mat-pointer commonAddMoreAlls">
+              add_circle
+            </mat-icon>
+
+            <mat-card class="getvalueCards" *ngIf="this.httpSenderModel.staticParameters?.length == 0">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.noStaticHeaders'): ""}}
+            </mat-card>
+
+            <table mat-table [dataSource]="this.httpSenderModel.staticParameters" class="mat-elevation-z8"
+                   *ngIf="this.httpSenderModel.staticParameters?.length">
+              <ng-container matColumnDef="Key">
+                <mat-header-cell
+                  *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.headerKey'): ""}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.key + ' = '}}{{element.value}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="Value">
+                <mat-header-cell
+                  *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.headerValue'): ""}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element let i = index;">
+                  <mat-icon (click)="removeStaticParameter(i)" aria-hidden="false" class="mat-pointer">remove_circle
+                  </mat-icon>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="staticHeadersColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: staticHeadersColumns;"></mat-row>
+            </table>
+
+            <mat-slide-toggle name="raiseResultWarning"
+                              class="mr-20 side_form_toggle toggle_change allToggls raiseResultWarning w-50"
+                              [(ngModel)]="httpSenderModel.raiseResultWarning">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.raiseResultWarning'): ""}}
+            </mat-slide-toggle>
+
+            <mat-form-field class="form_field w-50" appearance="fill">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.dateFormat'): ""}}</mat-label>
+              <mat-select [(ngModel)]="httpSenderModel.dateFormat" name="dateFormat">
+                <mat-option *ngFor="let dateFormat of dropdownData.dateFormats" [value]="dateFormat.key">
+                  {{dateFormat.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </form>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Points" *ngIf="pointValues">
+        <ng-template matTabContent>
+          <br>
+          <app-datapoints-list [dataXID]="dataPointXID"></app-datapoints-list>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Send Test">
+        <ng-template matTabContent>
+          <br>
+          <button mat-raised-button class="Add_button send_data sendStaticButton">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.sendStaticParams'): ""}}</button>
+          <button mat-raised-button class="cancel_button">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.cancel'): ""}}</button>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Events Alarms">
+        <ng-template matTabContent>
+          <br>
+          <table mat-table  [dataSource]="httpSenderModel.eventAlarmLevels"
+                 class="mat-elevation-z8 keyValues width-100">
+            <ng-container matColumnDef="eventType" class="table_row">
+              <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.eventType'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="commonReducesSizesAll"> {{element.eventType}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="level">
+              <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.level'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="commonReducesSizesAll"> {{element.level}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.description'): ""}}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="commonReducesSizesAll"> {{element.description}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="eventsTableColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: eventsTableColumns;"></mat-row>
+          </table>
+
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

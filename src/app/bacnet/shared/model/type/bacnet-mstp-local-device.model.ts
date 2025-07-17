@@ -1,7 +1,7 @@
 import {BacnetLocalDeviceModel} from '../common/bacnet-local-device.model';
 
 export class BacnetMstpLocalDeviceModel extends BacnetLocalDeviceModel<BacnetMstpLocalDeviceModel> {
-   declare commPortId: string;
+  declare commPortId: string;
   declare baudRate: number;
   declare thisStation: number;
   declare retryCount: number;
@@ -17,7 +17,7 @@ export class BacnetMstpLocalDeviceModel extends BacnetLocalDeviceModel<BacnetMst
     super(model);
   }
 
-   override toJson(): any {
+ override toJson(): any {
     super.toJson();
     return JSON.parse(JSON.stringify(this));
   }

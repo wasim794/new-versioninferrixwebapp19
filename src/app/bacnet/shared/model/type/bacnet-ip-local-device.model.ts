@@ -1,8 +1,8 @@
 import {BacnetLocalDeviceModel} from '../common/bacnet-local-device.model';
 
 export class BacnetIpLocalDeviceModel extends BacnetLocalDeviceModel<BacnetIpLocalDeviceModel> {
-  override type = "IP";
-  declare localBindAddress: string;
+  override type = 'IP';
+ declare localBindAddress: string;
   declare broadcastAddress: string;
   declare subnet: number;
   declare port: number;

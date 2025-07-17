@@ -1,11 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {BacnetSenderComponent} from 'src/app/bacnet/pages/publisher/bacnet-sender/bacnet-sender.component';
+import {BacnetSenderComponent} from '../../../pages/publisher/bacnet-sender/bacnet-sender.component';
 import {MatModuleModule} from '../../../../common/mat-module';
 
 @NgModule({
-  declarations: [BacnetSenderComponent],
     imports: [
         CommonModule,
         MatModuleModule,
