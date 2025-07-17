@@ -1,5 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {HttpSenderPointModel, HttpSenderPointService, HttpSenderService} from '../components/http';
+import {HttpSenderPointModel} from '../components/http';
+import {HttpSenderService} from '../../publisher/components/http/service/http-sender.service';
+import {HttpSenderPointService} from '../../publisher/components/http/service/http-sender-point.service';
 import {DataPointDailogComponent} from './dialog/data-point-dailog/data-point-dailog.component';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';

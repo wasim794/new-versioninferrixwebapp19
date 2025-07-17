@@ -8,7 +8,9 @@ import {
 } from '@angular/core';
 import {UnsubscribeOnDestroyAdapter} from '../common';
 import {MatSidenav} from '@angular/material/sidenav';
-import {BacnetLocalDeviceComponent, LoadbacnetformComponent, BacnetService, BacnetLocalDeviceModel} from '../bacnet';
+import {BacnetLocalDeviceComponent, BacnetLocalDeviceModel} from '../bacnet';
+import {LoadbacnetformComponent} from '../bacnet/component/loadbacnetform/loadbacnetform.component';
+import {BacnetService} from '../bacnet/shared/service/bacnet.service';
 import {CommonService} from '../services/common.service';
 import {commonHelp} from '../help/commonHelp';
 import {MatDialog} from '@angular/material/dialog';
@@ -21,31 +23,28 @@ import {DatasourceModel} from "../datasource/model/datasourceModel";
 import {SelectionModel} from "@angular/cdk/collections";
 import {DataPointModel} from "../core/models/dataPoint";
 import { CommonModule } from '@angular/common';
-import { MatModuleModule } from '../common/mat-module';
-
+import { MatModuleModule } from '../common/mat-module/mat-module.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, MatModuleModule],
+  imports:[CommonModule, MatModuleModule, ReactiveFormsModule, LoadbacnetformComponent],
+  providers:[BacnetService, DictionaryService],
   selector: 'app-bacnet',
   templateUrl: './bacnet.component.html'
 
 })
 export class BacnetComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  @ViewChild('localDeviceDrawer')
-  public bacnetSidebar!: MatSidenav;
-  @ViewChild(BacnetLocalDeviceComponent)
-  private bacnetLocalDevice!: BacnetLocalDeviceComponent;
-  @ViewChild('dynamicLoadComponent', { read: ViewContainerRef })
-  entry!: ViewContainerRef;
+  @ViewChild('localDeviceDrawer') public bacnetSidebar!: MatSidenav;
+  @ViewChild(BacnetLocalDeviceComponent) private bacnetLocalDevice!: BacnetLocalDeviceComponent;
+  @ViewChild('dynamicLoadComponent', {read: ViewContainerRef}) entry!: ViewContainerRef;
   @ViewChild(LoadbacnetformComponent)
   private loadBacnet!: LoadbacnetformComponent;
   private componentRef: any;
   deleteSuccessMsg = 'is deleted successfully!';
   bacnet = true;
   info = new commonHelp();
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = ['select', 'position', 'name',  'actions'];
   obs:any= new Observable;
   displayData!: boolean;
@@ -95,11 +94,11 @@ export class BacnetComponent extends UnsubscribeOnDestroyAdapter implements OnIn
     return numSelected === numRows;
   }
 
-  isChecked(node: { id: string; }): boolean {
+  isChecked(node: any): boolean {
     return this.selection.isSelected(node.id);
   }
 
-  addDataPointXid(event: { checked: any; }, dataPoint: { id: string; }) {
+  addDataPointXid(event: any, dataPoint: any) {
     if (event.checked) {
       this.selection.select(dataPoint.id);
     } else {

@@ -1,4 +1,4 @@
-<!-- <mat-card class="form_cards">
+<mat-card class="form_cards">
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title
       class="sidebar_form_title matCardTitles">
@@ -6,11 +6,11 @@
       <small *ngIf="localDeviceModelHidesName">{{localDeviceModel.deviceName}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button (click)="saveLocalDevice()"  *ngIf="!isEdit" align="end"
+    <button (click)="saveLocalDevice()"  *ngIf="!isEdit" 
             class="Top_Save_Button bacnetUpdate topRightButton"
             mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}
     </button>
-    <button (click)="updateLocalDevice()" *ngIf="isEdit" align="end"
+    <button (click)="updateLocalDevice()" *ngIf="isEdit" 
             class="toolbarUpdateButton bacnetUpdate toolbarButton"
             mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
@@ -276,4 +276,4 @@
     </mat-tab-group>
   </mat-card-content>
 
-</mat-card> -->
+</mat-card>

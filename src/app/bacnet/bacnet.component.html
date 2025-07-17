@@ -101,7 +101,7 @@
     <button mat-raised-button class="Save_Button cancelAllData top-54" (click)="closeAllSidebar($event)">
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
     </button>
-    <!-- <app-loadbacnetform (closeAllSidebar)="closeAllSidebar($event)"></app-loadbacnetform> -->
+    <app-loadbacnetform (closeAllSidebar)="closeAllSidebar($event)"></app-loadbacnetform>
   </mat-drawer>
 </mat-drawer-container>
 <!-- end here -->
