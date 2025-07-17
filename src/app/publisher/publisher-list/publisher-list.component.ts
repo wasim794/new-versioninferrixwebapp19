@@ -156,6 +156,7 @@ export class PublisherListComponent extends UnsubscribeOnDestroyAdapter implemen
       this.totalPublisher = this.abstractPublished.total;
       this.publishers = data;
       this.dataSources = data;
+      // console.log(data);
       const savedPageIndex = localStorage.getItem('currentPageIndex');
       const savedPageSize = localStorage.getItem('currentPageSize');
       if (savedPageIndex !== null && savedPageSize !== null) {
@@ -173,7 +174,6 @@ export class PublisherListComponent extends UnsubscribeOnDestroyAdapter implemen
 
   addPublisher(event: any, publisherType: any) {
     if (event.source.selected) {
-
       if (publisherType === 'BACNET_SENDER.PUB') {
         this.status = true;
         let someElement = document.getElementById('increaseValue')!;
@@ -197,6 +197,7 @@ export class PublisherListComponent extends UnsubscribeOnDestroyAdapter implemen
   }
 
   showPublisherDetails(publisher: any) {
+    console.log("show detail", publisher);
     this.publisherSideNav.open();
     this.publisherDetail = publisher;
     this.publisherEditComponent.getPublisher(publisher, true);

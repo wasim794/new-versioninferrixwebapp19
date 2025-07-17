@@ -34,7 +34,7 @@ export abstract class AbstractPublisherService<T extends AbstractPublisherModel<
     return throwError('Some internal issue with making API Call ' + errorMessage);
   }
 
-  public get(params?: string): Observable<AbstractPublisherModel<any>[]> {
+  public get(params?: any): Observable<AbstractPublisherModel<any>[]> {
     let url = `${this.env.apiUrl}${this.publisherUrl}`;
     if (params) {
       url = url + `?${params}`;
@@ -43,6 +43,7 @@ export abstract class AbstractPublisherService<T extends AbstractPublisherModel<
     .get<ArrayWithTotalModel<any>>(url)
     .pipe(map((result) => {
       this._total = result.total;
+      console.log("service",  result);
       return result.items.map((i) => new AbstractPublisherModel(i));
     }));
   }

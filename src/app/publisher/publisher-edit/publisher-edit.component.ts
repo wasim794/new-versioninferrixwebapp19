@@ -65,8 +65,9 @@ export class PublisherEditComponent implements OnInit {
     });
   }
 
-  getPublisher(publisher: Publisher, edit: boolean) {
+  getPublisher(publisher: any, edit: boolean) {
     this.entry.clear();
+    console.log(publisher);
     const factory = this.componentLoaded(publisher.modelType);
     if (!factory) {
       console.error('Component factory not found for publisherType:', publisher.modelType);
