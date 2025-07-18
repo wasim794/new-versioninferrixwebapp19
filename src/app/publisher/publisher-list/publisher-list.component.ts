@@ -197,7 +197,7 @@ export class PublisherListComponent extends UnsubscribeOnDestroyAdapter implemen
   }
 
   showPublisherDetails(publisher: any) {
-    console.log("show detail", publisher);
+    // console.log("show detail", publisher);
     this.publisherSideNav.open();
     this.publisherDetail = publisher;
     this.publisherEditComponent.getPublisher(publisher, true);

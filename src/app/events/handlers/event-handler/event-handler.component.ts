@@ -9,14 +9,19 @@ import {MatPaginator} from '@angular/material/paginator';
 import {CommonService} from '../../../services/common.service';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+    imports: [ CommonModule, MatModuleModule, EventHandlerEditComponent],
+    providers: [CommonService, EventHandlerService, DictionaryService],
   selector: 'app-event-handler',
   templateUrl: './event-handler.component.html'
 })
 export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  handlerTypes: TypesModel[];
-  handlers: AbstractEventHandlerModel<any> [];
+  handlerTypes!: TypesModel[];
+  handlers!: AbstractEventHandlerModel<any> [];
   selectedHandlerType: any;
   limit = 12;
   offset = 0;
@@ -24,12 +29,12 @@ export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implement
   enableMessage = 'Enable Successfully';
   disableMessage= 'Disable Successfully';
   UIDICTIONARY : any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('eventHandlerSideNav') public eventHandlerSideNav: MatSidenav;
-  @ViewChild(EventHandlerEditComponent) private eventHandlerEditComponent: EventHandlerEditComponent;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('eventHandlerSideNav') public eventHandlerSideNav!: MatSidenav;
+  @ViewChild(EventHandlerEditComponent) private eventHandlerEditComponent!: EventHandlerEditComponent;
   @ViewChild('dynamicLoadComponent', {
     read: ViewContainerRef
-  }) entry: ViewContainerRef;
+  }) entry!: ViewContainerRef;
   private componentRef: any;
 
   constructor(
@@ -58,7 +63,7 @@ export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implement
     });
   }
 
-  addEventHandler(event) {
+  addEventHandler(event: any) {
     if (event.source.selected) {
       this.selectedHandlerType = event.source.value;
       this.eventHandlerSideNav.toggle();
@@ -66,7 +71,7 @@ export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implement
     }
   }
 
-  eventHandlerClose(event) {
+  eventHandlerClose(event: any) {
     if (event === 'dlt') {
       this.eventHandlerSideNav.close();
     } else {
@@ -80,7 +85,7 @@ export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implement
     this.eventHandlerEditComponent.eventHandlerEditInit(handler);
   }
 
-  deleteHandler(handler: AbstractEventHandlerModel<any>) {
+  deleteHandler(handler: any) {
     this._commonService.openConfirmDialog('Are you want to delete', handler.name).afterClosed().subscribe(response => {
       if (response) {
         this.subs.add(this.eventHandlerService.delete(handler.xid).subscribe(eventHandler => {
@@ -92,7 +97,7 @@ export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implement
     });
   }
 
-  getNext(event) {
+  getNext(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = 'limit(' + limit + ',' + this.offset + ')';
@@ -101,7 +106,7 @@ export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implement
     });
   }
 
-  eventHandlerStatus(event, handler: AbstractEventHandlerModel<any>) {
+  eventHandlerStatus(event: any, handler: AbstractEventHandlerModel<any>) {
     const indexValue = this.handlers.indexOf(handler);
     handler.disabled = !event.checked;
     this.eventHandlerService.update(handler).subscribe((eventHandler) => {

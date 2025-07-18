@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {UnsubscribeOnDestroyAdapter} from '../../../../common';
 import {DataPointService, EventHandlerService} from '../../../../core/services';
 import {BasicSummaryModel} from '../../../../core/models';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../../services/common.service';
 import {
   AbstractEventHandlerModel,
   SetPointEventHandlerModel
@@ -17,6 +17,8 @@ import {
 } from '../../common';
 import {AbstractEventTypesModel, EventTypeMatcherModel} from "../../../../core/models/events";
 import {DictionaryService} from "../../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 
 
@@ -30,37 +32,40 @@ function toEventTypeMatchModel(eventType: AbstractEventTypesModel<any>): EventTy
 }
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule, BasicFormComponent, EventTypeTreeViewComponent],
+  providers: [ DictionaryService, CommonService, DataPointService, EventHandlerService ],
   selector: 'app-set-point',
   templateUrl: './set-point.component.html',
   styleUrls: []
 })
 export class SetPointComponent extends UnsubscribeOnDestroyAdapter implements OnInit, OnAddInit, OnEditInit,
   OnEventHandlerSave, OnEventHandlerUpdate {
-  @ViewChild(BasicFormComponent) private basicForm: BasicFormComponent;
-  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree: EventTypeTreeViewComponent;
+  @ViewChild(BasicFormComponent) private basicForm!: BasicFormComponent;
+  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree!: EventTypeTreeViewComponent;
   @Output() eventHandlerClose = new EventEmitter<any>();
-  targetDataPoints: BasicSummaryModel[];
-  dataPoints: BasicSummaryModel[];
-  public setPointModel: SetPointEventHandlerModel;
+  targetDataPoints!: BasicSummaryModel[];
+  dataPoints!: BasicSummaryModel[];
+  public setPointModel!: SetPointEventHandlerModel;
   activeAction = [
     {name: 'None', val: 'NONE'},
     {name: 'Set to point value', val: 'POINT_VALUE'},
     {name: 'Set to static value', val: 'STATIC_VALUE'}
   ];
-  isActiveAction: boolean;
-  isInActiveAction: boolean;
+  isActiveAction!: boolean;
+  isInActiveAction!: boolean;
   activeActionSelectedValue: any;
   inactiveActionSelectedValue: any;
-  isSaveSuccessful: boolean;
-  isUpdateSuccessful: boolean;
-  isEdit: boolean;
+  isSaveSuccessful!: boolean;
+  isUpdateSuccessful!: boolean;
+  isEdit!: boolean;
   saveSuccessMsg = 'Saved successfully';
   updateSuccessMsg = 'Updated successfully';
   UIDICTIONARY : any;
   limit = 50;
   offset = 0;
   isLoading = false;
-  selectedDataPoint: string;
+  selectedDataPoint!: string;
   searchTerm = '';
 
   constructor(
@@ -78,7 +83,7 @@ export class SetPointComponent extends UnsubscribeOnDestroyAdapter implements On
     this.dataPoints = [];
     const param = 'and(settable=true,enabled=true)';
     this._dataPointService.get(param).subscribe((dataPoints) =>
-      dataPoints.map((dataPoint) => this.targetDataPoints.push(new BasicSummaryModel(dataPoint.extendedName, dataPoint.xid))));
+      dataPoints.map((dataPoint: any) => this.targetDataPoints.push(new BasicSummaryModel(dataPoint.extendedName, dataPoint.xid))));
     const params = 'limit(' + this.limit + ',' + this.offset + ')';
     this.getDataPointsAll(params);
   }
@@ -145,7 +150,7 @@ export class SetPointComponent extends UnsubscribeOnDestroyAdapter implements On
   }
 
   eventHandlerUpdate(): void {
-        this.setPointModel.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType) =>
+        this.setPointModel.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType: any) =>
           toEventTypeMatchModel(eventType))
 
       this.setPointModel.name = this.basicForm.handlerModel.name;
@@ -161,7 +166,7 @@ export class SetPointComponent extends UnsubscribeOnDestroyAdapter implements On
 
 
   eventHandlerSave(): void {
-    this.setPointModel.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType) =>
+    this.setPointModel.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType: any) =>
       toEventTypeMatchModel(eventType));
     this.setPointModel.name = this.basicForm.handlerModel.name;
     this._handlerService.create(this.setPointModel).subscribe((model) => {

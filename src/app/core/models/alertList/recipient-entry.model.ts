@@ -1,11 +1,11 @@
 export abstract class RecipientEntryModel<T> {
-  public recipientType: string;
+  public recipientType!: string;
 
   constructor(model?: Partial<T>) {
     Object.assign(this, model);
   }
 
-  public toJson(): any {
+  public  toJson(): any {
     return JSON.parse(JSON.stringify(this));
   }
 }

@@ -17,3 +17,5 @@ export * from './modbus-tool.service';
 export * from './abstract-publisher.service';
 export * from './abstract-published-point.service';
 export * from './publisher.service';
+export * from './event-types.service';
+export * from './event-handler.service';

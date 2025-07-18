@@ -1,0 +1,25 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.event'): ""}}</span>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left" fxFlexFill >
+
+  <div fxFlex="22%" class="dynamicMenuCard" *ngFor="let subMenu of subMenus">
+    <mat-card class="mat-card matCardAll all_card {{subMenu.type}}">
+      <mat-card-header>
+        <mat-card-title class="system_text"> {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="dynamicMenuCardContent">
+        <mat-icon class="card-icon-space-size addCardIconsize mat-pointer" (click)="navigatingToUrl(subMenu.path)"
+                  aria-hidden="false" aria-label=" published_with_changes icon">{{subMenu.icon}}
+        </mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="loadermain" id="matSpinderAll"><img src="favicon.ico" alt="loader"/></div>
+</div>

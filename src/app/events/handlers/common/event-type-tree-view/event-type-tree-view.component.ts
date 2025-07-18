@@ -3,14 +3,19 @@ import {EventTypesService} from '../../../../core/services';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {DynamicDataSource, DynamicFlatNode} from '../../shared';
 import {EventTypeMatcherModel} from "../../../../core/models/events";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [EventTypesService],
   selector: 'app-event-type-tree-view',
   templateUrl: './event-type-tree-view.component.html'
 })
 export class EventTypeTreeViewComponent implements OnInit {
 
-  @Input() events: EventTypeMatcherModel[];
+  @Input() events?: EventTypeMatcherModel[];
 
   constructor(
     public typesService: EventTypesService,
@@ -20,7 +25,7 @@ export class EventTypeTreeViewComponent implements OnInit {
   }
 
   treeControl: FlatTreeControl<DynamicFlatNode>;
-  dataSource: DynamicDataSource;
+  dataSource:any = DynamicDataSource;
   getLevel = (node: DynamicFlatNode) => node.level;
   isExpandable = (node: DynamicFlatNode) => node.expandable;
   hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;

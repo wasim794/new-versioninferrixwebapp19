@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Alert} from '../../../../alert/model/alert';
 import {User} from '../../../../users/model';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../../services/common.service';
 import {UsersService} from '../../../../users/service';
 import {UnsubscribeOnDestroyAdapter} from '../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {EventHandlerService} from '../../../../core/services';
@@ -26,46 +26,51 @@ import {
 import {MatTable} from "@angular/material/table";
 import {DictionaryService} from "../../../../core/services/dictionary.service";
 import {TimePeriodModel} from "../../../../core/models/timePeriod";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule, EventTypeTreeViewComponent, BasicFormComponent],
+  providers:[EventHandlerService, DictionaryService],
   selector: 'app-sms',
   templateUrl: './sms.component.html',
   styleUrls: []
 })
 export class SmsComponent extends UnsubscribeOnDestroyAdapter implements OnInit, OnAddInit, OnEditInit,
   OnEventHandlerSave, OnEventHandlerUpdate {
-  @ViewChild(BasicFormComponent) private basicForm: BasicFormComponent;
-  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree: EventTypeTreeViewComponent;
+  @ViewChild(BasicFormComponent) private basicForm!: BasicFormComponent;
+  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree!: EventTypeTreeViewComponent;
   @Output() eventHandlerClose = new EventEmitter<any>();
-  isEscalation: boolean;
-  isInactiveNotification: boolean;
-  isOverrideInactiveRecipients: boolean;
-  alertLists: Alert[];
-  userList: User[];
-  public smsEvent = new SmsEventHandlerModel;
-  isSaveSuccessful: boolean;
-  isEdit: boolean;
+  isEscalation!: boolean;
+  isInactiveNotification!: boolean;
+  isOverrideInactiveRecipients!: boolean;
+  alertLists!: Alert[];
+  userList:any = new User();
+  public smsEvent?: any = new SmsEventHandlerModel();
+  isSaveSuccessful!: boolean;
+  isEdit!: boolean;
   saveSuccessMsg = 'Saved successfully';
   updateSuccessMsg = 'Updated successfully';
-  public phoneNumber: string;
-  public userSelection: string;
+  public phoneNumber!: string;
+  public userSelection!: string;
   RecipientListEntryTypes = SMS_RECIPIENT_TYPES;
   timePeriodTypes = TIME_PERIOD_TYPES;
   userListColumns: string[] = ['User/Phone', 'Delete'];
   timePeriods = new TimePeriodModel();
-  @ViewChild(MatTable) table: MatTable<any>;
-  public escalationPhoneNumber: string;
-  public escalationUser: string;
-  public inactivePhoneNumber: string;
-  public inactiveUser: string
+  @ViewChild(MatTable) table!: MatTable<any>;
+  public escalationPhoneNumber!: string;
+  public escalationUser!: string;
+  public inactivePhoneNumber!: string;
+  public inactiveUser!: string
   UIDICTIONARY : any;
 
-  activeAlertMap: Map<String, RecipientEntryModel<any>>;
-  escalationAlertMap: Map<String, RecipientEntryModel<any>>;
-  inactiveAlertMap: Map<String, RecipientEntryModel<any>>;
-  activeAlertRecipientType: String;
-  inactiveAlertRecipientType: String;
-  escalationAlertRecipientType: String;
+  activeAlertMap!: Map<String, RecipientEntryModel<any>>;
+  escalationAlertMap!: Map<String, RecipientEntryModel<any>>;
+  inactiveAlertMap!: Map<String, RecipientEntryModel<any>>;
+  activeAlertRecipientType!: String;
+  inactiveAlertRecipientType!: String;
+  escalationAlertRecipientType!: String;
   isActiveAlertRecipients: boolean = false;
   isInactiveAlertRecipients: boolean = false;
   isEscalationAlertRecipients: boolean = false;
@@ -89,23 +94,23 @@ export class SmsComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
 
   getUserList() {
     this.subs.add(this.usersService.allUsersList().subscribe(data => {
-      this.userList = data['items'];
+      this.userList = data;
     }));
   }
 
-  sendEscalation(Event) {
+  sendEscalation(Event: any) {
     this.isEscalation = Event.checked;
   }
 
-  sendEscalations(Event) {
+  sendEscalations(Event: any) {
     this.isEscalation = Event.checked;
   }
 
-  sendInactiveNotification(Event) {
+  sendInactiveNotification(Event: any) {
     this.isInactiveNotification = Event.checked;
   }
 
-  overrideInactiveRecipients(Event) {
+  overrideInactiveRecipients(Event: any) {
     this.isOverrideInactiveRecipients = Event.checked;
   }
 
@@ -214,7 +219,7 @@ export class SmsComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
   }
 
   eventType() {
-    this.smsEvent.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType) =>
+    this.smsEvent.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType: any) =>
       eventType.toEventTypeMatcherModel());
   }
 
@@ -251,7 +256,7 @@ export class SmsComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
   populateRecipientsTable() {
     if (this.smsEvent.activeRecipients) {
       this.isActiveAlertRecipients = true;
-      this.smsEvent.activeRecipients.forEach(recipient => {
+      this.smsEvent.activeRecipients.forEach((recipient: any) => {
         this.activeAlertRecipientType=recipient.recipientType;
         this.inactiveAlertRecipientType = recipient.recipientType;
         this.populateAppropriateMap(recipient.recipientType, recipient, 'ACTIVE');
@@ -260,12 +265,12 @@ export class SmsComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
 
     if (this.smsEvent.inactiveRecipients) {
       this.isInactiveAlertRecipients = true;
-      this.smsEvent.inactiveRecipients.forEach(recipient => this.populateAppropriateMap(recipient.recipientType, recipient, 'INACTIVE'));
+      this.smsEvent.inactiveRecipients.forEach((recipient: any) => this.populateAppropriateMap(recipient.recipientType, recipient, 'INACTIVE'));
     }
 
     if (this.smsEvent.escalationRecipients) {
       this.isEscalationAlertRecipients = true;
-      this.smsEvent.escalationRecipients.forEach(recipient => this.populateAppropriateMap(recipient.recipientType, recipient, 'ESCALATION'));
+      this.smsEvent.escalationRecipients.forEach((recipient: any) => this.populateAppropriateMap(recipient.recipientType, recipient, 'ESCALATION'));
     }
   }
 
