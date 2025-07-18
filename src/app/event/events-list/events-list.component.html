@@ -7,19 +7,19 @@
       <div class="containerInfo">
         <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.acknowledgeAll'): ''}}" class="right_button check_icon"
                 aria-label="icon button with a check icon">
-          <mat-icon class="event_right_icon" aria-hidden="false" aria-label="error_outline icon"
+          <mat-icon class="event_right_icon choseColor" aria-hidden="false" aria-label="error_outline icon"
                     (click)="ackEvent('all')">check
           </mat-icon>
         </button>
         <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.silenceAll'): ''}}" class="right_button valume_icon"
                 aria-label="icon button with a volume_off icon">
-          <mat-icon class="event_right_icon" aria-hidden="false" aria-label="error_outline icon"
+          <mat-icon class="event_right_icon choseColor" aria-hidden="false" aria-label="error_outline icon"
                     (click)="toggleSilence()">volume_off
           </mat-icon>
         </button>
         <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.searchEvent'): ''}}" class="right_button search_icons"
                 aria-label="icon button with a check icon">
-          <mat-icon class="event_right_icon event_right_search" aria-hidden="false" aria-label="error_outline icon"
+          <mat-icon class="event_right_icon choseColor event_right_search" aria-hidden="false" aria-label="error_outline icon"
                     (click)="search()">
             search
           </mat-icon>

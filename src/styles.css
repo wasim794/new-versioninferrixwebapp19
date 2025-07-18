@@ -2696,10 +2696,11 @@ margin-left: 50px;
 }
 
 .Search_button {
-  background-color: #225496;
+  background-color: #225496 !important;
   color: #ffffff !important;
   font-family: "Poppins-Bold";
   font-weight: 700;
+  border-radius: 8px !important;
 }
 
 .Save_Button:hover {
@@ -2728,8 +2729,8 @@ margin-left: 50px;
 
 .Search_button:hover {
   background-color: #0b3f86;
-  font-family: "Poppins-Bold";
-  font-weight: 700;
+  
+
 }
 
 .right_icons {
@@ -4271,6 +4272,11 @@ button.icon.headericons.favorite-icon.mat-mdc-icon-button {
 
 .watchLists {
   padding-top: 10px;
+}
+
+.mdc-data-table__cell, .mdc-data-table__header-cell{
+  padding: 0px !important;
+  min-width: 100px !important;
 }
 
 .allFormedit {
