@@ -3231,9 +3231,11 @@ mat-header-cell:first-of-type {
   padding-left:240px;
   }
 .searchBacnetBox{
-  float: right;
-  margin-top: 10px;
+float: right;
+
   }
+
+
 .iconPositionFixed{
   position:fixed;
   }
@@ -8135,8 +8137,16 @@ border-radius: 8px !important;
     background: #8dbbcbba;
   }
 }
+
+.publisherPoint{
+  height: 38px;
+margin-left: 20px;
+}
+
 .bacnetUpdate{
   margin-right:90px !important;
+  margin-top: 5px !important;
+  height: 38px !important;
   }
 
 .mqttMainContainer {
@@ -8220,6 +8230,7 @@ border-radius: 8px !important;
 
 
 .publisherBacnetMain {
+   width: 808px !important;
   .field_margin {
     min-width: 300px;
     margin-right: 10px;
@@ -8872,7 +8883,7 @@ border-radius: 8px !important;
 
 .w-100 {
   max-width: 100% !important;
-  width: 90% !important;
+  width: 100% !important;
   display: inline-block;
 }
 
