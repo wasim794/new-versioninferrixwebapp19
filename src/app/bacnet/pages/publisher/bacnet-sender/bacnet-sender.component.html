@@ -12,7 +12,7 @@
     </button>
     <button (click)="updatePublisherBacnet()"  *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate saveButton"
             matfab>
-              <mat-icon>save</mat-icon>
+              <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </mat-toolbar>
@@ -36,7 +36,7 @@
 
               <mat-form-field class="field_margin w-50 " appearance="fill" >
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
-                <input [(ngModel)]="bacnetSenderModel.xid" readonly matInput name="xid" placeholder="Auto generated">
+                <input [(ngModel)]="bacnetSenderModel.xid" disabled matInput name="xid" placeholder="Auto generated">
               </mat-form-field>
 
               <mat-form-field class="field_margin w-50" appearance="fill">

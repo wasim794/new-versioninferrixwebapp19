@@ -1891,6 +1891,7 @@ button.smsActiveButton {
   width: 300px;
 }
 
+
 .table_data.dataPointsAllTable > mat-row > mat-cell {
   padding-right: 9px;
   padding-left: 9px;
@@ -2820,6 +2821,15 @@ justify-content: flex-start !important;
   margin-left: 10px;
 }
 
+.cancelHttpSender{
+    color: #ffffff !important;
+  background: #062a51 !important;
+  text-transform: capitalize;
+  border: 2px solid #062a51 !important;
+  border-radius: 4px !important;
+  margin-bottom: 10px !important;
+}
+
 .cancel_button_new {
   color: #ffffff !important;
   background: #062a51 !important;
@@ -3558,6 +3568,7 @@ mat-dialog-actions.setActionsvalue {
 }
 .platformIntegrationToggle{
   margin-top:20px;
+  margin-left: 230px;
   }
 .marginPlatformIntegration{
   margin-left:20px;
@@ -4342,6 +4353,7 @@ p.paraGrapghbuttons {
 mat-card.getvalueCards {
   width: 33%;
   margin-bottom: 20px;
+  padding-left: 10px;
 }
 
 mat-checkbox.singleCheckbox {
@@ -5049,8 +5061,8 @@ mat-card.data_mat_card.mat-card {
 }
 
 .mat-form-field-disabled {
-  background-color: #e3e3e3;
-  height: 49px;
+  /* background-color: #e3e3e3; */
+  /* height: 49px; */
   cursor: not-allowed;
   margin-bottom: 10px;
   padding-right: 0px !important;
@@ -5152,7 +5164,7 @@ dt {
 .commonSidebarAlls {
   padding: 10px;
   position: fixed !important;
-  width: 680px !important;
+  max-width: 780px !important;
 }
 
 
@@ -7740,6 +7752,8 @@ border-radius: 8px !important;
     height: 104px;
   }
 
+
+
   .element-symbol {
     font-weight: bold;
     font-size: 40px;
@@ -7802,6 +7816,9 @@ border-radius: 8px !important;
     line-height: 40px;
   }
 }
+
+
+  
 
 @media (min-width: 1200px) {
   .OverflowScroll {
@@ -8108,14 +8125,14 @@ border-radius: 8px !important;
   }
 
   .httpSenderToggle {
-    margin-right: 180px;
+    margin-left: 140px;
   }
 
   .mat-raised-button {
     width: 17%;
   }
   .sendStaticButton {
-    width: 160px;
+    width: 180px;
   }
 
   .keyValues {
@@ -8128,15 +8145,13 @@ border-radius: 8px !important;
   .send_data {
     margin-right: 10px;
   }
-  .httpMainBlock {
-    .mat-raised-button {
-      background: #9da0a1ba;
-    }
-  }
+
+
   .updateButton.topRightButton {
     background: #8dbbcbba;
   }
 }
+
 
 .publisherPoint{
   height: 38px;
@@ -8880,6 +8895,11 @@ margin-left: 20px;
 .bacnetSlideToggle{
   margin-left:80px;
   }
+  .tableHadingCapital{
+    text-transform:uppercase !important;
+    font-weight: 900 !important;
+
+  }
 
 .w-100 {
   max-width: 100% !important;
@@ -9528,3 +9548,22 @@ table.dropdownTables {
 .offClass{
   display: none !important;
 }
+
+.mat-drawer-transition .mat-drawer{
+  width: auto !important;
+}
+/* .watchlistDrawer{
+  min-width: 1000px !important;
+} */
+
+.watchListPointMain{
+  width: 1012px !important;
+}
+
+  .httpMainBlock {
+    width: 800px !important ;
+    .mat-raised-button {
+      background: #9da0a1ba;
+    }
+  
+  }

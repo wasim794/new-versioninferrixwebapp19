@@ -1,14 +1,18 @@
-<mat-card class="form_cards publisherBacnetMain">
+<mat-card class="form_cards httpBlock httpMainBlock">
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title matCardTitles">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.systemSettings.platformIntegration'): ""}} <small *ngIf="integrationSenderTitle">{{integrationSenderModel.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button (click)="savePlatform()" *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate toolbarButton"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
+    <button (click)="savePlatform()" *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate saveButton"
+            matfab>
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
     </button>
-    <button (click)="updatePlatform()"  *ngIf="isEdit" class="toolbarUpdateButton toolbarUpdateButton bacnetUpdate"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    <button (click)="updatePlatform()"  *ngIf="isEdit" class="toolbarUpdateButton saveButton bacnetUpdate"
+            matfab>
+             <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </mat-toolbar>
   <mat-card-content class="form_cards form_edit_card">
@@ -30,9 +34,9 @@
                         required>
               </mat-form-field>
 
-              <mat-form-field class="field_margin w-50" appearance="fill">
+              <mat-form-field class=" w-50" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
-                <input [(ngModel)]="integrationSenderModel.xid"  class="inputBoxHeight"  disabled matInput name="xid" >
+                <input [(ngModel)]="integrationSenderModel.xid"  class="" matInput disabled  name="xid" >
               </mat-form-field>
 
             <mat-form-field class="field_margin w-50" appearance="fill">
@@ -41,27 +45,25 @@
               <input [(ngModel)]="integrationSenderModel.cacheWarningSize"  matInput name="cacheWarningSize" required>
             </mat-form-field>
 
-            <mat-form-field class="field_margin w-50" appearance="fill">
+            <mat-form-field class=" w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheDiscardSize'): ""}}
               </mat-label>
               <input [(ngModel)]="integrationSenderModel.cacheDiscardSize"  matInput name="cacheDiscardSize"
                      placeholder="Enter CacheDiscardsize" required>
             </mat-form-field>
 
-            <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
-              <mat-grid-tile class="httpToggles">
+ 
 
                 <mat-slide-toggle [(ngModel)]="integrationSenderModel.gateway" name="sendSnapshot" class="side_form_toggle toggle_change allToggls"
                 >
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.gateway'): ""}}
                 </mat-slide-toggle>
-              </mat-grid-tile>
-              <mat-grid-tile class="httpToggles">
-                <mat-slide-toggle [(ngModel)]="integrationSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change allToggls httpSenderToggle">
+          
+          
+                <mat-slide-toggle [(ngModel)]="integrationSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change  platformIntegrationToggle">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
                 </mat-slide-toggle>
-              </mat-grid-tile>
-            </mat-grid-list>
+           
 
             <mat-form-field class="field_margin w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.enterSnapshotSendPeriod'): ""}}
@@ -70,7 +72,7 @@
                      placeholder="Enter SnapshotSendPeriod" required>
             </mat-form-field>
 
-            <mat-form-field class="field_margin w-50" appearance="fill">
+            <mat-form-field class=" w-50" appearance="fill">
               <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}
               </mat-label>
               <mat-select [(ngModel)]="integrationSenderModel.snapshotSendPeriod.timePeriodType"  name="timePeriodType">
@@ -82,8 +84,8 @@
           </form>
         </ng-template>
       </mat-tab>
-
-      <mat-tab label="Points" *ngIf="pointValues" >
+<!-- *ngIf="pointValues"  -->
+      <mat-tab label="Points" >
         <div [hidden]=!viewDataPoint>
           <mat-form-field class="searchWidth serchInput" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
@@ -193,7 +195,7 @@
         </div>
 
         <div class="mat-elevation-z8">
-          <mat-table mat-table  [dataSource]="dataSources" class="table_data dataPointsAllTable setValueWidth setAutoWidth px-0">
+          <mat-table mat-table  [dataSource]="dataSources" class="table_data dataPointsAllTable setValueWidth  px-0">
             <ng-container matColumnDef="position">
               <mat-header-cell *matHeaderCellDef class="max50"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </mat-header-cell>
               <mat-cell *matCellDef="let element; let i = index;" class="max50">{{i + 1}}</mat-cell>

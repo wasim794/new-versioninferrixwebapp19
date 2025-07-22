@@ -23,7 +23,7 @@
 <div class="cardlayout " fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.0% grid"
      fxLayoutAlign="left">
   <div fxFlex="22%" class="card_margin"  *ngFor="let watchlist of watchLists.items">
-    <mat-card class="all_card matCardAll">
+    <mat-card class="all_card matCardAll marginLeft-20">
       <mat-card-header>
 
         <mat-card-title class="cardTitleName">{{watchlist.name}}</mat-card-title>
@@ -63,7 +63,7 @@
 </div>
 
 <mat-drawer-container class="container sidebar_position watchListEdit" autosize disableClose>
-  <mat-drawer #watchlist_drawer class="sidenav addnew_drawer_sidebar" mode="push" position="end">
+  <mat-drawer #watchlist_drawer class="sidenav watchlistDrawer" mode="push" position="end">
     <mat-icon aria-hidden="false" class="allCloseOptions" id="sidebarclose" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="sidebarclose(watchsidenav)"
               aria-label="close icon">
       close
@@ -79,8 +79,8 @@
   </mat-drawer>
 </mat-drawer-container> 
 
-<mat-drawer-container class="container sidebar_position" autosize disableClose>
-  <mat-drawer #watchlist_drawer_data_points class="drawer_sidebar sidebarWatchlist" mode="push" position="end">
+<mat-drawer-container class="container sidebar_position " autosize disableClose>
+  <mat-drawer #watchlist_drawer_data_points class=" sidebarWatchlist" mode="push" position="end">
     <mat-icon aria-hidden="false" class="allCloseOptions" id="sidebarclosetwo" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="sidebarclosetwo(watchsidenavtwo)"
               aria-label="close icon">
       close
