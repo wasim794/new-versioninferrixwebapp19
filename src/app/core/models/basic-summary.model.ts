@@ -1,7 +1,7 @@
 export class BasicSummaryModel {
   constructor(
-    public name: string,
-    public xid: string,
+    public name?: string,
+    public xid?: string,
   ) {
   }
 }

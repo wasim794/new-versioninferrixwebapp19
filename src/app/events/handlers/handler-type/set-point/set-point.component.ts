@@ -83,7 +83,7 @@ export class SetPointComponent extends UnsubscribeOnDestroyAdapter implements On
     this.dataPoints = [];
     const param = 'and(settable=true,enabled=true)';
     this._dataPointService.get(param).subscribe((dataPoints) =>
-      dataPoints.map((dataPoint: any) => this.targetDataPoints.push(new BasicSummaryModel(dataPoint.extendedName, dataPoint.xid))));
+      dataPoints.map((dataPoint: any) =>  this.targetDataPoints.push(new BasicSummaryModel(dataPoint.name, dataPoint.xid))));
     const params = 'limit(' + this.limit + ',' + this.offset + ')';
     this.getDataPointsAll(params);
   }
