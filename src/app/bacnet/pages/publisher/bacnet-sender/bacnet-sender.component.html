@@ -5,11 +5,15 @@
       <small *ngIf="bacnetTitles">{{bacnetSenderModel.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button (click)="savePublisherBacnet()"  *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate toolbarButton"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
+    <button (click)="savePublisherBacnet()"  *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate saveButton"
+            matfab>
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
     </button>
-    <button (click)="updatePublisherBacnet()"  *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    <button (click)="updatePublisherBacnet()"  *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate saveButton"
+            matfab>
+              <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </mat-toolbar>
 
@@ -96,8 +100,8 @@
           </form>
         </ng-template>
       </mat-tab>
-
-      <mat-tab class="bacnetPoints" label="Points" *ngIf="pointValues" >
+<!-- *ngIf="pointValues"  -->
+      <mat-tab class="bacnetPoints" label="Points" >
         <ng-template matTabContent>
           <form class="bacnetSize">
             <mat-form-field class="searchWidth serchInput" appearance="fill">
@@ -137,7 +141,7 @@
                 <mat-form-field class="bacNetFields w-50" appearance="fill">
                   <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.objectType'): ""}}</mat-label>
                   <input [(ngModel)]="bacnetSenderPointModel.objectType" matInput name="objectType"
-                         placeholder="Enter Name" type="text" disabled>
+                         placeholder="Enter Name" type="text" readonly>
                 </mat-form-field>
 
 
@@ -365,29 +369,34 @@
               <br>
               <br>
               <br>
-              <button (click)="saveDataPoint()" *ngIf="isEditDataPoint" align="end" class="Top_Save_Button mt-30"
-                      mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+              <button (click)="saveDataPoint()" *ngIf="isEditDataPoint" align="end" class="publisherPoint mt-30 saveButton"
+                      matfab>
+                          <mat-icon>save</mat-icon>
+                      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
               </button>
               <button (click)="updateDataPoints()" *ngIf="!isEditDataPoint" align="end"
-                      class="toolbarUpdateButton updateButton topRightButton"
-                      mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+                      class="toolbarUpdateButton updateButton saveButton"
+                      matfab>
+                       <mat-icon>save_as</mat-icon>
+                      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
               </button>
-              <button (click)="cancelButton()" align="end" color="warn" class="cancelButton"
+              <button (click)="cancelButton()" align="end" color="warn" class="cancel_button_new cancelPoint"
                       mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
               </button>
               <br>
               <br>
             </div>
             <mat-divider class="mqqtDividers mt-10"></mat-divider>
-            <div class="mat-elevation-z8">
+         
               <mat-form-field  class="searchBacnetBox">
                 <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
                 <input (keyup)="filtersPublisher($event)" [(ngModel)]="searchDatapoint"  matInput name="searchDatapoint"
                        placeholder="Search...">
                 <mat-icon  (click)="filtersPublisher($event)" matSuffix>search</mat-icon>
               </mat-form-field>
-
-              <mat-table style="width:100%" [dataSource]="dataSources"  class="table_data dataPointsAllTable setValueWidth setAutoWidth px-0" mat-table>
+              <br>
+   <div class="mat-elevation-z8">
+              <mat-table  [dataSource]="dataSources"  class="table_data dataPointsAllTable w-100 px-0" mat-table>
                 <ng-container matColumnDef="Name" class="table_row">
                   <mat-header-cell *matHeaderCellDef class="cells_title">
                     {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}

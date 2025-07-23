@@ -37,21 +37,21 @@
 </div>
 
 
-<div class="container cardlayout width-100 matMaintainableContains publisherTableContainer" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+<div class="container cardlayout width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
   <div fxFlex="100%" class="card_margin">
-    <table  mat-table [dataSource]="dataSources" class="mat-elevation-z8"
+    <table border="1" mat-table [dataSource]="dataSources" class="mat-elevation-z8 dataSources"
             matSort (matSortChange)="sortingData($event)">
 
       <!-- Checkbox Column -->
       <ng-container  matColumnDef="select">
-        <th  mat-header-cell *matHeaderCellDef>
-          <mat-checkbox class="containerAlign" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+        <th  mat-header-cell *matHeaderCellDef class="perticularHeader">
+          <mat-checkbox  (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()">
           </mat-checkbox>
         </th>
-        <td mat-cell *matCellDef="let element">
-          <mat-checkbox class="containerAlign" (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
+        <td mat-cell *matCellDef="let element" class="perticularHeader">
+          <mat-checkbox  (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
                         [checked]="isChecked(element)">
           </mat-checkbox>
         </td>
@@ -59,18 +59,18 @@
 
       <!-- Position Column -->
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</th>
-        <td mat-cell *matCellDef="let element; let i = index;">{{ paginator.pageIndex * paginator.pageSize + i + 1 }} </td>
+        <th mat-header-cell *matHeaderCellDef class="perticularHeader">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</th>
+        <td mat-cell *matCellDef="let element; let i = index;" class="perticularHeader">{{ paginator.pageIndex * paginator.pageSize + i + 1 }} </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container  matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}} </th>
-        <td  mat-cell *matCellDef="let element" class="cursorPointer" (click)="showPublisherDetails(element)"> {{element.name}} </td>
+        <td  mat-cell *matCellDef="let element" class="perticularHeader" (click)="showPublisherDetails(element)"> {{element.name}} </td>
       </ng-container>
       <ng-container  matColumnDef="enable">
         <th mat-header-cell  *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}  </th>
-        <td  mat-cell *matCellDef="let element"> <div class="toggle_right toggle_change">
+        <td  mat-cell *matCellDef="let element" class="perticularHeader"> <div class="toggle_right toggle_change">
           <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}" [(ngModel)]="element.enabled"
                             (change)="changePublisherStatus(element, $event.checked)">
           </mat-slide-toggle>
@@ -79,8 +79,8 @@
 
       <!-- Symbol Column -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
-        <td  mat-cell *matCellDef="let element">
+        <th mat-header-cell *matHeaderCellDef class="perticularHeader"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
+        <td  mat-cell *matCellDef="let element" class="perticularHeader">
           <mat-card-actions class="mat_right_icons iconAlignItem">
 
             <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"
@@ -120,7 +120,7 @@
 </div>
 
 <mat-drawer-container class="container sidebar_position" autosize>
-  <mat-drawer #publisherSideNav id="increaseValue" class="sidebarCommonAll" mode="push" position="end">
+  <mat-drawer #publisherSideNav id="increaseValue" class="sidebarCommonAll matDrawerPublisher" mode="push" position="end">
     <mat-icon class=" allCloseOptions" aria-hidden="false" id="datasource_side" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}"
       (click)="sidebarclose(publisherSideNav)" aria-label="close icon">
       close

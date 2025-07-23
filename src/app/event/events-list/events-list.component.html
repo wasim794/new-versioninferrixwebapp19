@@ -7,19 +7,19 @@
       <div class="containerInfo">
         <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.acknowledgeAll'): ''}}" class="right_button check_icon"
                 aria-label="icon button with a check icon">
-          <mat-icon class="event_right_icon" aria-hidden="false" aria-label="error_outline icon"
+          <mat-icon class="event_right_icon choseColor" aria-hidden="false" aria-label="error_outline icon"
                     (click)="ackEvent('all')">check
           </mat-icon>
         </button>
         <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.silenceAll'): ''}}" class="right_button valume_icon"
                 aria-label="icon button with a volume_off icon">
-          <mat-icon class="event_right_icon" aria-hidden="false" aria-label="error_outline icon"
+          <mat-icon class="event_right_icon choseColor" aria-hidden="false" aria-label="error_outline icon"
                     (click)="toggleSilence()">volume_off
           </mat-icon>
         </button>
         <button mat-mini-fab title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.event.searchEvent'): ''}}" class="right_button search_icons"
                 aria-label="icon button with a check icon">
-          <mat-icon class="event_right_icon event_right_search" aria-hidden="false" aria-label="error_outline icon"
+          <mat-icon class="event_right_icon choseColor event_right_search" aria-hidden="false" aria-label="error_outline icon"
                     (click)="search()">
             search
           </mat-icon>
@@ -36,26 +36,26 @@
     <div class="container-size mainContainerEvent">
       <mat-table mat-table [dataSource]="eventModels" class="mat-elevation-z8 evenTable">
         <ng-container matColumnDef="Id">
-          <mat-header-cell class="eventFirstChildData" *matHeaderCellDef [ngClass]="'column-width'">
+          <mat-header-cell class="eventFirstChildData tableHadingCapital" *matHeaderCellDef [ngClass]="'column-width'">
             {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.Id'): ""}}
           </mat-header-cell>
           <mat-cell class="eventFirstChildData" *matCellDef="let element" [ngClass]="'column-width'"> {{ element.id }}
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Event Type">
-          <mat-header-cell class="widthEventType" *matHeaderCellDef [ngClass]="'column-width'">
+          <mat-header-cell class="widthEventType tableHadingCapital" *matHeaderCellDef [ngClass]="'column-width'">
             {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.eventHandler.tabs.eventTypes'): ""}}
           </mat-header-cell>
           <mat-cell class="widthEventType" *matCellDef="let element" [ngClass]="'column-width'"> {{
             element.eventType.eventType }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Message">
-          <mat-header-cell
+          <mat-header-cell class="tableHadingCapital"
             *matHeaderCellDef>{{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.Message'): ""}}</mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element.message }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Alarm Level">
-          <mat-header-cell class="eventMidData" *matHeaderCellDef [ngClass]="'column-width_level'">
+          <mat-header-cell class="eventMidData tableHadingCapital" *matHeaderCellDef [ngClass]="'column-width_level'">
             {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.alarmLevel'): ""}}
           </mat-header-cell>
           <mat-cell class="eventMidData" *matCellDef="let element" [ngClass]="'column-width_level'">
@@ -77,14 +77,14 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Active Time">
-          <mat-header-cell class="widthActiveTime" *matHeaderCellDef>
+          <mat-header-cell class="widthActiveTime tableHadingCapital" *matHeaderCellDef>
             {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.activeTime'): ""}}
           </mat-header-cell>
           <mat-cell class="widthActiveTime" *matCellDef="let element">{{ element.activeTimestamp | date: 'MMM d, h:mm:ss
             a' }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Rtn Time">
-          <mat-header-cell class="withReturns" *matHeaderCellDef>
+          <mat-header-cell class="withReturns tableHadingCapital" *matHeaderCellDef>
             {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.returnToNormalTime'): ""}}
           </mat-header-cell>
           <mat-cell class="withReturns" *matCellDef="let element">
@@ -98,7 +98,7 @@
           </mat-cell>
         </ng-container>
         <ng-container matColumnDef="Action">
-          <mat-header-cell class="eventLastChildData" *matHeaderCellDef [ngClass]="'column-width'">
+          <mat-header-cell class="eventLastChildData tableHadingCapital" *matHeaderCellDef [ngClass]="'column-width'">
             {{UIDICTIONARY  ?  UIDICTIONARY.get('ui.core.event.table.Action'): ""}}
           </mat-header-cell>
           <mat-cell class="eventLastChildData" *matCellDef="let element" [ngClass]="'column-width'">
