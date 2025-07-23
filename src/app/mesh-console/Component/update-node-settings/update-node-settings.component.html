@@ -1,0 +1,54 @@
+<mat-toolbar class=" mat-toolbar_all">
+  <mat-card-title class="sidebar_form_title">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.configuration.updateNodeSettings'): ""}}
+  </mat-card-title>
+  <span class="spacer"></span>
+  <button [mat-dialog-close]="true"  mat-raised-button class="dialogCancel">
+    {{UIDICTIONARY ? UIDICTIONARY.get("ui.core.common.button.cancel"): ""}}
+  </button>
+</mat-toolbar>
+<div class="updateNodeMainSettings marginTop-20">
+
+    <input type="hidden" [(ngModel)]="address"  name="address" />
+
+
+    <mat-slide-toggle  (change)="nodeAddressOnly($event)" class="toggle_change"
+                      >
+      {{UIDICTIONARY ? UIDICTIONARY.get("ui.core.placeholder.slBus.nodeAddress"): ""}}
+    </mat-slide-toggle>
+    <mat-slide-toggle class="toggle_change marginLeft-10"
+                      (change)="networkOnly($event)">
+      {{UIDICTIONARY ? UIDICTIONARY.get("ui.meshConsole.field.network"): ""}} {{UIDICTIONARY ? UIDICTIONARY.get("ui.meshConsole.field.address"): ""}}
+    </mat-slide-toggle>
+    <mat-slide-toggle class="toggle_change marginLeft-10"
+                      (change)="channelOnly($event)">
+      {{UIDICTIONARY ? UIDICTIONARY.get("ui.meshConsole.field.channel"): ""}}
+    </mat-slide-toggle>
+
+  <div>
+    <mat-form-field class="form_field modbusInputField marginTop w-100"  appearance="fill" *ngIf="nodeAddressOne">
+      <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get("ui.core.placeholder.slBus.nodeAddress"): ""}}</mat-label>
+      <input matInput name="nodeAddress" [(ngModel)]="nodeAddress"  placeholder="Node Address">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form_field modbusInputField marginTop w-100" *ngIf="networkOne"  appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get("ui.meshConsole.field.network"): ""}} {{UIDICTIONARY ? UIDICTIONARY.get("ui.meshConsole.field.address"): ""}}</mat-label>
+      <input matInput name="networkAddress" [(ngModel)]="networkAddress" placeholder="Network Address">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form_field modbusInputField marginTop w-100" *ngIf="channelOne"  appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get("ui.meshConsole.field.channel"): ""}}</mat-label>
+      <input matInput name="channel" [(ngModel)]="channel"  placeholder="Channel">
+    </mat-form-field>
+  </div>
+  <div class="buttonAlign mt-10">
+    <button mat-raised-button (click)="saveNodeSettings()" [disabled]="!nodeUpdateBoolean" class="Update_Button mupdateButton" title="{{dictionaryService.uiDictionary.get('ui.core.common.button.update')}}">
+      {{UIDICTIONARY ? UIDICTIONARY.get("ui.core.common.button.update"): ""}}
+    </button>&nbsp;
+    <button mat-raised-button class="cancel_button_new "  title="{{dictionaryService.uiDictionary.get('ui.core.common.button.cancel')}}" mat-dialog-close>
+      {{UIDICTIONARY ? UIDICTIONARY.get("ui.core.common.button.cancel"): ""}}
+    </button>&nbsp;
+  </div>
+</div>

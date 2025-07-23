@@ -1,0 +1,70 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{dictionaryService.uiDictionary.get("ui.meshConsole.configuration.sinkSettings")}}
+    </mat-card-title>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card allFormedit sinkForms">
+    <form>
+      <div id="messages">
+        <mat-card class="validation-error" *ngIf="messages">
+          {{messages.confirmMessage.messageType}}: {{messages.confirmMessage.message}}
+        </mat-card>
+      </div>
+        <mat-form-field class="form_field sinkFormAlign" appearance="fill">
+          <mat-label>{{dictionaryService.uiDictionary.get(
+            "ui.meshConsole.field.address")}}</mat-label>
+          <input matInput name="meshAddress" [disabled]="isStackRunning"
+                 placeholder="Enter Address" [(ngModel)]="address">
+        </mat-form-field>
+        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+                aria-label="icon button with a filter list icon" (click)="pushAddress()">
+          {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
+        </button>
+
+        <mat-form-field class="form_field sinkFormAlign" appearance="fill">
+          <mat-label>{{dictionaryService.uiDictionary.get(
+            "ui.meshConsole.field.network")}}</mat-label>
+          <input matInput name="meshNetwork" [disabled]="isStackRunning"
+                 placeholder="Enter Network" [(ngModel)]="network">
+        </mat-form-field>
+        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+                aria-label="icon button with a filter list icon" (click)="pushNetwork()">
+          {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
+        </button>
+
+        <mat-form-field class="form_field sinkFormAlign" appearance="fill">
+          <mat-label>{{dictionaryService.uiDictionary.get(
+            "ui.meshConsole.field.channel")}}</mat-label>
+          <input matInput name="meshChannel" [disabled]="isStackRunning"
+                 placeholder="Enter Channel" [(ngModel)]="channel">
+        </mat-form-field>
+        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+                aria-label="icon button with a filter list icon" (click)="pushChannel()">
+          {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
+        </button>
+
+        <mat-form-field class="form_field sinkFormAlign" appearance="fill">
+          <mat-label>{{dictionaryService.uiDictionary.get("ui.meshConsole.field.role")}}</mat-label>
+          <mat-select name="meshRole" [(ngModel)]="role" [disabled]="isStackRunning">
+            <mat-option *ngFor="let role of roles;" [value]="role.key">{{role.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+                aria-label="icon button with a filter list icon" (click)="pushRole()">
+          {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
+        </button>
+
+      <button mat-raised-button class="Save_Button saveConsoleButton   w-23"
+              [disabled]="isStackRunning" (click)="startStack()">
+        {{dictionaryService.uiDictionary.get("ui.meshConsole.button.startStack")}}
+      </button>
+      <button mat-raised-button [disabled]="!isStackRunning"
+              class="Save_Button saveConsoleButton  sinkStops marginLeft30 w-23" (click)="stopStack()">
+        {{dictionaryService.uiDictionary.get("ui.meshConsole.button.stopStack")}}
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

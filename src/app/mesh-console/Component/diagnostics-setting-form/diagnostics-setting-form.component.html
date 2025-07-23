@@ -1,0 +1,32 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{dictionaryService.uiDictionary.get("ui.meshConsole.diagnostics.settings")}}
+    </mat-card-title>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card allFormedit">
+    <form>
+      <div id="messages">
+        <mat-card class="validation-error" *ngIf="messages">
+          {{messages.confirmMessage.messageType}}: {{messages.confirmMessage.message}}
+        </mat-card>
+      </div>
+
+        <mat-form-field style="width: 100%" appearance="fill">
+          <mat-label>{{dictionaryService.uiDictionary.get("ui.meshConsole.diagnostics.interval")}}</mat-label>
+          <mat-select required name="diagnosticInterval" [(ngModel)]="interval">
+            <mat-option *ngFor="let interval of intervals;"
+                        [value]="interval.key">{{interval.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      <button mat-raised-button class="saveButton saveConsoleButton allSaveButtons" (click)="pushInterval()">
+        {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+

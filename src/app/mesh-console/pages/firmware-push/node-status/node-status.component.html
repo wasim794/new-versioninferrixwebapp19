@@ -1,0 +1,289 @@
+<div class="container headinglayout nodeStatusInfo" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.heading') : ""}}</span>
+      <div fxFlex="100%" fxLayout="row" fxLayoutAlign="end end">
+        <button mat-raised-button *ngIf="!sequenceNumbersAll"
+                matTooltipClass="etooltip-uppercase"
+                class="buttonTopNodeStatus" (click)="sequenceNumbersFunction()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo') : ""}}
+        </button>
+        <button mat-raised-button
+                matTooltipClass="etooltip-uppercase" *ngIf="!notSequenceNumbersAll"
+                class="buttonTopNodeStatus"  (click)="notSequenceNumbersFunction()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}
+        </button>
+        <button mat-raised-button
+                matTooltipClass="etooltip-uppercase" *ngIf="!sequenceNumbersAllActions"
+                class="buttonTopNodeStatus" (click)="SequenceActionsFunction()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions') : ""}}
+        </button>
+        <button mat-raised-button
+                matTooltipClass="etooltip-uppercase" *ngIf="!sequenceNumbersAllMatchActions"
+                (click)="matchActions()" class="buttonTopNodeStatus"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.button.sequenceMatchAction') : ""}}
+        </button>
+   <div class="matchActions" class="nodeStatusButton">
+        <button mat-raised-button
+                matTooltipClass="etooltip-uppercase" *ngIf="sequenceNumbersAllMatch"
+                class="buttonTopNodeStatus" (click)="matchSequenceNumber()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo') : ""}}
+        </button>
+        <button mat-raised-button
+                matTooltipClass="etooltip-uppercase" *ngIf="notSequenceNumbersAllMatch"
+                class="buttonTopNodeStatus" (click)="matchNotSequenceNumber()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}
+        </button>
+   </div>
+        <div class="centerDivContainer nodeStatusFont">
+          <mat-form-field appearance="standard" *ngIf="filterNotSequenceNumbers">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}</mat-label>
+            <input matInput name="searchBacnetList" [(ngModel)]="notSequenceNumbers"
+                   (keyup.enter)="filerNotEqualSequenceNumber($event)" placeholder="Ex. ium" #input
+                   placeholder="{{UIDICTIONARY ===undefined ? '': UIDICTIONARY.get('ui.core.common.fields.search')}}...">
+            <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" *ngIf="filterSequenceNumbers">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo') : ""}}</mat-label>
+          <input matInput name="searchBacnetList" [(ngModel)]="sequenceNumbers"
+                 (keyup.enter)="applyFilterSequenceNumber($event)" placeholder="Ex. ium" #input
+                 placeholder="{{UIDICTIONARY ===undefined ? '': UIDICTIONARY.get('ui.core.common.fields.search')}}...">
+            <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field  *ngIf="filterDropdown">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions') : ""}}</mat-label>
+            <mat-select [(ngModel)]="sequenceActions" name="sequenceActions">
+              <mat-option  (onSelectionChange)="applyFilterActions($event)" *ngFor="let item of ACTIONSNODESTATUS" [value]="item.key">{{item.value}}</mat-option>
+            </mat-select>
+            <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" *ngIf="filterNotSequenceNumbersMatch">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}</mat-label>
+            <input matInput name="searchBacnetList" [(ngModel)]="notSequenceNumbersMatch"
+                   (keyup.enter)="filerNotEqualSequenceNumber($event)" placeholder="Ex. ium" #input
+                   placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ''}}...">
+            <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" *ngIf="filterSequenceNumbersMatch">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo') : ""}}</mat-label>
+            <input matInput name="searchBacnetList" [(ngModel)]="sequenceNumbersMacth"
+                   (keyup.enter)="applyFilterSequenceNumber($event)" placeholder="Ex. ium" #input
+                   placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ''}}...">
+            <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field  *ngIf="filterDropdownMatch">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions') : ""}}</mat-label>
+            <mat-select [(ngModel)]="sequenceActionsMatch" name="sequenceActions">
+              <mat-option  (onSelectionChange)="applyFilterActionsMatch($event)" *ngFor="let item of ACTIONSNODESTATUS" [value]="item.key">{{item.value}}</mat-option>
+            </mat-select>
+            <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
+
+          </mat-form-field>
+
+          <button mat-raised-button
+                  matTooltipClass="etooltip-uppercase" *ngIf="matchActionsButton"
+                  class="buttonTopNodeStatus" (click)="searchData()" >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}
+          </button>
+
+        </div>
+      </div>
+
+      <div class="containerInfo">
+
+        <div class="nodeIcons">
+          <mat-icon (click)="scratchPadStart()"   role="img" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpad') : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status') : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.start') : ''}}" class="all_icons" data-mat-icon-type="font">
+            play_circle </mat-icon>
+        <mat-icon (click)="scratchPadStop()"   role="img" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpad') : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status') : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.stopBit').substring(0,4) : ''}}" class="all_icons" data-mat-icon-type="font">
+          stop_screen_share </mat-icon>
+
+        </div>
+          <mat-form-field appearance="standard">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
+          <input matInput (keyup.enter)="applyFilter($event)">
+            <mat-icon (click)="applyFilter($event)" class="Input_search"  matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container cardlayout firmWareCard scrollBar" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="main_db">
+    <div class="container-size nodeStatusOverflowScroll addCommonPageTable meshConsoleTables">
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 nodeStatusOverflow meshTable diagnosticTableHeader width-100">
+
+
+        <ng-container matColumnDef="header-row-first-groups">
+          <th mat-header-cell *matHeaderCellDef
+              [attr.colspan]="3">
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="nodeType">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.nodeType') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.nodeType}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.address') : ""}} </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button style="margin-right: 12px"
+                    matTooltipClass="example-tooltip-uppercase"
+                    class="button">{{element.address}}
+            </button></td>
+        </ng-container>
+        <ng-container matColumnDef="timestamp">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.dateTime') : ""}} </th>
+          <td mat-cell *matCellDef="let element">{{element.timestamp| date:'dd/MM/yyyy HH:mm:ss'}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="header-row-first-group">
+          <th mat-header-cell *matHeaderCellDef
+              [attr.colspan]="5">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.storedScratchpad') : ""}}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="storedScratchpadLength">
+          <th mat-header-cell [attr.rowspan]="2" *matHeaderCellDef>  {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.length') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.storedScratchpadLength}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="storedScratchpadCrc">
+          <th mat-header-cell *matHeaderCellDef>  {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.crc') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.storedScratchpadCrc}} </td>
+        </ng-container>
+        <ng-container matColumnDef="storedScratchpadSequenceNumber">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.sequenceNo') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.storedScratchpadSequenceNumber}} </td>
+        </ng-container>
+        <ng-container matColumnDef="storedScratchpadType">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.type') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.storedScratchpadType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="storedScratchpadStatus">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.status') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.storedScratchpadStatus}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="header-row-second-group">
+          <th mat-header-cell *matHeaderCellDef
+              [attr.colspan]="5">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.processed') : ""}}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="processedScratchpadLength">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpadLength') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.processedScratchpadLength}} </td>
+        </ng-container>
+        <ng-container matColumnDef="processedScratchpadCrc">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpadCrc') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.processedScratchpadCrc}} </td>
+        </ng-container>
+        <ng-container matColumnDef="processedScratchpadSequenceNumber">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpadSequenceNo') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.processedScratchpadSequenceNumber}} </td>
+        </ng-container>
+        <ng-container matColumnDef="processedFirmwareAreaId">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.firmwareAreaId') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.processedFirmwareAreaId}} </td>
+        </ng-container>
+        <ng-container matColumnDef="firmwareVersion">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.firmwareVersion') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.firmwareVersion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="header-row-third-group">
+          <th mat-header-cell *matHeaderCellDef
+              [attr.colspan]="5">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.applicationProcessed') : ""}}
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="applicationProcessedScratchPadCrc">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpadCrc') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.applicationProcessedScratchPadCrc}} </td>
+        </ng-container>
+        <ng-container matColumnDef="applicationProcessedScratchPadLength">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpadLength') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.applicationProcessedScratchPadLength}} </td>
+        </ng-container>
+        <ng-container matColumnDef="applicationProcessedScratchPadSequenceNumber">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpadSequenceNo') : ""}} </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button style="margin-right: 12px"
+                    matTooltipClass="example-tooltip-uppercase"
+                    class="button">
+               {{element.data.applicationProcessedScratchPadSequenceNumber}}
+            </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="applicationProcessedApplicationAreaId">
+          <th mat-header-cell *matHeaderCellDef>  {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.appAreaId') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.applicationProcessedApplicationAreaId}} </td>
+        </ng-container>
+        <ng-container matColumnDef="applicationVersion">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.firmwareVersion') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.applicationVersion}} </td>
+        </ng-container>
+        <ng-container matColumnDef="header-row-fourth-group">
+          <th mat-header-cell *matHeaderCellDef
+              [attr.colspan]="5">
+
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.action') : ""}} </th>
+          <td mat-cell *matCellDef="let element"><button mat-raised-button style="margin-right: 12px"
+                                                         matTooltipClass="example-tooltip-uppercase"
+                                                          class="button">
+            {{element.data.action}}
+          </button>  </td>
+        </ng-container>
+        <ng-container matColumnDef="targetSequence">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.targetSequenceNo') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.targetSequence}} </td>
+        </ng-container>
+        <ng-container matColumnDef="targetCrc">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.targetCrc') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.targetCrc}} </td>
+        </ng-container>
+        <ng-container matColumnDef="processingDelay">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.processingDelay') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.processingDelay}} </td>
+        </ng-container>
+        <ng-container matColumnDef="remainingDelay">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.remainingDelay') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.data.remainingDelay}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['header-row-first-groups','header-row-first-group','header-row-second-group',
+        'header-row-third-group','header-row-fourth-group']"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsResponse"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumnsResponse;"></tr>
+      </table>
+      <button  class="scrollTabs leftSide" style="left:55px"  (click)="scrollTable('left')" mat-mini-fab >
+        <mat-icon><i class="material-icons">arrow_back_ios</i></mat-icon>
+      </button>
+      <button  class="scrollTabs" style="right:0" (click)="scrollTable('right')" mat-mini-fab>
+        <mat-icon><i class="material-icons">arrow_forward_ios</i></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="tableDescription nodeButton" [hidden]="!divHidden">
+    <section>
+      <div class="button-row actionButtonNodes">
+        <button mat-raised-button color="primary" (click)="checkStatus()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.checkStatus') : ""}}</button>
+        <button mat-raised-button color="primary" *ngIf="conditionFalse" (click)="allActions('allAction')">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.file.heading').substring(0,4) : ""}}</button>
+        <button mat-raised-button color="primary" *ngIf="conditionTrue"  (click)="updateLegacy('LEGACY')">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeUpdate.action.legacyUpdate') : ""}}</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+      <div class="pagination_fixed" [hidden]="!divHidden">
+        <mat-paginator class="pagination_all" [pageIndex]=0 [length]="meshOtaService.totalNodeStatus" [pageSizeOptions]="pageSizeOptions"
+                       [pageSize]=limit (page)="getNextPage($event)"></mat-paginator>
+      </div>

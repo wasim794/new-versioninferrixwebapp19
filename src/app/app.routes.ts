@@ -73,6 +73,12 @@ export const routes: Routes = [
     loadChildren: () => import('./publisher/publisher-routes').then(m => m.publisherRoutes),
   },
 
+  {
+    path: 'mesh-console',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./mesh-console/mesh-console-routes').then(m => m.meshConsoleRoutes),
+  },
+
   
   
   

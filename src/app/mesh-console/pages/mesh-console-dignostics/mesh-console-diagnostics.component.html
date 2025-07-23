@@ -1,0 +1,218 @@
+<div class="container headinglayout marginBottom-10" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics') : ""}}</span>
+      <div class="containerInfo">
+        <mat-form-field appearance="standard">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
+          <input matInput (keyup.enter)="applyFilter($event)" placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.search.placeHolder') : ''}}" #input>
+          <mat-icon (click)="applyFilter($event)" class="Input_search" matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="main_db">
+    <div class="container-size OverflowScroll addCommonPageTable meshConsoleTables">
+      <table mat-table [dataSource]="diagnosticData" multiTemplateDataRows class="mat-elevation-z8 meshTable diagnosticTableHeader width-100">
+        <ng-container matColumnDef="Address">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.address') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Node Type">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nodeType') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.nodeType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Role">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.role') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.role}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Battery">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.battery') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.voltage}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Buffer Usage">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bufferUsage') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.bufferUsage.average}}/{{element.diagnosticsData.bufferUsage.maximum}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Dropped Packets">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.droppedPackets') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.packetsDropped}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Access Cycle">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.accessCycle') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.cfmacAccessCycleInterval}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Quality">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.quality') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.installationQuality.qualityIndicator}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Error">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.qualityError') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.installationQuality.errorBitmap}} </td>
+        </ng-container>
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef aria-label="row Actions">&nbsp;{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions') : ""}}</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.start') : ''}}" *ngIf="element.nodeType==='Mesh Controller'" (click)="startStopMeshController(element)" aria-label="expand row">
+              <mat-icon><i class="fa fa-play"></i></mat-icon>
+            </button>
+            <button *ngIf="element.nodeType==='Mesh Controller'" mat-icon-button title="Enable WIFI" (click)="enableDisableMeshController(element)" aria-label="expand row">
+              <mat-icon><i class="fa fa-wifi"></i></mat-icon>
+            </button>
+            <button mat-icon-button aria-label="expand row" (click)="toggleRow(element, 'neighbors')">
+              <mat-icon><i class="fa fa-sitemap"></i></mat-icon>
+            </button>
+            <button mat-icon-button aria-label="expand row" (click)="toggleRow(element, 'boot')">
+              <mat-icon><i class="fa fa-cog"></i></mat-icon>
+            </button>
+            <button mat-icon-button aria-label="expand row" (click)="toggleRow(element, 'events')">
+              <mat-icon><i class="fa fa-clipboard"></i></mat-icon>
+            </button>
+            <button  mat-icon-button aria-label="expand row" (click)="rebootNode(element, 'reboot')">
+              <mat-icon title="Reboot Node "><i class="material-icons restoreAll">restore</i></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+            <div class="tableDetail" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'" fxLayoutAlign="center">
+              <div class="tableDescription" *ngIf="isNeighbors">
+                <div class="diagnosticsTable">
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.sinkAddress') : ""}}
+                    </b> &nbsp;:&nbsp; {{element.diagnosticsData.nextHopDetails.sinkAddress}}</div>
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopAddress') : ""}}
+                    </b> &nbsp;:&nbsp; {{element.diagnosticsData.nextHopDetails.nextHopAddress}}</div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopQuality') : ""}}</b> &nbsp;:&nbsp; {{element.diagnosticsData.nextHopDetails.nextHopQuality}}</div>
+                    <div class="diagnosticsData"><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.advertisedCost') : ""}}</b>  &nbsp;:&nbsp; {{element.diagnosticsData.nextHopDetails.advertisedCost}}</div>
+                  </div>
+                  <div class="diagnosticsTableRow borderBottom">
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopRssi') : ""}}
+                    </b> &nbsp;:&nbsp; {{element.diagnosticsData.nextHopDetails.nextHopRssi}}</div>
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopPower') : ""}}
+                    </b> &nbsp;:&nbsp; {{element.diagnosticsData.nextHopDetails.nextHopPower}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="tableDescription" *ngIf="isBoot && element.bootData">
+                <div class="diagnosticsTableEvent">
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.role') : ""}}
+                    </b>  &nbsp;:&nbsp;{{element.bootData.role}}         </div>
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootCount') : ""}}
+                    </b>  &nbsp;:&nbsp; {{element.bootData.bootCount}}    </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.firmwareVersion') : ""}}
+                    </b>  &nbsp;:&nbsp; {{element.bootData.firmwareStack}}</div>
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.firmwareVersion') : ""}}
+                    </b> &nbsp;:&nbsp; {{element.bootData.firmwareApp}}  </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.otapSupport') : ""}}    </b> &nbsp;:&nbsp; {{element.bootData.otapSupport}}                 </div>
+                    <div class="diagnosticsData"><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.processed') : ""}}</b> &nbsp;:&nbsp; {{element.bootData.scratchpadProcessedSequence}} </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderBottom">
+                    <div class="diagnosticsData"><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.storedScratchpad') : ""}}</b> &nbsp;:&nbsp; {{element.bootData.scratchpadStoredSequence}}    </div>
+                    <div class="diagnosticsData"><b>
+                      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.radioHardware') : ""}}
+                    </b> &nbsp;:&nbsp; {{element.bootData.hardwareMagic}}               </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tableDescription" *ngIf="isEvent && element.diagnosticsData.events">
+                <div class="diagnosticsTableEvent tableWidth100">
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event1.eventType}} </b> &nbsp;:&nbsp; {{element.diagnosticsData.events.event1.eventMessage}}</div>
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event2.eventType}} </b> &nbsp;:&nbsp; {{element.diagnosticsData.events.event2.eventMessage}}</div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event3.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event3.eventMessage}}
+                    </div>
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event4.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event4.eventMessage}}
+                    </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event5.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event5.eventMessage}}
+                    </div>
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event6.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event6.eventMessage}}
+                    </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event7.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event7.eventMessage}}
+                    </div>
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event8.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event8.eventMessage}}
+                    </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event9.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event9.eventMessage}}
+                    </div>
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event10.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event10.eventMessage}}
+                    </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event11.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event11.eventMessage}}
+                    </div>
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event12.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event12.eventMessage}}
+                    </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderTop">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event13.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event13.eventMessage}}
+                    </div>
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event14.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event14.eventMessage}}
+                    </div>
+                  </div>
+                  <div class="diagnosticsTableRow borderBottom">
+                    <div class="diagnosticsData"><b>{{element.diagnosticsData.events.event15.eventType}} </b> &nbsp;:&nbsp;
+                      {{element.diagnosticsData.events.event15.eventMessage}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+            class="tableRow"
+            [class.tableRow]="expandedElement === element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tableRow"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="service.totalDiagnostics > limit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="service.totalDiagnostics" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit (page)="getNextPage($event)"></mat-paginator>
+</div>
