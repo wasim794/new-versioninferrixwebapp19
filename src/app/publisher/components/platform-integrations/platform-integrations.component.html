@@ -1,4 +1,4 @@
-<mat-card class="form_cards httpBlock httpMainBlock">
+<mat-card class="form_cards platformIntegrationMain">
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title matCardTitles">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.systemSettings.platformIntegration'): ""}} <small *ngIf="integrationSenderTitle">{{integrationSenderModel.name}}</small>
@@ -85,7 +85,7 @@
         </ng-template>
       </mat-tab>
 <!-- *ngIf="pointValues"  -->
-      <mat-tab label="Points" >
+      <mat-tab label="Points">
         <div [hidden]=!viewDataPoint>
           <mat-form-field class="searchWidth serchInput" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>

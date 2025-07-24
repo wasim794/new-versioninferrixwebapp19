@@ -1,4 +1,4 @@
-<mat-card class="form_cards httpBlock httpMainBlock " style="width: 100px;">
+<mat-card class="form_cards httpBlock httpMainBlock ">
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title matCardTitles">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.edit'): ""}}
@@ -70,7 +70,7 @@
          
           
 
-                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change  httpSenderToggle"
+                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change  httpSenderToggle marginLeft-20"
                                   [(ngModel)]="httpSenderModel.enabled">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
                 </mat-slide-toggle>

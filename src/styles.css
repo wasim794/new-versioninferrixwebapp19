@@ -9567,3 +9567,24 @@ table.dropdownTables {
     }
   
   }
+
+  .meshSendersContainer{
+
+        width: 800px !important ;
+  }
+  .platformIntegrationMain{
+ width: 1100px !important;
+  }
+ 
+  .meshSenserToogle{
+    margin-left: 40px;
+  }
+
+  .mqttMainContainer{
+     width: 950px !important;
+  }
+
+  .mqttToggleAlign{
+ position: relative !important;
+ right: 40px !important;
+  }

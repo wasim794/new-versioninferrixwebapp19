@@ -5,11 +5,15 @@
       <small *ngIf="mqttSenderTitle">{{mqttSender.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button  class="toolbarSaveButton bacnetUpdate toolbarButton" (click)="saveMqttPublisher() " *ngIf="!isEdit"
-            align="end" mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+    <button  class="toolbarSaveButton bacnetUpdate saveButton" (click)="saveMqttPublisher() " *ngIf="!isEdit"
+            align="end" matfab>
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
     </button>
-    <button mat-raised-button class="toolbarUpdateButton bacnetUpdate" (click)="updateMqttPublisher()" *ngIf="isEdit"
-            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    <button matfab class="toolbarUpdateButton bacnetUpdate saveButton" (click)="updateMqttPublisher()" *ngIf="isEdit"
+            align="end">
+             <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </mat-toolbar>
   <mat-card-content class="form_cards form_edit_card allFormedit">
@@ -52,7 +56,7 @@
               </mat-form-field>
             </p>
             <p>
-              <mat-form-field class="meshSenderInput mt-10" appearance="fill">
+              <mat-form-field class="httpSenderInput mt-10" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.updateEvents'): ""}}
                 </mat-label>
                 <mat-select [(ngModel)]="mqttSender.publishType" class="form-control" name="publishType">
@@ -65,13 +69,13 @@
             <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
               <mat-grid-tile class="mqttToggles ">
                 <mat-slide-toggle name="sendSnapshot"
-                                  class="side_form_toggle toggle_change allToggls"
+                                  class="side_form_toggle toggle_change "
                                   [(ngModel)]="mqttSender.sendSnapshot">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.sendRegularSnapshot'): ""}}
                 </mat-slide-toggle>
               </mat-grid-tile>
               <mat-grid-tile class="mqttToggles marginLeft-30">
-                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change allToggls marginLeft-88"
+                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change mqttToggleAlign "
                                   [(ngModel)]="mqttSender.enabled">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
                 </mat-slide-toggle>
@@ -163,7 +167,7 @@
             </mat-form-field>
             <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
               <mat-grid-tile class="mqttConnect mqttInputAlign">
-                <mat-slide-toggle appearance="fill" class="toggle_change marginLeft-10" [(ngModel)]="mqttSender.autoReconnect"
+                <mat-slide-toggle appearance="fill" class="toggle_change mqttToggleAlign" [(ngModel)]="mqttSender.autoReconnect"
                                   name="autoReconnect">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.autoReconnect'): ""}}
                 </mat-slide-toggle>
@@ -171,7 +175,7 @@
               <mat-grid-tile class="mqttConnect">
 
 
-                <mat-slide-toggle appearance="fill" class="toggle_change singlerightToggle marginLeft-10" [(ngModel)]="mqttSender.cleanSession"
+                <mat-slide-toggle appearance="fill" class="toggle_change mqttToggleAlign " [(ngModel)]="mqttSender.cleanSession"
                                   name="cleanSession">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.mqtt.field.cleanSession'): ""}}
                 </mat-slide-toggle>
@@ -220,7 +224,8 @@
           </form>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Points" *ngIf="pointValues">
+      <!-- *ngIf="pointValues" -->
+      <mat-tab label="Points" >
         <ng-template matTabContent>
           <div class="sidebar-form px-0 mqttPointForm">
             <form [formGroup]="form">
@@ -303,14 +308,16 @@
               </div>
 
             </form>
-            <button #updateButton mat-raised-button class="Top_Update_Button marginLeft-20 " (click)="updatePublish()"
+            <button #updateButton matfab class="toolbarUpdateButton updateButton saveButton " (click)="updatePublish()"
                     *ngIf="isupdate">
+                       <mat-icon>save_as</mat-icon>
               {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
             </button>
-            <button #saveButton mat-raised-button class="Top_Save_Button marginLeft-20 mt-30" (click)="savePublish()" *ngIf="!isupdate">
+            <button #saveButton matfab class="publisherPoint mt-30 saveButton" (click)="savePublish()" *ngIf="!isupdate">
+                 <mat-icon>save</mat-icon>
               {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
             </button>
-            <button   mat-raised-button class="cancelButton" align="end" color="warn" (click)="cancelPublish()">
+            <button   mat-raised-button class="cancel_button_new cancelPoint" align="end" color="warn" (click)="cancelPublish()">
               {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
             </button>
           </div>
