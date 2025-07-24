@@ -86,7 +86,7 @@
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get(
                   'ui.core.recipients.fields.placeholder.user'): ""}}</mat-label>
                 <mat-select id="user" [(ngModel)]="userSelection" name="userSelection">
-                  <mat-option *ngFor="let user of userList;"
+                  <mat-option *ngFor="let user of userList.items;"
                               [value]="user.username">{{user.username}}
                   </mat-option>
                 </mat-select>
@@ -140,7 +140,7 @@
                 </ng-template>
               </div>
             </div>
-            <mat-slide-toggle [(ngModel)]="!smsEvent.disabled" name="disabled"
+            <mat-slide-toggle [ngModel]="!smsEvent.disabled" (ngModelChange)="smsEvent.disabled = !$event" name="disabled"
                               class="side_form_toggle toggle_change allToggls">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
             </mat-slide-toggle>

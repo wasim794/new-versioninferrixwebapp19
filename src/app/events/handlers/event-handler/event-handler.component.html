@@ -30,7 +30,7 @@
         <mat-card-title class="cardTitleName"> {{handler.name}}</mat-card-title>
         <div class="toggle_right toggle_change">
           <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.status'): ''}}"
-            [(ngModel)]="!handler.disabled" (change)="eventHandlerStatus($event, handler)">
+            [ngModel]="!handler.disabled" (ngModelChange)="handler.disabled = !$event;" (change)="eventHandlerStatus($event, handler)">
           </mat-slide-toggle>
         </div>
       </mat-card-header>

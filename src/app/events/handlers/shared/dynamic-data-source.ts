@@ -51,9 +51,9 @@ export class DynamicDataSource extends DataSource<DynamicFlatNode> {
     }
   }
 
-  toggleNode(node: DynamicFlatNode, expand: boolean) {
+  toggleNode(node: any, expand: boolean) {
     node.item.type.subType = node.item.supportsSubtype ? node.item.type.subType || undefined : null;
-    this._service.query(node.item.type).subscribe((events) => {
+    this._service.query(node.item.type).subscribe((events: any) => {
       const children = events;
       const index = this.data.indexOf(node);
       if (!children || index < 0) {
@@ -62,9 +62,8 @@ export class DynamicDataSource extends DataSource<DynamicFlatNode> {
       }
 
       if (expand) {
-        const nodes = [];
-        children.map(
-          event => {
+        const nodes: DynamicFlatNode[] = [];
+        children.map((event: any) => {
             if (this.eventHandlerTypes.value && this.eventHandlerTypes.value.length) {
               const eventType = this.eventHandlerTypes.value.filter((evenType) =>
                 this._service.typeId(evenType) === this._service.typeId(event.type));

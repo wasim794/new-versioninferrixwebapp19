@@ -1,0 +1,167 @@
+<mat-card class="form_cards ">
+  <mat-toolbar class=" mat-toolbar_all ">
+    <mat-card-title class="sidebar_form_title ">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.alertList.form.heading.alertSetup'): ""}}</span>
+      <small *ngIf="alertDetailCon">{{alertDetail.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button mat-raised-button class="buttonSaveAll bacnetUpdate" (click)="saveAlert() " *ngIf="!isEdit"
+            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+    <button mat-raised-button class="alertUpdateButton bacnetUpdate buttonUpdateAll" (click)="updateAlert()" *ngIf="isEdit"
+            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card">
+    <div [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li *ngFor="let err of alertError">{{err.property}}
+          : {{err.message}}</li>
+      </mat-card>
+    </div>
+    <mat-tab-group (selectedTabChange)="tabClick($event.index)">
+      <mat-tab label="Basic">
+        <ng-template matTabContent>
+          <br>
+          <form>
+              <mat-form-field class="form_field  w-50 mt-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+                <input matInput name="name" class="form-control" [(ngModel)]="alertDetail.name" required>
+              </mat-form-field>
+
+              <mat-form-field class="form_field  w-50 marginLeft-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input matInput name="xid"  [(ngModel)]="alertDetail.xid"   disabled class=" inputBoxHeight"  placeholder="Auto generated">
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="form_field  w-50">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
+                <mat-select multiple name="readPermissions" [(ngModel)]="readPermissions">
+                  <mat-option *ngFor="let permission of permissions"
+                              [value]="permission">{{permission}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="form_field w-50  marginLeft-10">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.setPermission'): ""}}</mat-label>
+                <mat-select multiple name="editPermissions" [(ngModel)]="editPermissions">
+                  <mat-option *ngFor="let permission of permissions"
+                              [value]="permission">{{permission}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+          </form>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Recipients">
+        <ng-template matTabContent>
+          <br>
+          <form>
+              <mat-form-field class="form_field  w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.alertType'): ""}}</mat-label>
+                <mat-select [(ngModel)]="alertDetail.receiveAlarmAlerts" name="receiveAlarmAlerts">
+                  <mat-option *ngFor="let alertType of alertTypes;" [value]="alertType.key">{{alertType.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="form_field w-50 marginLeft-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.recipientType'): ""}}</mat-label>
+                <mat-select (selectionChange)="RecipientListEntryType($event)" id="alertType" name="recipients">
+                  <mat-option *ngFor="let RecipientListEntryType of RecipientListEntryTypes;"
+                              [value]="RecipientListEntryType.key">{{RecipientListEntryType.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+
+            <div *ngIf="selectedAlertType === 'ALERT_LIST'" class="inline ">
+              <mat-form-field class="form_field  w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.alertList'): ""}}</mat-label>
+                <mat-select id="alertList" name="alertListSelection"
+                            (selectionChange)="changeAlertList($event.value)">
+                  <mat-option *ngFor="let alert of alertList;" [value]="alert">{{alert.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+
+            <div *ngIf="selectedAlertType === 'EMAIL_ADDRESS'" class="inline">
+              <mat-form-field class="form_field  w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.email'): ""}}</mat-label>
+                <input [(ngModel)]="emailAddress " id="emailAddress" matInput name="emailAddress"
+                       placeholder="Enter email">
+              </mat-form-field>
+              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="selectedAlertType === 'USER_EMAIL_ADDRESS' || selectedAlertType === 'USER_PHONE_NUMBER'"
+                 class="inline fields ">
+              <mat-form-field class="form_field  w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.user'): ""}}</mat-label>
+                <mat-select id="user" name="user" [(ngModel)]="userSelection">
+                  <mat-option *ngFor="let user of userList;" [value]="user.username">{{user.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="selectedAlertType === 'PHONE_NUMBER'" class="inline fields ">
+              <mat-form-field class="form_field  w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.phone'): ""}}</mat-label>
+                <input [(ngModel)]="phoneNumber" id="phoneNumber" matInput name="phoneNumber"
+                       placeholder="Enter phone Number">
+              </mat-form-field>
+
+              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="this.alertDetail.recipients?.length == 0 else other_content" class="pointing">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.messages'): ""}}
+            </div>
+            <ng-template #other_content>
+              <mat-table [dataSource]="this.alertDetail.recipients" class="form_table mat-elevation-z8 smsTable ">
+                <!-- Position Column -->
+                <ng-container matColumnDef="AlertType">
+                  <mat-header-cell *matHeaderCellDef
+                                   class="mat_spaces"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.recipients.fields.placeholder.alertType'): ""}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="mat_spaces ">
+                    <div *ngIf="element.recipientType === 'PHONE_NUMBER'">Phone = {{element.number}}</div>
+                    <div *ngIf="element.recipientType === 'ALERT_LIST'">Alert = {{element.name}}</div>
+                    <div *ngIf="element.recipientType === 'EMAIL_ADDRESS'">Email = {{element.address}}</div>
+                    <div *ngIf="element.recipientType === 'USER_EMAIL_ADDRESS'">User Email
+                      = {{element.username}}</div>
+                    <div *ngIf="element.recipientType === 'USER_PHONE_NUMBER'">User Phone = {{element.username}}</div>
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="Delete">
+                  <mat-header-cell *matHeaderCellDef
+                                   > {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ""}}</mat-header-cell>
+                  <mat-cell *matCellDef="let element  index as i">
+                    <mat-icon (click)="removeAddress(i)" class="mat-pointer mat_dlt">delete</mat-icon>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="alertListColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: alertListColumns;"></mat-row>
+              </mat-table>
+            </ng-template>
+
+          </form>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Schedule">
+        <br>
+        <div id="timeSchedule"></div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

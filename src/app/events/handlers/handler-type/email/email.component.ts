@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Alert} from '../../../../alert/model/alert';
 import {User} from '../../../../users/model';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../../services/common.service';
 import {UsersService} from '../../../../users/service';
 import {UnsubscribeOnDestroyAdapter} from '../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {DataPointService, EventHandlerService} from '../../../../core/services';
@@ -24,29 +24,34 @@ import {
 } from '../../common';
 import {EmailAddressEntryModel} from '../../../../core/models/alertList';
 import {MatTable} from "@angular/material/table";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule, EventTypeTreeViewComponent, BasicFormComponent ],
+  providers: [CommonService, UsersService, EventHandlerService, DictionaryService],
   selector: 'app-email',
   templateUrl: './email.component.html',
   styleUrls: []
 })
 export class EmailComponent extends UnsubscribeOnDestroyAdapter implements OnInit, OnAddInit, OnEditInit,
   OnEventHandlerSave, OnEventHandlerUpdate {
-  @ViewChild(BasicFormComponent) private basicForm: BasicFormComponent;
-  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree: EventTypeTreeViewComponent;
+  @ViewChild(BasicFormComponent) private basicForm!: BasicFormComponent;
+  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree!: EventTypeTreeViewComponent;
   @Output() eventHandlerClose = new EventEmitter<any>();
   public emailEventModel:any = new EmailEventHandlerModel();
-  isEscalation: boolean;
+  isEscalation!: boolean;
   userSelection:any;
-  isInactiveNotification: boolean;
-  isOverrideInactiveRecipients: boolean;
-  alertLists: Alert[];
-  userList: User[];
-  userListTwo: User[];
-  isSaveSuccessful: boolean;
-  isUpdateSuccessful: boolean;
-  isEdit: boolean;
+  isInactiveNotification!: boolean;
+  isOverrideInactiveRecipients!: boolean;
+  alertLists!: Alert[];
+  userList!: User[];
+  userListTwo:any = User;
+  isSaveSuccessful!: boolean;
+  isUpdateSuccessful!: boolean;
+  isEdit!: boolean;
   saveSuccessMsg = 'Saved successfully';
   updateSuccessMsg = 'Updated successfully';
   public userEntryModel:any = new UserEmailAddressEntryModel();
@@ -56,15 +61,15 @@ export class EmailComponent extends UnsubscribeOnDestroyAdapter implements OnIni
   public selectedType: any;
   public emailArrayData=<any>[];
   public emailArrayDataTwo=<any>[];
-  public emailAddress: string;
-  public emailAddressIsESC: string;
+  public emailAddress!: string;
+  public emailAddressIsESC!: string;
   public IsEscUserSelection: any;
   RecipientListEntryTypes = EMAIL_RECIPIENT_TYPES;
   RecipientListEntryTypesPhone = SMS_RECIPIENT_TYPES_EMAIL;
   timePeriodTypes=TIME_PERIOD_TYPES;
   userListColumns: string[] = ['UserType', 'Delete'];
   timePeriods = new TimePeriodModel();
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable) table!: MatTable<any>;
   UIDICTIONARY : any;
 
   constructor(private _handlerService: EventHandlerService,
@@ -82,7 +87,7 @@ export class EmailComponent extends UnsubscribeOnDestroyAdapter implements OnIni
   }
 
   //active start here
-  RecipientListEntryType(event: any , value) {
+  RecipientListEntryType(event: any , value: any) {
     this.selectedAlertType = event.value;
     if (this.selectedAlertType === 'USER_EMAIL_ADDRESS') {
       this.getUserOnly();
@@ -109,20 +114,20 @@ export class EmailComponent extends UnsubscribeOnDestroyAdapter implements OnIni
         break;
     }
   }
-  removeAddress(index) {
+  removeAddress(index: any) {
     this.emailEventModel.activeRecipients.splice(index, 1);
     this.table.renderRows();
   }
 
   //End here
 getUserOnly(){
-  this.subs.add(this.usersService.allUsersList().subscribe(data => {
-    this.userListTwo = data['items'];
+  this.subs.add(this.usersService.allUsersList().subscribe((data: any) => {
+    this.userListTwo = data;
   }));
 }
 
   //Escalation Start Here
-  RecipientListEntryTypeTwo(event: any, value){
+  RecipientListEntryTypeTwo(event: any, value: any){
     this.isEscalationSelectedType = event.value;
     if (this.isEscalationSelectedType === 'USER_EMAIL_ADDRESS') {
      this.getUserOnly();
@@ -151,18 +156,18 @@ getUserOnly(){
   }
   //End here
 
-  sendEscalations(Event) {
+  sendEscalations(Event: any) {
     this.isEscalation = Event.checked;
 
   }
-  sendInactiveNotification(Event) {
+  sendInactiveNotification(Event: any) {
     this.isInactiveNotification = Event.checked;
   }
-  overrideInactiverecipients(Event) {
+  overrideInactiverecipients(Event: any) {
     this.isOverrideInactiveRecipients = Event.checked;
   }
 
-  removeAddressTwo(index){
+  removeAddressTwo(index: any){
     this.emailEventModel.escalationRecipients.splice(index, 1);
     this.table.renderRows();
   }
@@ -182,7 +187,7 @@ getUserOnly(){
   }
 
   eventType(){
-    this.emailEventModel.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType) =>
+    this.emailEventModel.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType: any) =>
         eventType.toEventTypeMatcherModel());
   }
 

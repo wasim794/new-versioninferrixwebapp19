@@ -1,15 +1,14 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {EventHandlerComponent} from './event-handler/event-handler.component';
+import {AlertListComponent} from '../alert';
 
 const routes: Routes = [
-  {path: 'list', component: EventHandlerComponent},
+  {path: 'list', component: AlertListComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-
-export class EventHandlerRoutingModule {
+export class AlertListRoutingModule {
 }

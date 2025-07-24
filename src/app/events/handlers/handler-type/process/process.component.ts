@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {UnsubscribeOnDestroyAdapter} from '../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {DataPointService, EventHandlerService} from '../../../../core/services';
 import {BasicSummaryModel} from '../../../../core/models';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../../services/common.service';
 import {AbstractEventTypesModel, EventTypeMatcherModel} from "../../../../core/models/events";
 import {
   AbstractEventHandlerModel,
@@ -17,20 +17,25 @@ import {
   OnEventHandlerSave,
   OnEventHandlerUpdate
 } from '../../common';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule, BasicFormComponent, EventTypeTreeViewComponent ],
+  providers: [ CommonService, DictionaryService , DataPointService, EventHandlerService],
   selector: 'app-process',
   templateUrl: './process.component.html',
   styleUrls: []
 })
 export class ProcessComponent extends UnsubscribeOnDestroyAdapter implements OnInit, OnAddInit, OnEditInit,
   OnEventHandlerSave, OnEventHandlerUpdate {
-  @ViewChild(BasicFormComponent) private basicForm: BasicFormComponent;
-  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree: EventTypeTreeViewComponent;
+  @ViewChild(BasicFormComponent) private basicForm!: BasicFormComponent;
+  @ViewChild(EventTypeTreeViewComponent) private eventTypeTree!: EventTypeTreeViewComponent;
   @Output() eventHandlerClose = new EventEmitter<any>();
-  isSaveSuccessful: boolean;
-  isUpdateSuccessful: boolean;
-  isEdit: boolean;
+  isSaveSuccessful!: boolean;
+  isUpdateSuccessful!: boolean;
+  isEdit!: boolean;
   saveSuccessMsg = 'Saved successfully';
   updateSuccessMsg = 'Updated sucessfully';
   public processEvent = new ProcessEventHandlerModel;
@@ -50,7 +55,7 @@ export class ProcessComponent extends UnsubscribeOnDestroyAdapter implements OnI
   }
 
   eventHandlerUpdate(): void {
-    this.processEvent.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType) =>
+    this.processEvent.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType: any) =>
       eventType.toEventTypeMatcherModel());
     this.processEvent.name = this.basicForm.handlerModel.name;
     this._handlerService.update(this.processEvent).subscribe((model) => {
@@ -63,7 +68,7 @@ export class ProcessComponent extends UnsubscribeOnDestroyAdapter implements OnI
   }
 
   eventHandlerSave(): void {
-    this.processEvent.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType) =>
+    this.processEvent.eventTypes = this.eventTypeTree.dataSource.selectedEventTypes.selected.map((eventType: any) =>
       eventType.toEventTypeMatcherModel());
     this.processEvent.name = this.basicForm.handlerModel.name;
     this._handlerService.create(this.processEvent).subscribe((model) => {

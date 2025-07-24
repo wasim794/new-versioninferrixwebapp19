@@ -31,6 +31,17 @@ export const routes: Routes = [
     loadChildren: () => import('./event/event.routes').then(m => m.eventRoutes),
   },
 
+{
+    path: 'event',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./event-management/eventmaanagment.routes').then(m => m.eventsRoutes),
+  },
+  {
+    path: 'event-handler',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./events/handlers/eventshandler.routes').then(m => m.eventsHandlerRoutes),
+  },
+
   {
     path: 'datapoint',
     canActivate: [AuthGuard],
@@ -61,6 +72,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./publisher/publisher-routes').then(m => m.publisherRoutes),
   },
+
+  
   
   
 
