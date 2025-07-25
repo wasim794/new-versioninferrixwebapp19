@@ -4,19 +4,24 @@ import {MeshSinkService} from "../../shared/services";
 import {UnsubscribeOnDestroyAdapter} from "../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter";
 import {NumericKeyStaticData} from "../../../common/static-data/static-data";
 import {forkJoin} from "rxjs";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [DictionaryService, MeshSinkService],
   selector: 'app-sink-setting-form',
   templateUrl: './sink-setting-form.component.html',
   styleUrls: []
 })
 export class SinkSettingFormComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  roles: NumericKeyStaticData[];
-  isStackRunning: boolean;
-  address: number;
-  network: string;
-  channel: number;
-  role: number;
+  roles!: NumericKeyStaticData[];
+  isStackRunning!: boolean;
+  address!: number;
+  network!: string;
+  channel!: number;
+  role!: number;
   messages: any;
 
   constructor(
@@ -92,7 +97,7 @@ export class SinkSettingFormComponent extends UnsubscribeOnDestroyAdapter implem
   }
 
   private static showMessages() {
-    (<any>$('#messages')).show();
-    (<any>$('#messages')).fadeOut(2000);
+    // (<any>$('#messages')).show();
+    // (<any>$('#messages')).fadeOut(2000);
   }
 }

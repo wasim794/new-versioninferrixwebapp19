@@ -14,8 +14,13 @@ import {
   DiagnosticsSettingFormComponent
 } from '../Component/diagnostics-setting-form/diagnostics-setting-form.component';
 import {Router} from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule, MeshConsolePropertiesComponent, SinkSettingFormComponent, DiagnosticsSettingFormComponent],
+  providers: [],
   selector: 'app-load-pages',
   templateUrl: './load-pages.component.html',
   styleUrls: []
@@ -23,7 +28,7 @@ import {Router} from '@angular/router';
 export class LoadPagesComponent implements OnInit {
   @ViewChild('dynamicLoadComponent', {
     read: ViewContainerRef
-  }) entry: ViewContainerRef;
+  }) entry!: ViewContainerRef;
   private componentRef: any;
   @Output() meshConsoleSidebar = new EventEmitter<any>();
 
@@ -34,11 +39,11 @@ export class LoadPagesComponent implements OnInit {
   ngOnInit() {
   }
 
-  createMeshConsole(meshConsoleComponent, configDrawer) {
+  createMeshConsole(meshConsoleComponent: any, configDrawer: any) {
     this.entry.clear();
     this.showMeshConsoleDetails(meshConsoleComponent, configDrawer);
     this.createComponent(meshConsoleComponent);
-    this.componentRef.instance.meshConsolesidebar.subscribe($event => {
+    this.componentRef.instance.meshConsolesidebar.subscribe(($event: any) => {
       this.meshConsoleSidebar.emit($event);
     });
   }
@@ -61,6 +66,6 @@ export class LoadPagesComponent implements OnInit {
         factory = this.resolver.resolveComponentFactory(DiagnosticsSettingFormComponent);
         break;
     }
-    this.componentRef = this.entry.createComponent(factory);
+    // this.componentRef = this.entry.createComponent(factory);
   }
 }

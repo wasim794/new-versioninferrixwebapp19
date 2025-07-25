@@ -1,8 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone:true,
+  imports: [CommonModule, MatModuleModule],
+  providers:[DictionaryService],
   selector: 'app-publish-on-mesh',
   templateUrl: './publish-on-mesh.component.html',
   styleUrls: []

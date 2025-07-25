@@ -5,8 +5,13 @@ import {MeshConsoleService} from '../../shared/services';
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import {CommonService} from '../../../services/common.service';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import { MatModuleModule } from '../../../common/mat-module';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [MeshConsoleService, DictionaryService, CommonService],
   selector: 'app-mesh-console-diagnostics',
   templateUrl: './mesh-console-diagnostics.component.html',
   styleUrls: [],
@@ -27,7 +32,7 @@ export class MeshConsoleDiagnosticsComponent extends UnsubscribeOnDestroyAdapter
   offset = 0;
   pageSizeOptions: number[] = [10, 12, 16, 20];
   dataSource = this.diagnosticData;
-  expandedElement: MeshDiagnosticModel | null;
+  expandedElement!: MeshDiagnosticModel | null;
   isNeighbors: boolean = false;
   isBoot: boolean = false;
   isEvent: boolean = false;
@@ -50,7 +55,7 @@ export class MeshConsoleDiagnosticsComponent extends UnsubscribeOnDestroyAdapter
     this.getDiagnosticData(param);
   }
 
-  getNextPage(event) {
+  getNextPage(event: any) {
     this.limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = 'limit(' + this.limit + ',' + this.offset + ')&sort(+address))';
@@ -97,12 +102,12 @@ export class MeshConsoleDiagnosticsComponent extends UnsubscribeOnDestroyAdapter
   }
 
 
-  startStopMeshController(element){
+  startStopMeshController(element: any){
     this.subs.add(this.service.startStopMeshControllerPublisher(element.address, true).subscribe((data) => {
       this.commonService.notification(data.responseMessage);
     }));
   }
-  enableDisableMeshController(element){
+  enableDisableMeshController(element: any){
     this.subs.add(this.service.enableDisableMeshControllerWifi(element.address, true).subscribe((data) => {
       this.commonService.notification(data.responseMessage);
     }));

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {EnvService} from "../../../core/services";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {MeshStackStatusConfirmMessageModel} from "../models/mesh-stack-status-confirm-message.model";
 import {map} from "rxjs/operators";
 import {MeshScratchpadStatusModel} from "../models";
@@ -13,8 +13,8 @@ import {FileModel} from "../../../core/models/files/file.model";
 })
 export class MeshOtaService {
   private meshScratchpadUrl = '/v2/mesh-console/ota';
-  private _totalUploadedFirmware;
-  private _totalNodeStatus;
+  private _totalUploadedFirmware: any;
+  private _totalNodeStatus: any;
 
   constructor(private http: HttpClient,
               private env: EnvService
@@ -74,7 +74,7 @@ export class MeshOtaService {
   startFirmware(name: string, sequence: number): Observable<MeshStackStatusConfirmMessageModel> {
     let url = `${this.env.apiUrl}${this.meshScratchpadUrl}/start`;
     if((name==='') && (sequence===0)){
-      return;
+      // return false;
     }else {
       if (name) {
         url = url + `?name=${name}`;
@@ -96,7 +96,7 @@ export class MeshOtaService {
   transferFirmware(name: string): Observable<MeshStackStatusConfirmMessageModel> {
     let url = `${this.env.apiUrl}${this.meshScratchpadUrl}/transfer`;
     if(name===''){
-      return;
+      // return false;
     }else {
       if (name) {
         url = url + `?name=${name}`;
@@ -106,7 +106,7 @@ export class MeshOtaService {
       .pipe(map((result) => {return new MeshStackStatusConfirmMessageModel(result);}));
   }
 
-  uploadFirmware(upload): Observable<FileModel[]> {
+  uploadFirmware(upload: any): Observable<FileModel[]> {
     return this.http.post<FileModel[]>(`${this.env.apiUrl}${this.meshScratchpadUrl}/upload`, upload)
       .pipe(map((result) => { return result.map((response) => new FileModel(response));}));
   }

@@ -3,24 +3,24 @@ import {TxPowerTableModel} from "./tx-power-table.model";
 import {ScratchpadDetailsModel} from "./scratchpad-details.model";
 
 export class BootV2DataModel {
-  role: string
-  bootCount: number;
-  firmwareStack: string;
-  firmwareApp: string;
-  scratchpadProcessedSequence: number;
-  scratchpadStoredSequence: number;
-  otapSupport: boolean;
-  hardwareMagic: number;
-  bootAddress: number;
-  bootFaultReason: number;
-  bootLineNumber: number;
-  bootFilenameHash: number;
-  stackProfile: string;
+  role!: string
+  bootCount!: number;
+  firmwareStack!: string;
+  firmwareApp!: string;
+  scratchpadProcessedSequence!: number;
+  scratchpadStoredSequence!: number;
+  otapSupport!: boolean;
+  hardwareMagic!: number;
+  bootAddress!: number;
+  bootFaultReason!: number;
+  bootLineNumber!: number;
+  bootFilenameHash!: number;
+  stackProfile!: string;
   traceOptions: TraceOptionModel;
-  scratchPadXferCnt: number;
-  bootReason: number;
+  scratchPadXferCnt!: number;
+  bootReason!: number;
   txPowerTable: TxPowerTableModel;
-  rxGain: number;
+  rxGain!: number;
   scratchPadDetails: ScratchpadDetailsModel;
 
   constructor(model?: Partial<BootV2DataModel>) {
@@ -28,19 +28,19 @@ export class BootV2DataModel {
       Object.assign(this, model);
     }
 
-    if (this.traceOptions) {
+    if (model?.traceOptions) {
       this.traceOptions = new TraceOptionModel(model.traceOptions);
     } else {
       this.traceOptions = new TraceOptionModel();
     }
 
-    if (this.txPowerTable) {
+    if (model?.txPowerTable) {
       this.txPowerTable = new TxPowerTableModel(model.txPowerTable);
     } else {
       this.txPowerTable = new TxPowerTableModel();
     }
 
-    if (this.scratchPadDetails) {
+    if (model?.scratchPadDetails) {
       this.scratchPadDetails = new ScratchpadDetailsModel(model.scratchPadDetails);
     } else {
       this.scratchPadDetails = new ScratchpadDetailsModel();

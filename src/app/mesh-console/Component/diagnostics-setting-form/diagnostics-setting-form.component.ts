@@ -3,16 +3,21 @@ import {UnsubscribeOnDestroyAdapter} from "../../../common/Unsubscribe-adapter/u
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import {MeshConsoleService} from "../../shared/services";
 import {NumericKeyStaticData} from "../../../common/static-data/static-data";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [DictionaryService, MeshConsoleService],
   selector: 'app-diagnostics-setting-form',
   templateUrl: './diagnostics-setting-form.component.html',
   styleUrls: []
 })
 export class DiagnosticsSettingFormComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
 
-  intervals: NumericKeyStaticData[];
-  interval: number;
+  intervals!: NumericKeyStaticData[];
+  interval!: number;
   messages: any;
 
   constructor(
@@ -34,7 +39,7 @@ export class DiagnosticsSettingFormComponent extends UnsubscribeOnDestroyAdapter
   }
 
   private static showMessages() {
-    (<any>$('#messages')).show();
-    (<any>$('#messages')).fadeOut(10000);
+    // (<any>$('#messages')).show();
+    // (<any>$('#messages')).fadeOut(10000);
   }
 }

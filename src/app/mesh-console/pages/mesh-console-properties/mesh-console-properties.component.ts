@@ -7,8 +7,13 @@ import {
   SerialPortsService
 } from '../../../core/services';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [SystemSettingService, SerialPortsService, DictionaryService],
   selector: 'app-mesh-console-properties',
   templateUrl: './mesh-console-properties.component.html',
   styleUrls: []
@@ -17,13 +22,13 @@ export class MeshConsolePropertiesComponent extends UnsubscribeOnDestroyAdapter 
 
   @Input() meshSettings = {} as MeshSettingModel;
   saveSuccessMsg = 'Saved successfully';
-  serialPorts: string[];
-  emailError = [];
+  serialPorts!: string[];
+  emailError: any = [];
   private errorMsg: any;
   private durationInSeconds = 5;
-  error: any[];
+  error!: any[];
   @Output() meshConsolesidebar = new EventEmitter<any>();
-  public messageError: boolean;
+  public messageError!: boolean;
   UIDICTIONARY : any;
 
   constructor(

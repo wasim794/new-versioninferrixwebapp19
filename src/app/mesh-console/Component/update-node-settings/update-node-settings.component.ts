@@ -2,22 +2,27 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {UnsubscribeOnDestroyAdapter} from "../../../common";
 import {MeshConsoleService} from '../../shared/services';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports:[ CommonModule, MatModuleModule],
+  providers: [CommonService, DictionaryService, MeshConsoleService],
   selector: 'app-update-node-settings',
   templateUrl: './update-node-settings.component.html'
 })
 export class UpdateNodeSettingsComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  nodeAddressOne:boolean;
-  networkOne:boolean;
-  channelOne:boolean;
-  nodeUpdateBoolean:boolean;
-  address: number;
-  nodeAddress: number;
-  networkAddress: string;
-  channel: number
+  nodeAddressOne!:boolean;
+  networkOne!:boolean;
+  channelOne!:boolean;
+  nodeUpdateBoolean!:boolean;
+  address!: number;
+  nodeAddress!: any;
+  networkAddress!: any;
+  channel!: any
   UIDICTIONARY : any;
   updateMsg="UPDATE NODE SETTINGS SUCCESSFULLY";
   constructor(public dialogRef: MatDialogRef<UpdateNodeSettingsComponent>,
@@ -35,13 +40,13 @@ export class UpdateNodeSettingsComponent extends UnsubscribeOnDestroyAdapter imp
     this.address = this.data.data.address;
   }
 
-  nodeAddressOnly(event){
+  nodeAddressOnly(event: any){
     event.checked==true?this.enableNodeAddress() : this.disableNodeAddress();
   }
-  networkOnly(event){
+  networkOnly(event: any){
     event.checked==true?this.enableNetworkOne() : this.disableNetworkOne();
   }
-  channelOnly(event){
+  channelOnly(event: any){
     event.checked==true?this.enableChannelOne() : this.disableChannelOne();
   }
 

@@ -4,6 +4,7 @@ import {
   EventEmitter,
   OnInit,
   Output,
+  Type,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
@@ -11,8 +12,12 @@ import {MatDrawer} from '@angular/material/sidenav';
 import {MeshConsolePropertiesComponent} from '../pages';
 
 import {Router} from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule, MeshConsolePropertiesComponent],
   selector: 'app-load-components',
   templateUrl: './load-components.component.html',
   styleUrls: []
@@ -20,8 +25,8 @@ import {Router} from '@angular/router';
 export class LoadComponentsComponent implements OnInit {
   @ViewChild('dynamicLoadComponent', {
     read: ViewContainerRef
-  }) entry: ViewContainerRef;
-  private componentRef: any;
+  }) entry!: ViewContainerRef;
+  componentRef?: any; 
   @Output() meshConsoleSidebar = new EventEmitter<any>();
 
   constructor(private resolver: ComponentFactoryResolver,
@@ -60,16 +65,16 @@ export class LoadComponentsComponent implements OnInit {
     this.router.navigate(['/mesh-console/tof']);
    }
 
-  createMeshConsole(meshConsoleComponent, meshConsoleSideNav) {
+  createMeshConsole(meshConsoleComponent: any, meshConsoleSideNav: any) {
     this.entry.clear();
     this.showMeshConsoleDetails(meshConsoleComponent, meshConsoleSideNav);
     this.createComponent(meshConsoleComponent);
-    this.componentRef.instance.meshConsolesidebar.subscribe($event => {
+    this.componentRef.instance.meshConsolesidebar.subscribe(($event: any) => {
       this.meshConsoleSidebar.emit($event);
     });
   }
 
-  showMeshConsoleDetails(meshConsoleComponent: string, meshConsoleSideNav: MatDrawer) {
+  showMeshConsoleDetails(meshConsoleComponent: any, meshConsoleSideNav: MatDrawer) {
     if (meshConsoleComponent === 'LIGHT_COMMISSIONING.MENU') {
       this.nagivate();
     } else if (meshConsoleComponent === 'MESH_DIAGNOSTICS.MENU') {
@@ -93,14 +98,51 @@ export class LoadComponentsComponent implements OnInit {
     }
   }
 
-  createComponent(componentType: string) {
-    let factory;
-    this.entry.clear();
+   createComponent(componentType: string) {
+    console.log(`Attempting to load component: ${componentType}`);
+    this.entry.clear(); // Clear existing components before creating a new one
+
+    let componentToLoad: Type<any> | undefined;
+
+    // Use a switch statement to map string identifiers to component classes
     switch (componentType) {
       case 'MESH_CONFIGURATION.MENU':
-        factory = this.resolver.resolveComponentFactory(MeshConsolePropertiesComponent);
+        componentToLoad = MeshConsolePropertiesComponent;
         break;
+      // Add other cases for your dynamic components here:
+      // case 'LIGHT_COMMISSIONING.MENU':
+      //   componentToLoad = LightCommissioningComponent;
+      //   break;
+      // case 'MESH_DIAGNOSTICS.MENU':
+      //   componentToLoad = MeshNodeComponent;
+      //   break;
+      // case 'MODBUS_CONFIGURATION.MENU':
+      //   componentToLoad = ModbusConfigSettingsComponent;
+      //   break;
+      // case 'MESH_FIRMWARE_PUSH.MENU':
+      //   componentToLoad = FirmwarePushComponent;
+      //   break;
+      // case 'PUBLISH_ON_MESH.MENU':
+      //   componentToLoad = PublishOnMeshComponent;
+      //   break;
+      // case 'THERMOSTAT.MENU':
+      //   componentToLoad = ThermostatComponent;
+      //   break;
+      // case 'TOF_SENSOR.MENU':
+      //   componentToLoad = TofSensorComponent;
+      //   break;
+      default:
+        console.error(`Component type not recognized or defined for dynamic loading: ${componentType}`);
+        return; // Exit if no component is found
     }
-    this.componentRef = this.entry.createComponent(factory);
+
+    if (componentToLoad) {
+      // Create the component directly using ViewContainerRef.createComponent
+      // No need for ComponentFactoryResolver anymore
+      this.componentRef = this.entry.createComponent(componentToLoad);
+      console.log(`Successfully loaded component: ${componentType}`);
+    } else {
+      console.error(`Component not found for dynamic loading: ${componentType}`);
+    }
   }
 }

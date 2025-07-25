@@ -1,6 +1,6 @@
 export class ScratchpadDetailsModel {
-  fwAreaId: string;
-  appAreaId: string;
+  fwAreaId!: string;
+  appAreaId!: string;
 
   constructor(model?: Partial<ScratchpadDetailsModel>) {
     if (model) {

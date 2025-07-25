@@ -23,7 +23,7 @@
           <mat-icon class="iconPosition">stop</mat-icon>
         </button></li>
         </ul>
-          <mat-form-field appearance="standard">
+          <mat-form-field>
             <mat-label>{{UIDICTIONARY ?
               UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
             <input matInput (input)="applyFilter($event)">

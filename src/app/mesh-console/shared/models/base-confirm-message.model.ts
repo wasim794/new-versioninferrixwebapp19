@@ -1,6 +1,6 @@
 export class BaseConfirmMessageModel {
-  messageType: string;
-  message: string;
+  messageType!: string;
+  message!: string;
 
   constructor(model?: Partial<BaseConfirmMessageModel>) {
     if (model) {

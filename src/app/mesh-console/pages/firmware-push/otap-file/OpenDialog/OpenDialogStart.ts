@@ -5,21 +5,26 @@ import {MeshOtaService, MeshSinkService} from "../../../../shared/services";
 import {FileModel} from "../../../../../core/models/files/file.model";
 import {UnsubscribeOnDestroyAdapter} from "../../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter";
 import { DictionaryService } from "../../../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../../common/mat-module';
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [MeshOtaService, CommonService, MeshSinkService, DictionaryService],
   selector: 'dialogHtml',
   templateUrl: 'OpenDialogStart.html',
 
 
 })
 export class OpenDialogStart extends UnsubscribeOnDestroyAdapter implements OnInit {
-  name: string;
-  sequence: number;
-  model: FileModel;
+  name!: string;
+  sequence!: number;
+  model!: FileModel;
   showDialog = true;
-  public messageError: boolean;
-  error: any[];
+  public messageError!: boolean;
+  error!: any[];
   @Output() addedSavedDatasource = new EventEmitter<any>();
-  dataSource: FileModel[];
+  dataSource!: FileModel[];
   UIDICTIONARY : any;
 
   constructor(public dialog: MatDialog,@Inject(MAT_DIALOG_DATA) public filenames: any,
@@ -41,7 +46,7 @@ export class OpenDialogStart extends UnsubscribeOnDestroyAdapter implements OnIn
   }
 
 
-  startFirmware(element){
+  startFirmware(element: any){
     this.commonService.openConfirmDialog('Are you want to startFirmware ', this.name).afterClosed().subscribe(response => {
       if (response) {
         this.subs.add(this.meshOtaService.startFirmware(this.name, this.sequence).subscribe(data => {

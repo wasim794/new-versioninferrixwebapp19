@@ -33,7 +33,7 @@
         </button>
    </div>
         <div class="centerDivContainer nodeStatusFont">
-          <mat-form-field appearance="standard" *ngIf="filterNotSequenceNumbers">
+          <mat-form-field  *ngIf="filterNotSequenceNumbers">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}</mat-label>
             <input matInput name="searchBacnetList" [(ngModel)]="notSequenceNumbers"
                    (keyup.enter)="filerNotEqualSequenceNumber($event)" placeholder="Ex. ium" #input
@@ -41,7 +41,7 @@
             <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
           </mat-form-field>
 
-          <mat-form-field appearance="standard" *ngIf="filterSequenceNumbers">
+          <mat-form-field  *ngIf="filterSequenceNumbers">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo') : ""}}</mat-label>
           <input matInput name="searchBacnetList" [(ngModel)]="sequenceNumbers"
                  (keyup.enter)="applyFilterSequenceNumber($event)" placeholder="Ex. ium" #input
@@ -57,7 +57,7 @@
             <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
           </mat-form-field>
 
-          <mat-form-field appearance="standard" *ngIf="filterNotSequenceNumbersMatch">
+          <mat-form-field  *ngIf="filterNotSequenceNumbersMatch">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}</mat-label>
             <input matInput name="searchBacnetList" [(ngModel)]="notSequenceNumbersMatch"
                    (keyup.enter)="filerNotEqualSequenceNumber($event)" placeholder="Ex. ium" #input
@@ -65,7 +65,7 @@
             <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
           </mat-form-field>
 
-          <mat-form-field appearance="standard" *ngIf="filterSequenceNumbersMatch">
+          <mat-form-field  *ngIf="filterSequenceNumbersMatch">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo') : ""}}</mat-label>
             <input matInput name="searchBacnetList" [(ngModel)]="sequenceNumbersMacth"
                    (keyup.enter)="applyFilterSequenceNumber($event)" placeholder="Ex. ium" #input
@@ -99,7 +99,7 @@
           stop_screen_share </mat-icon>
 
         </div>
-          <mat-form-field appearance="standard">
+          <mat-form-field>
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
           <input matInput (keyup.enter)="applyFilter($event)">
             <mat-icon (click)="applyFilter($event)" class="Input_search"  matSuffix>search</mat-icon>

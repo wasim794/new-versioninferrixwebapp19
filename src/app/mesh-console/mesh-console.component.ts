@@ -11,8 +11,13 @@ import { UnsubscribeOnDestroyAdapter } from "../common";
 import { CommonService } from "../services/common.service";
 import { MenuModel } from "../frame/model/menuModel";
 import { DictionaryService } from "../core/services";
+import { CommonModule } from "@angular/common";
+import { MatModuleModule } from "../common/mat-module";
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule, LoadComponentsComponent],
+  providers: [ DictionaryService, CommonService],
   selector: "app-mesh-console",
   templateUrl: "./mesh-console.component.html",
   styleUrls: ["./mesh-console.component.css"],
@@ -25,14 +30,14 @@ export class MeshConsoleComponent
   @ViewChild("dynamicLoadComponent", {
     read: ViewContainerRef,
   })
-  entry: ViewContainerRef;
+  entry!: ViewContainerRef;
   @ViewChild(LoadComponentsComponent)
-  private LoadComponents: LoadComponentsComponent;
-  menuData: MenuModel[];
-  subMenus: MenuModel[];
+  private LoadComponents!: LoadComponentsComponent;
+  menuData!: MenuModel[];
+  subMenus!: MenuModel[];
   status: boolean = false;
   UIDICTIONARY : any;
-  @ViewChild("meshConsoleSideNav") public meshConsoleSideNav: MatSidenav;
+  @ViewChild("meshConsoleSideNav") public meshConsoleSideNav!: MatSidenav;
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -59,7 +64,7 @@ export class MeshConsoleComponent
     );
   }
 
-  meshConsolesidebar(event) {
+  meshConsolesidebar(event: any) {
     this.meshConsoleSideNav.close();
   }
 

@@ -5,13 +5,18 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import { MatDialogRef } from '@angular/material/dialog';
-import {ThermostatDatasourceModel} from "../../../datasource/components";
+import {ThermostatDatasourceModel} from "../../../datasource/components/thermostat";
 import {ThermostatService} from "../../shared/services";
 import {CommonService} from '../../../services/common.service';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {LOCK_UNLOCK, COMMONACTIONS, MODE, FAN_SPEED} from '../../shared';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone:true,
+  imports:[ CommonModule, MatModuleModule],
+  providers:[CommonService, DictionaryService, ThermostatService],
   selector: 'app-thermostat',
   templateUrl: './thermostat.component.html'
 })
@@ -51,14 +56,14 @@ export class ThermostatComponent extends UnsubscribeOnDestroyAdapter implements 
       this.dataSource = data;
     }))
   }
-  getNextPage(event) {
+  getNextPage(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = `limit(${this.limit},${this.offset})&type=${this.thermostatDS}`;
     this.getThermostatData(param);
   }
 
-  startActions(element, actions) {
+  startActions(element: any, actions: any) {
     const dialogBox = this.dialog.open(ContentDialog, {
       data: {
         element: element,
@@ -77,17 +82,20 @@ export class ThermostatComponent extends UnsubscribeOnDestroyAdapter implements 
 ///*START DIALOG CONTAINER HTML*///
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [CommonService, DictionaryService],
   selector: 'content-dialog',
   templateUrl: 'content-dialog.html',
 })
 export class ContentDialog extends UnsubscribeOnDestroyAdapter implements OnInit {
   UIDICTIONARY       :any;
   actionsMode        :any;
-  inputTextHideSHow  :boolean;
-  inputSelectHideSHow:boolean;
-  hidetemp:boolean;
+  inputTextHideSHow!  :boolean;
+  inputSelectHideSHow!:boolean;
+  hidetemp!:boolean;
   actionTypesSelect  :any;
-  actionTypesInput   :string;
+  actionTypesInput!   :string;
   constructor(private dictionaryService:DictionaryService, public dialogRef: MatDialogRef<ContentDialog>,
               @Inject(MAT_DIALOG_DATA) public data: any, private thermostatService: ThermostatService) {
     super();
@@ -130,7 +138,7 @@ export class ContentDialog extends UnsubscribeOnDestroyAdapter implements OnInit
     const actionTypeValues = this.actionTypesSelect;
     const actionTypeValuesInput = this.actionTypesInput;
 
-    const actionHandlers = {
+    const actionHandlers: any = {
     powerONOFF     : this.powerONOFFActions.bind(this),
     lockUnlocks    : this.lockUnlockActions.bind(this),
     onlyMode       : this.onlyModeActions.bind(this),
@@ -153,56 +161,56 @@ export class ContentDialog extends UnsubscribeOnDestroyAdapter implements OnInit
     }
   }
 
-  private powerONOFFActions(xid, boolean){
+  private powerONOFFActions(xid: any, boolean: any){
     this.subs.add(this.thermostatService.powerOnOff(xid, boolean).
     subscribe(data=>{
      this.dialogRef.close("success");
     }))
   }
 
-  private lockUnlockActions(xid, boolean){
+  private lockUnlockActions(xid: any, boolean: any){
     this.subs.add(this.thermostatService.lockUnlock(xid, boolean).subscribe(data=>{
       this.dialogRef.close("success");
     }));
   }
 
-  private onlyModeActions(xid, string){
+  private onlyModeActions(xid: any, string: any){
     this.subs.add(this.thermostatService.modeCommand(xid, string).subscribe(data=>{
       this.dialogRef.close("success");
     }));
   }
 
-  private fanActions(xid, string){
+  private fanActions(xid: any, string: any){
     this.subs.add(this.thermostatService.fanCommand(xid, string).subscribe(data=>{
       this.dialogRef.close("success");
     }));
   }
 
-  private energySavingsActions(xid, boolean){
+  private energySavingsActions(xid: any, boolean: any){
     this.subs.add(this.thermostatService.energySaving(xid, boolean).subscribe(data=>{
       this.dialogRef.close("success");
     }));
   }
 
-  private automaticManualActions(xid, boolean){
+  private automaticManualActions(xid: any, boolean: any){
     this.subs.add(this.thermostatService.automaticManual(xid, boolean).subscribe(data=>{
       this.dialogRef.close("success");
     }));
   }
 
-  private tempActions (xid, string){
+  private tempActions (xid: any, string: any){
     this.subs.add(this.thermostatService.targetTemperature(xid, string).subscribe(data=>{
       this.dialogRef.close("success");
     }));
   }
 
-  private echoTempActions (xid, string){
+  private echoTempActions (xid: any, string: any){
     this.subs.add(this.thermostatService.ecoModeTargetTemperature(xid, string).subscribe(data=>{
       this.dialogRef.close("success");
     }));
   }
 
-  private syncThermostats (xid, string){
+  private syncThermostats (xid: any, string: any){
     this.subs.add(this.thermostatService.syncThermostat(xid, string).subscribe(data=>{
       this.dialogRef.close("success");
     }));

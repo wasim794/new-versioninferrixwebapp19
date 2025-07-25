@@ -1,6 +1,6 @@
 export class TraceOptionModel {
-  traceType: string;
-  sequence: number;
+  traceType!: string;
+  sequence!: number;
 
   constructor(model?: Partial<TraceOptionModel>) {
     if (model) {

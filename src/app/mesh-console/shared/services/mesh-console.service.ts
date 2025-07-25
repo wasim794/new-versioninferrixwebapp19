@@ -1,6 +1,6 @@
 import {EnvService} from '../../../core/services';
 import {MeshControllerResponseModel, MeshDiagnosticModel, MeshNodeInfoModel} from '../models';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ArrayWithTotalModel} from "../../../core/models";
@@ -18,7 +18,7 @@ export class MeshConsoleService {
   private rebootNodeUrl = '/v2/mesh-console/reboot-node';
   private meshControllerUrl = '/v2/mesh-console/mesh-controller';
   private remoteAPI = '/v2/mesh-console/remote-api';
-  private _totalDiagnostics;
+  private _totalDiagnostics!: any;
 
   constructor(private http: HttpClient,
               private env: EnvService

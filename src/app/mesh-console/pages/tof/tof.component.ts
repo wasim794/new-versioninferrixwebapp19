@@ -7,8 +7,13 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {CommonService} from "../../../services/common.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule],
+  providers:[CommonService, DictionaryService, TofService],
   selector: 'app-tof',
   templateUrl: './tof.component.html'
 })
@@ -49,14 +54,14 @@ export class TofComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
     this.dataSource.sort = this.sort;
   }
 
-  getNextPage(event) {
+  getNextPage(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = `limit(${this.limit},${this.offset})&type=${this.tofTypesSensors}`;
     this.getTofData(param);
   }
 
-  startActions(element, actions) {
+  startActions(element: any, actions: any) {
     const dialogRef = this.dialog.open(TofDialogComponent, {
       data: {
         element: element,
@@ -73,6 +78,9 @@ export class TofComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
 
 /*start second row*/
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule],
+  providers:[CommonService, DictionaryService],
   selector: 'content-dialog',
   templateUrl: 'content-dialog.html',
 })
@@ -83,7 +91,7 @@ export class TofDialogComponent extends UnsubscribeOnDestroyAdapter implements O
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   public UIDICTIONARY: any;
   public tofData: any;
-  public targetAddress: number;
+  public targetAddress!: number;
 
   constructor(private dictionaryService: DictionaryService,
               public dialogRef: MatDialogRef<TofDialogComponent>,

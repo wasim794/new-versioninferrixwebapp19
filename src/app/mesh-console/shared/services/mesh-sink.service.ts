@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {EnvService} from "../../../core/services";
-import {Observable} from "rxjs/index";
+import {Observable} from "rxjs";
 import {
   BaseConfirmMessageModel,
   CsapReadConfirmModel,

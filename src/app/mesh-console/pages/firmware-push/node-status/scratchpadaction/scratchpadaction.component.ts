@@ -4,23 +4,28 @@ import {UnsubscribeOnDestroyAdapter} from "../../../../../common/Unsubscribe-ada
 import {MeshOtaService} from '../../../../shared/services';
 import { DictionaryService } from "../../../../../core/services/dictionary.service";
 import {ACTIONSNODESTATUS} from "../shared";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [MeshOtaService, DictionaryService],
   selector: 'app-scratchpadaction',
   templateUrl: './scratchpadaction.component.html',
   styleUrls: []
 })
 export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  action: string;
-  sequence: number;
-  targetCrc: number;
-  delay: number
+  action!: string;
+  sequence!: any;
+  targetCrc!: any;
+  delay!: any;
   public startMsg: any;
   actionNodeStatus=ACTIONSNODESTATUS;
-  sequenceNo:boolean;
-  targetSRC:boolean;
-  actionHideShow:boolean;
-  DELAY:boolean;
+  sequenceNo!:boolean;
+  targetSRC!:boolean;
+  actionHideShow!:boolean;
+  DELAY!:boolean;
   UIDICTIONARY : any;
 
   constructor(public dialogRef: MatDialogRef<ScratchpadactionComponent>, public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any, private meshOtaService:MeshOtaService,public dictionaryService: DictionaryService) {super(); }
@@ -41,7 +46,7 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
         }
       }
 
-  actionsNodeSelection(event, actionsNode) {
+  actionsNodeSelection(event: any, actionsNode: any) {
       if (event.source.selected) {
           if (actionsNode.key === 'NO_OTAP') {
             this.noOTAPTrue();
@@ -104,7 +109,7 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
     this.targetSRC = false;
     this.DELAY = true;
     this.delay = 0;
-    this.targetCrc = null;
+    this.targetCrc= null;
     this.sequence = null;
    }
 
@@ -112,8 +117,8 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
     this.sequenceNo = false;
     this.targetSRC = false;
     this.DELAY = false;
-    this.sequence=null;
-    this.targetCrc=null;
+    this.sequence!=null;
+    this.targetCrc!=null;
     this.delay = null;
    }
 
@@ -140,10 +145,11 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
          this.updatePropagateAndProcess(this.action, this.sequence, this.targetCrc, this.delay);
           break;
       }
+      return true;
     }
   }
 
-  updateNoOtap(action){
+  updateNoOtap(action: any){
     this.subs.add(this.meshOtaService.updateFirmware(action,'0','0','0').subscribe(data=>{
       this.startMsg = data;
       this.dialogRef.close(true);
@@ -151,7 +157,7 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
   }
 
 
-  updateLegacy(action, sequence, targetCrc, delay){
+  updateLegacy(action: any, sequence: any, targetCrc: any, delay: any){
     delay = '0';
     this.subs.add(this.meshOtaService.updateFirmware(action, sequence, targetCrc, delay).subscribe((data) => {
       this.startMsg = data;
@@ -160,7 +166,7 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
   }
 
 
-  updatePropagateOnly(action, sequence, targetCrc, delay){
+  updatePropagateOnly(action: any, sequence: any, targetCrc: any, delay: any){
     delay = '0';
     this.subs.add(this.meshOtaService.updateFirmware(action, sequence, targetCrc, delay).subscribe((data) => {
       this.startMsg = data;
@@ -168,7 +174,7 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
     }));
   }
 
-  updatePropagateAndProcess(action, sequence, targetCrc, delay){
+  updatePropagateAndProcess(action: any, sequence: any, targetCrc: any, delay: any){
      delay = '0';
     this.subs.add(this.meshOtaService.updateFirmware(action, sequence, targetCrc, delay).subscribe((data) => {
       this.startMsg = data;
@@ -176,7 +182,7 @@ export class ScratchpadactionComponent extends UnsubscribeOnDestroyAdapter imple
     }));
   }
 
-  updatePropagateAndProcessWithDelay(action, sequence, targetCrc, delay){
+  updatePropagateAndProcessWithDelay(action: any, sequence: any, targetCrc: any, delay: any){
     this.subs.add(this.meshOtaService.updateFirmware(action, sequence, targetCrc, delay).subscribe((data) => {
       this.startMsg = data;
       this.dialogRef.close(true);

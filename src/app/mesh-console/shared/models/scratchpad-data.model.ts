@@ -1,12 +1,12 @@
 import {MeshScratchpadStatusModel} from "./mesh-scratchpad-status.model";
 
 export class ScratchpadDataModel {
-  totalMeshNodes: number;
-  updatedMeshNodes: number;
-  sequenceNumber: number;
-  legacyUpdate: boolean;
-  appAreaIds: string[];
-  statusModel: MeshScratchpadStatusModel;
+  totalMeshNodes!: number;
+  updatedMeshNodes!: number;
+  sequenceNumber!: number;
+  legacyUpdate!: boolean;
+  appAreaIds!: string[];
+  statusModel!: MeshScratchpadStatusModel;
 
   constructor(model?: ScratchpadDataModel) {
     if (model) {

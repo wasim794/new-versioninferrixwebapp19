@@ -29,7 +29,7 @@
         <button (click)="showHide('dateFilter')" *ngIf="!filterButton" mat-raised-button class="dateFilter" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.dateFormat').substring(0,4) : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.valueFilter').substring(5,12) : ''}}" color="accent"><i class="material-icons">filter_alt</i></button>
 
         <span [hidden]="!secondData">
-          <mat-form-field appearance="standard">
+          <mat-form-field>
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
           <input matInput [(ngModel)]="numbers" (keyup.enter)="applyFilter($event)" placeholder="search limit" #input>
           <mat-icon (click)="applyFilter($event)" class="Input_search" matSuffix>search</mat-icon>

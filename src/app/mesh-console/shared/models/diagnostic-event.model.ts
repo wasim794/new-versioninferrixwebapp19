@@ -22,91 +22,91 @@ export class DiagnosticEventModel {
       Object.assign(this, model);
     }
 
-    if (this.event1) {
+    if (model?.event1) {
       this.event1 = new EventModel(model.event1);
     } else {
       this.event1 = new EventModel();
     }
 
-    if (this.event2) {
+  if (model?.event2) {
       this.event2 = new EventModel(model.event2);
     } else {
       this.event2 = new EventModel();
     }
 
-    if (this.event3) {
+    if (model?.event3) {
       this.event3 = new EventModel(model.event3);
     } else {
       this.event3 = new EventModel();
     }
 
-    if (this.event4) {
+   if (model?.event4) {
       this.event4 = new EventModel(model.event4);
     } else {
       this.event4 = new EventModel();
     }
 
-    if (this.event5) {
+   if (model?.event5) {
       this.event5 = new EventModel(model.event5);
     } else {
       this.event5 = new EventModel();
     }
 
-    if (this.event6) {
+    if (model?.event6) {
       this.event6 = new EventModel(model.event6);
     } else {
       this.event6 = new EventModel();
     }
 
-    if (this.event7) {
+   if (model?.event7) {
       this.event7 = new EventModel(model.event7);
     } else {
       this.event7 = new EventModel();
     }
 
-    if (this.event8) {
+    if (model?.event8) {
       this.event8 = new EventModel(model.event8);
     } else {
       this.event8 = new EventModel();
     }
 
-    if (this.event9) {
+   if (model?.event9) {
       this.event9 = new EventModel(model.event9);
     } else {
       this.event9 = new EventModel();
     }
 
-    if (this.event10) {
+   if (model?.event10) {
       this.event10 = new EventModel(model.event10);
     } else {
       this.event10 = new EventModel();
     }
 
-    if (this.event11) {
+    if (model?.event11) {
       this.event11 = new EventModel(model.event11);
     } else {
       this.event11 = new EventModel();
     }
 
-    if (this.event12) {
+   if (model?.event12) {
       this.event12 = new EventModel(model.event12);
     } else {
       this.event12 = new EventModel();
     }
 
-    if (this.event13) {
+   if (model?.event13) {
       this.event13 = new EventModel(model.event13);
     } else {
       this.event13 = new EventModel();
     }
 
-    if (this.event14) {
+    if (model?.event14) {
       this.event14 = new EventModel(model.event14);
     } else {
       this.event14 = new EventModel();
     }
 
-    if (this.event15) {
+   if (model?.event15) {
       this.event15 = new EventModel(model.event15);
     } else {
       this.event15 = new EventModel();

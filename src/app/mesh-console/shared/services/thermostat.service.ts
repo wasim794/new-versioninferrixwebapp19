@@ -1,10 +1,10 @@
 import {AbstractDataSourceService, EnvService} from "../../../core/services";
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ThermostatDatasourceModel} from "../../../datasource/components";
+import {ThermostatDatasourceModel} from "../../../datasource/components/thermostat";
 import {Observable} from "rxjs";
 import {ArrayWithTotalModel} from "../../../core/models";
-import {map} from "rxjs/operators";
+import {map} from "rxjs";
 
 @Injectable({
   providedIn: 'root',

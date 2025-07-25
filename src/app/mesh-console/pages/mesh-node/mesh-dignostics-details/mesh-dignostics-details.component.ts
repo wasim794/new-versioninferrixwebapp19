@@ -7,7 +7,14 @@ import {MatDialog} from '@angular/material/dialog';
 import {MeshDiagnosticDataService} from '../../../shared/services';
 import {CommonService} from '../../../../services/common.service';
 import {DignosticsSomeDataComponent} from './dignostics-some-data/dignostics-some-data.component';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
+import { OwlDateTimeModule } from '@danielmoncada/angular-datetime-picker';
+
 @Component({
+  standalone: true,
+  imports:[ CommonModule, MatModuleModule, DignosticsSomeDataComponent, OwlDateTimeModule],
+  providers:[CommonService, DictionaryService, MeshDiagnosticDataService],
   selector: 'app-mesh-dignostics-details',
   templateUrl: './mesh-dignostics-details.component.html'
 })
@@ -24,17 +31,17 @@ export class MeshDignosticsDetailsComponent extends UnsubscribeOnDestroyAdapter 
     end: new FormControl(null),
   });
   dataSource : any = [];
-  firstData:boolean;
-  secondData:boolean;
-  filterButton:boolean;
-  filterButtonTwo:boolean;
+  firstData!:boolean;
+  secondData!:boolean;
+  filterButton!:boolean;
+  filterButtonTwo!:boolean;
   XID:any;
   dateFrom = new Date();
   dateTo = new Date();
   limit = 10;
   offset = 0;
   pageSizeOptions: number[] = [10, 12, 16, 20];
-  numbers: number;
+  numbers!: number;
   UIDICTIONARY : any;
 
   constructor(private route: ActivatedRoute, private router: Router, public dictionaryService: DictionaryService,
@@ -53,7 +60,7 @@ export class MeshDignosticsDetailsComponent extends UnsubscribeOnDestroyAdapter 
     this.getDetail(urlID, this.numbers);
   }
 
-  private getDetail(xid, number){
+  private getDetail(xid: any, number: any){
     this.subs.add(this.meshDiagnostic.getLatestDiagnosticsData(xid, number).subscribe(data=>{
       this.dataSource = data;
     }))
@@ -81,7 +88,7 @@ export class MeshDignosticsDetailsComponent extends UnsubscribeOnDestroyAdapter 
     container?.addEventListener("wheel", (event: WheelEvent) => this.handleWheelScroll(event, container));
   }
 
-  showHide(event){
+  showHide(event: any){
     if(event==='dateFilter'){
     this.firstData = true;
     this.filterButton = true;
@@ -102,7 +109,7 @@ export class MeshDignosticsDetailsComponent extends UnsubscribeOnDestroyAdapter 
      this.getAndReturnUrl();
   }
 
-  applyFilter(event){
+  applyFilter(event: any){
    this.getDetail(this.XID, this.numbers)
   }
 

@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {UnsubscribeOnDestroyAdapter} from '../../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {MeshOtaService} from '../../../../shared/services';
 import { DictionaryService } from "../../../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../../common/mat-module';
+
 @Component({
+  standalone:true,
+  imports:[ CommonModule, MatModuleModule],
+  providers: [ DictionaryService, MeshOtaService],
   selector: 'app-check-status',
   templateUrl: './check-status.component.html',
   styleUrls: []
@@ -11,7 +17,7 @@ export class CheckStatusComponent extends UnsubscribeOnDestroyAdapter implements
   displayedColumns: string[] = ['messageType', 'message', 'scratchPadLengthInBytes','scratchPadCrc', 'scratchPadSequenceNumber', 'scratchPadType', 'scratchPadStatus',
     'processedScratchPadLengthInBytes', 'processedScratchPadCrc','processedScratchPadSequenceNumber','firmwareMemoryAreaId','firmwareMajorVersion',
     'firmwareMinorVersion','firmwareMaintenanceVersion','firmwareDevelopmentVersion'];
-  dataSource=[];
+  dataSource: any=[];
   limit = 5;
   offset = 0;
   pageSizeOptions: number[] = [5, 12, 16, 20];

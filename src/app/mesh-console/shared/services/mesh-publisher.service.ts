@@ -11,7 +11,7 @@ import {ArrayWithTotalModel} from "../../../core/models";
 })
 export class MeshPublisherService {
   integrationUrl = '/v2/mesh-console/mesh-publisher';
-  private _total: number;
+  private _total!: number;
 
   get total(): number {
     return this._total;

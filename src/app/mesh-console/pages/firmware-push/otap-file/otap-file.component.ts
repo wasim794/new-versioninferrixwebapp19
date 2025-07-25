@@ -6,13 +6,19 @@ import {CommonService} from '../../../../services/common.service';
 import {MeshSinkService} from "../../../shared/services";
 import {OpenDialogStart} from "./OpenDialog/OpenDialogStart";
 import {MatDialog} from '@angular/material/dialog';
-import {param} from "jquery";
+// import {param} from "jquery";
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource} from "@angular/material/table";
 import {Observable} from "rxjs";
 import { PageEvent } from '@angular/material/paginator';
 import { DictionaryService } from "../../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
+
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [MeshOtaService, CommonService, MeshSinkService, DictionaryService],
   selector: 'app-otap-file',
   templateUrl: './otap-file.component.html',
   styleUrls: []
@@ -24,17 +30,17 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
   offset = 0;
   obs:any= new Observable;
   pageSizeOptions: number[] = [10, 20, 30, 40];
-  fileName: string;
+  fileName!: string;
   messages = "fileUploaded Successfully";
-  isStackRunning: boolean;
+  isStackRunning!: boolean;
   clearScratchpad:any;
   startProcess:any;
   transferProcess:any;
-  deleteFile:boolean;
+  deleteFile!:boolean;
   stackStop : any;
   UIDICTIONARY: any;
 
-  @ViewChild(MatPaginatorModule) paginator: MatPaginatorModule;
+  @ViewChild(MatPaginatorModule) paginator!: MatPaginatorModule;
   activeAction: string = '';
   stopMsg='Successfully Stopped';
   deleteMsg = 'Successfully Deleted';
@@ -63,7 +69,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
   }
 
 
-  getUploadedFirmware(param): void {
+  getUploadedFirmware(param: any): void {
     this.subs.add(this.meshOtaService.getUploadedFirmware().subscribe(data => {
       this.dataSource.data = data;
     }));
@@ -77,7 +83,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
   }
 
 
-  openDialog(event) {
+  openDialog(event: any) {
     const dialogRef = this.dialog.open(OpenDialogStart, {
       data: {filenames: event.filename}
     });
@@ -90,7 +96,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
     });
   }
 
-  uploadFirmware(event) {
+  uploadFirmware(event: any) {
     if (confirm('Are you sure you want to upload this file?')) {
       const file: File = event.target.files[0];
       if (file) {
@@ -104,7 +110,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
           this.startProcess = false;
           this.transferProcess = false;
           this.deleteFile = true;
-          this.getUploadedFirmware(param);
+          // this.getUploadedFirmware(param);
         });
       }
     } else {
@@ -141,7 +147,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
     }));
   }
 
-  clearSinkScratchpad(event){
+  clearSinkScratchpad(event: any){
 
     this.subs.add(this.meshOtaService.clearSinkScratchpad().subscribe(data => {
 
@@ -149,19 +155,19 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
       this.clearScratchpad = event.filename;
       this.transferProcess = event.filename;
       this.deleteFile = true;
-      this.getUploadedFirmware(param);
+      // this.getUploadedFirmware(param);
 
     }));
   }
 
 
-  transferFirmware(element){
+  transferFirmware(element: any){
 
     this.commonService.openConfirmDialog('Are you want to Transfer ', element.filename).afterClosed().subscribe(response => {
       if (response) {
         this.meshOtaService.transferFirmware(element.filename).subscribe(data => {
           this.commonService.notification(data.confirmMessage.message);
-          this.getUploadedFirmware(param);
+          // this.getUploadedFirmware(param);
           this.clearScratchpad = true;
           this.startProcess = element.filename;
           this.transferProcess = element.filename;
@@ -188,7 +194,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
       if (response) {
         this.meshOtaService.deleteUploadedFirmware(element.filename).subscribe(data => {
           this.commonService.notification("Successfully Deleted");
-          this.getUploadedFirmware(param);
+          // this.getUploadedFirmware(param);
 
         });
       }
@@ -197,8 +203,8 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
 
 
   private static showMessages() {
-    (<any>$('#messages')).show();
-    (<any>$('#messages')).fadeOut(2000);
+    // (<any>$('#messages')).show();
+    // (<any>$('#messages')).fadeOut(2000);
   }
 }
 

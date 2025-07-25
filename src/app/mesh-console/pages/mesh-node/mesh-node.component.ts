@@ -9,8 +9,13 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Router} from '@angular/router';
 import {MatDialog} from "@angular/material/dialog";
 import {UpdateNodeSettingsComponent} from '../../Component/update-node-settings/update-node-settings.component';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports:[ CommonModule, MatModuleModule],
+  providers: [ CommonService, DictionaryService, MeshConsoleService ],
   selector: 'app-mesh-node',
   templateUrl: './mesh-node.component.html',
   animations: [
@@ -29,11 +34,11 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
   offset = 0;
   pageSizeOptions: number[] = [10, 12, 16, 20];
   dataSource = this.meshNodeInfoModels;
-  expandedElement: MeshNodeInfoModel | null;
+  expandedElement!: MeshNodeInfoModel | null;
   isNeighbors: boolean = false;
   isBoot: boolean = false;
   isEvent: boolean = false;
-  meshNodeControllers: boolean;
+  meshNodeControllers!: boolean;
   dignoSticsDetails='/mesh-console/mesh-node/dignostics-detail';
   successNode='reboot Successfully';
   UIDICTIONARY : any;
@@ -56,7 +61,7 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
     this.getMeshNodesData(param);
   }
 
-  getNextPage(event) {
+  getNextPage(event: any) {
     this.limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = 'limit(' + this.limit + ',' + this.offset + ')&sort(+address))';
@@ -105,7 +110,7 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
 
   }
 
-  nodeUpdateSettings(element){
+  nodeUpdateSettings(element: any){
     const dialogRef = this.dialog.open(UpdateNodeSettingsComponent, {
       data: {data: element,},
       width: '320',
@@ -138,17 +143,17 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
         }
       }));
   }
-  enableDisableMeshController(element, boolean){
+  enableDisableMeshController(element: any, boolean: any){
     this.subs.add(this.service.enableDisableMeshControllerWifi(element.address, boolean).subscribe((data) => {
       this.commonService.notification(data.responseMessage+' '+element.address);
     }));
   }
 
-  private detailUrl(element){
+  private detailUrl(element: any){
    return  this.router.navigate([this.dignoSticsDetails, element.xid]);
   }
 
-  detailDiagnotics(element){
+  detailDiagnotics(element: any){
     this.detailUrl(element).then(r => console.log(r));
   }
 

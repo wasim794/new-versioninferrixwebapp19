@@ -1,5 +1,5 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatDialog} from "@angular/material/dialog";
 import {CommonService} from '../../../../services/common.service';
@@ -12,8 +12,12 @@ import {ScratchpadactionComponent} from './scratchpadaction/scratchpadaction.com
 import { DictionaryService } from "../../../../core/services/dictionary.service";
 import {ACTIONSNODESTATUS} from "./shared";
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule],
+  providers: [ DictionaryService, CommonService, ConfigurationService, WebsocketService, MeshOtaService],
   selector: 'app-node-status',
   templateUrl: './node-status.component.html',
   styleUrls: [],
@@ -36,35 +40,35 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
   dataSource:any;
   limit = 5;
   offset = 0;
-  divHidden:boolean;
-  sequenceNumbersAll:boolean;
-  notSequenceNumbersAll:boolean;
-  sequenceNumbersAllActions:boolean;
-  sequenceNumbersAllMatchActions:boolean;
-  sequenceNumbersAllMatch:boolean;
-  notSequenceNumbersAllMatch:boolean;
-  filterNotSequenceNumbersMatch:boolean;
+  divHidden!:boolean;
+  sequenceNumbersAll!:boolean;
+  notSequenceNumbersAll!:boolean;
+  sequenceNumbersAllActions!:boolean;
+  sequenceNumbersAllMatchActions!:boolean;
+  sequenceNumbersAllMatch!:boolean;
+  notSequenceNumbersAllMatch!:boolean;
+  filterNotSequenceNumbersMatch!:boolean;
   notSequenceNumbersMatch:any;
   sequenceActionsMatch:any;
-  filterSequenceNumbersMatch:boolean;
-  filterDropdownMatch:boolean;
+  filterSequenceNumbersMatch!:boolean;
+  filterDropdownMatch!:boolean;
   sequenceNumbersMacth:any;
   pageSizeOptions: number[] = [5, 12, 16, 20];
   startMsg:any;
   stopMsg:any;
-  conditionFalse:boolean;
-  conditionTrue:boolean;
-  conditionFalseOtap:boolean;
+  conditionFalse!:boolean;
+  conditionTrue!:boolean;
+  conditionFalseOtap!:boolean;
   actionMethod="Mesh scratchpad update request sent";
   names:any;
   numberAll:boolean =false;
-  @ViewChild(MatPaginatorModule) paginator: MatPaginatorModule;
+  @ViewChild(MatPaginatorModule) paginator!: MatPaginatorModule;
   sequenceNumbers:any;
   sequenceActions:any;
-  filterSequenceNumbers:boolean;
-  filterDropdown:boolean;
-  filterNotSequenceNumbers:boolean;
-  matchActionsButton: boolean;
+  filterSequenceNumbers!:boolean;
+  filterDropdown!:boolean;
+  filterNotSequenceNumbers!:boolean;
+  matchActionsButton!: boolean;
   notEqual:boolean=true;
   ACTIONSNODESTATUS=ACTIONSNODESTATUS;
   notSequenceNumbers:any;
@@ -74,7 +78,7 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
               private _WebSocketService: WebsocketService,
               public dictionaryService: DictionaryService, private location: Location) {
     super();
-    this.token = JSON.parse(localStorage.getItem('access_token')).token;
+    this.token = JSON.parse(localStorage.getItem('access_token')!).token;
   }
 
   ngOnInit(): void {
@@ -109,7 +113,7 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
     }));
   }
 
-  getNextPage(event) {
+  getNextPage(event: any) {
     this.limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = 'limit(' + this.limit + ',' + this.offset + ')';
@@ -190,7 +194,7 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
     this.getNodeStatus(this.names);
   }
 
-  applyFilterActions(event) {
+  applyFilterActions(event: any) {
     if (event.source.selected) {
       const filterValue = event.source.value;
       let param;
@@ -205,21 +209,21 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
     }
   }
 
-  applyFilterActionsMatch(event) {
+  applyFilterActionsMatch(event: any) {
     if (event.source.selected) {
       const filterValue = event.source.value;
       this.sequenceActionsMatch = filterValue;
     }
   }
 
-  filerNotEqualSequenceNumber(event){
-      this.dataSource = this.dataSource.filter(item => item.data.applicationProcessedScratchPadSequenceNumber !== parseInt(this.notSequenceNumbers));
+  filerNotEqualSequenceNumber(event: any){
+      this.dataSource = this.dataSource.filter((item: any) => item.data.applicationProcessedScratchPadSequenceNumber !== parseInt(this.notSequenceNumbers));
 }
 
-  filerNotEqualActions(event) {
+  filerNotEqualActions(event: any) {
     this.numberAll = true;
     if (event.checked) {
-      this.dataSource = this.dataSource.filter(item => item.data.action !== this.sequenceActions);
+      this.dataSource = this.dataSource.filter((item: any) => item.data.action !== this.sequenceActions);
     } else {
       this.numberAll = false;
     }
@@ -239,7 +243,7 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
 
   /*New Condition Start Here*/
 
-  allActions(event) {
+  allActions(event: any) {
     const dialogRef = this.dialog.open(ScratchpadactionComponent, {
       data: {data: event,},
       disableClose: true,
@@ -253,7 +257,7 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
     });
   }
 
-  updateLegacy(event){
+  updateLegacy(event: any){
     const dialogRef = this.dialog.open(ScratchpadactionComponent, {
       data: {data: event,},
       disableClose: true,
@@ -341,9 +345,9 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
 
   searchData() {
     if (this.sequenceNumbersMacth){
-      this.dataSource = this.dataSource.filter(item => item.data.applicationProcessedScratchPadSequenceNumber == this.sequenceNumbersMacth && item.data.action == this.sequenceActionsMatch);
+      this.dataSource = this.dataSource.filter((item:any) => item.data.applicationProcessedScratchPadSequenceNumber == this.sequenceNumbersMacth && item.data.action == this.sequenceActionsMatch);
   }else {
-      this.dataSource = this.dataSource.filter(item =>
+      this.dataSource = this.dataSource.filter((item:any) =>
         item.data.applicationProcessedScratchPadSequenceNumber !== parseInt(this.notSequenceNumbersMatch) &&
         item.data.action !== parseInt(this.sequenceActionsMatch)
       );
