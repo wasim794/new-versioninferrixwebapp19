@@ -79,6 +79,11 @@ export const routes: Routes = [
     loadChildren: () => import('./mesh-console/mesh-console-routes').then(m => m.meshConsoleRoutes),
   },
 
+  // {
+  //     //   path: 'config-settings', // Matches /datasource/datapoint/detail
+  //     //   loadComponent: () => import('./setting-page/config-settings/config-settings.component').then(m => m.ConfigSettingsComponent),
+  //     // },
+
   
   
   

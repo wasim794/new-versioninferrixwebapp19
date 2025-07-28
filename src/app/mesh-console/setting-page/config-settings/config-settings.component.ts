@@ -9,12 +9,12 @@ import {MatDrawer, MatSidenav} from '@angular/material/sidenav';
 import {UnsubscribeOnDestroyAdapter} from "../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter";
 import {LoadPagesComponent} from "../../dynamic-load-settings/load-pages.component";
 import {DictionaryService} from "../../../core/services/dictionary.service";
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location  } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
   standalone:true,
-  imports:[CommonModule, MatModuleModule, LoadPagesComponent],
+  imports:[CommonModule , MatModuleModule, LoadPagesComponent],
   providers:[DictionaryService],
   selector: 'app-config-settings',
   templateUrl: './config-settings.component.html',
@@ -34,6 +34,7 @@ export class ConfigSettingsComponent extends UnsubscribeOnDestroyAdapter impleme
   constructor(
     private resolver: ComponentFactoryResolver,
     public dictionaryService: DictionaryService,
+    private location: Location
   ) {
     super();
   }
@@ -59,5 +60,10 @@ export class ConfigSettingsComponent extends UnsubscribeOnDestroyAdapter impleme
   allClose() {
     this.configDrawer.close();
   }
+
+goBack(): void {
+  this.location.back();
+}
+
 
 }

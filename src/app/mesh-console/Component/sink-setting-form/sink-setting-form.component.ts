@@ -32,6 +32,7 @@ export class SinkSettingFormComponent extends UnsubscribeOnDestroyAdapter implem
   }
 
   ngOnInit(): void {
+    this.dictionaryService.getUIDictionary('meshConsole').subscribe();
     this.subs.add(forkJoin([
       this._service.getRoles(),
       this._service.getAddress(),
