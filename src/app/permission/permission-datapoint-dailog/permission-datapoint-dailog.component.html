@@ -1,0 +1,93 @@
+<div class="permissionDilogAlign">
+  <mat-toolbar  class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row pt-14 toolbarWidth">
+    <span class="tb-details-title">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.permissions'): ""}}</span>
+    <div class="header-label">
+      <mat-form-field class="header-field selectMenuFonts">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
+        <input (keyup)="FilterDataPoint($event)" [(ngModel)]="searchDataPoint" matInput name="searchDataPoint"
+               placeholder="Search...">
+        <mat-icon (click)="FilterDataPoint($event)" matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <mat-icon class="close-container" (click)="cancel()">close</mat-icon>
+  </mat-toolbar>
+
+  <table class="table_form mat_table_data permissionDailog">
+    <tr>
+      <td>
+        <mat-form-field class="header-field" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
+          <mat-select multiple name="permission" [(ngModel)]="readSelectedPermissions">
+            <mat-option *ngFor="let permission of toPermissionGroupsArray" [value]="permission">{{permission}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button style="background: transparent" [disabled]="!enableGroupPermission">
+          <mat-icon (click)="readPermission()"  title="{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.apply') |  uppercase) : ''}}" matSuffix><i class="material-icons">send</i></mat-icon>
+        </button>
+      </td>
+      <td>
+        <mat-form-field class="header-field" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.setPermission'): ""}}</mat-label>
+          <mat-select multiple name="permission" [(ngModel)]="setSelectedPermissions">
+            <mat-option *ngFor="let permission of toPermissionGroupsArray" [value]="permission">{{permission}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button style="background: transparent" [disabled]="!enableGroupPermission">
+          <mat-icon (click)="setPermission()"  title="{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.apply') |  uppercase) : ''}}" matSuffix><i class="material-icons">send</i></mat-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <mat-dialog-content>
+    <form>
+      <div id="errorMsgReadPermission">
+        <div *ngFor="let error of permissionReadError">
+          <li class="ui red message">{{error.property}} : {{error.message}}</li>
+        </div>
+      </div>
+      <div id="errorMsgSetPermission">
+        <div *ngFor="let error of permissionSetError">
+          <li class="ui red message">{{error.property}} : {{error.message}}</li>
+        </div>
+      </div>
+
+      <table mat-table [dataSource]="dataPoints" width="103%" class="table_form mat_table_data">
+        <ng-container matColumnDef="Select">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox class="all_checkbox" (change)="$event ? masterToggle($event) : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-checkbox class="all_checkbox" (change)="$event ? addDataPointXid($event, element) : null"
+                          (click)="$event.stopPropagation()" [checked]="selection.isSelected(element)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Datapoint">
+          <mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Read Permission">
+          <mat-header-cell *matHeaderCellDef>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.readPermission}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Set Permission">
+          <mat-header-cell *matHeaderCellDef>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.setPermission'): ""}}</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.setPermission}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableColumns;"></mat-row>
+      </table>
+    </form>
+  </mat-dialog-content>
+</div>

@@ -45,7 +45,7 @@ export class LoadComponentsComponent implements OnInit {
   }
 
   configSettings() {
-    this.router.navigate(['/mesh-console/config-settings']);
+    this.router.navigateByUrl('/mesh-console/config-settings');
   }
 
   modbusConfigSettings() {
@@ -98,51 +98,20 @@ export class LoadComponentsComponent implements OnInit {
     }
   }
 
-   createComponent(componentType: string) {
-    console.log(`Attempting to load component: ${componentType}`);
-    this.entry.clear(); // Clear existing components before creating a new one
-
-    let componentToLoad: Type<any> | undefined;
-
-    // Use a switch statement to map string identifiers to component classes
+  createComponent(componentType: string) {
+    let factory;
+    this.entry.clear();
     switch (componentType) {
       case 'MESH_CONFIGURATION.MENU':
-        componentToLoad = MeshConsolePropertiesComponent;
+        factory = this.resolver.resolveComponentFactory(MeshConsolePropertiesComponent);
         break;
-      // Add other cases for your dynamic components here:
-      // case 'LIGHT_COMMISSIONING.MENU':
-      //   componentToLoad = LightCommissioningComponent;
-      //   break;
-      // case 'MESH_DIAGNOSTICS.MENU':
-      //   componentToLoad = MeshNodeComponent;
-      //   break;
-      // case 'MODBUS_CONFIGURATION.MENU':
-      //   componentToLoad = ModbusConfigSettingsComponent;
-      //   break;
-      // case 'MESH_FIRMWARE_PUSH.MENU':
-      //   componentToLoad = FirmwarePushComponent;
-      //   break;
-      // case 'PUBLISH_ON_MESH.MENU':
-      //   componentToLoad = PublishOnMeshComponent;
-      //   break;
-      // case 'THERMOSTAT.MENU':
-      //   componentToLoad = ThermostatComponent;
-      //   break;
-      // case 'TOF_SENSOR.MENU':
-      //   componentToLoad = TofSensorComponent;
-      //   break;
-      default:
-        console.error(`Component type not recognized or defined for dynamic loading: ${componentType}`);
-        return; // Exit if no component is found
+    }
+    // this.componentRef = this.entry.createComponent(factory);
+    if (!factory) {
+      console.error('Component factory not found for datasourceType:', componentType);
+      return;
     }
 
-    if (componentToLoad) {
-      // Create the component directly using ViewContainerRef.createComponent
-      // No need for ComponentFactoryResolver anymore
-      this.componentRef = this.entry.createComponent(componentToLoad);
-      console.log(`Successfully loaded component: ${componentType}`);
-    } else {
-      console.error(`Component not found for dynamic loading: ${componentType}`);
-    }
+   this.componentRef = this.entry.createComponent(factory, undefined, this.entry.injector);
   }
 }

@@ -1,0 +1,59 @@
+<div class="container headinglayout mainSystemSettingContainer" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.systemSettings'): ""}}</span>
+    </mat-toolbar>
+
+  </div>
+</div>
+
+<div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+
+  <div fxFlex="22%" class="card_margin" *ngFor="let subMenu of subMenus">
+    <mat-card class="mat-card all_card matCardAll {{subMenu.type}}">
+      <mat-card-header>
+        <mat-card-title class="system_text "> {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="meshMainContent">
+        <mat-icon class="card-icon-space-size mat-pointer addCardIconsize"
+                  (click)="showSystemSettingSidebar(subMenu.type, systemSettingSideNav)" aria-hidden="false"
+                  aria-label=" published_with_changes icon">{{subMenu.icon}}
+        </mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="22%" class="card_margin" >
+    <mat-card class="mat-card all_card matCardAll">
+      <mat-card-header>
+        <mat-card-title class="system_text ">BACnet device browser</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="meshMainContent">
+        <mat-icon class="card-icon-space-size mat-pointer addCardIconsize"
+                   aria-hidden="false" (click)="openBacnetBrowser()"
+                  aria-label=" published_with_changes icon" style="color:#ff00cd99">
+          network_ping
+        </mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+<div class="loadermain" id="matSpinderAll"><img src="/assets/images/favicon.ico" alt="loader"/></div>
+</div>
+<mat-drawer-container class="container-size sidebar_position" autosize [hasBackdrop]="'true'">
+  <mat-drawer #systemSettingSideNav class="drawer_sidebar add_drawer_sidebar systemSettingsSidebar commonSidebarAlls"
+              mode="push" position="end">
+    <mat-icon class="allCloseOptions" aria-hidden="false" id="systemsettingsidebar" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}"
+              (click)="systemsettingsidebar(systemSettingSideNav)" aria-label="close icon">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close') | uppercase): ""}}
+    </mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllData top-54"
+            (click)="systemsettingsidebar(systemSettingSideNav)">
+      {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+    <app-load-components (systemsettingsidebar)="systemsettingsidebar(systemSettingSideNav)"></app-load-components>
+  </mat-drawer>
+</mat-drawer-container>
+

@@ -55,7 +55,7 @@ export class MeshConsoleComponent
   }
 
   showMeshConsoleDetail(
-    meshConsoleComponent: string,
+    meshConsoleComponent: any,
     meshConsoleSideNav: MatDrawer
   ) {
     this.LoadComponents.createMeshConsole(

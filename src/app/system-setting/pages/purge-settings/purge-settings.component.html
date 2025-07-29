@@ -1,0 +1,244 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all">
+    <span class="sidebar_form_title">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.dataPurge'): ""}}</span>
+  </mat-toolbar>
+  <mat-card-content class="allFormedit dataPurseCon">
+    <form class="TextAlign">
+      <div class="purgeFormAlign">
+      <p class="inputsPara mt-10">
+        <label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.pointPurge'): ""}}</label></p>
+      <p class="m-0">
+        <mat-slide-toggle class="toggle_change w-50 marginLeft-20"
+                          [(ngModel)]="model.enablePurgePointValues" name="enablePurgePointValues">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.enablePointValuePurge'): ""}}
+        </mat-slide-toggle>
+        <mat-slide-toggle class="toggle_change marginLeft-20 w-50"
+                          [(ngModel)]="model.enablePurgePointValuesPerPoint" name="dataPurseTls"
+                          id="pointPurseTls">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.enablePerPointValuePurge'): ""}}
+        </mat-slide-toggle>
+      </p>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="purgePointType" [(ngModel)]="model.pointDataPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input [(ngModel)]="model.pointDataPurgePeriods" matInput name="purgePointPeriod">
+        </mat-form-field>
+      </p>
+      <mat-divider class="marginTop-20"></mat-divider>
+      <p class="inputsPara mt-10">
+        <label class="purgeConfigration"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.eventPurge'): ""}}</label></p>
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.dataPointEventPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="dataPointPurge" [(ngModel)]="model.dataPointEventPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.dataPointEventPurgePeriods"
+                 name="dataPointPurgePeriod">
+        </mat-form-field>
+      </p>
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.dataSourceEventPurge'): ""}}</label>
+      <p class="m-0">
+
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="datasourcePurge" [(ngModel)]="model.dataSourceEventPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.dataSourceEventPurgePeriods"
+                 name="datasourcePurgePeriod">
+        </mat-form-field>
+      </p>
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.systemEventPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="systemEventPurge" [(ngModel)]="model.systemEventPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.systemEventPurgePeriods" name="systemEventPurgePeriod">
+        </mat-form-field>
+      </p>
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.publisherEventPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="publisherEventPurge" [(ngModel)]="model.publisherEventPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.publisherEventPurgePeriods"
+                 name="publisherEventPurgePeriod">
+        </mat-form-field>
+      </p>
+
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.auditEventPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="auditEventPurge" [(ngModel)]="model.auditEventPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.auditEventPurgePeriods" name="auditEventPurgePeriod">
+        </mat-form-field>
+      </p>
+      <mat-divider class="marginTop-20"></mat-divider>
+      <p class="inputsPara mt-10">
+        <label class="purgeConfigration"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.alarmLevelPurge'): ""}}</label></p>
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.emergencyAlarmsPurge'): ""}}</label>
+      <p class="m-0">
+
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="emergencyEventType" [(ngModel)]="model.emergencyAlarmPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.emergencyAlarmPurgePeriods"
+                 name="emergencyEventPeriod">
+        </mat-form-field>
+      </p>
+
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.criticalAlarmsPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="criticalEventType" [(ngModel)]="model.criticalAlarmPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.criticalAlarmPurgePeriods" name="criticalEventPeriod">
+        </mat-form-field>
+      </p>
+
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.urgentAlarmsPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="urgentEventType" [(ngModel)]="model.urgentAlarmPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.urgentAlarmPurgePeriods" name="urgentEventPeriod">
+        </mat-form-field>
+      </p>
+
+      <label class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.warningAlarmsPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="warningEventType" [(ngModel)]="model.warningAlarmPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.warningAlarmPurgePeriods" name="warningEventPeriod">
+        </mat-form-field>
+      </p>
+
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="informationEventType"
+                      [(ngModel)]="model.informationAlarmPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.informationAlarmPurgePeriods"
+                 name="informationEventPeriod">
+        </mat-form-field>
+      </p>
+
+      <label
+        class="dataEventPurge">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.noneAlarmsPurge'): ""}}</label>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="noneEventType" [(ngModel)]="model.noneAlarmPurgePeriodType">
+
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.noneAlarmPurgePeriods" name="noneEventPeriod">
+        </mat-form-field>
+      </p>
+
+      <mat-divider class="marginTop-20"></mat-divider>
+      <p class="inputsPara mt-10">
+        <label class="purgeConfigration">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.generalEventPurge'): ""}}</label></p>
+      <p class="m-0">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
+          <mat-select name="generalEventType" [(ngModel)]="model.eventPurgePeriodType">
+            <mat-option *ngFor="let item of periodType" [value]="item.value">{{item.key}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriod'): ""}}</mat-label>
+          <input matInput [(ngModel)]="model.eventPurgePeriods" name="eventPeriod">
+        </mat-form-field>
+      </p>
+      </div>
+      <p class="marginTop">
+        <button mat-raised-button class="saveButton addSaveAllButtons"
+                (click)="savePurgeSettings()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+        </button>
+      </p>
+    </form>
+  </mat-card-content>
+</mat-card>

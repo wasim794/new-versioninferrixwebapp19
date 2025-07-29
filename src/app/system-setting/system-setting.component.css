@@ -1,0 +1,86 @@
+
+.mat-card {
+  width: 375px;
+  margin-bottom: 50px;
+  float: left;
+  margin: 7px;
+  background: #292f35;
+}
+
+.card-icon-space-size {
+  font-size: 110px;
+  width: auto;
+}
+
+
+/* material css start here */
+
+.mat-card {
+  width: 100%;
+  margin: 7px;
+  background-color: #ffffff;
+  color: rgba(0, 0, 0, .87);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: round;
+  background-size: 680px 825px;
+  color: #000000;
+  padding-bottom: 84px;
+  text-align: center;
+}
+
+
+td {
+  padding-right: 8px;
+}
+
+.ng-trigger.ng-trigger-transformPanel.ng-tns-c14-6.mat-select-panel.mat-primary.ng-star-inserted {
+  min-width: 190px !important;
+  margin-left: 12px !important;
+}
+
+.add_drawer_sidebar {
+  width: 60%;
+  position: fixed;
+  /* padding-left: 10px;
+      padding-right: 10px; */
+}
+
+.matright {
+  float: right;
+  margin-top: 35px;
+}
+
+.card_title {
+  position: absolute;
+  width: 200px;
+
+}
+
+.system_text {
+  color: #000000;
+  text-align: left;
+}
+
+.mat-card:hover {
+  background-color: #bfbfbf63;
+}
+
+@media (min-width: 1300px) {
+  .add_drawer_sidebar {
+    width: 52%;
+    position: fixed;
+  }
+}
+
+@media (min-width: 1400px) {
+  .add_drawer_sidebar {
+    width: 50%;
+    position: fixed;
+  }
+}
+
+/* end here */
+
+
+

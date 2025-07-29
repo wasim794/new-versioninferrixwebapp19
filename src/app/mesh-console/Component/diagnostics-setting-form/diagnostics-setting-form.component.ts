@@ -28,6 +28,7 @@ export class DiagnosticsSettingFormComponent extends UnsubscribeOnDestroyAdapter
   }
 
   ngOnInit(): void {
+    this.dictionaryService.getUIDictionary('meshConsole').subscribe();
     this._service.getDiagnosticsInterval().subscribe(data => this.intervals = data);
   }
 

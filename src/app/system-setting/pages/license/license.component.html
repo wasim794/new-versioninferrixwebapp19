@@ -1,0 +1,62 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar">
+    <span class="sidebar_form_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.licenseInformation'): ""}}</span>
+    <div class="">
+      <mat-icon class="toolbar_icon marginLeft-10 mt-10" aria-hidden="false"
+                aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                (click)="loadLicenseHelpModel()">
+        info_outline
+      </mat-icon>
+    </div>
+  </mat-toolbar>
+  <mat-card-content class="allFormedit">
+    <form>
+      <div [hidden]="!messageError">
+        <mat-card class="validation-error">
+          <li *ngFor="let err of licenseError">{{err.property}}
+            : {{err.message}}
+          </li>
+        </mat-card>
+      </div>
+
+      <div class="licenseFormAlign">
+      <mat-slide-toggle class="toggle_change marginLeft-10"
+                        (change)="toggleCheckBox($event)">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.allowEdit'): ""}}
+      </mat-slide-toggle>
+   <div>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.organizationName'): ""}}</mat-label>
+          <input [(ngModel)]="licenseModel.licenseeName" matInput name="licenseName"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.organizationName'): ''}}"
+                 [disabled]="!CheckboxVar">
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 mt-10 marginLeft-20" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ""}}</mat-label>
+          <input [(ngModel)]="licenseModel.licenseeId" matInput name="licenseeId"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ''}}"
+                 [disabled]="!CheckboxVar">
+        </mat-form-field>
+     </div>
+
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licenseUniqueKey'): ""}}</mat-label>
+          <input [(ngModel)]="licenseKey" matInput name="licenseUniqueKey"
+                 [disabled]="true">
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 mt-10 marginLeft-20" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.license'): ""}}</mat-label>
+          <input [(ngModel)]="licenseModel.license" matInput name="license"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.license'): ''}}"
+                 [disabled]="!CheckboxVar">
+        </mat-form-field>
+
+      </div>
+      <div class="marginTop">
+        <button mat-raised-button class="saveButton addSaveAllButtons" (click)="saveLicense()"
+                [disabled]="!CheckboxVar">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
