@@ -11,44 +11,48 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {DataPointModel} from '../../datasource/model/dataPointModel';
 import {UnsubscribeOnDestroyAdapter} from '../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {DictionaryService} from "../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../common/mat-module';
 
 export interface PermissionDialogData {
   datasource: DatasourceModel;
 }
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, MatTable],
   selector: 'app-permission-datapoint-dailog',
   templateUrl: './permission-datapoint-dailog.component.html',
   styleUrls: []
 })
 export class PermissionDatapointDailogComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
 
-  @ViewChild(MatTable) table: MatTable<any>;
-  searchDataPoint: string;
-  private selectedDatasourceId: number;
+  @ViewChild(MatTable) table!: MatTable<any>;
+  searchDataPoint!: string;
+  private selectedDatasourceId!: number;
   dataPoints: any;
   private errorMsg: any;
   private limit = 10;
   private offset = 0;
-  private dataPointTotalPages: number;
+  private dataPointTotalPages!: number;
   private selectedDataPointsXid: any[] = [];
   private editPermissionGroupArray: any[] = [];
   toPermissionGroupsArray: any[] = [];
-  private permissions: string;
+  private permissions!: string;
   private permissionError = [];
-  permissionReadError = [];
-  enableGroupPermission: boolean;
-  permissionSetError = [];
-  readSelectedPermissions: any[];
-  setSelectedPermissions: any[];
+  permissionReadError: any = [];
+  enableGroupPermission!: boolean;
+  permissionSetError: any = [];
+  readSelectedPermissions!: any[];
+  setSelectedPermissions!: any[];
   tableColumns = ['Select', 'Datapoint', 'Read Permission', 'Set Permission'];
   selection = new SelectionModel<DataPointModel>(true, []);
   private dataSource: any;
-  private checkedDataPoints = [];
+  private checkedDataPoints: any = [];
   private readPermissionMessage = 'Read Permission Applied Successfully';
   private setPermissionMessage = 'Set Permission Applied Successfully';
   private durationInSeconds = 5;
-  public messageError: boolean;
+  public messageError!: boolean;
   UIDICTIONARY : any;
 
   constructor(private _dataSource: DataSourceService,
@@ -98,7 +102,7 @@ export class PermissionDatapointDailogComponent extends UnsubscribeOnDestroyAdap
       });
     }, err => {
       this.permissionError = [];
-      err.forEach(prop => {
+      err.forEach((prop: any) => {
         this.permissionSetError.push(prop);
         this.timeOutFunction();
       });
@@ -108,7 +112,7 @@ export class PermissionDatapointDailogComponent extends UnsubscribeOnDestroyAdap
     this.table.renderRows();
   }
 
-  FilterDataPoint(event) {
+  FilterDataPoint(event: any) {
     let param;
     if (event.key === "Enter" || event.type === "click") {
       if (this.searchDataPoint) {
@@ -126,7 +130,7 @@ export class PermissionDatapointDailogComponent extends UnsubscribeOnDestroyAdap
   /**
    * Get Datasource list as per limit and offSet value for pagination using RQL
    */
-  getDataPointList(event) {
+  getDataPointList(event: any) {
     const param = 'limit(' + this.limit + ',' + this.offset + ')';
     this.subs.add(this._dataPoint.get(param).subscribe(data => {
       this.dataPointTotalPages = this._dataPoint.total;
@@ -149,7 +153,7 @@ export class PermissionDatapointDailogComponent extends UnsubscribeOnDestroyAdap
       this.getDataPointList(data);
     }, err => {
       this.permissionError = [];
-      err.forEach(prop => {
+      err.forEach((prop: any) => {
         this.permissionReadError.push(prop);
         this.timeOutFunction();
       });
@@ -160,15 +164,15 @@ export class PermissionDatapointDailogComponent extends UnsubscribeOnDestroyAdap
   }
 
   selectedDataPoints() {
-    this.checkedDataPoints.forEach(dp => {
+    this.checkedDataPoints.forEach((dp: any) => {
       this.selectedDataPointsXid.push(dp.xid);
     });
   }
 
-  masterToggle(Event) {
+  masterToggle(Event: any) {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.dataSource.data.forEach((row: any) => this.selection.select(row));
     this.selectAllDataPoints(Event);
   }
 
@@ -179,28 +183,28 @@ export class PermissionDatapointDailogComponent extends UnsubscribeOnDestroyAdap
     return numSelected === numRows;
   }
 
-  selectAllDataPoints(Event) {
+  selectAllDataPoints(Event: any) {
     if (Event.checked) {
       this.enableGroupPermission = true;
-      this.dataPoints.forEach(data => {
+      this.dataPoints.forEach((data: any) => {
         this.checkedDataPoints.push(data);
       });
     } else {
       this.enableGroupPermission = false;
-      this.dataPoints.forEach(data => {
-        this.checkedDataPoints = this.checkedDataPoints.filter(h => h !== data);
+      this.dataPoints.forEach((data: any) => {
+        this.checkedDataPoints = this.checkedDataPoints.filter((h: any) => h !== data);
       });
     }
 
   }
 
-  addDataPointXid(event, dataPoint) {
+  addDataPointXid(event: any, dataPoint: any) {
     if (event.checked) {
       this.enableGroupPermission = true;
       this.checkedDataPoints.push(dataPoint);
     } else {
       this.enableGroupPermission = false;
-      this.checkedDataPoints = this.checkedDataPoints.filter(h => h !== dataPoint);
+      this.checkedDataPoints = this.checkedDataPoints.filter((h: any) => h !== dataPoint);
     }
   }
   private timeOutFunction() {

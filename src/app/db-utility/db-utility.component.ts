@@ -12,8 +12,14 @@ import {HelpModalComponent} from '../help/help-modal/help-modal.component';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {Observable} from "rxjs";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../common/mat-module';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, MatPaginator, MatProgressSpinner],
+  providers: [DbUtilityService, ConfigurationService, WebsocketService, DictionaryService, ServerService, CommonService],
   selector: 'app-db-utility',
   templateUrl: './db-utility.component.html',
   styleUrls: []
@@ -24,11 +30,11 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
   token: string;
   listDbAll: any;
   databaseSettings = {} as DatabaseSettingsModel;
-  databaseActions = {} as DatabaseActionsModel;
+  databaseActions: any = {} as DatabaseActionsModel;
   websocketResponse: any;
   dbList = [];
-  public messageError: boolean;
-  obs: Observable<any>;
+  public messageError!: boolean;
+  obs!: Observable<any>;
   public dataSources: any;
   public dataSource = new MatTableDataSource<any>([]);
   dbBackupMessage = 'Db backup Successfully';
@@ -36,23 +42,23 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
   dbSaveSettingMessage = 'Db Setting Saved Successfully';
   BackupDownloadMessage = 'backup Download Successfully';
   dbUploadMessage = 'File Uploaded Successfully';
-  totaldblist: number;
+  totaldblist!: number;
   info = new commonHelp();
-  fileName: string;
-  blob: Blob;
+  fileName!: any;
+  blob!: Blob;
   errorMsg: any;
-  backUperror = [];
+  backUperror: any = [];
   isRestart: boolean = false;
-  pageData: boolean;
+  pageData!: boolean;
   // @ViewChild(MatPaginator) paginator: MatPaginator;
-  backupId: string = null;
+  backupId: any = null;
   showWebsocketData: boolean = true;
-  restoreId: string = null;
+  restoreId: any = null;
   processing: boolean = true;
   restartStackMsg= "Restarting the stack";
   UIDICTIONARY : any;
   showIcon: { [key: number]: boolean } = {};
-  @ViewChild('paginatorRef') paginator: MatPaginator;
+  @ViewChild('paginatorRef') paginator!: MatPaginator;
 
   constructor(private _configurationService: ConfigurationService,
               private _WebSocketService: WebsocketService,
@@ -61,7 +67,7 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
               private dbUtilityService: DbUtilityService,
               private commonService: CommonService,
               private serverService: ServerService, private changeDetectorRef: ChangeDetectorRef) {
-    this.token = JSON.parse(localStorage.getItem('access_token')).token;
+    this.token = JSON.parse(localStorage.getItem('access_token')!).token;
   }
 
   ngOnInit() {
@@ -165,7 +171,7 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
     });
   }
 
-  restoreDb(fileName) {
+  restoreDb(fileName: any) {
     this.showIcon[fileName] = true;
     this.commonService.openConfirmDialog('Are you sure, you want to Restore.....?',
       fileName).afterClosed().subscribe(response => {
@@ -187,7 +193,7 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
   }
 
 
-  private handleWebSocketData(fileName) {
+  private handleWebSocketData(fileName: any) {
     this._WebSocketService.subscribeWebsocket().subscribe(data => {
       this.websocketResponse = JSON.parse(data);
       if (this.websocketResponse.notificationType === 'delete') {
@@ -207,7 +213,7 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
 
   //download function
 
-  downloadDb(fileName) {
+  downloadDb(fileName: any) {
     this.commonService.openConfirmDialog('Are you sure,you want to Download......?',
       fileName).afterClosed().subscribe(response => {
       if (response) {
@@ -222,7 +228,7 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onFileSelected(event) {
+  onFileSelected(event: any) {
     if (confirm('Are you sure you want to save this file?')) {
       // Save it!
       const file: File = event.target.files[0];

@@ -25,7 +25,7 @@ export class DbUtilityService {
     return this.api.post(`${this.dbAction_Url}`, databaseActions);
   }
 
-  downloadBackupOrList(fileName): Observable<any> {
+  downloadBackupOrList(fileName: any): Observable<any> {
    const REQUEST_PARAMS = new HttpParams().set('fileName', fileName.fileName);
    //ToDo need to check and implement it with using this.api.get way.
      /* return this.api.get(`${this.dbAction_Url}/${fileName}`, {
@@ -39,7 +39,7 @@ export class DbUtilityService {
        });
     }
 
-  dbUpload(dbUpload): Observable<any> {
+  dbUpload(dbUpload: any): Observable<any> {
     return this.api.post(`${this.dbAction_Upload_Url}`, dbUpload);
   }
 }

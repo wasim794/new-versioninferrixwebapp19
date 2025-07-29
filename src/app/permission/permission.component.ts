@@ -124,25 +124,25 @@ export class PermissionComponent extends UnsubscribeOnDestroyAdapter implements 
   }
 
   readPermission() {
-    let readPermissions = (<any>$('#readPermission')).dropdown('get value');
-    if (readPermissions != null) {
-      readPermissions = readPermissions.toString();
-    }
-    this.selectedDataPoints();
-    const readPermissionBody = {
-      'xids': this.selectedDataPointsXid,
-      'groups': readPermissions
-    };
-    this.subs.add(this.dataPointService.bulkReadPermissionUpdate(readPermissionBody).subscribe(data => {
-      this.isSaveReadPermission = true;
-      this.timeOutFunction();
-    }, err => {
-      this.permissionError = [];
-      err.forEach((prop: any) => {
-        this.permissionReadError.push(prop);
-        this.timeOutFunction();
-      });
-    }));
+    // let readPermissions = (<any>$('#readPermission')).dropdown('get value');
+    // if (readPermissions != null) {
+    //   readPermissions = readPermissions.toString();
+    // }
+    // this.selectedDataPoints();
+    // const readPermissionBody = {
+    //   'xids': this.selectedDataPointsXid,
+    //   'groups': readPermissions
+    // };
+    // this.subs.add(this.dataPointService.bulkReadPermissionUpdate(readPermissionBody).subscribe(data => {
+    //   this.isSaveReadPermission = true;
+    //   this.timeOutFunction();
+    // }, err => {
+    //   this.permissionError = [];
+    //   err.forEach((prop: any) => {
+    //     this.permissionReadError.push(prop);
+    //     this.timeOutFunction();
+    //   });
+    // }));
     const param = 'limit(' + this.limit + ',' + this.offset + ')';
     this.getDataPointList(param);
   }
@@ -213,7 +213,7 @@ export class PermissionComponent extends UnsubscribeOnDestroyAdapter implements 
   }
 
 
-  FilterDatasource(event: { key: string; type: string; }) {
+  FilterDatasource(event: any) {
     let param;
     if (event.key === "Enter" || event.type === "click") {
       if (this.searchDatasource !== '') {
