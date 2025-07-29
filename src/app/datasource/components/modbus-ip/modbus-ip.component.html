@@ -69,16 +69,16 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.multipleWritesOnly'): ""}}
           </mat-slide-toggle>
           <mat-slide-toggle [(ngModel)]="modbusIpModel.contiguousBatches" name="contiguousBatches"
-                            class="side_form_toggle contiguousBatchesToggle">
+                            class="side_form_toggle contiguousBatchesToggle ">
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.contiguousBatches'): ""}}
           </mat-slide-toggle>
         </p>
         <p>
           <mat-slide-toggle [(ngModel)]="modbusIpModel.createSlaveMonitorPoints" name="createSlaveMonitorPoints"
-                            class="side_form_toggle toggle_change allToggls modbusToggles">
+                            class="side_form_toggle toggle_change allToggls modbusToggles w-50">
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.slaveMonitor'): ""}}
           </mat-slide-toggle>
-          <mat-form-field class="w-50 modbusInputField singleInputsM" appearance="fill">
+          <mat-form-field class="w-50 modbusInputField " appearance="fill">
             <mat-label>
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.maxReadBitCount'): ""}}
             </mat-label>

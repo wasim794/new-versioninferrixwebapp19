@@ -10,11 +10,11 @@
      fxLayoutAlign="left" fxFlexFill >
 
   <div fxFlex="22%" class="dynamicMenuCard" *ngFor="let subMenu of subMenus">
-    <mat-card class="marginLeft-20 all_card matCardAll {{subMenu.type}}">
+    <mat-card class="eventAllCardNew all_card matCardAll {{subMenu.type}}">
       <mat-card-header>
         <mat-card-title class="system_text"> {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ""}}</mat-card-title>
       </mat-card-header>
-      <mat-card-content class="dynamicMenuCardContent">
+      <mat-card-content class="dynamicMenuCardContent marginTop-20">
         <mat-icon class="card-icon-space-size addCardIconsize mat-pointer" (click)="navigatingToUrl(subMenu.path)"
                   aria-hidden="false" aria-label=" published_with_changes icon">{{subMenu.icon}}
         </mat-icon>

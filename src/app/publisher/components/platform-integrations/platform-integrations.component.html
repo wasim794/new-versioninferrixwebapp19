@@ -53,16 +53,16 @@
             </mat-form-field>
 
  
-<mat-grid-list class="allGridcheckbox  marginTop-20" cols="2" rowHeight="30px">
+<mat-grid-list class="allGridcheckbox platformInteToggles marginTop-20" cols="2" rowHeight="30px">
               <mat-grid-tile class="mqttToggles ">
-                <mat-slide-toggle [(ngModel)]="integrationSenderModel.gateway" name="sendSnapshot" class="side_form_toggle toggle_change "
+                <mat-slide-toggle [(ngModel)]="integrationSenderModel.gateway" name="sendSnapshot" class="side_form_toggle toggle_change"
                 >
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.gateway'): ""}}
                 </mat-slide-toggle>
           
            </mat-grid-tile>
               <mat-grid-tile class="mqttToggles">
-                <mat-slide-toggle [(ngModel)]="integrationSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change mqttToggleAlign ">
+                <mat-slide-toggle [(ngModel)]="integrationSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
                 </mat-slide-toggle>
             </mat-grid-tile>
@@ -88,8 +88,8 @@
           </form>
         </ng-template>
       </mat-tab>
-<!-- *ngIf="pointValues"  -->
-      <mat-tab label="Points">
+
+      <mat-tab label="Points" *ngIf="pointValues" >
         <div [hidden]=!viewDataPoint>
           <mat-form-field class="searchWidth serchInput" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
@@ -154,7 +154,7 @@
                </mat-select>
              </mat-form-field>
 
-            <mat-form-field class=" form_field platformAlign w-50" appearance="fill">
+            <mat-form-field class=" form_field  w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-label>
               <input [(ngModel)]="integrationPointModel.name"   matInput name="name"
                      placeholder="Enter Name" type="text">

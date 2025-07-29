@@ -6,7 +6,7 @@
         <i class="fa fa-chevron-left"></i>
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.eventHandler'): ""}}</span>
-      <div class="commonLeftMargin">
+      <div class="selectMenuFonts">
         <mat-form-field>
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.dropDown.placeholder'): ""}}</mat-label>
           <mat-select>
@@ -25,7 +25,7 @@
 <div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
   fxLayoutAlign="left">
   <div fxFlex="22%" class="card_margin" *ngFor="let handler of handlers">
-    <mat-card class="mat-card all_card increaseIconsCard matCardAll">
+    <mat-card class="mat-card all_card increaseIconsCard matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title class="cardTitleName"> {{handler.name}}</mat-card-title>
         <div class="toggle_right toggle_change">

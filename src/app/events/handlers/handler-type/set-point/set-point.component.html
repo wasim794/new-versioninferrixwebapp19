@@ -1,16 +1,18 @@
-<form>
+<form class="eventFormSize">
   <mat-card class="form_cards">
     <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
       <mat-card-title class="sidebar_form_title">
         {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.form.heading.setPoint'): ""}}
       </mat-card-title>
       <span class="spacer"></span>
-      <button mat-raised-button class="Top_Save_Button bacnetUpdate topSaveSidbarButton" (click)="eventHandlerSave() "
+      <button matfab class="toolbarSaveButton bacnetUpdate saveButton" (click)="eventHandlerSave() "
               *ngIf="!isEdit">
+                 <mat-icon>save</mat-icon>
         {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
       </button>
-      <button mat-raised-button class="Top_Update_Button bacnetUpdate toolbarUpdateButton" (click)="eventHandlerUpdate()"
+      <button matfab class="toolbarUpdateButton bacnetUpdate saveButton" (click)="eventHandlerUpdate()"
               *ngIf="isEdit">
+                 <mat-icon>save_as</mat-icon>
         {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
       </button>
     </mat-toolbar>

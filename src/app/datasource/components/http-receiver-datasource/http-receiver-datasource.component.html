@@ -34,7 +34,7 @@
           </p>
 
           <p>
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field remoteIpWhiteList" appearance="fill">
               <mat-label>
                 {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpReceiver.field.placeholder.remoteIpWhiteList'): ""}}
               </mat-label>
@@ -45,7 +45,7 @@
               <mat-icon (click)="addIpToList(ip.value)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}">add</mat-icon>
             </button>
 
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field remoteIpWhiteList" appearance="fill">
               <mat-label>
                 {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpReceiver.field.placeholder.deviceIdWhiteList'): ""}}
               </mat-label>
