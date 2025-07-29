@@ -1,4 +1,4 @@
-<mat-card class="form_cards platformIntegrationMain">
+<mat-card class="form_cards mqttMainContainer">
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title matCardTitles">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.systemSettings.platformIntegration'): ""}} <small *ngIf="integrationSenderTitle">{{integrationSenderModel.name}}</small>
@@ -26,9 +26,9 @@
       <mat-tab label="Basic">
         <ng-template matTabContent>
           <br>
-          <form class="allFormSize">
+          <form class="allFormsSize mqttFormProperties">
 
-              <mat-form-field class="field_margin w-50" appearance="fill">
+              <mat-form-field class="w-50 mqttInputAlign" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
                 <input  matInput name="name" [(ngModel)]="integrationSenderModel.name" placeholder="Enter Name" type="text"
                         required>
@@ -39,7 +39,7 @@
                 <input [(ngModel)]="integrationSenderModel.xid"  class="" matInput disabled  name="xid" >
               </mat-form-field>
 
-            <mat-form-field class="field_margin w-50" appearance="fill">
+            <mat-form-field class="w-50 mqttInputAlign" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheWarningSize'): ""}}
               </mat-label>
               <input [(ngModel)]="integrationSenderModel.cacheWarningSize"  matInput name="cacheWarningSize" required>
@@ -53,19 +53,23 @@
             </mat-form-field>
 
  
-
-                <mat-slide-toggle [(ngModel)]="integrationSenderModel.gateway" name="sendSnapshot" class="side_form_toggle toggle_change allToggls"
+<mat-grid-list class="allGridcheckbox  marginTop-20" cols="2" rowHeight="30px">
+              <mat-grid-tile class="mqttToggles ">
+                <mat-slide-toggle [(ngModel)]="integrationSenderModel.gateway" name="sendSnapshot" class="side_form_toggle toggle_change "
                 >
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.gateway'): ""}}
                 </mat-slide-toggle>
           
-          
-                <mat-slide-toggle [(ngModel)]="integrationSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change  platformIntegrationToggle">
+           </mat-grid-tile>
+              <mat-grid-tile class="mqttToggles">
+                <mat-slide-toggle [(ngModel)]="integrationSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change mqttToggleAlign ">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
                 </mat-slide-toggle>
-           
+            </mat-grid-tile>
+            </mat-grid-list>
+            <br>
 
-            <mat-form-field class="field_margin w-50" appearance="fill">
+            <mat-form-field class="w-50 mqttInputAlign" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.enterSnapshotSendPeriod'): ""}}
               </mat-label>
               <input [(ngModel)]="integrationSenderModel.snapshotSendPeriod.timePeriod"  matInput name="timePeriod"
@@ -158,20 +162,24 @@
           </div>
 
 
-            <mat-slide-toggle [(ngModel)]="integrationPointModel.enabled" class="toggle_change marginBottom-10 marginRight"  name="enabled" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+            <mat-slide-toggle [(ngModel)]="integrationPointModel.enabled" class="toggle_change marginBottom-10 marginLeft-20"  name="enabled" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
             >
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}/{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
             </mat-slide-toggle>
 
              <br>
-          <button  *ngIf="dataPointActions" (click)="saveDataPoint()"  align="end" class="Top_Save_Button mt-30"
-                   mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+          <button  *ngIf="dataPointActions" (click)="saveDataPoint()"  align="end" class="publisherPoint mt-30 saveButton "
+                   matfab>
+                    <mat-icon>save</mat-icon>
+                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
           </button>
           <button *ngIf="!dataPointActions" (click)="updateDataPoint()"
-                  class="Top_Update_Button updateButton topRightButton"
-                  mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+                  class="toolbarUpdateButton updateButton saveButton"
+                  matfab>
+                  <mat-icon>save_as</mat-icon>
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
           </button>
-          <button (click)="cancel()"    align="end" color="warn" class="cancelButton"
+          <button (click)="cancel()"    align="end" color="warn" class="cancel_button_new cancelPoint"
                   mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
           </button>
           <br>
@@ -195,7 +203,7 @@
         </div>
 
         <div class="mat-elevation-z8">
-          <mat-table mat-table  [dataSource]="dataSources" class="table_data dataPointsAllTable setValueWidth  px-0">
+          <mat-table mat-table  [dataSource]="dataSources" class="table_data dataPointsAllTable setValueWidth setAutoWidth px-0">
             <ng-container matColumnDef="position">
               <mat-header-cell *matHeaderCellDef class="max50"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </mat-header-cell>
               <mat-cell *matCellDef="let element; let i = index;" class="max50">{{i + 1}}</mat-cell>
