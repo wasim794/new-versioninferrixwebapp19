@@ -1,0 +1,83 @@
+<mat-card class="form_cards matCardsMainPr top-header-bg-color">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row w-88 pt-10 justify-content-center">
+    <span class="tb-details-title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.permissions'): ""}} </span>
+    <div class="header-label">
+      <mat-form-field class="header-field permissionInputs">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+        <input (keyup)="FilterDatasource($event)" [(ngModel)]="searchDatasource" matInput name="searchDatasource"
+               placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ''}}...">
+        <mat-icon matSuffix class="per_icon" pointer (click)="FilterDatasource($event)">search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="header-label">
+      <mat-form-field class="header-field permissionInputs">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.groupPermission'): ""}}</mat-label>
+        <mat-select multiple name="selectedPermissions" [(ngModel)]="selectedPermissions">
+          <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button class="permissionSaveButton saveButton"  (click)="saveEditPermission() " [disabled]="!enableDataSourcePermission">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.apply')| uppercase) : ""}}</button>
+    <div>
+      <mat-icon class="info_position toolbar_icon" aria-hidden="false" aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                (click)="permissionHelpModel()">
+        info_outline
+      </mat-icon>
+    </div>
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="form_cards form_edit_card form_edit_card-m">
+    <table mat-table [dataSource]="dataSources" width="100%" class="table_form table-sidebar_mat sideBarTable pb-0">
+      <ng-container matColumnDef="Select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox class="all_checkbox" (change)="$event ? masterToggle($event) : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-checkbox class="all_checkbox" (change)="$event ? addDataSourceXid(element.xid, $event) : null"
+                        (click)="$event.stopPropagation()"
+                        [checked]="selection.isSelected(element)"
+          >
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="DatasourceName">
+        <mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.datasource'): ""}}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="EditPermission">
+        <mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.editPermission'): ""}}</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.editPermission}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="DataPoints">
+        <mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-icon (click)="showSidebarSetDataPointsPermission(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.dataPoint'): ''}}" class="mat-pointer">
+            payments
+          </mat-icon>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableColumns;"></mat-row>
+    </table>
+</mat-card-content>
+
+
+<div *ngIf="totalPages > limit" class="sideBarPaginationFixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="totalPages" [pageSizeOptions]="pageSizeOptions" [pageSize]=limit
+                 (page)="getNextDataSources($event)"></mat-paginator>
+</div>
+<div id="errorMsg">
+  <div *ngFor="let error of permissionError">
+    <li class="ui red message">{{error.property}} : {{error.message}}</li>
+  </div>
+</div>

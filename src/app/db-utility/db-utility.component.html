@@ -1,0 +1,123 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar_all">
+    <span class="sidebar_form_title">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.dbUtility') : ""}}</span>
+    <div class="">
+      <mat-icon class=" toolbar_icon marginLeft-10 mt-10" aria-hidden="false" aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                (click)="DbUtilityInfoHelpModel()"> info_outline
+      </mat-icon>
+    </div>
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="form_cards form_edit_card dbUtilityMatCard">
+  <div [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li *ngFor="let err of backUperror">{{err.property}} : {{err.message}}</li>
+    </mat-card>
+  </div>
+
+  <form class="dbUtilitySideBar">
+    <mat-card-title class="backupSettingHead">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.backupNow') : ""}}
+    </mat-card-title>
+    <p class="marginTop-0">
+
+      <mat-form-field appearance="fill" class="utilityNameFieldsTop w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.pleaseEnterHere') : ""}}</mat-label>
+        <input class="form-control" id="inputFile" matInput minlength="1" [(ngModel)]="databaseActions.backupFileName"
+               name="inputFile" required type="text">
+      </mat-form-field>
+      <button mat-raised-button  [disabled]="!processing" class="backupButtonDb"
+                (click)="dbBackup()">{{processing===true ?
+        UIDICTIONARY ===undefined ? "":UIDICTIONARY.get('ui.core.common.button.backup'):'Please wait...'}}</button>
+    </p>
+    <mat-divider></mat-divider><span class="dbUtilityDevider">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.save') : ""}}
+  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fileCount').substring(0,4) : ""}}
+  </span>
+    <mat-card-title class="backupSettingHead">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.backupSettings') : ""}}
+    </mat-card-title>
+
+      <mat-form-field appearance="fill" class="utilityNameFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fileCount') : ""}}</mat-label>
+        <input class="form-control" id="fileCount" matInput minlength="1" name="fileCount"
+               [(ngModel)]="databaseSettings.databaseBackupFileCount" type="text">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="utilityNameFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.backupHour') : ""}}</mat-label>
+        <input class="form-control" id="backupHour" matInput minlength="1" name="backupHour"
+               [(ngModel)]="databaseSettings.databaseBackupHour" type="text">
+      </mat-form-field>
+
+    <div>
+      <mat-form-field appearance="fill" class="utilityNameFields w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.backupMinute') : ""}}</mat-label>
+        <input class="form-control" id="backupPower" matInput minlength="1" name="backupMinute"
+               [(ngModel)]="databaseSettings.databaseBackupMinute" type="text">
+      </mat-form-field>
+
+      <mat-slide-toggle class="toggle_change" [(ngModel)]="databaseSettings.databaseBackupEnabled"
+                        name="bacmUpEnableDesable">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable') : ""}}
+      </mat-slide-toggle>
+      <button mat-raised-button class="Top_Save_Button marginLeft30" align="end"
+              (click)="saveBackupSetting()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+    </div>
+  </form>
+  <mat-divider class="modbusDeviceDividers"></mat-divider><span class="dbUtilityDevider">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.upload') : ""}}</span>
+  <mat-card-title class="backupSettingHead listingsRestore w-50">
+   </mat-card-title>
+  <input type="file" class="file-input mr-10" (change)="onFileSelected($event)" #fileUpload>
+  <div class="file-upload uploadFileInput">
+    {{fileName || "No file uploaded yet."}}
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider><span class="dbUtilityDevider">{{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.listData') : ""}}</span>
+  <mat-card-title class="backupSettingHead listingsRestore">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.listingRestore') : ""}}</mat-card-title>
+  <mat-hint align="start" [ngClass]="{'active': isRestart, 'disabled': !isRestart}">Restart after successfully restoring database</mat-hint><mat-icon matTooltip="Restart" class="dbRestore DbRestore" [ngClass]="{'active': isRestart, 'disabled': !isRestart}" (click)="restartStack()"><i class="material-icons">restart_alt</i></mat-icon>
+
+  <mat-form-field class="topSearchBoxes">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
+    <input matInput name="searchBacnetList" (keyup)="applyFilter($event)" placeholder="Ex. ium" #input
+           placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ''}}...">
+    <mat-icon class="Input_search" matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" class="tableWidth dbtablet width-100 marginTop-20">
+      <ng-container matColumnDef="S.No." class="table_row">
+        <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll maxWidth-60">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno') : ""}}</mat-header-cell>
+        <mat-cell class="commonReducesSizesAll maxWidth-60" *matCellDef="let element; let i = index;">{{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="File Name">
+        <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll singleTableInput">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.fileName') : ""}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"
+                  class="commonReducesSizesAll singleTableInput">{{element}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Action">
+        <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions') : ""}}</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="commonReducesSizesAll">
+          <mat-icon *ngIf="!showIcon[element]" matTooltip="Restore Here" (click)="restoreDb(element)" class="allIcons">
+            settings_backup_restore
+          </mat-icon>
+          <mat-spinner  class="allIcons matSpinners" *ngIf="showIcon[element]"></mat-spinner>
+          <mat-icon matTooltip="Download Here" (click)="downloadDb(element)" class="allIcons">get_app</mat-icon>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="selectedFilesColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: selectedFilesColumns;"></mat-row>
+    </mat-table>
+    <div [hidden]="!pageData">
+      <mat-paginator #paginatorRef [pageSizeOptions]="[2, 20, 30]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+  <div class="loadermain" id="matSpinderAllTable"><img src="favicon.ico" alt="loader"/></div>
+</mat-card-content>

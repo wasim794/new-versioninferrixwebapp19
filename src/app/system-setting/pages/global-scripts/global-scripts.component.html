@@ -1,0 +1,104 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all">
+    <span class="sidebar_form_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.globalScripts'): ""}}</span>
+    <div class="">
+      <mat-icon class="toolbar_icon marginLeft-10 mt-10" aria-hidden="false"
+                aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                (click)="loadGlobalScriptHelpModel()" >
+        info_outline
+      </mat-icon>
+    </div>
+  </mat-toolbar>
+</mat-card>
+  <mat-card-content class="allFormedit">
+    <div  [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <p class ="mb-0 text-white" *ngFor="let err of globalScriptError">{{err.message}}</p>
+      </mat-card>
+    </div>
+    <form>
+
+      <div class="licenseFormAlign">
+
+          <mat-form-field class="form_field w-50" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+            <input matInput name="Name" [(ngModel)]="globalScriptModel.name"  required>
+          </mat-form-field>
+          <mat-form-field class="form_field w-50 mt-10" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+            <input matInput name="Xid" [(ngModel)]="globalScriptModel.xid" readonly>
+          </mat-form-field>
+
+          <mat-form-field class="form_field w-50 marginTop" appearance="fill">
+            <mat-label disabled>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.permissions'): ""}}</mat-label>
+            <mat-select name="editPermission" [(ngModel)]="editPermission" multiple checked>
+              <mat-option *ngFor="let read of readPermission" [value]="read">{{read}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+        <div>
+
+              <mat-label></mat-label>
+              <textarea  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="terminal" cols="100" rows="100" class="terminalGlobalScript" [(ngModel)]="globalScriptModel.script"
+                         name="script"></textarea>
+
+
+        <div class="globalValidateAlign">
+          <button mat-raised-button class="globalValidate" (click)="validateGlobalScript()">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.validate'): ""}}
+          </button>
+        </div>
+        </div>
+      </div>
+
+      <div class="meshActionsButtons">
+        <div *ngIf="!globalButtonsView then savePoint else updatePoint"></div>
+        <ng-template #savePoint>
+          <button mat-raised-button class="saveButton addSaveAllButtons" (click)="saveGlobalScript()">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase): ""}}
+          </button>
+        </ng-template>
+        <ng-template #updatePoint>
+          <button mat-raised-button class="Top_Save_Button updateButton " (click)="updateGlobalScript()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase): ""}}</button>
+        </ng-template>
+      </div>
+    </form>
+    <div class="mat-elevation-z8">
+          <mat-table [dataSource]="dataSource" class="tableWidth dbtablet width-100 marginTop-20"   matSort (matSortChange)="sortingData($event)">
+        <ng-container matColumnDef="S.No." class="table_row">
+          <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll maxWidth-60">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</mat-header-cell>
+          <mat-cell class="commonReducesSizesAll maxWidth-60" *matCellDef="let element; let i = index;">{{i + 1}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="File Name">
+          <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll singleTableInput">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"
+                    class="commonReducesSizesAll singleTableInput">{{element.name}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll ">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+          <mat-cell *matCellDef="let element" class="commonReducesSizesAll">
+
+              <mat-icon aria-hidden="false" class="allIcons  " id="all_icons_one" aria-label="edit icon" (click)="editGlobalScript(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"> edit </mat-icon>
+              <mat-icon (click)="deleteGlobalScript(element)" aria-hidden="false" class="allIcons  " aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"> delete </mat-icon>
+
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="selectedFilesColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: selectedFilesColumns;" (click)="selection.toggle(row)"></mat-row>
+      </mat-table>
+      <div>
+        <mat-paginator [pageIndex]=0 [length]="_GlobalScriptService.total" [pageSizeOptions]="pageSizeOptions" [pageSize]=limit (page)="getNextPage($event)"  showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </mat-card-content>
+
+

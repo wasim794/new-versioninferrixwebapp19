@@ -1,0 +1,64 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <span
+      class="sidebar_form_title">  {{'System Configuration'}}</span>
+    <div class="">
+      <mat-icon class="info_position toolbar_icon" aria-hidden="false" aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                (click)="loadSystemInfoHelpModel()">
+        info_outline
+      </mat-icon>
+    </div>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card allFormedit">
+    <form class="allFormLables">
+      <div [hidden]="!messageError">
+        <mat-card class="validation-error">
+          <li *ngFor="let err of systemInfoError">{{err.property}}
+            : {{err.message}}
+          </li>
+        </mat-card>
+      </div>
+      <div class=" systemFormAlign">
+        <p class="inputsPara text-center textMarginInformation">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.publishers.persistentMemory'): ""}}</p>
+        <br>
+        <mat-slide-toggle [(ngModel)]="persistentQueue.persistentQueuePublisher"  (change)="enableDisable($event.checked)"  name="enabledAuthorization" class="toggle_change blockMargin form_field systemEnabled">
+           {{"Disabled"}}/{{"Enabled"}}
+          </mat-slide-toggle>
+        <button mat-raised-button class="saveButton addSaveAllButtons pushButtonSystem "
+                (click)="pushPersistantConfiguration()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}</button>
+
+                  <mat-divider class="mqqtDividers marginTop-20"></mat-divider>
+                <p class="inputsPara text-center mt-10">
+                  <label class="dividerText"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.threads.threadMaximumPoolSize'): ""}}</label></p>
+                <p>
+                  <mat-form-field class="form_field w-50 marginTop-20" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.highPriority'): ""}}</mat-label>
+                    <input matInput [(ngModel)]="threadConfigurationModel.mediumPriorityThreadMaximumPoolSize"
+                           name="highPriorityThreadMaximumPoolSize" id="highPriorityThreadMaximumPoolSize">
+                  </mat-form-field>
+                  <mat-form-field class="form_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.mediumPriority'): ""}}</mat-label>
+                    <input matInput [(ngModel)]="threadConfigurationModel.mediumPriorityThreadMaximumPoolSize"
+                           id="mediumPriorityThreadMaximumPoolSize" name="mediumPriorityThreadMaximumPoolSize">
+                  </mat-form-field>
+                </p>
+                <p>
+                  <mat-form-field class="form_field w-50" appearance="fill">
+                    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.lowPriority'): ""}}</mat-label>
+                    <input matInput [(ngModel)]="threadConfigurationModel.lowPriorityThreadCorePoolSize"
+                           id="lowPriorityThreadMaximumPoolSize" name="lowPriorityThreadCorePoolSize"
+                    >
+                  </mat-form-field>
+                </p>
+                </div>
+                <div id="errorMsg">
+                  <div *ngFor="let error of systemInfoError">
+                    <li class="ui red message">{{error.property}} : {{error.message}}</li>
+                  </div>
+                </div>
+                <button mat-raised-button class="saveButton addSaveAllButtons"
+                        (click)="saveThreadConfiguration()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}</button>
+              </form>
+            </mat-card-content>
+          </mat-card>

@@ -1,0 +1,93 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar_all">
+    <span
+      class="sidebar_form_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.emailConfiguration'): ""}} </span>
+    <div class="">
+      <mat-icon class="toolbar_icon marginLeft-10 mt-10" aria-hidden="false"
+                aria-label="error_outline icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}"
+                (click)="loadEmailHelpModel()">
+        info_outline
+      </mat-icon>
+    </div>
+  </mat-toolbar>
+  <mat-card-content class="allFormedit ">
+    <form>
+      <div  [hidden]="!messageError">
+        <mat-card class="validation-error">
+          <p class ="mb-0 text-white" *ngFor="let err of emailError">{{err.message}}</p>
+        </mat-card>
+      </div>
+      <div class="emailFormAlign">
+
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.smtpHost'): ""}}</mat-label>
+          <input [(ngModel)]="emailSetting.emailSmtpHost" matInput name="emailSmtpHost"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.smtpHost'): ''}}">
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.smtpPort'): ""}}</mat-label>
+          <input [(ngModel)]="emailSetting.emailSmtpPort" matInput name="emailSmtpPort"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.smtpPort'): ''}}">
+        </mat-form-field>
+
+      <div>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fromAddress'): ""}}</mat-label>
+          <input [(ngModel)]="emailSetting.emailFromAddress" matInput name="emailFromAddress"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fromAddress'): ''}}" required>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fromName'): ""}}</mat-label>
+          <input [(ngModel)]="emailSetting.emailFromName" matInput name="emailFromName"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fromName'): ''}}" required>
+        </mat-form-field>
+      </div>
+      <mat-slide-toggle [(ngModel)]="emailSetting.emailAuthorization" name="enabledAuthorization" class="toggle_change marginLeft-10"
+                        (change)="useAuthorization($event)">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.useAuthorization'): ""}}
+      </mat-slide-toggle>
+      <div>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ""}}</mat-label>
+          <input [(ngModel)]="emailSetting.emailSmtpUsername" matInput name="emailSmtpUsername"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ''}}"
+                 [disabled]="!showCredentialFields">
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 mt-10 marginLeft-20" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.password'): ""}}</mat-label>
+          <input [(ngModel)]="emailSetting.emailSmtpPassword" matInput name="emailSmtpPassword"
+                 placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.password'): ''}}"
+                 [disabled]="!showCredentialFields" type="password">
+        </mat-form-field>
+      </div>
+      <mat-slide-toggle class="toggle_change marginLeft-10" name="emailTls" id="emailTls"
+                        [(ngModel)]="emailSetting.emailTls">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enableTLS'): ""}}
+      </mat-slide-toggle>
+
+        <mat-slide-toggle class="toggle_change marginLeft-10" name="emailSendTimeout"
+                          [(ngModel)]="emailSetting.emailSendTimeout">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.emailSendTimeout'): ""}}
+        </mat-slide-toggle>
+        <br> <br>
+        <mat-slide-toggle class="toggle_change marginLeft-10" name="emailDisabled"
+                          [(ngModel)]="emailSetting.emailDisabled">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.emailConfiguration').substring(0,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}
+        </mat-slide-toggle>
+      <div>
+        <mat-form-field class="form_field w-50 mt-10" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.contentType'): ""}}</mat-label>
+          <mat-select [(ngModel)]="emailSetting.emailContentType" name="emailContentType">
+            <mat-option *ngFor="let contentType of contentTypes" [value]="contentType.val">
+              {{contentType.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      </div>
+      <div class="marginTop">
+        <button mat-raised-button class="saveButton addSaveAllButtons"
+                (click)="saveEmailConfiguration()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
