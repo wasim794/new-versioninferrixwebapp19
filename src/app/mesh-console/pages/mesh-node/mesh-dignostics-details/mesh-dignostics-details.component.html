@@ -1,0 +1,298 @@
+<div class="container headinglayout marginBottom-10 meshDiagnosticss" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span> {{"Diagnostics Detail"}}</span>
+      <div class="containerInfo">
+        <span [hidden]="!firstData">
+          <mat-form-field class="chartInputField" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.from') : ""}}</mat-label>
+       <input [(ngModel)]="dateFrom" name="dateFrom" matInput [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+   <mat-datepicker-toggle class="matToggleDates" [owlDateTimeTrigger]="dt"></mat-datepicker-toggle>
+    <owl-date-time #dt></owl-date-time>
+ </mat-form-field>
+     <mat-form-field class="chartInputField" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.to') : ""}}</mat-label>
+       <input [(ngModel)]="dateTo" name="dateTo" matInput [owlDateTimeTrigger]="dtT" [owlDateTime]="dtT">
+   <mat-datepicker-toggle class="matToggleDates" [owlDateTimeTrigger]="dtT"></mat-datepicker-toggle>
+    <owl-date-time #dtT></owl-date-time>
+ </mat-form-field>
+          <!-- Add a click event to trigger the date filter -->
+  <button (click)="searchByDate()" mat-raised-button class="dateFilter" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close') : ''}} " color="accent">
+    <i class="material-icons highLightRemove" (click)="closeThisFunction()">highlight_remove</i>
+    <i class="material-icons">filter_alt</i>
+  </button>
+</span>
+        <button (click)="showHide('dateFilter')" *ngIf="!filterButton" mat-raised-button class="dateFilter" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.dateFormat').substring(0,4) : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.valueFilter').substring(5,12) : ''}}" color="accent"><i class="material-icons">filter_alt</i></button>
+
+        <span [hidden]="!secondData">
+          <mat-form-field>
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
+          <input matInput [(ngModel)]="numbers" (keyup.enter)="applyFilter($event)" placeholder="search limit" #input>
+          <mat-icon (click)="applyFilter($event)" class="Input_search" matSuffix>search</mat-icon>
+            <i class="material-icons highLightRemove" (click)="closeThisFunction()">highlight_remove</i>
+        </mat-form-field>
+</span>
+        <button (click)="showHide('searchFilter')" *ngIf="!filterButtonTwo" mat-raised-button class="dateFilter" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.highLimit').substring(4,11) : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.valueFilter').substring(5,12) : ''}}" color="accent"><i class="material-icons">search</i></button>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="main_db meshTableContainer">
+    <div class="container-size OverflowScroll addCommonPageTable meshConsoleTables">
+      <table id="scrollingTables" mat-table [dataSource]="dataSource"  multiTemplateDataRows class="mat-elevation-z8 meshTable diagnosticTableHeader width-100">
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.address') : ""}} </th>
+          <td class="perticularRows"  mat-cell *matCellDef="let element">{{element.address}} </td>
+        </ng-container>
+        <ng-container matColumnDef="timestamp">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.heading.dateTime') : ""}} </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.timestamp | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
+        </ng-container>
+        <ng-container matColumnDef="nodeType">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nodeType') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.nodeType}} </td>
+        </ng-container>
+        <ng-container matColumnDef="bootData">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootData') : ""}}  </th>
+          <td mat-cell *matCellDef="let element">  <button mat-raised-button style="margin-right: 12px"
+                                                           (click)="getTooltipText(element,'bootData')"
+                                                           matTooltipClass="example-tooltip-uppercase"
+                                                           aria-label="Button that shows a red tooltip"
+                                                           class="example-button">
+            <i class="material-icons">details</i>
+          </button></td>
+        </ng-container>
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.role') : ""}} </th>
+          <td mat-cell *matCellDef="let element">{{element.diagnosticsData.role}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="voltage">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.voltage') : ""}} </th>
+          <td mat-cell *matCellDef="let element">{{element.diagnosticsData.voltage}}   </td>
+        </ng-container>
+        <ng-container matColumnDef="bufferUsage">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bufferUsage') : ""}} </th>
+          <td mat-cell *matCellDef="let element"><strong style="color: green;">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacReservedUploadAverage').substring(16,23) : ""}} :</strong> {{element.diagnosticsData.bufferUsage.average}} <br>
+            <strong style="color: green;">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacReservedUploadMaximum').substring(16,23) : ""}}:</strong> {{element.diagnosticsData.bufferUsage.maximum}}</td>
+        </ng-container>
+        <ng-container matColumnDef="memoryAllocationFailures">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.memoryAllocationFailures') : ""}} </th>
+          <td mat-cell *matCellDef="let element">{{element.diagnosticsData.memoryAllocationFailures}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="packetsDropped">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.droppedPackets') : ""}} </th>
+          <td mat-cell *matCellDef="let element">{{element.diagnosticsData.packetsDropped}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="cbmacDetails">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacDetails') : ""}} </th>
+          <td mat-cell *matCellDef="let element">
+            <button  style="margin-right: 10px;" mat-raised-button
+                    (click)="getTooltipText(element,'cbmacDetails')"
+                    matTooltipClass="example-tooltip-uppercase"
+                    aria-label="Button that shows a red tooltip"
+                    class="example-button">
+              <i class="material-icons">details</i>
+            </button>
+
+        </ng-container>
+        <ng-container matColumnDef="cbmac">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmac') : ""}}  </th>
+          <td mat-cell *matCellDef="let element">
+            <button style="margin-right: 10px;" mat-raised-button
+                    (click)="getTooltipText(element,'Cbmac')"
+                    matTooltipClass="example-tooltip-uppercase"
+                    aria-label="Button that shows a red tooltip"
+                    class="example-button">
+              <i class="material-icons">details</i>
+            </button> </td>
+        </ng-container>
+        <ng-container matColumnDef="nextHopDetails">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopDetails') : ""}}  </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button style="margin-right: 12px"
+                    (click)="getTooltipText(element,'nextHopDetails')"
+                    matTooltipClass="example-tooltip-uppercase"
+                    aria-label="Button that shows a red tooltip"
+                    class="example-button">
+              <i class="material-icons">details</i>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="cfmac">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmac') : ""}}  </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button style="margin-right: 12px"
+                    (click)="getTooltipText(element,'cfmac')"
+                    matTooltipClass="example-tooltip-uppercase"
+                    aria-label="Button that shows a red tooltip"
+                    class="example-button">
+              <i class="material-icons">details</i>
+            </button></td>
+        </ng-container>
+        <ng-container matColumnDef="networkScansAmount">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.networkScansAmount') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.networkScansAmount}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="sleepTime">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.sleepTime') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.sleepTime}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="installationQuality">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.installationQuality') : ""}} </th>
+          <td mat-cell *matCellDef="let element"><strong style="color: green;">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.qualityIndicator') : ""}} :</strong> {{element.diagnosticsData.installationQuality.qualityIndicator}} <br>
+            <strong style="color: green;">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.errorBitMap') : ""}} :</strong> {{element.diagnosticsData.installationQuality.errorBitmap}}</td>
+        </ng-container>
+        <ng-container matColumnDef="droppedUnackBcsPacket">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.droppedUnackBcsPacket') : ""}} </th>
+          <td mat-cell *matCellDef="let element">{{element.diagnosticsData.droppedUnackBcsPacket}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="unackBroadCastChannel">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.unackBroadCastChannel') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.unackBroadCastChannel}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="wbnRssiCorrectionVal">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.wbnRssiCorrectionVal') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.wbnRssiCorrectionVal}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="networkChannelPer">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.networkChannelPer') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.networkChannelPer}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="ccaLimitDbm">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.ccaLimitDbm') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.ccaLimitDbm}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="addressClashes">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.addressClashes') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.addressClashes}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="nborDeviceInfo">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nborDeviceInfo') : ""}} </th>
+          <td mat-cell *matCellDef="let element">   <button mat-raised-button style="margin-right: 12px"
+                                                            (click)="getTooltipText(element,'nborDeviceInfo')"
+                                                            matTooltipClass="example-tooltip-uppercase"
+                                                            aria-label="Button that shows a red tooltip"
+                                                            class="example-button">
+            <i class="material-icons">details</i>
+          </button>  </td>
+        </ng-container>
+        <ng-container matColumnDef="clusterChannel">
+          <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.clusterChannel') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.clusterChannel}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="clusterChannelReliability">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.clusterChannelReliability') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.clusterChannelReliability}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="event">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.events') : ""}} </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button style="margin-right: 12px"
+                    (click)="getTooltipText(element,'event')"
+                    matTooltipClass="example-tooltip-uppercase"
+                    aria-label="Button that shows a red tooltip"
+                    class="example-button">
+              <i class="material-icons">details</i>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="blacklistedChannelAmount">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.blacklistedChannelAmount') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.blacklistedChannelAmount}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="traceOptions">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.traceOptions') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> <strong style="color: green;">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.traceType') : ""}}:</strong> {{element.diagnosticsData.traceOptions.traceType}} <br>
+            <strong style="color: green;">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo').substring(0,9) : ""}}:</strong> {{element.diagnosticsData.traceOptions.sequence}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="cbmacUnicastMembersPending">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacUnicastMembersPending') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.cbmacUnicastMembersPending}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cbmacBlacklistingChannels41ToMax">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBlacklistingChannels41ToMax') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.cbmacBlacklistingChannels41ToMax}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="llDeviceCountInRadioRange">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.llDeviceCountInRadioRange') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.llDeviceCountInRadioRange}} </td>
+        </ng-container>
+        <ng-container matColumnDef="clusterMemberAmount">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.clusterMemberAmount') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.clusterMemberAmount}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="clusterRouterAmount">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.clusterRouterAmount') : ""}} </th>
+          <td mat-cell *matCellDef="let element">{{element.diagnosticsData.clusterRouterAmount}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="scanTotalTime">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.scanTotalTime') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.scanTotalTime}} </td>
+        </ng-container>
+        <ng-container matColumnDef="bleScannerActive">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bleScannerActive') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.bleScannerActive}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="costComp">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.costComp') : ""}} </th>
+          <td mat-cell *matCellDef="let element">
+
+            <button mat-raised-button style="margin-right: 12px"
+                    (click)="getTooltipText(element,'costComp')"
+                    matTooltipClass="example-tooltip-uppercase"
+                    aria-label="Button that shows a red tooltip"
+                    class="example-button">
+              <i class="material-icons">details</i>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="joiningBeaconActive">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.joiningBeaconActive') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.joiningBeaconActive}}  </td>
+        </ng-container>
+        <ng-container matColumnDef="floodingPacketsAmount">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.floodingPacketsAmount') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.floodingPacketsAmount}}  </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ftdmaTable">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.ftdmaTable') : ""}} </th>
+          <td mat-cell *matCellDef="let element"><button mat-raised-button style="margin-right: 12px"
+                                                         (click)="getTooltipText(element,'ftdmaTable')"
+                                                         matTooltipClass="example-tooltip-uppercase"
+                                                         aria-label="Button that shows a red tooltip"
+                                                         class="example-button">
+            <i class="material-icons">details</i>
+          </button> </td>
+        </ng-container>
+        <ng-container matColumnDef="droppedReassemblyPacket">
+          <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.droppedReassemblyPacket') : ""}} </th>
+          <td mat-cell *matCellDef="let element"> {{element.diagnosticsData.droppedReassemblyPacket}}  </td>
+        </ng-container>
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+
+        <tr mat-header-row *matHeaderRowDef="dataColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: dataColumns;"
+            class="tableRow"
+        >
+        </tr>
+      </table>
+      <button  class="scrollTabs leftSide" style="left:55px"  (click)="scrollTable('left')" mat-mini-fab >
+        <mat-icon><i class="material-icons">arrow_back_ios</i></mat-icon>
+      </button>
+      <button  class="scrollTabs" style="right:0" (click)="scrollTable('right')" mat-mini-fab>
+        <mat-icon><i class="material-icons">arrow_forward_ios</i></mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+

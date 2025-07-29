@@ -1,0 +1,29 @@
+<div>
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebarTitle">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.fileProcessStart') : ""}} </span>
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+  <p>
+  <mat-form-field class="form_field modbusInputField marginTop"  appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.name') : ""}} </mat-label>
+    <input matInput  [(ngModel)]="name" name="name"  readonly>
+  </mat-form-field>
+  </p>
+  <p>
+  <mat-form-field class="form_field modbusInputField"  appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo') : ""}} </mat-label>
+    <input matInput [(ngModel)]="sequence" name="sequence" placeholder="Sequence">
+  </mat-form-field>
+  </p>
+  <div class="buttonAlign" >
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="startFirmware($event)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.start') : ''}}">
+    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.meshConsole.ota.process.start') | uppercase) : ""}}
+  </button>&nbsp;
+  <button mat-raised-button color="primary" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.cancel') : ''}}" mat-dialog-close>
+    {{UIDICTIONARY ? (UIDICTIONARY.get('ui.meshConsole.ota.process.cancel') | uppercase) : ""}}
+  </button>&nbsp;
+  </div>
+</div>

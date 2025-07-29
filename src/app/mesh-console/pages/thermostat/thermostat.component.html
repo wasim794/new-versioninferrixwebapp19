@@ -1,0 +1,99 @@
+<div class="container headinglayout deviceProfileMains" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>{{"Thermostat"}} </span>
+
+      <div class="containerInfo">
+        <mat-form-field>
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
+          <input matInput name="searchBacnetList"   placeholder="" #input
+          >
+          <mat-icon class="Input_search"   matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+        <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon">
+          info_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container headinglayout deviceProfileTables" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+
+  <div fxFlex="100%" class="main_db">
+    <div class="container-size OverflowScroll">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 addCn tableHeader40 mt-10" style="width:100%"
+             matSort>
+        <ng-container matColumnDef="S.No." class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef
+                           style="max-width: 5% !important;">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize " *matCellDef="let element; let i = index;"
+                    style="max-width: 5% !important;">{{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Address" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize " *matHeaderCellDef
+                           mat-sort-header>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress'): ""}}
+          </mat-header-cell>
+          <mat-cell  class="commonReducesSize " *matCellDef="let element"
+                    > {{element.address}}
+
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Description -->
+        <ng-container matColumnDef="Name" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize " *matHeaderCellDef
+                           mat-sort-header >
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize " *matCellDef="let element"
+                   > {{element.name}}
+
+          </mat-cell>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="Actions" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize " *matHeaderCellDef mat-sort-header
+                          >
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize thermoAllIcons" *matCellDef="let element"
+                   >
+            <mat-icon  class="allIcons" (click)="startActions(element, 'powerONOFF')"  matSuffix title="Power setting">power_settings_new</mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'lockUnlocks')"  matSuffix title="Lock" >lock</mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'onlyMode')" matSuffix title="Mode">mode_standby</mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'fan')"  matSuffix title="Fan" >heat_pump</mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'energySavings')"  matSuffix title="Energy Saving">energy_savings_leaf</mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'automaticManual')"  matSuffix title="Auto mode" >auto_mode</mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'temp')"  matSuffix title="Set point temprature">device_thermostat</mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'echotemp')"  matSuffix title="Echo set point temprature"> <mat-icon>thermostat_auto</mat-icon></mat-icon>
+            <mat-icon  class="allIcons" (click)="startActions(element, 'syncter')"  matSuffix title="sync thermostat"> <mat-icon>cloud_sync</mat-icon></mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="thermostatService.total" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit (page)="getNextPage($event)"></mat-paginator>
+</div>
+
+
+

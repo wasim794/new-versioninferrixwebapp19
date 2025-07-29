@@ -1,0 +1,239 @@
+<mat-card class="form_cards modelRemainShow">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{data.dataName}}
+    </mat-card-title>
+
+  </mat-toolbar>
+  <div class="table-container">
+  <table class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="dataCbmacDetails">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.from') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.rxMessagesAck') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.rxMessagesUnack') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.txAckCcaFail') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.txAckNotReceived') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.txMessagesAck') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.txMessagesUnack') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.txCcaUnackFail') : ""}}</th>
+    </tr>
+    <tr>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.load}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.rxMessagesAck}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.rxMessagesUnack}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.txAckCcaFail}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.txAckNotReceived}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.txMessagesAck}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.txMessagesUnack}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacDetails.txCcaUnackFail}}</td>
+    </tr>
+  </table>
+
+
+
+  <table id="scrollingTable"  class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="bootDataDetails">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.field.role') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootCount') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.firmwareStack') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.firmwareApp') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.scratchpadProcessedSequence') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.scratchpadStoredSequence') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.otapSupport') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.hardwareMagic') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootAddress') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootFaultReason') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootLineNumber') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootFilenameHash') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.stackProfile') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.traceOptions') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.scratchPadXferCnt') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootReason') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.txPowerTable') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.rxGain') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.scratchPadDetails') : ""}}</th>
+
+    </tr>
+    <tr>
+      <td>{{dataAll.bootData.role}}</td>
+      <td>{{dataAll.bootData.bootCount}}</td>
+      <td>{{dataAll.bootData.firmwareStack}}</td>
+      <td>{{dataAll.bootData.firmwareApp}}</td>
+      <td>{{dataAll.bootData.scratchpadProcessedSequence}}</td>
+      <td>{{dataAll.bootData.scratchpadStoredSequence}}</td>
+      <td>{{dataAll.bootData.otapSupport}}</td>
+      <td>{{dataAll.bootData.hardwareMagic}}</td>
+      <td>{{dataAll.bootData.bootAddress}}</td>
+      <td>{{dataAll.bootData.bootFaultReason}}</td>
+      <td>{{dataAll.bootData.bootLineNumber}}</td>
+      <td>{{dataAll.bootData.bootFilenameHash}}</td>
+      <td>{{dataAll.bootData.stackProfile}}</td>
+      <td><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.traceType') : ""}}</b>: {{dataAll.bootData.traceOptions.traceType}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.process.sequenceNo').substring(0,9) : ""}}</b>: {{dataAll.bootData.traceOptions.sequence}}</td>
+      <td>{{dataAll.bootData.scratchPadXferCnt}}</td>
+      <td>{{dataAll.bootData.bootReason}}</td>
+      <td><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm1') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm1}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm2') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm2}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm3') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm3}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm4') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm4}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm5') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm5}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm6') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm6}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm7') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm7}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm8') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm8}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.dBm9') : ""}}</b>: {{dataAll.bootData.txPowerTable.dBm9}}
+      </td>
+        <td>{{dataAll.bootData.bootReason}}</td>
+      <td><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.fwAreaId') : ""}}</b>: {{dataAll.bootData.scratchPadDetails.fwAreaId}}<br>
+        <b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.appAreaId') : ""}}</b>: {{dataAll.bootData.scratchPadDetails.appAreaId}}</td>
+    </tr>
+  </table>
+
+
+  <table id="scrollingTable" class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="cbmacDataDetails">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBroadcastLlMembersPending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBroadcastLeMembersPending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBroadcastNextHopPending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBroadcastUnackPending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacPacketsExpiredPending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacPacketsReroutePending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacUnicastClusterPending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBlacklistingChannelsMinTo40') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacUnicastMembersPending') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBlacklistingChannels41ToMax') : ""}}</th>
+    </tr>
+    <tr>
+      <td>{{dataAll.diagnosticsData.cbmacBroadcastLlMembersPending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacBroadcastLeMembersPending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacBroadcastNextHopPending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacBroadcastUnackPending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacPacketsExpiredPending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacPacketsReroutePending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacUnicastClusterPending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacBlacklistingChannelsMinTo40}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacUnicastMembersPending}}</td>
+      <td>{{dataAll.diagnosticsData.cbmacBlacklistingChannels41ToMax}}</td>
+    </tr>
+  </table>
+
+  <table class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="nextDataDetails">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.advertisedCost') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.sinkAddress') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopAddress') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopQuality') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopRssi') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopPower') : ""}}</th>
+    </tr>
+    <tr>
+      <td>{{dataAll.diagnosticsData.nextHopDetails.advertisedCost}}</td>
+      <td>{{dataAll.diagnosticsData.nextHopDetails.sinkAddress}}</td>
+      <td>{{dataAll.diagnosticsData.nextHopDetails.nextHopAddress}}</td>
+      <td>{{dataAll.diagnosticsData.nextHopDetails.nextHopQuality}}</td>
+      <td>{{dataAll.diagnosticsData.nextHopDetails.nextHopRssi}}</td>
+      <td>{{dataAll.diagnosticsData.nextHopDetails.nextHopPower}}</td>
+    </tr>
+  </table>
+
+  <table class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="cfmacDataDetails">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacAccessCycleInterval') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacPendingBroadcastLeMember') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacMessagesAck') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacAlohaUploadMaximum') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacReservedUploadMaximum') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cfmacReservedUploadAverage') : ""}}</th>
+    </tr>
+    <tr>
+      <td>{{dataAll.diagnosticsData.cfmacAccessCycleInterval}}</td>
+      <td>{{dataAll.diagnosticsData.cfmacPendingBroadcastLeMember}}</td>
+      <td>{{dataAll.diagnosticsData.cfmacMessagesAck}}</td>
+      <td>{{dataAll.diagnosticsData.cfmacAlohaUploadMaximum}}</td>
+      <td>{{dataAll.diagnosticsData.cfmacReservedUploadMaximum}}</td>
+      <td>{{dataAll.diagnosticsData.cfmacReservedUploadAverage}}</td>
+    </tr>
+  </table>
+
+  <table  class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="nborDeviceInfoDetails">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.address') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.txPower') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nextHopRssi').substring(8,13) : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.type') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbRxAttempts') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbRxFailures') : ""}}</th>
+    </tr>
+    <tr>
+      <td>{{dataAll.diagnosticsData.nborDeviceInfo.address}}</td>
+      <td>{{dataAll.diagnosticsData.nborDeviceInfo.txPower}}</td>
+      <td>{{dataAll.diagnosticsData.nborDeviceInfo.rssi}}</td>
+      <td>{{dataAll.diagnosticsData.nborDeviceInfo.type}}</td>
+      <td>{{dataAll.diagnosticsData.nborDeviceInfo.cbRxAttempts}}</td>
+      <td>{{dataAll.diagnosticsData.nborDeviceInfo.cbRxFailures}}</td>
+    </tr>
+  </table>
+
+
+    <table id="scrollingTable" class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 eventsTables" *ngIf="eventDetails">
+      <tr>
+        <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.events') : ""}}</th>
+        <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name') : ""}}</th>
+        <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.description') : ""}}</th>
+      </tr>
+      <tr *ngFor="let event of arrays">
+        <td>{{ event[0] }}</td>
+        <td>{{ event[1].eventType }}</td>
+        <td> {{ event[1].eventMessage }}</td>
+      </tr>
+    </table>
+
+  <button *ngIf="buttons" class="scrollTabs" style="left:0"  (click)="scrollTable('left')" mat-mini-fab >
+    <mat-icon><i class="material-icons">arrow_back_ios</i></mat-icon>
+  </button>
+  <button *ngIf="buttons" class="scrollTabs" style="right:0" (click)="scrollTable('right')" mat-mini-fab>
+    <mat-icon><i class="material-icons">arrow_forward_ios</i></mat-icon>
+  </button>
+
+
+  <table class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="costCompDetails">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.costCompThroughput') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.costCompBadLink') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.costCompBadChannel') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.costCompAssociation') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.costCompBuffer') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.costCompEnergy') : ""}}</th>
+
+    </tr>
+    <tr>
+      <td>{{dataAll.diagnosticsData.costCompThroughput}}</td>
+      <td>{{dataAll.diagnosticsData.costCompBadLink}}</td>
+      <td>{{dataAll.diagnosticsData.costCompBadChannel}}</td>
+      <td>{{dataAll.diagnosticsData.costCompAssociation}}</td>
+      <td>{{dataAll.diagnosticsData.costCompBuffer}}</td>
+      <td>{{dataAll.diagnosticsData.costCompEnergy}}</td>
+
+    </tr>
+  </table>
+
+  <table class="mat-elevation-z8 meshTable diagnosticTableHeader width-100" *ngIf="ftdmaTableDetail">
+    <tr>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.ftdmaSlotInfo1') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.ftdmaSlotInfo2') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.ftdmaSlotInfo3') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.ftdmaSlotInfo4') : ""}}</th>
+      <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.ftdmaSlotInfo5') : ""}}</th>
+
+    </tr>
+    <tr>
+      <td>{{dataAll.diagnosticsData.ftdmaTable.ftdmaSlotInfo1}}</td>
+      <td>{{dataAll.diagnosticsData.ftdmaTable.ftdmaSlotInfo2}}</td>
+      <td>{{dataAll.diagnosticsData.ftdmaTable.ftdmaSlotInfo3}}</td>
+      <td>{{dataAll.diagnosticsData.ftdmaTable.ftdmaSlotInfo4}}</td>
+      <td>{{dataAll.diagnosticsData.ftdmaTable.ftdmaSlotInfo5}}</td>
+
+    </tr>
+  </table>
+  </div>
+</mat-card>

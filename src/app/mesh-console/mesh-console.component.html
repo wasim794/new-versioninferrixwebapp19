@@ -1,0 +1,36 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.meshConsole'): ""}}</span>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container cardlayout width-100 meshMainContainer" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid" fxLayoutAlign="left">
+  <div fxFlex="22%" *ngFor="let subMenu of subMenus" class="dynamicMenuCard meshConsole {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ''}}">
+    <mat-card class="mat-card {{subMenu.type}} matCardAll">
+      <mat-card-header>
+        <mat-card-title class="mesh_text "> {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="meshMainContent">
+        <mat-icon class="card-icon-space-size mat-pointer" (click)="showMeshConsoleDetail(subMenu.type, meshConsoleSideNav)" aria-hidden="false" aria-label=" mesh_console_properties icon">{{subMenu.icon}}
+        </mat-icon>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="loadermain" id="matSpinderAll">
+
+    <img src="favicon.ico" alt="loader" />
+
+  </div>
+</div>
+<mat-drawer-container class="container-size sidebar_position meshConsoleDrawers" autosize [hasBackdrop]="'true'">
+  <mat-drawer #meshConsoleSideNav class="drawer_sidebar add_drawer_sidebar meshConsoleSidenave" id="myElement" mode="push" position="end">
+    <mat-icon class="allCloseOptions" aria-hidden="false" id="meshConsolesidebar" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" (click)="meshConsolesidebar($event)" aria-label="close icon">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ""}}
+    </mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllData top-54" (click)="meshConsolesidebar($event)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+    <app-load-components (meshConsoleSidebar)="meshConsolesidebar($event)"></app-load-components>
+  </mat-drawer>
+</mat-drawer-container>

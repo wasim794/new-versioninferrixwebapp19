@@ -1,0 +1,19 @@
+ <div class="mainDialogContainer">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.content.confirmation'): ""}}
+ </div>
+  <div class="confirmContainer">
+    <mat-form-field class=""  appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-label>
+      <mat-select name="actionsType" [(ngModel)]="actionTypesSelect" *ngIf="inputSelectHideSHow">
+        <mat-option *ngFor="let action of actionsMode" [value]="action.key" >{{action.value}}</mat-option>
+      </mat-select>
+      <input type="text" matInput name="actionTypesInput" [(ngModel)]="actionTypesInput" [hidden]="!inputTextHideSHow"/>
+    </mat-form-field>
+  </div>
+  <div class="deletesButton">
+    <button [mat-dialog-close]="true" mat-flat-button class="removeButtons"
+           >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.no'): ""}}</button>
+    <button mat-flat-button class="yesButtons"
+            (click)="startActions()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.yes'): ""}}</button>
+  </div>
+

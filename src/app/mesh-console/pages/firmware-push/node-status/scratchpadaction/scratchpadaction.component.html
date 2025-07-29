@@ -1,0 +1,69 @@
+<div class="actionsDivOtap" *ngIf="!actionHideShow">
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebarTitle">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.type') : ""}}</span>
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+
+    <mat-form-field class="form_field modbusInputField marginTop"  appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Action') : ""}}</mat-label>
+      <mat-select name="actionsType" [(ngModel)]="action" name="action" >
+        <mat-option   *ngFor="let actionNode of actionNodeStatus"
+                      (onSelectionChange)="actionsNodeSelection($event, actionNode)" [title]=actionNode.value
+                    [value]=actionNode.key>{{actionNode.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form_field modbusInputField marginTop"  appearance="fill" >
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.sequenceNumber') : ""}}</mat-label>
+      <input matInput name="sequence" [(ngModel)]="sequence" placeholder="Sequence No." [disabled]="sequenceNo">
+    </mat-form-field>
+
+  <div>
+    <mat-form-field class="form_field modbusInputField"  appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.targetCrc') : ""}}</mat-label>
+      <input matInput  name="targetCrc" [(ngModel)]="targetCrc" placeholder="TargetCrc" [disabled]="targetSRC">
+    </mat-form-field>
+    <mat-form-field class="form_field modbusInputField"  appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.delay') : ""}}</mat-label>
+      <input matInput  name="delay" [(ngModel)]="delay" placeholder="Delay" [disabled]="DELAY">
+    </mat-form-field>
+  </div>
+  <div class="buttonAlign" >
+    <button mat-raised-button (click)="updateUsingAction()"  color="primary" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.update') : ''}}">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.update') | uppercase) : ""}}
+    </button>&nbsp;
+    <button mat-raised-button color="primary"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.cancel') : ''}}" mat-dialog-close>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.meshConsole.ota.process.cancel') | uppercase) : ""}}
+    </button>&nbsp;
+  </div>
+</div>
+
+
+
+<div class="actionsDivOtap" *ngIf="actionHideShow">
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebarTitle">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.type') : ""}}</span>
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+
+  <p>
+    <mat-form-field class="form_field modbusInputField marginTop"  appearance="fill" style="margin-top: 20px;">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.sequenceNumber') : ""}}</mat-label>
+      <input matInput name="sequence" [(ngModel)]="sequence" placeholder="Sequence No." >
+    </mat-form-field>
+  </p>
+  <div class="buttonAlign" >
+    <button mat-raised-button (click)="updateUsingActionLegacy()"  color="primary" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.update') : ''}}">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.update') | uppercase) : ""}}
+    </button>&nbsp;
+    <button mat-raised-button color="primary"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.cancel') : ''}}" mat-dialog-close>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.meshConsole.ota.process.cancel') | uppercase) : ""}}
+    </button>&nbsp;
+  </div>
+</div>
+

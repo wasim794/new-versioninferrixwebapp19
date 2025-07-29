@@ -1,0 +1,45 @@
+<mat-card class="form_cards meshConsoleProperties">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.configuration.meshSettings') : ""}}
+    </mat-card-title>
+  </mat-toolbar>
+  <mat-card-content>
+    <form>
+      <div [hidden]="!messageError">
+        <mat-card class="validation-error">
+          <li *ngFor="let err of error">{{err.property}}
+            : {{err.message}}</li>
+        </mat-card>
+      </div>
+        <mat-form-field class="form_field" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name') : ""}}</mat-label>
+          <input [(ngModel)]="meshSettings.meshConsoleName" matInput name="meshConsoleName" placeholder="Enter Name">
+        </mat-form-field>
+
+        <mat-form-field class="form_field" appearance="fill">
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.table.Id') : ""}}</mat-label>
+          <mat-select [(ngModel)]="meshSettings.meshCommPortId" name="meshPort">
+            <mat-option *ngFor="let port of serialPorts;" [value]="port">{{port}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-mini-fab class="refresh_circles" aria-label="icon button with a filter list icon">
+          <mat-icon (click)="getPorts()" class="mat-pointer" title="Refresh">refresh_circle
+          </mat-icon>
+        </button>
+      <br>
+
+      <button mat-raised-button class="saveButton saveConsoleButton allSaveButtons"
+        (click)="meshConsoleConfiguration() ">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.submit') : ""}}
+      </button>
+
+      <div id="errorMsg">
+        <div *ngFor="let error of emailError">
+          <li class="ui red message">{{error.property}} : {{error.message}}</li>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
