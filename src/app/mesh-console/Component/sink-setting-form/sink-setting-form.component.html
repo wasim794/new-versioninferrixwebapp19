@@ -18,7 +18,7 @@
           <input matInput name="meshAddress" [disabled]="isStackRunning"
                  placeholder="Enter Address" [(ngModel)]="address">
         </mat-form-field>
-        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+        <button mat-mini-fab class="saveButton sinkPushButton" [disabled]="isStackRunning"
                 aria-label="icon button with a filter list icon" (click)="pushAddress()">
           {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
         </button>
@@ -29,7 +29,7 @@
           <input matInput name="meshNetwork" [disabled]="isStackRunning"
                  placeholder="Enter Network" [(ngModel)]="network">
         </mat-form-field>
-        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+        <button mat-mini-fab class="saveButton sinkPushButton" [disabled]="isStackRunning"
                 aria-label="icon button with a filter list icon" (click)="pushNetwork()">
           {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
         </button>
@@ -40,7 +40,7 @@
           <input matInput name="meshChannel" [disabled]="isStackRunning"
                  placeholder="Enter Channel" [(ngModel)]="channel">
         </mat-form-field>
-        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+        <button mat-mini-fab class="saveButton sinkPushButton" [disabled]="isStackRunning"
                 aria-label="icon button with a filter list icon" (click)="pushChannel()">
           {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
         </button>
@@ -52,12 +52,12 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button mat-mini-fab class="refresh_circles sinkPushButton" [disabled]="isStackRunning"
+        <button mat-mini-fab class="saveButton sinkPushButton" [disabled]="isStackRunning"
                 aria-label="icon button with a filter list icon" (click)="pushRole()">
           {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
         </button>
 
-      <button mat-raised-button class="Save_Button saveConsoleButton   w-23"
+      <button mat-raised-button class="Save_Button saveConsoleButton sinkStart  w-23"
               [disabled]="isStackRunning" (click)="startStack()">
         {{dictionaryService.uiDictionary.get("ui.meshConsole.button.startStack")}}
       </button>

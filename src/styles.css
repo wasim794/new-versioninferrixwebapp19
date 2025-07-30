@@ -4532,6 +4532,8 @@ button.Save_Button.addSaveAllButtons {
 .refresh_circles {
   margin-left: 12px !important;
   background-color: #225496 !important;
+  border-radius: 100% !important;
+  color: white !important;
 }
 
 .toogleShaddowTop {
@@ -7246,7 +7248,13 @@ p.allParagraph.eventBasicForms {
 }
 
 .sinkForms .sinkStops {
-  background-color: #b83232;
+  background-color: #b83232 !important;
+  border-radius: 8px !important;
+}
+
+.sinkForms .sinkStart {
+
+  border-radius: 8px !important;
 }
 
 .dataPurseCon p.inputsPara {
@@ -9665,4 +9673,10 @@ mat-card-title.mesh_text {
 
 .headerKey{
   padding-left: 50px !important;
+}
+
+.meshMainCardNew{
+  margin-left: 20px;
+  width: 350px;
+
 }
