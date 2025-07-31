@@ -177,7 +177,7 @@ export class HttpJsonRetrieverComponent extends UnsubscribeOnDestroyAdapter impl
     return true;
   }
 
-  editDataPoint(dataPoint: { [x: string]: number; }) {
+  editDataPoint(dataPoint: any) {
 
     const dataPointXid = dataPoint['dpXid'];
     this.currentDatapointIndex = dataPoint['index'];

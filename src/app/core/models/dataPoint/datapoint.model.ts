@@ -33,8 +33,11 @@ export class DataPointModel extends BasicModel<DataPointModel> {
   constructor(model?: Partial<DataPointModel>) {
     super(model);
 
-    if (this.purgePeriod) {
-      this.purgePeriod = new TimePeriodModel(model?.purgePeriod);
+     if (model?.purgePeriod) {
+      this.purgePeriod = new TimePeriodModel(model.purgePeriod);
+    } else {
+      // Provide a default if purgePeriod is not provided in the model
+      this.purgePeriod = new TimePeriodModel(); // Or handle as appropriate for your application
     }
 
     if (this.textRenderer) {
@@ -65,14 +68,18 @@ export class DataPointModel extends BasicModel<DataPointModel> {
       }
     }
 
-    if (this.loggingPropertiesModel) {
-      this.loggingPropertiesModel = new LoggingPropertiesModel(model?.loggingPropertiesModel);
+    if (model?.loggingPropertiesModel) {
+      this.loggingPropertiesModel = new LoggingPropertiesModel(model.loggingPropertiesModel);
+    } else {
+      // Provide a default if loggingPropertiesModel is not provided in the model
+      this.loggingPropertiesModel = new LoggingPropertiesModel(); // Or handle as appropriate for your application
     }
 
-    if (this.pointLocator) {
+   if (this.pointLocator) {
       // @ts-ignore
       this.pointLocator = new PointLocatorModel<any>(model.pointLocator);
     }
+
   }
 
   public override toJson(): any {

@@ -53,12 +53,13 @@ export class DataPointService {
     }));
   }
 
-  public getByXid(xid: any): Observable<DataPointModel> {
-    return this.http
+  public getByXid(xid: string): Observable<DataPointModel> {
+  return this.http
     .get<DataPointModel>(`${this.env.apiUrl}${this.dataPointUrl}/${xid}`)
-    .pipe(map((result) => new DataPointModel(result)));
-  }
-
+    .pipe(
+      map(result => result)
+    );
+}
   public update(resource: Partial<DataPointModel> & { toJson: () => DataPointModel }): Observable<DataPointModel> {
     return this.http
     .put<DataPointModel>(`${this.env.apiUrl}${this.dataPointUrl}/${resource.xid}`, resource.toJson())
