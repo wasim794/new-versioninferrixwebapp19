@@ -1,3 +1,4 @@
+<div class="mainBoxForm">
 <div class="actionsDivOtap" *ngIf="!actionHideShow">
   <mat-toolbar
     class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
@@ -57,8 +58,8 @@
       <input matInput name="sequence" [(ngModel)]="sequence" placeholder="Sequence No." >
     </mat-form-field>
   </p>
-  <div class="buttonAlign" >
-    <button mat-raised-button (click)="updateUsingActionLegacy()"  color="primary" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.update') : ''}}">
+  <div class="buttonAlign mt-10" >
+    <button class="scratchpadActionButton" (click)="updateUsingActionLegacy()"   title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.update') : ''}}">
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.meshConsole.ota.scratchpadAction.update') | uppercase) : ""}}
     </button>&nbsp;
     <button mat-raised-button color="primary"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.cancel') : ''}}" mat-dialog-close>
@@ -67,3 +68,4 @@
   </div>
 </div>
 
+</div>

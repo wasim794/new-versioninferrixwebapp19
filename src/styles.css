@@ -5080,11 +5080,11 @@ mat-card.data_mat_card.mat-card {
 }
 
 .dialogCancel{
-      color:white;
+      color:white !important;
       position: relative;
       z-index: 2;
       float: right;
-      border-radius: 4px;
+      border-radius: 4px !important;
       background-color: #062a51 !important;
       line-height: 23px;
       font-family: "Poppins-SemiBold";
@@ -7796,8 +7796,10 @@ border-radius: 8px !important;
 
 .containerInfo {
   .nodeIcons {
-    margin-top: 20px;
-    margin-right: 20px;
+    margin-top: 27px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
   }
 }
 
@@ -8201,6 +8203,7 @@ margin-left: 20px;
     margin-right: 12px;
     color: #ffffff;
     background: #0d437e;
+    border-radius: 8px !important;
   }
   .buttonTopNodeStatus span {
     font-size: 16px !important;
@@ -9680,3 +9683,28 @@ mat-card-title.mesh_text {
   width: 350px;
 
 }
+.mainBoxForm{
+  padding: 10px;
+
+}
+.updateInputBoxNew{
+  width: 98%;
+
+}
+
+.nodeStatusFont{
+mat-form-field {
+  margin-top: 20px !important;
+  margin-left: 10px !important;
+}
+
+}
+.buttonAlign{
+button{
+  border-radius: 4px ;
+  background-color: #002349 !important;
+  color: white !important;
+}
+
+}
+

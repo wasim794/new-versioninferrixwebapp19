@@ -1,3 +1,4 @@
+<div class="mainBoxForm">
 <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row position-sticky">
   <mat-card-title class="sidebar_form_title">
     {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.heading'): ""}}
@@ -8,7 +9,7 @@
   </button>
 </mat-toolbar>
 <div class="container-size OverflowScroll addCommonPageTable meshConsoleTables checkStatus">
-  <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 meshTable diagnosticTableHeader width-100">
+  <table mat-table border="1" [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 meshTable diagnosticTableHeader width-100">
     <ng-container matColumnDef="header-row-first-groups">
       <th mat-header-cell *matHeaderCellDef
           [attr.colspan]="2">
@@ -112,3 +113,4 @@
   </button>
 </div>
 
+</div>

@@ -7,7 +7,7 @@
       </mat-icon>
       <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics') : ""}}</span>
       <div class="containerInfo">
-        <mat-form-field>
+        <mat-form-field class="mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
           <input matInput (keyup.enter)="applyFilter($event)" placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.search.placeHolder'): ''}}" #input>
           <mat-icon (click)="applyFilter($event)" class="Input_search" matSuffix>search</mat-icon>
