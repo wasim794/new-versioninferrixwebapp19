@@ -8,11 +8,11 @@
   </div>
 </div>
 
-<div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+<div class="container cardlayout meshMainContainer  width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
 
-  <div fxFlex="22%" class="card_margin" *ngFor="let subMenu of subMenus">
-    <mat-card class="mat-card all_card matCardAll {{subMenu.type}}">
+  <div fxFlex="22%" class="dynamicMenuCard meshConsole" *ngFor="let subMenu of subMenus">
+    <mat-card class="meshMatCardNew matCardAll {{subMenu.type}} marginLeft-20">
       <mat-card-header>
         <mat-card-title class="system_text "> {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ""}}</mat-card-title>
       </mat-card-header>
@@ -25,8 +25,8 @@
     </mat-card>
   </div>
 
-  <div fxFlex="22%" class="card_margin" >
-    <mat-card class="mat-card all_card matCardAll">
+  <div fxFlex="22%" class="" >
+    <mat-card class="meshMatCardNew  matCardAll marginTop-20 marginLeft-20">
       <mat-card-header>
         <mat-card-title class="system_text ">BACnet device browser</mat-card-title>
       </mat-card-header>

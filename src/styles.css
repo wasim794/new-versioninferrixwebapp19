@@ -9699,6 +9699,10 @@ mat-form-field {
 }
 
 }
+.addressButtonStyle{
+  border-radius: 4px !important;
+}
+
 .buttonAlign{
 button{
   border-radius: 4px ;
@@ -9707,4 +9711,41 @@ button{
 }
 
 }
+
+
+
+.PERMISSIONS\.MENU mat-icon {
+    color:#8a2be2;
+}
+
+
+.STACK_INFORMATION\.MENU mat-icon {
+    color:#daa520;
+}
+
+.MAIL_SETTINGS\.MENU mat-icon {
+  color:tomato;
+}
+
+.BACNET_LOCAL_DEVICE\.MENU mat-icon {
+  color: #466e51b5;
+}
+
+.DB_UTILS\.MENU mat-icon {
+  color: brown;
+}
+
+.DATA_PURGE\.MENU mat-icon {
+  color: #3d6a6b;
+}
+
+.PLATFORM_INTEGRATION\.MENU mat-icon {
+  color:#413d6b;
+}
+
+.ADAPPT_INTEGRATION\.MENU mat-icon {
+  color: #305680;
+}
+
+/* .................. */
 
