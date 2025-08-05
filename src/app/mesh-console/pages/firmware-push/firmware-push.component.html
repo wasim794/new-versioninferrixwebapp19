@@ -17,8 +17,8 @@
      fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
 
-  <div fxFlex="22%" class="card_margin allResponsiveCard" (click)="OtabFile()">
-    <mat-card class="meshMainCardNew mat-card all_card matCardAll">
+  <div fxFlex="22%" class="card_margin " (click)="OtabFile()">
+    <mat-card class="meshMainCardNew firmPushCard all_card matCardAll">
       <mat-card-header>
         <mat-card-title
           class="cardTitleName allResponsiveText"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.file.heading') : ""}}</mat-card-title>
@@ -35,8 +35,8 @@
     </mat-card>
   </div>
 
-  <div fxFlex="22%" class="card_margin allResponsiveCard" (click)="nodeStatus()">
-    <mat-card class="meshMainCardNew mat-card all_card matCardAll">
+  <div fxFlex="22%" class="card_margin " (click)="nodeStatus()">
+    <mat-card class="meshMainCardNew firmPushCard all_card matCardAll">
       <mat-card-header>
         <mat-card-title
           class="cardTitleName allResponsiveText"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.heading') : ""}}</mat-card-title>

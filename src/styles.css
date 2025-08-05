@@ -9657,6 +9657,7 @@ mat-cell.mat-mdc-cell.mdc-data-table__cell.cdk-cell.table_data.maxWidth-52.cdk-c
   }
 
   .MESH_CONFIGURATION\.MENU.matCardAll {
+
     color:crimson;
 }
   .MESH_DIAGNOSTICS\.MENU.matCardAll {
@@ -9724,6 +9725,7 @@ button{
 
 
 .PERMISSIONS\.MENU mat-icon {
+
     color:#8a2be2;
 }
 
@@ -9755,6 +9757,13 @@ button{
 .ADAPPT_INTEGRATION\.MENU mat-icon {
   color: #305680;
 }
+
+
+.firmPushCard{
+  height: 170px;
+}
+
+
 
 /* .................. */
 
