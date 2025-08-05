@@ -17,6 +17,16 @@ export const settingsRoutes: Routes = [
     //   },
     ],
   },
+
+  {
+    path:'bacnet',
+    loadComponent: () => import('../bacnet/bacnet.component').then(m => m.BacnetComponent),
+  },
+
+  {
+    path:'bacnet-device-browser',
+    loadComponent: () => import('../bacnet/component/bacnet-device-browser/bacnet-device-browser.component').then(m => m.BacnetDeviceBrowserComponent),
+  }
 ];
 
 

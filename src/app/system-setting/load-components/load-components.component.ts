@@ -32,7 +32,7 @@ import { MatModuleModule } from '../../common/mat-module';
 export class LoadComponentsComponent implements OnInit {
   @ViewChild('dynamicLoadComponent', {
     read: ViewContainerRef
-  }) entry!: ViewContainerRef;
+  }) entry!: any;
   componentRef: any;
   @Output() systemsettingsidebar = new EventEmitter<any>();
 
@@ -52,18 +52,21 @@ export class LoadComponentsComponent implements OnInit {
     this.router.navigate(['/system-setting/platform-integration']);
   }
 
-  dynamicLoad(componentType: string) {
+  dynamicLoad(componentType: any) {
     this.entry.clear();
     const factory = this.componentLoaded(componentType);
-    // this.componentRef = this.entry.createComponent(factory);
-    this.componentRef.instance.systemsettingsidebar.subscribe(($event: any) => {
-      this.systemsettingsidebar.emit($event);
-    });
+    if (factory) {
+      this.componentRef = this.entry.createComponent(factory);
+      this.componentRef.instance.systemsettingsidebar.subscribe(($event: any) => {
+        this.systemsettingsidebar.emit($event);
+      });
+      return this.componentRef;
+    }
 
   }
 
   /** Method for creating the component dynamically */
-  componentLoaded(componentType: string) {
+  componentLoaded(componentType: any) {
     let factory;
     this.entry.clear();
     if (componentType === 'BACNET_LOCAL_DEVICE.MENU') {
