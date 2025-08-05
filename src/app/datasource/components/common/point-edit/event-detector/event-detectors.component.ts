@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Inject, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, Inject, Input, OnInit, Output, ViewChild, ViewContainerRef} from '@angular/core';
 import {DataPointModel} from '../../../../model';
 import {DictionaryService} from "../../../../../core/services";
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -39,7 +39,6 @@ export interface DialogData {
 @Component({
   standalone: true,
   imports: [CommonModule, MatModuleModule, MultiStateEventDetectorComponent,
-  NoChangeEventDetectorComponent,
   NoUpdateEventDetectorComponent,
   PointChangeEventDetectorComponent,
   StateChangeCountEventDetectorComponent,
@@ -119,6 +118,7 @@ export class EventDetectorsComponent implements OnInit {
     this.getEventDetectorByDataPoint(this.dataPoint.id);
     this._WebSocketService.createWebSocket(this.websocket_URL + this.token);
     this.websocket();
+    
   }
 
   websocket() {
@@ -185,7 +185,7 @@ export class EventDetectorsComponent implements OnInit {
     this.dataArray.push(newValue);
   }
 
-  componentLoaded(componentType: string, eventDetectorModel: { xid: any; } | null) {
+  componentLoaded(componentType: any, eventDetectorModel: any) {
     this.eventDetectorComponentProperty = new EventDetectorComponentPropertyModel();
     this.entry.clear();
     let factory;
@@ -203,6 +203,7 @@ export class EventDetectorsComponent implements OnInit {
         if (eventDetectorModel != null) {
           this.componentRef.instance.noChange = eventDetectorModel;
           this.componentRef.instance.eventDetectorXid = eventDetectorModel.xid;
+          // console.log("nochange output ", this.componentRef.instance.noChange);
         }
         break;
       case 'NO_UPDATE_DETECTOR':
@@ -387,140 +388,145 @@ export class EventDetectorsComponent implements OnInit {
   }
 //   /** Adding event detector. to table list */
   saveEventDetector() {
-    this.eventDetectorsArray.forEach((eventDetectorType: { type: string; componentObject: { instance: { setNoChangeEventDetectorService: () => void; setNoUpdateToEventDetectorService: () => void; setMultiStateToEventDetectorService: () => void; setPointChangeToEventDetectorService: () => void; setBinaryToEventDetectorService: () => void; setStateChangeCountToEventDetectorService: () => void; setAnalogHighLimitToEventDetectorService: () => void; setAnalogLowLimitToEventDetectorService: () => void; setAnalogRangeToEventDetectorService: () => void; setNegativeCusumToEventDetectorService: () => void; setPositiveCusumToEventDetectorService: () => void; setAlphaNumericRegexStateToEventDetectorService: () => void; setAlphaNumericStateToEventDetectorService: () => void; setRateOfChangeToEventDetectorService: () => void; }; }; }) => {
-
+    console.log(this.eventDetectorsArray);
+    this.eventDetectorsArray.forEach((eventDetectorType: any) => {
+     console.log('eventDetectorType', eventDetectorType, this.eventDetectorService.setNoChange(eventDetectorType.componentObject.instance.noChange));
       this.staticDataWIthJSON();
       if (eventDetectorType.type === 'NO_CHANGE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setNoChangeEventDetectorService();
+        eventDetectorType.componentObject.instance;
+        // console.log("noChangeModels", this.eventDetectorService.getNoChange());
         this.abstractEventDetector = new AbstractEventDetectorModel();
         this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setNoChangeEventDetectorService();
+        // console.log("noChangeModels", this.eventDetectorService.noChangeModel);
+        eventDetectorType.componentObject.instance;
         this.eventDetectorService.noChangeModel.sourceId = this.dataPoint.xid;
+        console.log("intance", this.dataPoint.xid,  this.eventDetectorService.noChangeModel.sourceId);
+        this.eventDetectorService.noChangeModel = eventDetectorType.componentObject.instance;
         this.abstractEventDetector.body = this.eventDetectorService.noChangeModel;
         this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.noChangeModel.sourceId);
+        this.filteredArray = this.eventTableList.filter((h: any) => h.name !== this.eventDetectorService.noChangeModel.sourceId);
       }
-      if (eventDetectorType.type === 'NO_UPDATE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setNoUpdateToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setNoUpdateToEventDetectorService();
-        this.eventDetectorService.noUpdateModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.noUpdateModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.noUpdateModel.sourceId);
-      }
-      if (eventDetectorType.type === 'MULTISTATE_STATE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setMultiStateToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setMultiStateToEventDetectorService();
-        this.eventDetectorService.multiStateModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.multiStateModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.multiStateModel.sourceId);
-      } else if (eventDetectorType.type === 'POINT_CHANGE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setPointChangeToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setPointChangeToEventDetectorService();
-        this.eventDetectorService.pointChangeModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.pointChangeModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.pointChangeModel.sourceId);
-      } else if (eventDetectorType.type === 'BINARY_STATE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setBinaryToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setBinaryToEventDetectorService();
-        this.eventDetectorService.binaryStateModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.binaryStateModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.binaryStateModel.sourceId);
+      // if (eventDetectorType.type === 'NO_UPDATE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setNoUpdateToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setNoUpdateToEventDetectorService();
+      //   this.eventDetectorService.noUpdateModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.noUpdateModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.noUpdateModel.sourceId);
+      // }
+      // if (eventDetectorType.type === 'MULTISTATE_STATE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setMultiStateToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setMultiStateToEventDetectorService();
+      //   this.eventDetectorService.multiStateModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.multiStateModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.multiStateModel.sourceId);
+      // } else if (eventDetectorType.type === 'POINT_CHANGE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setPointChangeToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setPointChangeToEventDetectorService();
+      //   this.eventDetectorService.pointChangeModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.pointChangeModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.pointChangeModel.sourceId);
+      // } else if (eventDetectorType.type === 'BINARY_STATE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setBinaryToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setBinaryToEventDetectorService();
+      //   this.eventDetectorService.binaryStateModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.binaryStateModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.binaryStateModel.sourceId);
 
-      } else if (eventDetectorType.type === 'STATE_CHANGE_COUNT_DETECTOR') {
-        eventDetectorType.componentObject.instance.setStateChangeCountToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setStateChangeCountToEventDetectorService();
-        this.eventDetectorService.stateChangeCountModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.stateChangeCountModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.stateChangeCountModel.sourceId);
-      } else if (eventDetectorType.type === 'ANALOG_HIGH_LIMIT_DETECTOR') {
-        eventDetectorType.componentObject.instance.setAnalogHighLimitToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setAnalogHighLimitToEventDetectorService();
-        this.eventDetectorService.analogHighLimitModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.analogHighLimitModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.analogHighLimitModel.sourceId);
-      } else if (eventDetectorType.type === 'ANALOG_LOW_LIMIT_DETECTOR') {
-        eventDetectorType.componentObject.instance.setAnalogLowLimitToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setAnalogLowLimitToEventDetectorService();
-        this.eventDetectorService.analogLowLimitModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.analogLowLimitModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.analogLowLimitModel.sourceId);
-      } else if (eventDetectorType.type === 'ANALOG_RANGE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setAnalogRangeToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setAnalogRangeToEventDetectorService();
-        this.eventDetectorService.analogRangeModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.analogRangeModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.analogRangeModel.sourceId);
-      } else if (eventDetectorType.type === 'NEGATIVE_CUSUM_DETECTOR') {
-        eventDetectorType.componentObject.instance.setNegativeCusumToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setNegativeCusumToEventDetectorService();
-        this.eventDetectorService.negativeCusumModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.negativeCusumModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.negativeCusumModel.sourceId);
-      } else if (eventDetectorType.type === 'POSITIVE_CUSUM_DETECTOR') {
-        eventDetectorType.componentObject.instance.setPositiveCusumToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setPositiveCusumToEventDetectorService();
-        this.eventDetectorService.positiveCusumModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.positiveCusumModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.positiveCusumModel.sourceId);
-      } else if (eventDetectorType.type === 'ALPHANUMERIC_REGEX_STATE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setAlphaNumericRegexStateToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setAlphaNumericRegexStateToEventDetectorService();
-        this.eventDetectorService.alphaNumericRegexStateModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.alphaNumericRegexStateModel;
+      // } else if (eventDetectorType.type === 'STATE_CHANGE_COUNT_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setStateChangeCountToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setStateChangeCountToEventDetectorService();
+      //   this.eventDetectorService.stateChangeCountModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.stateChangeCountModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.stateChangeCountModel.sourceId);
+      // } else if (eventDetectorType.type === 'ANALOG_HIGH_LIMIT_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setAnalogHighLimitToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setAnalogHighLimitToEventDetectorService();
+      //   this.eventDetectorService.analogHighLimitModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.analogHighLimitModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.analogHighLimitModel.sourceId);
+      // } else if (eventDetectorType.type === 'ANALOG_LOW_LIMIT_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setAnalogLowLimitToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setAnalogLowLimitToEventDetectorService();
+      //   this.eventDetectorService.analogLowLimitModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.analogLowLimitModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.analogLowLimitModel.sourceId);
+      // } else if (eventDetectorType.type === 'ANALOG_RANGE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setAnalogRangeToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setAnalogRangeToEventDetectorService();
+      //   this.eventDetectorService.analogRangeModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.analogRangeModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.analogRangeModel.sourceId);
+      // } else if (eventDetectorType.type === 'NEGATIVE_CUSUM_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setNegativeCusumToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setNegativeCusumToEventDetectorService();
+      //   this.eventDetectorService.negativeCusumModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.negativeCusumModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.negativeCusumModel.sourceId);
+      // } else if (eventDetectorType.type === 'POSITIVE_CUSUM_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setPositiveCusumToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setPositiveCusumToEventDetectorService();
+      //   this.eventDetectorService.positiveCusumModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.positiveCusumModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.positiveCusumModel.sourceId);
+      // } else if (eventDetectorType.type === 'ALPHANUMERIC_REGEX_STATE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setAlphaNumericRegexStateToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setAlphaNumericRegexStateToEventDetectorService();
+      //   this.eventDetectorService.alphaNumericRegexStateModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.alphaNumericRegexStateModel;
 
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.alphaNumericRegexStateModel.sourceId);
-      } else if (eventDetectorType.type === 'ALPHANUMERIC_STATE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setAlphaNumericStateToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setAlphaNumericStateToEventDetectorService();
-        this.eventDetectorService.alphaNumericStateModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.alphaNumericStateModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.alphaNumericStateModel.sourceId);
-      } else if (eventDetectorType.type === 'RATE_OF_CHANGE_DETECTOR') {
-        eventDetectorType.componentObject.instance.setRateOfChangeToEventDetectorService();
-        this.abstractEventDetector = new AbstractEventDetectorModel();
-        this.abstractEventDetector.action = 'CREATE';
-        eventDetectorType.componentObject.instance.setRateOfChangeToEventDetectorService();
-        this.eventDetectorService.rateOfChangeModel.sourceId = this.dataPoint.xid;
-        this.abstractEventDetector.body = this.eventDetectorService.rateOfChangeModel;
-        this.eventTableList = [this.abstractEventDetector.body];
-        this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.rateOfChangeModel.sourceId);
-      }
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.alphaNumericRegexStateModel.sourceId);
+      // } else if (eventDetectorType.type === 'ALPHANUMERIC_STATE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setAlphaNumericStateToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setAlphaNumericStateToEventDetectorService();
+      //   this.eventDetectorService.alphaNumericStateModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.alphaNumericStateModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.alphaNumericStateModel.sourceId);
+      // } else if (eventDetectorType.type === 'RATE_OF_CHANGE_DETECTOR') {
+      //   eventDetectorType.componentObject.instance.setRateOfChangeToEventDetectorService();
+      //   this.abstractEventDetector = new AbstractEventDetectorModel();
+      //   this.abstractEventDetector.action = 'CREATE';
+      //   eventDetectorType.componentObject.instance.setRateOfChangeToEventDetectorService();
+      //   this.eventDetectorService.rateOfChangeModel.sourceId = this.dataPoint.xid;
+      //   this.abstractEventDetector.body = this.eventDetectorService.rateOfChangeModel;
+      //   this.eventTableList = [this.abstractEventDetector.body];
+      //   this.filteredArray = this.eventTableList.filter((h: { name: string; }) => h.name !== this.eventDetectorService.rateOfChangeModel.sourceId);
+      // }
       this.filteredArray.forEach((event: any) => {
         const uniqueArray = [...new Set(this.filteredArray.map((event: any) => JSON.stringify(event)))].map(event => JSON.parse(event as any));
         uniqueArray.forEach(event => {

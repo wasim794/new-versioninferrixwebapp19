@@ -49,7 +49,7 @@ export class DataPointService {
     .get<ArrayWithTotalModel<any>>(url)
     .pipe(map((result) => {
       this._total = result.total;
-      return result.items.map((i) => new DataPointModel(i));
+      return result.items.map((i) => i);
     }));
   }
 

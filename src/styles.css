@@ -7362,6 +7362,15 @@ mat-divider.mqqtDividers {
   padding: 2px 0px 2px 0px;
 }
 
+.eventModal {
+  mat-dialog-content.mat-mdc-dialog-content.mdc-dialog__content.all_dialog_content {
+    overflow: visible;
+}
+form{
+  position: relative;
+  z-index: 1;
+}
+}
 
 .dataSources .mat-sort-header-container {
   width: 100%;

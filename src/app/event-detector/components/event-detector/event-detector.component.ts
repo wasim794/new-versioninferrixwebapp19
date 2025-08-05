@@ -59,10 +59,12 @@ export class EventDetectorComponent extends UnsubscribeOnDestroyAdapter implemen
     }
   }
 
-  loadEventDetector(dataPoint: any) {
-    this.entry.clear();
-    const factory = this.resolver.resolveComponentFactory(EventDetectorsComponent);
-    this.componentRef = this.entry.createComponent(factory);
-    this.componentRef.instance.dataPoint = this.dataPoint;
-  }
+loadEventDetector(dataPoint: DataPointModel) {
+  this.entry.clear();
+  // Directly pass the component class
+  this.componentRef = this.entry.createComponent(EventDetectorsComponent);
+  this.componentRef.instance.dataPoint = dataPoint;
+}
+
+
 }

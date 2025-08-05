@@ -41,6 +41,7 @@ export class NoChangeEventDetectorComponent implements OnInit {
     this.noChange.detectorType = 'NO_CHANGE_DETECTOR';
     this.noChange.duration = this.duration;
     this.eventDetectorService.setNoChange(this.noChange);
+    console.log('No Change Event Detector Service Set:', this.noChange);
   }
 
   removeComponent() {
