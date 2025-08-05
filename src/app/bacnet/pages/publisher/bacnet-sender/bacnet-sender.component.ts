@@ -139,6 +139,7 @@ export class BacnetSenderComponent extends UnsubscribeOnDestroyAdapter implement
   getDataPoint(pushData: any) {
     this.subs.add(this.datapointService.get(pushData).subscribe(data => {
       this.dataPointModels = data;
+      console.log(this.dataPointModels);
       // console.log("step 1data", this.dataPointModels);
       // if (this.bacnetSenderModel.points.length > 0) {
       //   this.bacnetSenderModel.points.forEach(value => {
@@ -313,6 +314,7 @@ export class BacnetSenderComponent extends UnsubscribeOnDestroyAdapter implement
     let params = param+'&like(publisherXid,%2A' + this.xid + '%2A)';
     this.bacnetSenderPoint.get(params).subscribe(data=>{
       this.dataSources = data;
+      console.log(this.dataSources);
     });
   }
   getPubBacnet(xid: any) {
@@ -378,6 +380,7 @@ export class BacnetSenderComponent extends UnsubscribeOnDestroyAdapter implement
   getBacnetLocalDevices() {
     this.subs.add(this.bacnetService.get().subscribe(data => {
       this.localDeviceModels = data;
+      console.log("items localbacnegt", this.localDeviceModels);
       if (data) {
         this._commonService.hideloader();
       }

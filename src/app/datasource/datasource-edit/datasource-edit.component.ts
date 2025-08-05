@@ -123,7 +123,7 @@ export class DatasourceEditComponent {
       'WATER_LEAKAGE_DETECTOR.DS': LeakageDetectorComponent,
       'LIGHT_CONTROLLER_V4.DS': LightControllerV4Component,
       'LIGHT_RELAY_CONTROLLER.DS': LightDiControllerComponent,
-      'PEOPLE_COUNT_CAMERA': PeopleCountCameraComponent
+      'PEOPLE_COUNT_CAMERA.DS': PeopleCountCameraComponent
     };
 
     const component = componentMapping[dataSourceType];

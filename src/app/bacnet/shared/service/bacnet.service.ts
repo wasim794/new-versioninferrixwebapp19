@@ -43,7 +43,7 @@ export class BacnetService {
     return this.http.get<BacnetLocalDeviceModel<any>[]>(url)
     .pipe(map((result) => {
       this._total = result.length;
-      return result.map((model) => new BacnetLocalDeviceModel<any>(model));
+      return result.map((model) => model);
     }));
   }
 

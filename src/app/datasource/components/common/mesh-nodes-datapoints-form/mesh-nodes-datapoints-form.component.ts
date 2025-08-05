@@ -49,7 +49,7 @@ export class MeshNodesDatapointsFormComponent extends UnsubscribeOnDestroyAdapte
   });
   this.setSettable();
   this.allAttribute();
-  console.log(this.dataTypes);
+  console.log(this.pointLocator);
             }
 
   allAttribute(){

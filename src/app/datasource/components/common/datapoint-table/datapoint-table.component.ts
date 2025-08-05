@@ -111,9 +111,9 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
         this.nodata = 'No data found';
       }
       this.dataPoints = new MatTableDataSource(data);
-      // console.log(this.dataPoints.data);
-      // console.log(this.dataPoints.data['items']);
-      this.dataPoints.data.items.forEach((value: { xid: string; }) => {
+      console.log(this.dataPoints.data);
+      console.log(this.dataPoints.data['items']);
+      this.dataPoints.data.items.forEach((value: any) => {
         this.updatedData(value.xid);
       });
     });
@@ -170,7 +170,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
 
   getWebSocket(xid: any) {
     const message = { 'dataPointXid': xid, 'eventTypes': ['INITIALIZE', 'CHANGE', 'UPDATE', 'SET'] };
-    console.log(message);
+    // console.log(message);
     this._configurationService.connect(message);
     this._WebSocketService.subscribeWebsocket().subscribe(data => {
       this.dataPointData = JSON.parse(data);
@@ -199,6 +199,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   }
 
   updateTable(xid: string, status: any, time: any, color: string | null, enabled: boolean) {
+    // console.log('updateTable called with xid:', xid, 'status:', status, 'time:', time, 'color:', color, 'enabled:', enabled);
     setTimeout(function () {
       document.querySelectorAll('.text-shadow').forEach(element => {
         element.classList.remove('text-shadow');
@@ -206,9 +207,11 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
     }, 5000);
 
     /*TODO need to update status */
-    for (let i = 0; i < this.dataPoints.data.length; i++) {
+// console.log('Updating dataPoints for xid:', this.dataPoints.data.items);
 
-      if (this.dataPoints.data[i].xid === xid) {
+    for (let i = 0; i < this.dataPoints.data.items.length; i++) {
+
+      if (this.dataPoints.data.items[i].xid === xid) {
         if (color !== null) {
           const statusElement = document.getElementById(xid + '_status');
           if (statusElement) statusElement.style.color = color;
@@ -218,9 +221,10 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
           if (timeElement) timeElement.classList.add('text-shadow');
           if (statusElement) statusElement.classList.add('text-shadow');
         }
-        this.dataPoints.data[i].websocketStatus = status;
-        this.dataPoints.data[i].webSocketTime = time;
-        this.dataPoints.data[i].enabled = this.enabled;
+        this.dataPoints.data.items[i].websocketStatus = status;
+        this.dataPoints.data.items[i].webSocketTime = time;
+        this.dataPoints.data.items[i].enabled = this.enabled;
+        // console.log( 'Updated dataPoints:', this.dataPoints.data[i]);
       }
     }
   }
@@ -228,6 +232,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   edit(dataPointXid: any, index: any) {
     const dpDetail = { dpXid: dataPointXid, index: index };
     this.editPoint.emit(dpDetail);
+    console.log( 'Editing datapoint with xid:', dataPointXid, 'at index:', index);
     document.body.classList.remove('sidebarFormBblock');
   }
 

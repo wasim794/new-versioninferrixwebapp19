@@ -50,6 +50,8 @@ export class EventDetectorService {
     this.noChangeModel = noChange;
   }
 
+  
+
   setNoUpdate(noUpdate: NoUpdateEventDetectorModel): any {
     this.noUpdateModel = noUpdate;
   }

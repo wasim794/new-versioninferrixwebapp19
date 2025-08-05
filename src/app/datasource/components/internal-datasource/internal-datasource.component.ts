@@ -25,7 +25,7 @@ export class InternalDatasourceComponent extends DataSourceBase implements OnIni
   datasourceTitleName:any;
   UIDICTIONARY : any;
 
-  constructor(public dictionaryService: DictionaryService, private sataPointService: DataPointService) {
+  constructor(public dictionaryService: DictionaryService, private dataPointService: DataPointService) {
     super();
   }
 
@@ -42,11 +42,13 @@ export class InternalDatasourceComponent extends DataSourceBase implements OnIni
   editDataPoint(dataPoint: any) {
     const dataPointXid = dataPoint['dpXid'];
     this.currentDatapointIndex = dataPoint['index'];
-    this.subs.add(this.sataPointService.getByXid(dataPointXid).subscribe(data => {
+    this.subs.add(this.dataPointService.getByXid(dataPointXid).subscribe(data => {
+      console.log('Editing DataPoint:', data);
         this.datapointForm = true;
         this.datapoints.datapointButtonsView = true;
         this.dataPoint = data;
         this.pointLocator = this.dataPoint.pointLocator;
+        console.log('Editing DataPoint:', this.dataPoint);
       })
     );
   }
