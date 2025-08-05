@@ -5,14 +5,14 @@
     </mat-toolbar>
   </div>
 </div>
-<div class="container cardlayout width-100 meshMainContainer" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid" fxLayoutAlign="left">
+<div class="container cardlayout width-100 meshMainContainer marginLeft-20" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid" fxLayoutAlign="left">
   <div fxFlex="22%" *ngFor="let subMenu of subMenus" class="dynamicMenuCard meshConsole {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ''}}">
-    <mat-card class="mat-card {{subMenu.type}} matCardAll">
+    <mat-card class="meshMatCardNew {{subMenu.type}} matCardAll">
       <mat-card-header>
         <mat-card-title class="mesh_text "> {{UIDICTIONARY ? UIDICTIONARY.get(subMenu.name): ""}}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="meshMainContent">
-        <mat-icon class="card-icon-space-size mat-pointer" (click)="showMeshConsoleDetail(subMenu.type, meshConsoleSideNav)" aria-hidden="false" aria-label=" mesh_console_properties icon">{{subMenu.icon}}
+        <mat-icon class="card-icon-space-size mat-pointer marginTop-20" (click)="showMeshConsoleDetail(subMenu.type, meshConsoleSideNav)" aria-hidden="false" aria-label=" mesh_console_properties icon">{{subMenu.icon}}
         </mat-icon>
       </mat-card-content>
     </mat-card>

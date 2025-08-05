@@ -31,8 +31,10 @@
         </button>
       <br>
 
-      <button mat-raised-button class="saveButton saveConsoleButton allSaveButtons"
-        (click)="meshConsoleConfiguration() ">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.submit') : ""}}
+      <button matfab class="saveButton saveConsoleButton allSaveButtons"
+        (click)="meshConsoleConfiguration() ">
+        <mat-icon>save</mat-icon>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.submit') : ""}}
       </button>
 
       <div id="errorMsg">

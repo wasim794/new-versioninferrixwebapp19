@@ -4,11 +4,15 @@
       {{"Mesh Sender"}} <small *ngIf="meshSenderTitle">{{meshSenderModel.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button (click)="saveMeshSender()" align="end" *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate toolbarButton"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
+    <button (click)="saveMeshSender()" align="end" *ngIf="!isEdit" class="toolbarSaveButton bacnetUpdate saveButton"
+            matfab>
+             <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
     </button>
-    <button (click)="updateMeshSender()" align="end" *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate toolbarButton"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    <button (click)="updateMeshSender()" align="end" *ngIf="isEdit" class="toolbarUpdateButton bacnetUpdate saveButton"
+            matfab>
+             <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </mat-toolbar>
 
@@ -25,31 +29,31 @@
           <br>
           <form>
             <p>
-              <mat-form-field class="field_margin form_field " appearance="fill">
+              <mat-form-field class="field_margin form_field w-50" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
                 <input  matInput name="name" [(ngModel)]="meshSenderModel.name" placeholder="Enter Name" type="text"
                         required>
               </mat-form-field>
 
-              <mat-form-field class="form_field " appearance="fill">
+              <mat-form-field class="form_field w-50" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
                 <input [(ngModel)]="meshSenderModel.xid"  class="inputBoxHeight"  disabled matInput name="xid" >
               </mat-form-field>
             </p>
-            <mat-form-field class="field_margin form_field " appearance="fill">
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheWarningSize'): ""}}
               </mat-label>
               <input [(ngModel)]="meshSenderModel.cacheWarningSize"  matInput name="cacheWarningSize" required>
             </mat-form-field>
 
-            <mat-form-field class=" form_field" appearance="fill">
+            <mat-form-field class=" form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.enterCacheDiscardSize'): ""}}
               </mat-label>
               <input [(ngModel)]="meshSenderModel.cacheDiscardSize"  matInput name="cacheDiscardSize"
                      placeholder="Enter CacheDiscardsize" required>
             </mat-form-field>
             <p>
-              <mat-form-field class="field_margin form_field meshSenderInput mt-10" appearance="fill">
+              <mat-form-field class="field_margin form_field httpSenderInput mt-10" appearance="fill">
                 <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.updateEvents'): ""}}
                 </mat-label>
                 <mat-select [(ngModel)]="meshSenderModel.publishType"  class="form-control" name="publishType">
@@ -59,29 +63,26 @@
                 </mat-select>
               </mat-form-field>
             </p>
-            <mat-grid-list class="allGridcheckbox" cols="2" rowHeight="30px">
-              <mat-grid-tile class="httpToggles">
+     
 
                 <mat-slide-toggle [(ngModel)]="meshSenderModel.sendSnapshot" name="sendSnapshot" class="side_form_toggle toggle_change allToggls"
                 >
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.sendRegularSnapshot'): ""}}
                 </mat-slide-toggle>
-              </mat-grid-tile>
-              <mat-grid-tile class="httpToggles">
-                <mat-slide-toggle [(ngModel)]="meshSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change allToggls httpSenderToggle">
+        
+                <mat-slide-toggle [(ngModel)]="meshSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change  meshSenserToogle">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
                 </mat-slide-toggle>
-              </mat-grid-tile>
-            </mat-grid-list>
+         
             <br>
-            <mat-form-field class="field_margin form_field " appearance="fill">
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeHolder.enterSnapshotSendPeriod'): ""}}
               </mat-label>
               <input [(ngModel)]="meshSenderModel.snapshotSendPeriod.timePeriod"  matInput name="timePeriod"
                      placeholder="Enter SnapshotSendPeriod" required>
             </mat-form-field>
 
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field w-50" appearance="fill">
               <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.timePeriodType'): ""}}
               </mat-label>
               <mat-select [(ngModel)]="meshSenderModel.snapshotSendPeriod.timePeriodType"  name="timePeriodType">
@@ -93,8 +94,8 @@
           </form>
         </ng-template>
       </mat-tab>
-
-      <mat-tab label="Points" *ngIf="pointValues">
+<!-- *ngIf="pointValues" -->
+      <mat-tab label="Points" >
         <div [hidden]=!viewDataPoint>
           <mat-form-field class="searchWidth serchInput" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
@@ -115,24 +116,24 @@
 
           <span *ngIf="showDataPointFields" class="changedropDowns" >
           <p>
-            <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-label>
               <input [(ngModel)]="meshSenderPointModel.name"   matInput name="name"
                      placeholder="Enter Name" type="text">
             </mat-form-field>
-            <mat-form-field class="form_field" appearance="fill">
+            <mat-form-field class="form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.xid'): ""}}</mat-label>
               <input  matInput  [(ngModel)]="meshSenderPointModel.xid" name="xid"
                       type="text"  class="inputBoxHeight" >
             </mat-form-field>
           </p>
           <p>
-            <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-form-field class="field_margin form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.attributeId'): ""}}</mat-label>
              <input  matInput [(ngModel)]="meshSenderPointModel.attributeId" name="attributeId"
                      type="text">
             </mat-form-field>
-           <mat-form-field class="field_margin form_field" appearance="fill">
+           <mat-form-field class=" form_field w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}</mat-label>
              <mat-select  [(ngModel)]="meshSenderPointModel.type" name="type">
                 <mat-option *ngFor="let attr of dropdownData.attributeType" [value]="attr.key">
@@ -151,15 +152,21 @@
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
             </mat-slide-toggle>
           </p>
-          <button  *ngIf="dataPointActions" (click)="saveDataPoint()"  align="end" class="Top_Save_Button mt-30"
-                   mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+          <button  *ngIf="dataPointActions" (click)="saveDataPoint()"  align="end" class="publisherPoint mt-30 saveButton"
+                   matfab>
+                   <mat-icon>save</mat-icon>
+                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
           </button>
           <button *ngIf="!dataPointActions" (click)="updateDataPoint()"
-                  class="Top_Update_Button updateButton topRightButton"
-                  mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+                  class="toolbarUpdateButton updateButton saveButton"
+                 matfab>
+                  <mat-icon>save_as</mat-icon>
+                 {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
           </button>
-          <button (click)="cancel()"    align="end" color="warn" class="cancelButton"
-                  mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+          <button (click)="cancel()"    align="end" color="warn" class="cancel_button_new cancelPoint"
+                  mat-raised-button>
+                 
+                  {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
           </button>
           <br>
           <br>

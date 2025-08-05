@@ -1,4 +1,4 @@
-<mat-card class="form_cards httpBlock httpMainBlock " style="width: 100px;">
+<mat-card class="form_cards httpBlock httpMainBlock ">
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title matCardTitles">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.edit'): ""}}
@@ -61,7 +61,7 @@
                 </mat-select>
               </mat-form-field>
             </p>
-           
+      
          
                 <mat-slide-toggle name="sendSnapshot" class="side_form_toggle toggle_change allToggls"
                                   [(ngModel)]="httpSenderModel.sendSnapshot">
@@ -70,7 +70,7 @@
          
           
 
-                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change  httpSenderToggle"
+                <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change  httpSenderToggle marginLeft-20"
                                   [(ngModel)]="httpSenderModel.enabled">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
                 </mat-slide-toggle>
@@ -139,7 +139,7 @@
                 <mat-header-cell
                   *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.headerKey'): ""}}
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.key + ' = '}}{{element.value}} </mat-cell>
+                <mat-cell class="headerKey" *matCellDef="let element"> {{element.key + ' = '}}{{element.value}} </mat-cell>
               </ng-container>
               <ng-container matColumnDef="Value">
                 <mat-header-cell
@@ -178,7 +178,7 @@
                 <mat-header-cell
                   *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.headerKey'): ""}}
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.key + ' = '}}{{element.value}} </mat-cell>
+                <mat-cell class="headerKey" *matCellDef="let element"> {{element.key + ' = '}}{{element.value}} </mat-cell>
               </ng-container>
               <ng-container matColumnDef="Value">
                 <mat-header-cell
@@ -192,6 +192,7 @@
               <mat-header-row *matHeaderRowDef="staticHeadersColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: staticHeadersColumns;"></mat-row>
             </table>
+            <br>
 
             <mat-slide-toggle name="raiseResultWarning"
                               class="mr-20 side_form_toggle toggle_change allToggls raiseResultWarning w-50"

@@ -32,10 +32,10 @@
                 class="buttonTopNodeStatus" (click)="matchNotSequenceNumber()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}
         </button>
    </div>
-        <div class="centerDivContainer nodeStatusFont">
-          <mat-form-field  *ngIf="filterNotSequenceNumbers">
+        <div class="centerDivContainer nodeStatusFont ">
+          <mat-form-field  *ngIf="filterNotSequenceNumbers" class="filterNotSequence">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.notEqualToSequenceNumber') : ""}}</mat-label>
-            <input matInput name="searchBacnetList" [(ngModel)]="notSequenceNumbers"
+            <input matInput  name="searchBacnetList" [(ngModel)]="notSequenceNumbers"
                    (keyup.enter)="filerNotEqualSequenceNumber($event)" placeholder="Ex. ium" #input
                    placeholder="{{UIDICTIONARY ===undefined ? '': UIDICTIONARY.get('ui.core.common.fields.search')}}...">
             <mat-icon (click)="clearAll()" class="Input_search"  matSuffix>clear</mat-icon>
@@ -84,7 +84,7 @@
 
           <button mat-raised-button
                   matTooltipClass="etooltip-uppercase" *ngIf="matchActionsButton"
-                  class="buttonTopNodeStatus" (click)="searchData()" >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}
+                  class="buttonTopNodeStatus marginLeft-10" (click)="searchData()" >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}
           </button>
 
         </div>
@@ -99,7 +99,7 @@
           stop_screen_share </mat-icon>
 
         </div>
-          <mat-form-field>
+          <mat-form-field class="marginTop-20">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
           <input matInput (keyup.enter)="applyFilter($event)">
             <mat-icon (click)="applyFilter($event)" class="Input_search"  matSuffix>search</mat-icon>
@@ -131,9 +131,9 @@
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.address') : ""}} </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-raised-button style="margin-right: 12px"
+            <button mat-raised-button
                     matTooltipClass="example-tooltip-uppercase"
-                    class="button">{{element.address}}
+                    class="button addressButtonStyle">{{element.address}}
             </button></td>
         </ng-container>
         <ng-container matColumnDef="timestamp">
@@ -214,9 +214,9 @@
         <ng-container matColumnDef="applicationProcessedScratchPadSequenceNumber">
           <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.sinkStatus.scratchpadSequenceNo') : ""}} </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-raised-button style="margin-right: 12px"
+            <button mat-raised-button 
                     matTooltipClass="example-tooltip-uppercase"
-                    class="button">
+                    class="button addressButtonStyle">
                {{element.data.applicationProcessedScratchPadSequenceNumber}}
             </button>
             </td>
@@ -237,9 +237,9 @@
         </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.action') : ""}} </th>
-          <td mat-cell *matCellDef="let element"><button mat-raised-button style="margin-right: 12px"
+          <td mat-cell *matCellDef="let element"><button mat-raised-button 
                                                          matTooltipClass="example-tooltip-uppercase"
-                                                          class="button">
+                                                          class="button addressButtonStyle">
             {{element.data.action}}
           </button>  </td>
         </ng-container>
@@ -274,10 +274,10 @@
   </div>
   <div class="tableDescription nodeButton" [hidden]="!divHidden">
     <section>
-      <div class="button-row actionButtonNodes">
-        <button mat-raised-button color="primary" (click)="checkStatus()">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.checkStatus') : ""}}</button>
-        <button mat-raised-button color="primary" *ngIf="conditionFalse" (click)="allActions('allAction')">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.file.heading').substring(0,4) : ""}}</button>
-        <button mat-raised-button color="primary" *ngIf="conditionTrue"  (click)="updateLegacy('LEGACY')">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeUpdate.action.legacyUpdate') : ""}}</button>
+      <div class="button-row  marginLeft-20">
+        <button mat-raised-button color="primary" (click)="checkStatus()" class="saveButton" style="border-radius: 4px;">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeStatus.checkStatus') : ""}}</button>
+        <button mat-raised-button color="primary" *ngIf="conditionFalse" class="saveButton" style="border-radius: 4px;" (click)="allActions('allAction')">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.file.heading').substring(0,4) : ""}}</button>
+        <button mat-raised-button color="primary" *ngIf="conditionTrue" class="saveButton" style="border-radius: 4px;" (click)="updateLegacy('LEGACY')">{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.nodeUpdate.action.legacyUpdate') : ""}}</button>
       </div>
     </section>
 
