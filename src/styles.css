@@ -7209,7 +7209,7 @@ button.sinkPushButton {
 }
 
 mat-drawer.mat-drawer.sidenav.singleSidebars.configSide {
-  width: 30% !important;
+  width: 28% !important;
 }
 
 .mat-drawer-inner-container {
@@ -7253,7 +7253,7 @@ p.allParagraph.eventBasicForms {
 }
 
 .sinkForms .sinkStart {
-
+  background-color:#225496 !important;
   border-radius: 8px !important;
 }
 
