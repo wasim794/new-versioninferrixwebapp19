@@ -43,6 +43,12 @@ export const routes: Routes = [
   },
 
   {
+    path: 'scheduler',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./scheduler/scheduler.routes').then(m => m.schedulerRoutes),
+  },
+
+  {
     path: 'datapoint',
     canActivate: [AuthGuard],
     loadChildren: () => import('./datapoint/datapoints.routes').then(m => m.datapointsRoutes),

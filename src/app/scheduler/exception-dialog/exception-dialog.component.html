@@ -1,0 +1,62 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar_all">
+    <mat-card-title
+      class="sidebar_form_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.heading.ruleSet'): ""}} </mat-card-title>
+  </mat-toolbar>
+  <button mat-raised-button mat-dialog-close class="Save_Button cancelSc">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+
+  <mat-card-content class="form_cards form_edit_card">
+    <div [hidden]="!messageError">
+      <mat-card class="validation-error">
+        <li *ngFor="let error of rulesError">{{error.property}} : {{error.message}}</li>
+      </mat-card>
+    </div>
+    <form class="scheduler">
+      <div id="inputHide" class="inputHide">
+        <mat-form-field class="w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+          <input matInput [(ngModel)]="calendarRuleSetModel.name" class="form-control" id="name" name="name" required
+                 type="text">
+        </mat-form-field>
+        <mat-form-field class="w-50 marginLeft-10" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.permissions'): ""}}</mat-label>
+          <mat-select name="editPermission" [(ngModel)]="calendarRuleSetModel.editPermission">
+            <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-card class="demo-inline-calendar-card">
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+      </mat-card>
+      <mat-divider class="matDividerBar"></mat-divider>
+      <h1 class="allOrText">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.heading.or'): ""}}</h1>
+      <h2 class="textDateRange">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.heading.chooseDateRange'): ""}}</h2>
+      <mat-form-field appearance="fill" class="matInputDialog">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.enterDataSourceName').substring(0,7): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.heading.chooseDateRange').substring(7,17): ""}} </mat-label>
+        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle class="datePickerrange" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+        <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+      </mat-form-field>
+
+      <div class="layout-field">
+        <div *ngIf="!schedulerButtonsView then saveButton else updateButton"></div>
+        <ng-template #saveButton>
+          <button mat-raised-button class="saveButton"
+                  [mat-dialog-close] (click)="setRule($event)">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+        </ng-template>
+        <ng-template #updateButton>
+          <button mat-raised-button (click)="updateRule($event)"
+                  [mat-dialog-close] class="updateButton">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+        </ng-template>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

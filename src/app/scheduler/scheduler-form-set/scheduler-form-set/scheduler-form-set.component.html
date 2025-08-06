@@ -1,0 +1,102 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar_all">
+    <mat-card-title
+      class="sidebar_form_title matCardTitles">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.scheduler'): ""}} </span>
+    <small *ngIf="scheduleCon">{{schedule.name}}</small>
+    </mat-card-title>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card">
+    <div [hidden]="!errorMsgs">
+      <mat-card class="validation-error">
+        <li>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.form.heading'): ""}} </li>
+      </mat-card>
+    </div>
+    <form class="scheduler">
+      <div id="inputHide" class="inputHide">
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+          <input matInput [(ngModel)]="schedule.xid" name="xid" class="form-control" readonly mat-raised-button
+                 #tooltip="matTooltip"  class="inputBoxHeight"  matTooltip="This is a readonly" id="xid" name="xid" placeholder="Auto-generated"
+                 type="text">
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+          <input matInput class="form-control" id="name" [(ngModel)]="schedule.name" name="name" required type="text">
+        </mat-form-field>
+      </div>
+
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.alarmLevel'): ""}}</mat-label>
+          <mat-select name="alarmLevel" [(ngModel)]="schedule.alarmLevel" name="alarmLevel">
+            <mat-option *ngFor="let alarmData of dropdownData.alarmLevel"
+                        [value]="alarmData.value">{{alarmData.key}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field marginLeft-20 w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.errorAlarmLevel'): ""}}</mat-label>
+          <mat-select name="erroAlarmLevel" [(ngModel)]="schedule.errorAlarmLevel" name="errorAlarmLevel">
+            <mat-option *ngFor="let alarmData of dropdownData.alarmLevel"
+                        [value]="alarmData.value">{{alarmData.key}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      <div>
+            <span class="w-50 allInputsMargin">
+            <mat-slide-toggle [(ngModel)]="schedule.enabled" name="enabled" name="Enable"
+                              class=" side_form_toggle toggle_change allToggls">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
+            </mat-slide-toggle>
+            </span>
+        <mat-form-field class="form_field w-50" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.permissions'): ""}}</mat-label>
+          <mat-select name="readPermission" [(ngModel)]="schedule.readPermission">
+            <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-divider class="divider_all"></mat-divider>
+     <br>
+      <calendar-component [toggleAll]="enableToggle"></calendar-component>
+      <div class="layout-field">
+        <button (click)="addExceptionData()" mat-raised-button
+                class="Save_Button addException">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.addAnException'): ""}} </button>
+        <span [hidden]=!exceptionData><button (click)="cancelExceptionData()" mat-raised-button
+                                              class="Save_Button cancelException">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.exceptionCancel'): ""}} </button> </span>
+        <mat-icon (click)="addHelpGuide()" aria-hidden="false" class="info_position marginLeft-10" aria-label="error_outline icon"
+                  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}">
+          error_outline
+        </mat-icon>
+      </div>
+      <div [formGroup]="productForm" [hidden]=!exceptionData>
+        <div formArrayName="quantities">
+          <div *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">
+            <app-exception-data class="exCeptions"></app-exception-data>
+
+          </div>
+
+          <button type="button" (click)="addQuantity()" mat-mini-fab color="accent" class="addExceptions">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button type="button" (click)="removeQuantity($event)" mat-mini-fab color="primary"
+                  class="addExceptionsDlt">
+            <mat-icon title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="layout-field">
+        <div *ngIf="!schedulerButtonsView then saveButton else updateButton"></div>
+        <ng-template #saveButton>
+          <button mat-raised-button class="saveButton"
+                  (click)="addNewScheduler()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+        </ng-template>
+        <ng-template #updateButton>
+          <button mat-raised-button (click)="updateScheduler()"
+                  class="updateButton">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+        </ng-template>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,38 @@
+
+<div class="buttons">
+  <mat-slide-toggle name="Enable" [(ngModel)]="weekIsChecked" (change)="viewWeek($event)"   class="toggle_change">
+    {{ UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.placeholder.lockAllWeek'): ""}}
+  </mat-slide-toggle>
+  <mat-slide-toggle name="Enable" [(ngModel)]="weekDaysIsChecked" (change)="viewWeekDays($event)"  class="toggle_change marginLeft-10">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.placeholder.lockWeekdays'): ""}}
+  </mat-slide-toggle>
+  <mat-slide-toggle name="Enable" [(ngModel)]="weekEndIsChecked" (change)="viewWeekEnd($event)"   class="toggle_change marginLeft-10">
+    {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.placeholder.lockWeekend'): ""}}
+  </mat-slide-toggle>
+  <button (click)="revertSch($event)" mat-raised-button class="calenderRevert">revert</button>
+
+</div>
+<mat-card class="demo-inline-calendar-card newAddCards">
+ <table>
+   <tr>
+     <th [ngClass]="{'disabledWeek': !weekendDays}">Sunday</th>
+     <th [ngClass]="{'disabledWeek': !weekDayss}">Monday</th>
+     <th [ngClass]="{'disabledWeek': !weekDayss}">Tuesday</th>
+     <th [ngClass]="{'disabledWeek': !weekDayss}">Wednesday</th>
+     <th [ngClass]="{'disabledWeek': !weekDayss}">Thursday</th>
+     <th [ngClass]="{'disabledWeek': !weekDayss}">Friday</th>
+     <th [ngClass]="{'disabledWeek': !weekendDays}">Saturday</th>
+   </tr>
+ </table>
+  <div class="mainDivWeek">
+  <button mat-raised-button color="accent" style="margin-right: 20px">
+  <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.startScan').substring(0,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.time'): ""}}:</label>
+    <input style="padding: 10px;" type="time" [(ngModel)]="startTime">
+  </button>
+
+  <button mat-raised-button color="accent">
+  <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.tab.sendTest').substring(1,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.time'): ""}}:</label>
+  <input style="padding: 10px;" [(ngModel)]="endTime" type="time">
+  </button>
+  </div>
+</mat-card>

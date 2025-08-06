@@ -122,6 +122,8 @@ export const EventTypes: StaticData[] = [
 ];
 
 export const PURGE_TIME_PERIOD_TYPES: StaticData[] = [
+  {key: 'MINUTES', value: 'MINUTES'},
+  {key: 'HOURS', value: 'HOURS'},
   {key: 'Days', value: 'DAYS'},
   {key: 'Weeks', value: 'WEEKS'},
   {key: 'Months', value: 'MONTHS'},
