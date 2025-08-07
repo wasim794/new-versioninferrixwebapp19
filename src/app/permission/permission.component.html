@@ -1,6 +1,6 @@
-<mat-card class="form_cards matCardsMainPr top-header-bg-color">
+<mat-card class="form_cards matCardsMainPr top-header-bg-color" >
   <mat-toolbar
-    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row w-88 pt-10 justify-content-center">
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row w-88 pt-10 justify-content-center" style="border-left: 4px;">
     <span class="tb-details-title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.permissions'): ""}} </span>
     <div class="header-label">
       <mat-form-field class="header-field permissionInputs">
@@ -12,7 +12,7 @@
     </div>
 
     <div class="header-label">
-      <mat-form-field class="header-field permissionInputs">
+      <mat-form-field class=" permissionInputs">
         <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.groupPermission'): ""}}</mat-label>
         <mat-select multiple name="selectedPermissions" [(ngModel)]="selectedPermissions">
           <mat-option *ngFor="let permission of permissions" [value]="permission">{{permission}}</mat-option>
@@ -29,7 +29,7 @@
   </mat-toolbar>
 </mat-card>
 <mat-card-content class="form_cards form_edit_card form_edit_card-m">
-    <table mat-table [dataSource]="dataSources" width="100%" class="table_form table-sidebar_mat sideBarTable pb-0">
+    <table border="1" mat-table [dataSource]="dataSources" width="100%" class="table_form table-sidebar_mat sideBarTable pb-0">
       <ng-container matColumnDef="Select">
         <mat-header-cell *matHeaderCellDef>
           <mat-checkbox class="all_checkbox" (change)="$event ? masterToggle($event) : null"

@@ -120,6 +120,7 @@ body {
 }
 .permissionDilogAlign {
   width: 750px !important;
+  padding: 10px;
 }
 .allIcons.mat-icon[title="Delete"] {
   color: red;
@@ -1537,7 +1538,7 @@ mat-cell.commonReducesSizesAll.singleData {
 }
 
 .selectMenuFonts {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 20px;
   font-size: 15px !important;
 }
@@ -3208,6 +3209,7 @@ mat-header-cell:first-of-type {
 
 .top-header-bg-color {
   background-color: #002349 !important;
+  border-radius: 0px !important;
 }
 
 .addbottom_main_icon:hover {
@@ -3555,7 +3557,7 @@ mat-dialog-actions.setActionsvalue {
 
 .mat_table_data {
   font-size: 13px !important;
-  background: #ffffffc4;
+  /* background: #ffffffc4; */
 }
 
 .senderTableCell{
@@ -5108,7 +5110,9 @@ mat-card.data_mat_card.mat-card {
 }
 
 .permissionInputs {
-  width: 145px;
+  width: 155px;
+  height: 70px;
+  margin-top: 10px;
 }
 
 b {
@@ -6938,7 +6942,8 @@ mat-card.mat-card.all_card.lightSettingsCards.mat-card {
 .permissionSaveButton.saveButton {
   margin-left: 16px !important;
   margin-right: 3px !important;
-  margin-bottom: 12px !important;
+  margin-bottom: 10px !important;
+  border-radius: 4px ;
 }
 
 .permissionDailog .header-field {
@@ -7456,7 +7461,7 @@ form{
   left: auto;
   right: 39%;
   margin-top: -20px;
-  background: #ffffff;
+  background: #fbfbfb;
   font-size: 15px;
 }
 .pushButtonSystem {
@@ -9764,6 +9769,22 @@ button{
 }
 
 
+mat-drawer.mat-drawer.drawer_sidebar.systemSettingsSidebar.mat-drawer-end.mat-drawer-push.mat-drawer-opened {
+    width: 50% !important;
+}
 
+.PermissionDataDialog{
+     margin-left: 20px;
+     margin-top: 10px;
+    width: 240px;
+}
+
+.permissionSearch{
+  height: 70px;
+}
+
+.licenseFormInput{
+  height: 80px;
+}
 /* .................. */
 
