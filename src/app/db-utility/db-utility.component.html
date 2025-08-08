@@ -27,7 +27,7 @@
         <input class="form-control" id="inputFile" matInput minlength="1" [(ngModel)]="databaseActions.backupFileName"
                name="inputFile" required type="text">
       </mat-form-field>
-      <button mat-raised-button  [disabled]="!processing" class="backupButtonDb"
+      <button mat-raised-button  [disabled]="!processing" class="backupButtonDb saveButton addressButtonStyle"
                 (click)="dbBackup()">{{processing===true ?
         UIDICTIONARY ===undefined ? "":UIDICTIONARY.get('ui.core.common.button.backup'):'Please wait...'}}</button>
     </p>
@@ -60,8 +60,10 @@
       <mat-slide-toggle class="toggle_change" [(ngModel)]="databaseSettings.databaseBackupEnabled"
                         name="bacmUpEnableDesable">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable') : ""}}
       </mat-slide-toggle>
-      <button mat-raised-button class="Top_Save_Button marginLeft30" align="end"
-              (click)="saveBackupSetting()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+      <button matfab class="Top_Save_Button dbUtilitySaveButton" align="end"
+              (click)="saveBackupSetting()">
+            
+              {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
     </div>
   </form>
   <mat-divider class="modbusDeviceDividers"></mat-divider><span class="dbUtilityDevider">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.upload') : ""}}</span>
@@ -87,7 +89,7 @@
   </mat-form-field>
 
   <div class="mat-elevation-z8">
-    <mat-table [dataSource]="dataSource" class="tableWidth dbtablet width-100 marginTop-20">
+    <mat-table  [dataSource]="dataSource" class="tableWidth dbtablet width-100 marginTop-20">
       <ng-container matColumnDef="S.No." class="table_row">
         <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll maxWidth-60">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno') : ""}}</mat-header-cell>

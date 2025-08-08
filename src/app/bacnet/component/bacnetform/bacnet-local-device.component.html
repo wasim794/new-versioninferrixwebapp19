@@ -7,8 +7,10 @@
     </mat-card-title>
     <span class="spacer"></span>
     <button (click)="saveLocalDevice()"  *ngIf="!isEdit" 
-            class="Top_Save_Button bacnetUpdate topRightButton"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}
+            class="Top_Save_Button bacnetUpdate saveButton"
+            matFab>
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}
     </button>
     <button (click)="updateLocalDevice()" *ngIf="isEdit" 
             class="toolbarUpdateButton bacnetUpdate toolbarButton"
@@ -25,7 +27,7 @@
       </mat-card>
     </div>
     <mat-tab label="Device configuration">
-    <form>
+    <form class="mt-10">
 
       <mat-form-field appearance="fill" class="bacNetFields w-50 marginTop-10">
         <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.id'): ""}}</mat-label>
@@ -240,8 +242,8 @@
       </div>
     </form>
     </mat-tab>
-    <mat-tab label="Register as foreign device">
-      <mat-form-field appearance="fill" class="bacNetFields w-50">
+    <mat-tab label="Register as foreign device" >
+      <mat-form-field appearance="fill" class="bacNetFields w-50 mt-10">
         <mat-label>
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.bbmdAddress'): ""}}
         </mat-label>
@@ -267,8 +269,8 @@
                name="bbmd" [(ngModel)]="bacnetForeignDevice.timeToLiveSeconds" required type="timeToLiveSeconds">
       </mat-form-field>
       <br>
-      <button (click)="sendForeignDevice()" style="text-transform: uppercase" align="end"
-              color="accent"
+      <button   class="addressButtonStyle saveButton" (click)="sendForeignDevice()" style="text-transform: uppercase" align="end"
+          
               mat-raised-button> Send foreign device registration
       </button>
 

@@ -3879,7 +3879,7 @@ mat-cell.table_data.mat-cell.cdk-column-dataType.mat-column-dataType.ng-star-ins
   }
 
 .Top_Save_Button {
-  background-color: #688b9c;
+  background-color: #002349 !important;
   color: #ffffff !important;
   font-family: "Poppins-Regular";
   font-weight: 600;
@@ -9785,6 +9785,14 @@ mat-drawer.mat-drawer.drawer_sidebar.systemSettingsSidebar.mat-drawer-end.mat-dr
 
 .licenseFormInput{
   height: 80px;
+}
+
+.dbUtilitySaveButton{
+
+  border-radius: 4px;
+  font-weight: 800;
+  margin-left: 20px;
+  height: 40px;
 }
 /* .................. */
 
