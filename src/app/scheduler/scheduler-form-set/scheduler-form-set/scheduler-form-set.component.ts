@@ -200,10 +200,11 @@ export class SchedulerFormSetComponent extends UnsubscribeOnDestroyAdapter imple
 
   }
 
-  showSchedulerDetail(xid: string) {
+  showSchedulerDetail(xid: any) {
     this.schedulerButtonsView = true;
     this.subs.add(this.schedulerService.getByXid(xid).subscribe(data => {
       this.schedule = data;
+      console.log(this.schedule);
       if (this.schedule.exceptions.length === 0) {
         this.exceptionData = false;
       } else {

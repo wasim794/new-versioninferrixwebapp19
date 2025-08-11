@@ -38,6 +38,7 @@ import { LeakageDetectorComponent } from '../components/leakage-detector';
 import { LightControllerV4Component } from '../components/light-controller-v4';
 import { LightDiControllerComponent } from '../components/light-di-controller';
 import { PeopleCountCameraComponent } from '../components/people-count-camera';
+import { CurrentSensorComponent } from '../components/current-sensor';
 
 
 
@@ -118,12 +119,14 @@ export class DatasourceEditComponent {
       'SENSOR_TAG_PIR.DS': SensorTagPirComponent,
       '4DI_2DO_CARD.DS': DiDoCardSensorComponent,
       'DOOR_SENSOR.DS': DoorSensorComponent,
+      'SENSOR_TAG_DOOR_SENSOR.DS': DoorSensorComponent,
       'SENSOR_TAG_IAQ_V.DS': IaqSensorComponent,
       'SENSOR_TAG_INJECTION_MOULD_COUNT.DS': InjectionMouldCountComponent,
       'WATER_LEAKAGE_DETECTOR.DS': LeakageDetectorComponent,
       'LIGHT_CONTROLLER_V4.DS': LightControllerV4Component,
       'LIGHT_RELAY_CONTROLLER.DS': LightDiControllerComponent,
-      'PEOPLE_COUNT_CAMERA.DS': PeopleCountCameraComponent
+      'PEOPLE_COUNT_CAMERA.DS': PeopleCountCameraComponent,
+      'CURRENT_SENSOR.DS': CurrentSensorComponent,
     };
 
     const component = componentMapping[dataSourceType];

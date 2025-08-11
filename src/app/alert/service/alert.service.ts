@@ -15,7 +15,7 @@ export class AlertService {
   constructor(private http: HttpClient, private env: EnvService) {
   }
 
-  filterAlertList(inputSearch): Observable<Alert[]> {
+  filterAlertList(inputSearch: any): Observable<Alert[]> {
     return this.http.get<Alert[]>(`${this.env.apiUrl + this.alertURL}?like(name,*${inputSearch}*)`);
   }
 

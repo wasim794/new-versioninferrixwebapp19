@@ -51,11 +51,17 @@ export class SchedulerService {
       }));
   }
 
-  public getByXid(xid: String): Observable<ScheduleModel> {
-    return this.http
-      .get<ScheduleModel>(`${this.env.apiUrl}${this.schedulerUrl}/${xid}`)
-      .pipe(map((result) => new ScheduleModel(result)));
-  }
+ public getByXid(xid: string): Observable<ScheduleModel> {
+  return this.http
+    .get<ScheduleModel>(`${this.env.apiUrl}/${this.schedulerUrl}/${xid}`)
+    .pipe(
+      map(result => new ScheduleModel(result)),
+      catchError(error => {
+        // handle or log error as needed
+        return throwError(error);
+      })
+    );
+}
 
   public create(resource: Partial<ScheduleModel> & { toJson: () => ScheduleModel }): Observable<ScheduleModel> {
     return this.http

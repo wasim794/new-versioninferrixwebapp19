@@ -42,6 +42,12 @@ export const routes: Routes = [
     loadChildren: () => import('./events/handlers/eventshandler.routes').then(m => m.eventsHandlerRoutes),
   },
 
+ {
+  path:'alert',
+  canActivate: [AuthGuard],
+  loadChildren: () => import('./alert/alert-list.routes').then(m => m.alertListRoutes),
+ },
+
   {
     path: 'scheduler',
     canActivate: [AuthGuard],

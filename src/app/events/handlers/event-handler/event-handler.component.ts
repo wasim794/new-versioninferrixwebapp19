@@ -114,4 +114,9 @@ export class EventHandlerComponent extends UnsubscribeOnDestroyAdapter implement
         :this._commonService.notification(this.enableMessage)
     });
   }
+
+goBack(){
+  this._commonService.goBackHistory();
+}
+
 }
