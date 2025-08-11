@@ -9,11 +9,12 @@ import {CurrentSensorDatasourceModel, CurrentSensorPointLocatorModel} from '../c
 import {CurrentSensorDatasourceService} from '../current-sensor/service/current-sensor-datasource.service';
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
+import { DatapointTableComponent } from '../common';
 
 @Component({
   standalone: true,
   providers: [CurrentSensorDatasourceService, DictionaryService],
-  imports: [CommonModule, MatModuleModule],
+  imports: [CommonModule, MatModuleModule, DatapointTableComponent],
   selector: 'app-current-sensor',
   templateUrl: './current-sensor.component.html',
   styleUrls: []

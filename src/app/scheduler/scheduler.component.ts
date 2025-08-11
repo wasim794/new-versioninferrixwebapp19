@@ -74,9 +74,10 @@ export class SchedulerComponent extends UnsubscribeOnDestroyAdapter implements O
   }
 
 
-  getAllDataScheduler(param: string) {
+  getAllDataScheduler(param: any) {
     this.schedulerService.get(param).subscribe((result: any) => {
       this.Schedulers = result;
+      console.log(this.Schedulers);
       this.totalScheduler = this.schedulerService.total;
     });
   }
@@ -119,6 +120,10 @@ export class SchedulerComponent extends UnsubscribeOnDestroyAdapter implements O
 
     alert("hello");
 
+  }
+
+  goBack(){
+    this.commonService.goBackHistory();
   }
 
 }

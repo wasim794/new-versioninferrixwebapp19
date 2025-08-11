@@ -3,6 +3,7 @@ import {CommonService} from '../../services/common.service';
 import {AlertService, Alert, WeeklySchedule, DailySchedule} from '../../alert';
 import {UsersService} from '../../users/service';
 import {User} from '../../users/model';
+import $ from 'jquery';
 import {EmailAddressEntryModel} from '../../core/models/alertList';
 import {AlertListEntryModel} from '../model/alertListEntryModel';
 import {UserEmailAddressEntryModel} from '../../core/models/alertList';
@@ -11,8 +12,13 @@ import {MatTable} from '@angular/material/table';
 import {UnsubscribeOnDestroyAdapter} from '../../common';
 import {DictionaryService} from "../../core/services/dictionary.service";
 import {Alarm_level, RECIPIENT_TYPES} from "../../common";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule],
+  providers: [CommonService, AlertService, UsersService, DictionaryService],
   selector: 'app-alert-edit',
   templateUrl: './alert-edit.component.html',
   styleUrls: []
@@ -21,49 +27,49 @@ export class AlertEditComponent extends UnsubscribeOnDestroyAdapter implements O
   @Output() closeSidebar: EventEmitter<any> = new EventEmitter<any>();
   weeklySchedule = new WeeklySchedule();
   dailySchedule = new DailySchedule();
-  phoneNumber: string;
+  phoneNumber?: string;
   saveSuccessMsg = 'Saved successfully';
   updateSuccessMsg = 'Updated successfully';
-  permissions: string;
+  permissions?: string;
   alertTypes = Alarm_level;
-  isEdit: boolean;
+  isEdit?: boolean;
   public alertError: any;
   alertListSelection: any;
-  userSelection: string;
-  readPermissions: any[];
-  editPermissions: any[];
+  userSelection?: string;
+  readPermissions?: any[];
+  editPermissions?: any[];
   alertListColumns: string[] = ['AlertType', 'Delete'];
-  @ViewChild(MatTable) table: MatTable<any>;
-  result = [];
+  @ViewChild(MatTable) table!: MatTable<any>;
+  result:any = [];
   count = 0;
   finalValue = [];
   Value = [];
-  periodArray = [];
+  periodArray: any = [];
   i = 0;
   j = 1;
   public RecipientListEntryTypes = RECIPIENT_TYPES;
-  public alertDetail = new Alert();
+  public alertDetail: any = new Alert();
   public selectedAlertType: any;
-  public emailAddress: string;
-  public alertList: Alert[];
+  public emailAddress?: string;
+  public alertList?: Alert[];
   public recipients = [];
-  public emailAddressEntryModel = new EmailAddressEntryModel();
-  public alertListEntryModel = new AlertListEntryModel();
-  public userEntryModel = new UserEmailAddressEntryModel();
-  public phoneEntryModel = new PhoneNumberEntryModel();
-  public userList: User[];
+  public emailAddressEntryModel: any = new EmailAddressEntryModel();
+  public alertListEntryModel: any = new AlertListEntryModel();
+  public userEntryModel: any = new UserEmailAddressEntryModel();
+  public phoneEntryModel: any = new PhoneNumberEntryModel();
+  public userList?: User[];
   public selectedInactive = [];
   public periods = [];
-  public weekTimeData = [];
-  public isUpdateSuccessful: boolean;
-  public allChanges = [];
+  public weekTimeData: any = [];
+  public isUpdateSuccessful?: boolean;
+  public allChanges: any = [];
   public index = 0;
-  public alertListData;
-  public messageError: boolean;
+  public alertListData: any;
+  public messageError?: boolean;
   saveMessage = "Save Successfully";
   updateMessage = "Update Successfully";
   UIDICTIONARY : any;
-  public alertDetailCon: boolean;
+  public alertDetailCon?: boolean;
 
   constructor(private commonService: CommonService, public dictionaryService: DictionaryService, private _commonService: CommonService, private alertService: AlertService, private usersService: UsersService) {
     super();
@@ -79,8 +85,12 @@ export class AlertEditComponent extends UnsubscribeOnDestroyAdapter implements O
     );
   }
 
-  getAlertDetailByXid(alertXid, alert: Alert[]) {
-    (<any>$('#timeSchedule')).jqs('reset');
+  getAlertDetailByXid(alertXid:any, alert: any) {
+    // ($('#timeSchedule') as any).jqs('reset');
+    const el = document.getElementById('timeSchedule');
+if (el) {
+  el.innerHTML = '';
+}
     this.allChanges = [];
     this.index = 0;
     this.alertList = alert;
@@ -95,11 +105,11 @@ export class AlertEditComponent extends UnsubscribeOnDestroyAdapter implements O
 
   }
 
-  RecipientListEntryType(event) {
+  RecipientListEntryType(event: any) {
     this.selectedAlertType = event.value;
     if (this.selectedAlertType === 'USER_EMAIL_ADDRESS' || this.selectedAlertType === 'USER_PHONE_NUMBER') {
       this.subs.add(this.usersService.allUsersList().subscribe(data => {
-        this.userList = data['items'];
+        this.userList = data;
       }));
     }
   }
@@ -179,8 +189,8 @@ export class AlertEditComponent extends UnsubscribeOnDestroyAdapter implements O
     if (this.editPermissions) {
       this.alertDetail.editPermissions = this.editPermissions.toString();
     }
-    const changesArray = [];
-    this.weekTimeData.forEach(weekTime => {
+    const changesArray: any = [];
+    this.weekTimeData.forEach((weekTime: any) => {
       this.dailySchedule = weekTime;
       const changes = {'changes': this.dailySchedule};
       changesArray.push(changes);
@@ -200,7 +210,7 @@ export class AlertEditComponent extends UnsubscribeOnDestroyAdapter implements O
    * remove key and value properties using index of table
    * @param index
    */
-  removeAddress(index) {
+  removeAddress(index: any) {
     this.alertDetail.recipients.splice(index, 1);
     this.table.renderRows();
   }
@@ -209,10 +219,14 @@ export class AlertEditComponent extends UnsubscribeOnDestroyAdapter implements O
     this.selectedInactive = [];
     this.periods = [];
     this.weekTimeData = [];
-    let timePeriod = [];
+    let timePeriod :any = [];
+    if(!this.selectedInactive){
     this.selectedInactive = JSON.parse((<any>$('#timeSchedule')).jqs('export'));
-    this.selectedInactive.forEach(inActive => {
-      inActive.periods.forEach(prop => {
+    }else{
+      this.selectedInactive = JSON.parse((<any>$('#timeSchedule')).jqs('export'));
+    }
+    this.selectedInactive.forEach((inActive: any) => {
+      inActive.periods.forEach((prop: any) => {
         timePeriod.push(prop.start);
         timePeriod.push(prop.end);
       });
@@ -221,22 +235,22 @@ export class AlertEditComponent extends UnsubscribeOnDestroyAdapter implements O
     });
   }
 
-  changeAlertList(data) {
+  changeAlertList(data: any) {
     this.alertListEntryModel.xid = data.xid;
     this.alertListEntryModel.name = data.name;
   }
 
-  tabClick(tab) {
+  tabClick(tab: any) {
     if (tab === 2) {
       if (!this.isEdit) {
-        (<any>$('#timeSchedule')).jqs({
-          periodOptions: false,
-        });
+        // (<any>$('#timeSchedule')).jqs({
+        //   periodOptions: false,
+        // });
       } else {
-        this.alertDetail.inactiveSchedule.dailySchedules.forEach(prop => {
+        this.alertDetail.inactiveSchedule.dailySchedules.forEach((prop: any) => {
           this.allChanges.push(prop.changes);
         });
-        this.allChanges.forEach(change => {
+        this.allChanges.forEach((change: any) => {
           this.finalValue = [];
           if (change.toString().length != 0) {
             const splitValue = change.toString().split(',');

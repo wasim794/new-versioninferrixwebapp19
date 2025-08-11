@@ -25,7 +25,7 @@
 
 <div class="container  width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
-  <div fxFlex="22%" class="card_margin" *ngFor="let alertList of alertLists ">
+  <div fxFlex="22%" class="card_margin" *ngFor="let alertList of alertLists.items">
     <mat-card class=" all_card matCardAll">
       <mat-card-header class="">
         <mat-card-title class="cardTitleName">  {{alertList.name}}</mat-card-title>

@@ -4,6 +4,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {Observable, Subject, throwError} from 'rxjs';
 // import {DataPoint} from '../datapoint/model/dataPoint';
+import { CommonModule, Location  } from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ConfirmDialogComponent} from '../common/confirm-dialog/confirm-dialog.component';
@@ -29,6 +30,7 @@ export class CommonService {
     private http: HttpClient,
     private dialog: MatDialog,
     private _snackBar: MatSnackBar,
+    private location: Location,
     private env: EnvService) {
     this.userLoggedIn.next(false);
   }
@@ -101,6 +103,11 @@ export class CommonService {
     });
 
   }
+
+
+  goBackHistory(): void {
+  this.location.back();
+}
 
 
 
