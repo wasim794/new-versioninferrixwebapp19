@@ -56,21 +56,24 @@
       <div class="meshActionsButtons">
         <div *ngIf="!globalButtonsView then savePoint else updatePoint"></div>
         <ng-template #savePoint>
-          <button mat-raised-button class="saveButton addSaveAllButtons" (click)="saveGlobalScript()">
+          <button matfab class="saveButton globalSaveButton" (click)="saveGlobalScript()">
+            <mat-icon>save</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase): ""}}
           </button>
         </ng-template>
         <ng-template #updatePoint>
-          <button mat-raised-button class="Top_Save_Button updateButton " (click)="updateGlobalScript()">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase): ""}}</button>
+          <button matfab class=" updateButton saveButton globalSaveButton" (click)="updateGlobalScript()">
+              <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase): ""}}</button>
         </ng-template>
       </div>
     </form>
     <div class="mat-elevation-z8">
-          <mat-table [dataSource]="dataSource" class="tableWidth dbtablet width-100 marginTop-20"   matSort (matSortChange)="sortingData($event)">
-        <ng-container matColumnDef="S.No." class="table_row">
-          <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll maxWidth-60">
+          <mat-table border="1" [dataSource]="dataSource" class="table_data dataPointsAllTable globalTableData  px-0"   matSort (matSortChange)="sortingData($event)">
+        <ng-container matColumnDef="S.No." class="" style="width: auto;">
+          <mat-header-cell *matHeaderCellDef class="tabl_heading commonReducesSizesAll ">
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}</mat-header-cell>
-          <mat-cell class="commonReducesSizesAll maxWidth-60" *matCellDef="let element; let i = index;">{{i + 1}}</mat-cell>
+          <mat-cell class="commonReducesSizesAll " *matCellDef="let element; let i = index;">{{i + 1}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="File Name">

@@ -81,7 +81,7 @@
     {{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.listingRestore') : ""}}</mat-card-title>
   <mat-hint align="start" [ngClass]="{'active': isRestart, 'disabled': !isRestart}">Restart after successfully restoring database</mat-hint><mat-icon matTooltip="Restart" class="dbRestore DbRestore" [ngClass]="{'active': isRestart, 'disabled': !isRestart}" (click)="restartStack()"><i class="material-icons">restart_alt</i></mat-icon>
 
-  <mat-form-field class="topSearchBoxes">
+  <mat-form-field class="topSearchBoxes marginLeft-20">
     <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
     <input matInput name="searchBacnetList" (keyup)="applyFilter($event)" placeholder="Ex. ium" #input
            placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ''}}...">
