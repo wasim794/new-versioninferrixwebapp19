@@ -2,7 +2,7 @@
   <mat-toolbar  class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row pt-14 toolbarWidth">
     <span class="tb-details-title">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.permissions'): ""}}</span>
     <div class="header-label">
-      <mat-form-field class="header-field selectMenuFonts">
+      <mat-form-field class="header-field selectMenuFonts permissionSearch">
         <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
         <input (keyup)="FilterDataPoint($event)" [(ngModel)]="searchDataPoint" matInput name="searchDataPoint"
                placeholder="Search...">
@@ -15,26 +15,26 @@
   <table class="table_form mat_table_data permissionDailog">
     <tr>
       <td>
-        <mat-form-field class="header-field" appearance="fill">
+        <mat-form-field class="PermissionDataDialog" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
           <mat-select multiple name="permission" [(ngModel)]="readSelectedPermissions">
             <mat-option *ngFor="let permission of toPermissionGroupsArray" [value]="permission">{{permission}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button mat-raised-button style="background: transparent" [disabled]="!enableGroupPermission">
+        <button mat-raised-button class="marginLeft-10" style="background: transparent;border-radius: 4px;" [disabled]="!enableGroupPermission">
           <mat-icon (click)="readPermission()"  title="{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.apply') |  uppercase) : ''}}" matSuffix><i class="material-icons">send</i></mat-icon>
         </button>
       </td>
       <td>
-        <mat-form-field class="header-field" appearance="fill">
+        <mat-form-field class="PermissionDataDialog " appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.setPermission'): ""}}</mat-label>
           <mat-select multiple name="permission" [(ngModel)]="setSelectedPermissions">
             <mat-option *ngFor="let permission of toPermissionGroupsArray" [value]="permission">{{permission}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <button mat-raised-button style="background: transparent" [disabled]="!enableGroupPermission">
+        <button mat-raised-button class="marginLeft-10" style="background: transparent;border-radius: 4px;" [disabled]="!enableGroupPermission">
           <mat-icon (click)="setPermission()"  title="{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.apply') |  uppercase) : ''}}" matSuffix><i class="material-icons">send</i></mat-icon>
         </button>
       </td>

@@ -46,14 +46,14 @@
       <mat-slide-toggle [(ngModel)]="emailSetting.emailAuthorization" name="enabledAuthorization" class="toggle_change marginLeft-10"
                         (change)="useAuthorization($event)">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.useAuthorization'): ""}}
       </mat-slide-toggle>
-      <div>
+      <div style="display: flex; margin-top: 20px;">
         <mat-form-field class="form_field w-50" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ""}}</mat-label>
           <input [(ngModel)]="emailSetting.emailSmtpUsername" matInput name="emailSmtpUsername"
                  placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ''}}"
                  [disabled]="!showCredentialFields">
         </mat-form-field>
-        <mat-form-field class="form_field w-50 mt-10 marginLeft-20" appearance="fill">
+        <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.password'): ""}}</mat-label>
           <input [(ngModel)]="emailSetting.emailSmtpPassword" matInput name="emailSmtpPassword"
                  placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.password'): ''}}"
@@ -84,7 +84,7 @@
       </div>
       </div>
       <div class="marginTop">
-        <button mat-raised-button class="saveButton addSaveAllButtons"
+        <button mat-raised-button class="saveButton  addressButtonStyle"
                 (click)="saveEmailConfiguration()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}
         </button>
       </div>

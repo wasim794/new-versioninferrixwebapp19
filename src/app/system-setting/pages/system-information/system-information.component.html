@@ -25,7 +25,7 @@
         <mat-slide-toggle [(ngModel)]="persistentQueue.persistentQueuePublisher"  (change)="enableDisable($event.checked)"  name="enabledAuthorization" class="toggle_change blockMargin form_field systemEnabled">
            {{"Disabled"}}/{{"Enabled"}}
           </mat-slide-toggle>
-        <button mat-raised-button class="saveButton addSaveAllButtons pushButtonSystem "
+        <button mat-raised-button class="saveButton addressButtonStyle pushButtonSystem"
                 (click)="pushPersistantConfiguration()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}</button>
 
                   <mat-divider class="mqqtDividers marginTop-20"></mat-divider>
@@ -57,7 +57,7 @@
                     <li class="ui red message">{{error.property}} : {{error.message}}</li>
                   </div>
                 </div>
-                <button mat-raised-button class="saveButton addSaveAllButtons"
+                <button mat-raised-button class="saveButton addressButtonStyle"
                         (click)="saveThreadConfiguration()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}</button>
               </form>
             </mat-card-content>

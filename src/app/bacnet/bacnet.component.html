@@ -7,7 +7,7 @@
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.localDevice'): ""}}</span>
       <div class="containerInfo">
-        <mat-form-field class="topSearchBoxes">
+        <mat-form-field class="topSearchBoxes mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
           <input matInput name="searchBacnetList"
                  (keyup)="applyFilter($event)" placeholder="Ex. ium" #input
@@ -29,7 +29,7 @@
 <div class="container cardlayout width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
   <div fxFlex="100%" class="card_margin">
-    <table  mat-table [dataSource]="obs" class="mat-elevation-z8"
+    <table border="1" mat-table [dataSource]="obs" class="mat-elevation-z8 meshTable diagnosticTableHeader width-100"
             matSort (matSortChange)="sortingCommissionedNodes($event)">
 
       <!-- Checkbox Column -->

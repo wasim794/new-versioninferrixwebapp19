@@ -18,7 +18,7 @@
                           id="pointPurseTls">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.enablePerPointValuePurge'): ""}}
         </mat-slide-toggle>
       </p>
-      <p class="m-0">
+      <p class="m-0 mt-10">
         <mat-form-field class="form_field w-50" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.purgePeriodType'): ""}}</mat-label>
           <mat-select name="purgePointType" [(ngModel)]="model.pointDataPurgePeriodType">
@@ -235,8 +235,10 @@
       </p>
       </div>
       <p class="marginTop">
-        <button mat-raised-button class="saveButton addSaveAllButtons"
-                (click)="savePurgeSettings()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+        <button matfab class="saveButton addSaveAllButtons"
+                (click)="savePurgeSettings()">
+                <mat-icon>save</mat-icon>
+                {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
         </button>
       </p>
     </form>

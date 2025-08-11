@@ -24,37 +24,40 @@
       <mat-slide-toggle class="toggle_change marginLeft-10"
                         (change)="toggleCheckBox($event)">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.allowEdit'): ""}}
       </mat-slide-toggle>
-   <div>
-        <mat-form-field class="form_field w-50" appearance="fill">
+   <div style="display: flex; margin-top: 20px;">
+        <mat-form-field class="licenseFormInput w-50" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.organizationName'): ""}}</mat-label>
           <input [(ngModel)]="licenseModel.licenseeName" matInput name="licenseName"
                  placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.organizationName'): ''}}"
                  [disabled]="!CheckboxVar">
         </mat-form-field>
-        <mat-form-field class="form_field w-50 mt-10 marginLeft-20" appearance="fill">
+        <mat-form-field class="licenseFormInput w-50 marginLeft-10" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ""}}</mat-label>
-          <input [(ngModel)]="licenseModel.licenseeId" matInput name="licenseeId"
+          <input  [(ngModel)]="licenseModel.licenseeId" matInput name="licenseeId"
                  placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licensedUserName'): ''}}"
                  [disabled]="!CheckboxVar">
         </mat-form-field>
      </div>
 
-        <mat-form-field class="form_field w-50" appearance="fill">
+     <div style="display: flex;">
+        <mat-form-field class="licenseFormInput w-50" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.licenseUniqueKey'): ""}}</mat-label>
           <input [(ngModel)]="licenseKey" matInput name="licenseUniqueKey"
                  [disabled]="true">
         </mat-form-field>
-        <mat-form-field class="form_field w-50 mt-10 marginLeft-20" appearance="fill">
+        <mat-form-field class="licenseFormInput w-50 " appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.license'): ""}}</mat-label>
           <input [(ngModel)]="licenseModel.license" matInput name="license"
                  placeholder="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.license'): ''}}"
                  [disabled]="!CheckboxVar">
         </mat-form-field>
-
+</div>
       </div>
       <div class="marginTop">
-        <button mat-raised-button class="saveButton addSaveAllButtons" (click)="saveLicense()"
-                [disabled]="!CheckboxVar">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+        <button matfab class="saveButton addSaveAllButtons" (click)="saveLicense()"
+                [disabled]="!CheckboxVar">
+                 <mat-icon>save</mat-icon>
+                {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
         </button>
       </div>
     </form>
