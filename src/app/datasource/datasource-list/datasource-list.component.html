@@ -4,7 +4,7 @@
     <mat-toolbar>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.Datasource') : ""}}</span>
       <div class="selectMenuFonts">
-        <mat-form-field class="field_margin datasourceWidth">
+        <mat-form-field class="field_margin datasourceWidth mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.select') : ""}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let datasource of datasourceType.items" [value]="datasource.type"

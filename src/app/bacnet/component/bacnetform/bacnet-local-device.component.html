@@ -7,7 +7,7 @@
     </mat-card-title>
     <span class="spacer"></span>
     <button (click)="saveLocalDevice()"  *ngIf="!isEdit" 
-            class="Top_Save_Button bacnetUpdate saveButton"
+            class="toolbarSaveButton bacnetUpdate saveButton"
             matFab>
             <mat-icon>save</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}

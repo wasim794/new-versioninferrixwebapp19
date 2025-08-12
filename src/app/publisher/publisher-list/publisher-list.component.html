@@ -4,7 +4,7 @@
     <mat-toolbar>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.publisher'): ""}}</span>
       <div class="selectMenuFonts">
-        <mat-form-field class="field_margin">
+        <mat-form-field class="field_margin mt-10">
           <mat-label>
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.select'): ""}}
           </mat-label>
@@ -21,7 +21,7 @@
             folder_delete
           </mat-icon></button>
         <mat-icon class="refreshIcons" (click)="refreshItemData()">refresh</mat-icon>
-        <mat-form-field>
+        <mat-form-field class="mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
           <input (keyup)="filterPublisher($event)" [(ngModel)]="searchPublisher" matInput name="searchPublisher">
           <mat-icon class="Input_search" (click)="filterPublisher($event)" matSuffix>search</mat-icon>

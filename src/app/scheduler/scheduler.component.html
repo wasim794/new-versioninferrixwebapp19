@@ -7,7 +7,7 @@
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler'): ""}}</span>
       <div class="containerInfo">
-        <mat-form-field class="topSearchBoxes">
+        <mat-form-field class="topSearchBoxes mt-10">
           <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
           <input matInput name="searchWatchList"
                  placeholder="Search...">
@@ -26,7 +26,7 @@
 <div class="cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
   <div fxFlex="22%" class="card_margin" *ngFor="let Scheduler of Schedulers">
-    <mat-card class="mat-card all_card matCardAll">
+    <mat-card class="meshMainCardNew firmPushCard matCardAll marginTop-20">
       <mat-card-header>
         <mat-card-title class="cardTitleName">{{Scheduler.name}}</mat-card-title>
         <mat-card-subtitle class="card_icon_right cardIconRight">

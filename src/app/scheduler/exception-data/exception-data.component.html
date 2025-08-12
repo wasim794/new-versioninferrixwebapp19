@@ -8,10 +8,10 @@
   </mat-select>
 </mat-form-field>
 
-  <button class="shedulerButtons marginLeft-10" (click)="addRules()" mat-mini-fab aria-label="icon button with a home icon">
+  <button class="addAddressIcon marginLeft-10" (click)="addRules()" mat-mini-fab aria-label="icon button with a home icon">
     <mat-icon title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}">add</mat-icon>
   </button>
-  <button (click)="editRules()" class="shedulerButtons marginLeft-20" mat-mini-fab aria-label="icon button with a home icon">
+  <button (click)="editRules()" class="addAddressIcon marginLeft-20" mat-mini-fab aria-label="icon button with a home icon">
     <mat-icon title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}">edit</mat-icon>
   </button>
 </div>
@@ -19,12 +19,12 @@
 <mat-card class="demo-inline-calendar-card newAddCards" style="margin-bottom: 20px">
 
   <div class="mainDivWeek">
-    <button mat-raised-button color="accent" style="margin-right: 20px">
+    <button mat-raised-button class="calendarButton" style="margin-right: 20px">
       <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.startScan').substring(0,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.time'): ""}}:</label>
       <input style="padding: 10px;" type="time" [(ngModel)]="startTimeEx">
     </button>
 
-    <button mat-raised-button color="accent">
+    <button mat-raised-button class="calendarButton">
       <label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.tab.sendTest').substring(1,5): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.time'): ""}}:</label>
       <input style="padding: 10px;" [(ngModel)]="endTimeEx" type="time">
     </button>

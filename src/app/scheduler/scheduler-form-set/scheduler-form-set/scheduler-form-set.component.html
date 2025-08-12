@@ -56,14 +56,15 @@
           </mat-select>
         </mat-form-field>
       </div>
+      
       <mat-divider class="divider_all"></mat-divider>
      <br>
       <calendar-component [toggleAll]="enableToggle"></calendar-component>
       <div class="layout-field">
         <button (click)="addExceptionData()" mat-raised-button
-                class="Save_Button addException">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.addAnException'): ""}} </button>
+                class="saveButton addException">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.addAnException'): ""}} </button>
         <span [hidden]=!exceptionData><button (click)="cancelExceptionData()" mat-raised-button
-                                              class="Save_Button cancelException">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.exceptionCancel'): ""}} </button> </span>
+                                              class=" cancelException">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.exceptionCancel'): ""}} </button> </span>
         <mat-icon (click)="addHelpGuide()" aria-hidden="false" class="info_position marginLeft-10" aria-label="error_outline icon"
                   title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}">
           error_outline
@@ -76,11 +77,11 @@
 
           </div>
 
-          <button type="button" (click)="addQuantity()" mat-mini-fab color="accent" class="addExceptions">
+          <button type="button" (click)="addQuantity()" mat-mini-fab color="accent" class="addAddressIcon addExceptions">
             <mat-icon>add</mat-icon>
           </button>
           <button type="button" (click)="removeQuantity($event)" mat-mini-fab color="primary"
-                  class="addExceptionsDlt">
+                  class="addExceptionsDlt addAddressIcon">
             <mat-icon title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}">delete</mat-icon>
           </button>
         </div>
@@ -89,12 +90,16 @@
       <div class="layout-field">
         <div *ngIf="!schedulerButtonsView then saveButton else updateButton"></div>
         <ng-template #saveButton>
-          <button mat-raised-button class="saveButton"
-                  (click)="addNewScheduler()">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+          <button matfab class="saveButton"
+                  (click)="addNewScheduler()">
+                  <mat-icon>save</mat-icon>
+                  {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
         </ng-template>
         <ng-template #updateButton>
-          <button mat-raised-button (click)="updateScheduler()"
-                  class="updateButton">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+          <button matfab (click)="updateScheduler()"
+                  class="updateButton saveButton">
+                  <mat-icon>save_as</mat-icon>
+                  {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
         </ng-template>
       </div>
     </form>
