@@ -1,0 +1,328 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.cards.gradeMappings'): ""}}</span>
+      <div class="containerInfo">
+        <button mat-raised-button class="Top_Save_Button saveButton" (click)="saveGradeMappingSetting() " *ngIf="isSaveEnable"
+                align="end">{{UIDICTIONARY ?
+          (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}</button>
+        <button mat-raised-button class="Top_Update_Button gradeTopButton updateButton" (click)="updateGradeMappingSetting()"
+                *ngIf="isUpdateEnable"
+                align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+        </button>
+      </div>
+      <div [hidden]="!messageError">
+        <mat-card class="validation-error">
+          <li *ngFor="let err of gradeError">{{err.property}}
+            : {{err.message}}</li>
+        </mat-card>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container cardlayout width-100 gradeMappings" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="30%" class="card_margin">
+    <mat-card class="mat-card all_card gradecards">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.cards.title.siteMapping'): ""}}
+        </mat-card-title>
+        <mat-divider class="cardsDividerAll"></mat-divider>
+        <br>
+        <div class="AllFormInputs">
+          <form [formGroup]="siteNameForm">
+            <div formArrayName="siteNameSetting">
+              <div *ngFor="let contact of siteGradeFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                  <mat-form-field class="example-form-field inputnumber" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.siteNumber'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="key" readonly>
+
+                  </mat-form-field>
+                  <mat-form-field class="example-form-field inputText" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.siteName'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="value" name="value">
+
+                  </mat-form-field>
+                  <button matSuffix mat-mini-fab color="warn" class="AllRemoves closeIconSize" aria-label="Clear">
+                    <mat-icon (click)="removeSiteGrade(i)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}">close</mat-icon>
+                  </button>
+                </div>
+                <mat-divider class="matDividerAlls"></mat-divider>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </mat-card-header>
+
+      <button type="button" mat-raised-button class="saveButton displayBlock marginLeftAuto"  (click)="addSiteGradeSettingProperties()">{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.core.common.button.addMore'): ""}}</button>
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="30%" class="card_margin">
+    <mat-card class="mat-card all_card gradecards">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.cards.title.buildingMapping'): ""}}
+        </mat-card-title>
+        <mat-divider class="cardsDividerAll"></mat-divider>
+        <br>
+        <div class="AllFormInputs">
+          <form [formGroup]="buildingForm">
+            <div formArrayName="buildingNumberSetting">
+              <div *ngFor="let contact of buildingGradeFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                  <mat-form-field class="example-form-field inputnumber" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.buildingNumber'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="key" name="key" readonly>
+                  </mat-form-field>
+                  <mat-form-field class="example-form-field inputText" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.buildingName'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="value" name="value">
+                  </mat-form-field>
+                  <button matSuffix mat-mini-fab color="warn" class="AllRemoves closeIconSize closeIconSize"
+                          aria-label="Clear">
+                    <mat-icon (click)="removeBuildingGrade(i)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" >close</mat-icon>
+                  </button>
+                </div>
+                <mat-divider class="matDividerAlls"></mat-divider>
+              </div>
+            </div>
+          </form>
+        </div>
+      </mat-card-header>
+
+      <button type="button" mat-raised-button class="saveButton displayBlock marginLeftAuto" (click)="addBuildingGradeSettingProperties()">{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.core.common.button.addMore'): ""}}</button>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="30%" class="card_margin">
+    <mat-card class="mat-card all_card gradecards">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.cards.title.floorMapping'): ""}}
+        </mat-card-title>
+        <mat-divider class="cardsDividerAll"></mat-divider>
+        <br>
+        <div class="AllFormInputs">
+          <form [formGroup]="floorForm">
+            <div formArrayName="floorSetting">
+              <div *ngFor="let contact of floorGradeFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                  <mat-form-field class="example-form-field inputnumber" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.floorNumber'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="key" name="key" readonly>
+
+                  </mat-form-field>
+                  <mat-form-field class="example-form-field inputText" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.floorName'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="value" name="value">
+                  </mat-form-field>
+                  <button matSuffix mat-mini-fab color="warn" class="AllRemoves closeIconSize" aria-label="Clear">
+                    <mat-icon (click)="removeFloorGrade(i)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}">close</mat-icon>
+                  </button>
+                </div>
+                <mat-divider class="matDividerAlls"></mat-divider>
+              </div>
+            </div>
+          </form>
+        </div>
+      </mat-card-header>
+
+
+      <button type="button" mat-raised-button class="saveButton displayBlock marginLeftAuto"  (click)="addFloorGradeSettingProperties()">{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.core.common.button.addMore'): ""}}</button>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+  <div fxFlex="30%" class="card_margin">
+    <mat-card class="mat-card all_card gradecards">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.cards.title.roomMapping'): ""}}
+        </mat-card-title>
+        <mat-divider class="cardsDividerAll"></mat-divider>
+        <br>
+        <div class="AllFormInputs">
+          <form [formGroup]="roomForm">
+            <div formArrayName="roomSetting">
+              <div *ngFor="let contact of roomGradeFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                  <mat-form-field class="example-form-field inputnumber" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.roomNumber'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="key" name="key" readonly>
+
+                  </mat-form-field>
+                  <mat-form-field class="example-form-field inputText" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.roomName'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="value" name="value">
+
+                  </mat-form-field>
+                  <button matSuffix mat-mini-fab color="warn" class="AllRemoves closeIconSize" aria-label="Clear">
+                    <mat-icon (click)="removeRoomGrade(i)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" >close</mat-icon>
+                  </button>
+                </div>
+                <mat-divider class="matDividerAlls"></mat-divider>
+              </div>
+            </div>
+          </form>
+        </div>
+      </mat-card-header>
+
+      <button type="button"  mat-raised-button class="saveButton displayBlock marginLeftAuto"  (click)="addRoomGradeSettingProperties()">{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.core.common.button.addMore'):""}}</button>
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+  <div fxFlex="30%" class="card_margin">
+    <mat-card class="mat-card all_card gradecards">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.cards.title.zoneMapping'): ""}}
+        </mat-card-title>
+        <mat-divider class="cardsDividerAll"></mat-divider>
+        <br>
+        <div class="AllFormInputs">
+          <form [formGroup]="zoneForm">
+            <div formArrayName="zoneSetting">
+              <div *ngFor="let contact of zoneGradeFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                  <mat-form-field class="example-form-field inputnumber" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.zoneNumber'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="key" name="key" readonly>
+
+                  </mat-form-field>
+                  <mat-form-field class="example-form-field inputText" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.zoneName'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="value" name="value">
+
+                  </mat-form-field>
+                  <button matSuffix mat-mini-fab color="warn" class="AllRemoves closeIconSize" aria-label="Clear">
+                    <mat-icon (click)="removeZoneGrade(i)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" >close</mat-icon>
+                  </button>
+                </div>
+                <mat-divider class="matDividerAlls"></mat-divider>
+              </div>
+            </div>
+          </form>
+        </div>
+      </mat-card-header>
+
+      <button type="button" mat-raised-button class="saveButton displayBlock marginLeftAuto"  (click)="addZoneGradeSettingProperties()">{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.core.common.button.addMore'): ""}}</button>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="30%" class="card_margin">
+    <mat-card class="mat-card all_card gradecards">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.cards.title.groupMapping'): ""}}
+        </mat-card-title>
+        <mat-divider class="cardsDividerAll"></mat-divider>
+        <br>
+        <div class="AllFormInputs">
+          <form [formGroup]="groupForm">
+            <div formArrayName="groupSetting">
+              <div *ngFor="let contact of groupGradeFormGroup.controls; let i = index;">
+                <div [formGroupName]="i" class="row">
+                  <mat-form-field class="example-form-field inputnumber" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.groupNumber'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="key" name="key" readonly>
+                  </mat-form-field>
+                  <mat-form-field class="example-form-field inputText" appearance="fill">
+                    <mat-label>
+                      {{UIDICTIONARY ?
+                      UIDICTIONARY.get('ui.lightCommissioning.gradeMapping.fields.placeholder.groupName'): ""}}
+                    </mat-label>
+                    <input matInput type="text" formControlName="value" name="value">
+
+
+                  </mat-form-field>
+                  <button matSuffix mat-mini-fab color="warn" class="AllRemoves closeIconSize" aria-label="Clear">
+                    <mat-icon (click)="removeGroupGrade(i)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}">close</mat-icon>
+                  </button>
+                </div>
+                <mat-divider class="matDividerAlls" ></mat-divider>
+              </div>
+            </div>
+          </form>
+        </div>
+      </mat-card-header>
+
+      <button type="button" mat-raised-button class="saveButton displayBlock marginLeftAuto"  (click)="addGroupGradeSettingProperties()">{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.core.common.button.addMore'): ""}}</button>
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

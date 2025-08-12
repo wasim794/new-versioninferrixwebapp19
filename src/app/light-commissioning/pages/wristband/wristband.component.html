@@ -1,0 +1,66 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.heading.profileSetting.wristBand'): ""}}
+      <small *ngIf="wristBandProfileTitle">{{wristBandProfile.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button (click)="saveWristBand() " *ngIf="!isEdit" align="end" class="Top_Save_Button bacnetUpdate topRightButton" mat-raised-button>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}</button>
+    <button (click)="updateWristBand()" *ngIf="isEdit" align="end" class="Top_Update_Button bacnetUpdate toolbarUpdateButton" mat-raised-button>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    </button>
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="form_cards form_edit_card onlyWristband">
+  <div [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li *ngFor="let err of wristControllerProfileError">{{err.property}}
+        : {{err.message}}
+      </li>
+    </mat-card>
+  </div>
+  <form class="TextAlign">
+    <br>
+      <mat-form-field appearance="fill" class="form_field name_field w-50">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+        <input  class="form-control" id="name" [(ngModel)]="wristBandProfile.name" matInput minlength="1"
+                name="name" required type="text">
+      </mat-form-field>
+
+    <div>
+      <mat-form-field appearance="fill" class="form_field w-50 mr-20">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
+        <mat-select [(ngModel)]="readPermission" multiple name="readPermission">
+          <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="form_field w-50 m-0">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
+        <mat-select [(ngModel)]="editPermission" multiple name="editPermission">
+          <mat-option *ngFor="let write of permissions" [value]="write">{{write}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-divider  class="marginTop-20"></mat-divider>
+    <p>
+      <span class="profile_headings headnodes profileBandSettings">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.config.bandSettings'): ""}}</span>
+    </p>
+    <div>
+      <mat-form-field class="form_field allFormFields w-50 mr-20 mt-10" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.bandName'): ""}}</mat-label>
+        <input matInput class="form-control" [(ngModel)]="wristBandSettings.name" name="BN"
+               placeholder="Enter here "
+               type="text">
+      </mat-form-field>
+      <mat-form-field class="form_field allFormFields w-50 m-0" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.broadcastInterval'): ""}}</mat-label>
+        <input matInput class="form-control" [(ngModel)]="wristBandSettings.motionBroadcastInterval"  name="BI"
+               placeholder="Second"
+               type="text">
+      </mat-form-field>
+    </div>
+  </form>
+</mat-card-content>

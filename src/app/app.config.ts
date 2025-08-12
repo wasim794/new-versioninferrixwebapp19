@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
@@ -7,6 +7,8 @@ import { provideEffects } from '@ngrx/effects';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { provideHttpClient, withFetch, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './core/services/jwt.service';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +17,8 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideStore(),
     provideEffects(),
+    provideAnimations(),
+    importProvidersFrom(OwlDateTimeModule, OwlNativeDateTimeModule),
     
     // HTTP Client Configuration
     provideHttpClient(

@@ -9696,8 +9696,12 @@ mat-card-title.mesh_text {
 .meshMainCardNew{
   margin-left: 20px;
   width: 350px;
-
 }
+
+.meshMainCardNew.firmPushCard{
+  cursor: pointer;
+  } 
+
 .mainBoxForm{
   padding: 10px;
 

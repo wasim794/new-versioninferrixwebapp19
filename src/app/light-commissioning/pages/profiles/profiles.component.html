@@ -1,0 +1,125 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.heading.profileSetting'): ""}}</span>
+      <div class="leftDropdowns">
+        <mat-form-field class="field_margin">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.selectToAddProfile'): ""}}</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let profileType of profileTypes" [value]="profileType"
+                        (onSelectionChange)="addProfile($event, profileType.type)">{{profileType.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="containerInfo">
+        <mat-form-field>
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
+          <input (keyup)="filterPublisher($event)" [(ngModel)]="searches" matInput name="searchPublisher">
+          <mat-icon class="Input_search" (click)="filterPublisher($event)" matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+
+
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container cardlayout width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="card_margin"
+      >
+    <table  mat-table [dataSource]="dataSources" class="mat-elevation-z8"
+            matSort (matSortChange)="sortingCommissionedNodes($event)">
+
+      <!-- Checkbox Column -->
+
+
+      <ng-container  matColumnDef="select">
+        <th  mat-header-cell *matHeaderCellDef>
+          <mat-checkbox class="containerAlign" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox class="containerAlign" (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
+                        [checked]="isChecked(element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'):""}}</th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container  matColumnDef="name">
+        <th style="width: 60%" mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'):""}} </th>
+        <td style="width: 60%"  mat-cell *matCellDef="let element" (click)="showProfileDetail(element)" > {{element.name}} </td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
+        <td  mat-cell *matCellDef="let element">
+          <mat-card-actions class="mat_right_icons iconAlignItem">
+
+            <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"
+                      (click)="showProfileDetail(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'):''}}"
+                      >
+              edit
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons"  aria-label="edit icon"
+                      (click)="copyProfile(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.copy'): ''}}"
+            >
+              content_copy
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon"
+                      (click)="deleteProfile(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                      >
+              delete
+            </mat-icon>
+          </mat-card-actions></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+         >
+      </tr>
+    </table>
+  </div>
+</div>
+<div *ngIf="totalProfiles > limit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="totalProfiles" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit
+                 (page)="getNext($event)"></mat-paginator>
+</div>
+
+<mat-drawer-container class="container-size sidebar_position profileSidebarMain" autosize disableClose>
+  <mat-drawer #profileCreatorSidebar class="sidenav addnew_drawer_sidebar" [ngClass]="status ? 'success' : 'danger'"
+              mode="push" position="end">
+    <mat-icon (click)="closeAllSidebar($event)" class="allCloseOptions">close</mat-icon>
+    <button  mat-raised-button class="Save_Button cancelAllData top-54" (click)="closeAllSidebar($event)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase): ""}}
+    </button>
+    <template #dynamicLoadComponent>
+    </template>
+  </mat-drawer>
+</mat-drawer-container>
+
+<mat-drawer-container class="container-size sidebar_position profileSidebarMain" autosize disableClose>
+  <mat-drawer #profileCreatorSidebars class="sidenav addnew_drawer_sidebar filterSidebar"
+              [ngClass]="status ? 'success' : 'danger'" mode="push" position="end">
+    <mat-icon (click)="closeAllSidebar($event)" class="allCloseOptions">close</mat-icon>
+
+    <app-filter-profile  (closeAllSidebar)="closeAllSidebar($event)"></app-filter-profile>
+  </mat-drawer>
+</mat-drawer-container>
+
+
+

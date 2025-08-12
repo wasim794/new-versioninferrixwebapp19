@@ -1,0 +1,39 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.heading.profileSetting.wristBand'): ""}}
+    </mat-card-title>
+  </mat-toolbar>
+</mat-card>
+
+<mat-card-content class="form_cards form_edit_card wristBand">
+  <form>
+          <mat-form-field appearance="fill" class="form_field name_field">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.fields.placeholder.Address'): ""}}</mat-label>
+            <input class="form-control" id="name" [(ngModel)]="wristBandNode.address" matInput minlength="1"
+                   name="name" required type="text">
+          </mat-form-field>
+
+      <mat-divider class="divider_all"></mat-divider>
+    <p>
+        <span class="profile_headings headnodes">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.config.bandSettings'): ""}}</span>
+    </p>
+     <div>
+          <mat-form-field class="form_field allFormFields" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.bandName'): ""}}</mat-label>
+            <input matInput class="form-control" [(ngModel)]="wristBandSettings.name" name="BN"
+                   placeholder="Enter here "
+                   type="text">
+          </mat-form-field>
+
+          <mat-form-field class="form_field allFormFields" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.broadcastInterval'): ""}}</mat-label>
+            <input matInput class="form-control" [(ngModel)]="wristBandSettings.motionBroadcastInterval"  name="BI"
+                   placeholder="Second"
+                   type="text">
+          </mat-form-field>
+        </div>
+  </form>
+</mat-card-content>

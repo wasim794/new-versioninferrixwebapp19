@@ -36,7 +36,7 @@ export class MeshConsoleService {
     return this.http.get<ArrayWithTotalModel<any>>(url)
     .pipe(map((result) => {
       this._totalDiagnostics = result.total;
-      return result.items.map((node) => new MeshNodeInfoModel(node));
+      return result.items.map((node) => node);
     }));
   }
 

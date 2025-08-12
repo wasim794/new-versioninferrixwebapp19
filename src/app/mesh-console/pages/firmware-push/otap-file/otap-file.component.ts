@@ -202,6 +202,10 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
   }
 
 
+  goBack() {
+    this.commonService.goBackHistory();
+  }
+
   private static showMessages() {
     // (<any>$('#messages')).show();
     // (<any>$('#messages')).fadeOut(2000);

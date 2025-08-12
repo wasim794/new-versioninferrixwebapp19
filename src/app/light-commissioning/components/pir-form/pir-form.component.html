@@ -1,0 +1,40 @@
+<div clas="pirMainDiv">
+  <mat-divider class="form_devide visibilityHidden"></mat-divider>
+  <div class="doubleSlider">
+    <span>
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.noMotion'): ""}}
+        &nbsp; &nbsp;<strong>{{noMotionValue}}</strong></mat-label>
+      <br>
+
+      <input matInput class="form-control" [(ngModel)]="noMotionValue" id="noMotionValue" name="noMotionValue"
+             hidden="true">
+      <mat-slider class="example-margin" [(ngModel)]="noMotionValue" (change)="noMotionChange($event)">
+      </mat-slider>
+    </span>
+
+    <span>
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.Motion'): ""}}
+        &nbsp; &nbsp;<strong> {{motionValue}}</strong></mat-label>
+      <br>
+
+      <input matInput class="form-control" [(ngModel)]="motionValue" id="MotionValue" name="MotionValue" hidden="true">
+
+      <mat-slider class="example-margin" [(ngModel)]="motionValue">
+      </mat-slider>
+    </span>
+  </div>
+
+    <mat-form-field class="field_margin w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableGrade'): ""}}
+      </mat-label>
+      <mat-select [(ngModel)]="pirSettings.gradeType" class="form-control" name="publishType">
+        <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+          {{gradeType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+</div>

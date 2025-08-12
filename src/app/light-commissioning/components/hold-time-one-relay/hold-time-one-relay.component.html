@@ -1,0 +1,24 @@
+<mat-form-field class="form_field w-50 mr-20" appearance="fill">
+  <mat-label>{{UIDICTIONARY ?
+    UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.holdTimeOne'): ""}}</mat-label>
+  <input matInput class="form-control" [(ngModel)]="nodeSettings.holdTimeOne" id="HTO" name="HTO"
+         placeholder="Enter here"
+         type="text">
+</mat-form-field>
+
+<mat-form-field class="form_field w-50 mr-0" appearance="fill">
+  <mat-label>{{UIDICTIONARY ?
+    UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.signalInterval'): ""}}</mat-label>
+  <input matInput class="form-control" [(ngModel)]="this.nodeSettings.dimValueOne" id="singlaInterval"
+         name="singlaInterval"
+         placeholder="Seconds"
+         type="text">
+</mat-form-field>
+
+
+
+
+
+
+
+

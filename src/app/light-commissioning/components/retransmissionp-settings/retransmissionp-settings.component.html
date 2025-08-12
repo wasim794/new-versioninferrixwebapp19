@@ -1,0 +1,36 @@
+
+  <mat-form-field appearance="fill" class="form_field w-50">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.retransmission.pirRetransmissionCount'): ""}}</mat-label>
+    <input  class="form-control" [(ngModel)]="retransmission.pirRetransmissionCount"  matInput
+           name="pirRetransmissionCount" required type="text">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="field_margin form_field w-50 mr-0">
+    <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.retransmission.pirRetransmissionInterval'): ""}}</mat-label>
+    <input  class="form-control"[(ngModel)]="retransmission.pirRetransmissionDelayInterval"  matInput minlength="1"
+            name="pirRetransmissionDelayInterval" required type="text">
+  </mat-form-field>
+
+<div>
+  <mat-form-field appearance="fill" class="form_field w-50">
+    <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.retransmission.luxRetransmissionCount'): ""}} </mat-label>
+    <input  class="form-control" [(ngModel)]="retransmission.luxRetransmissionCount"  matInput
+            name="luxRetransmissionCount" required type="text">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="field_margin form_field w-50 mr-0">
+    <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.retransmission.luxRetransmissionInterval'): ""}}</mat-label>
+    <input  class="form-control"[(ngModel)]="retransmission.luxRetransmissionDelayInterval"  matInput minlength="1"
+            name="luxRetransmissionDelayInterval" required type="text">
+  </mat-form-field>
+</div>
+
+  <mat-form-field appearance="fill" class="form_field w-50">
+    <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.retransmission.switchRetransmissionCount'): ""}} </mat-label>
+    <input  class="form-control" [(ngModel)]="retransmission.switchRetransmissionCount"  matInput
+            name="switchRetransmissionCount" required type="text">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="field_margin form_field w-50 mr-0">
+    <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.retransmission.switchRetransmissionInterval'): ""}} </mat-label>
+    <input  class="form-control"[(ngModel)]="retransmission.switchRetransmissionDelayInterval"  matInput minlength="1"
+            name="switchRetransmissionDelayInterval" required type="text">
+  </mat-form-field>
+

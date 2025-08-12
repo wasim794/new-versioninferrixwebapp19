@@ -1,0 +1,199 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.heading.profileSetting.relayController'): ""}}
+      <small *ngIf="relayControllerProfileTitle">{{relayControllerProfile.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button mat-raised-button class="Top_Save_Button bacnetUpdate topRightButton" (click)="saveProfile() " *ngIf="!isEdit"
+            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) :"" }}</button>
+    <button mat-raised-button class="Top_Update_Button bacnetUpdate relayButtonAlign" (click)="updateProfile()" *ngIf="isEdit"
+            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="form_cards form_edit_card matAllCardContents">
+  <div [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li *ngFor="let err of relayControllerProfileError">{{err.property}}
+        : {{err.message}}
+      </li>
+    </mat-card>
+  </div>
+  <form class="TextAlign allFormSize">
+
+      <mat-form-field class="form_field name_field w-50 marginTop-20" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+        <input matInput class="form-control" [(ngModel)]="relayControllerProfile.name" id="name" minlength="1"
+               name="name" required type="text"/>
+      </mat-form-field>
+
+
+      <mat-form-field class="form_field w-50  mr-20 " appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}</mat-label>
+        <mat-select name="readPermission" [(ngModel)]="readPermission" multiple>
+          <mat-option *ngFor="let read of permissions" [value]="read">{{read}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form_field w-50 m-0" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.editPermission'): ""}}</mat-label>
+        <mat-select name="editPermission" [(ngModel)]="editPermission" multiple>
+          <mat-option *ngFor="let write of permissions" [value]="write">{{write}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <mat-divider class="modbusDeviceDividers"></mat-divider>
+<p>
+    <span class="profileNodeSettings headnodes"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.headings.nodeSettings'): ""}}</span>
+</p>
+
+      <mat-form-field class="field_margin form_field w-50 mr-20 mt-10" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.site'): ""}}</mat-label>
+        <mat-select [(ngModel)]="nodeSettings.site" class="form-control" name="site">
+          <mat-option *ngFor="let site of siteNameMapping" [value]="site.key">
+            {{site.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field_margin form_field w-50 mr-0" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.building'): ""}}</mat-label>
+        <mat-select [(ngModel)]="nodeSettings.building" class="form-control" name="building">
+          <mat-option *ngFor="let building of buildingNameMapping" [value]="building.key">
+            {{building.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="field_margin form_field w-50 mr-20" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.floor'): ""}}</mat-label>
+        <mat-select [(ngModel)]="nodeSettings.floor" class="form-control" name="floor">
+          <mat-option *ngFor="let floor of floorNameMapping" [value]="floor.key">
+            {{floor.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field_margin form_field w-50 mr-0" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.room'): ""}}</mat-label>
+        <mat-select [(ngModel)]="nodeSettings.room" class="form-control" name="room">
+          <mat-option *ngFor="let room of roomNameMapping" [value]="room.key">
+            {{room.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="field_margin form_field w-50 mr-20" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.zone'):""}}</mat-label>
+        <mat-select [(ngModel)]="nodeSettings.zone" class="form-control" name="zone">
+          <mat-option *ngFor="let zone of zoneNameMapping" [value]="zone.key">
+            {{zone.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="field_margin form_field w-50 mr-0" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.groups'): ""}}</mat-label>
+        <mat-select [(ngModel)]="nodeSettings.group" class="form-control" name="group">
+          <mat-option *ngFor="let group of groupNameMapping" [value]="group.key">
+            {{group.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form_field w-50 mr-20" appearance="fill">
+        <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.holdTime'): ""}}</mat-label>
+        <input matInput class="form-control" [(ngModel)]="nodeSettings.holdTime" id="holdTime" minlength="1"
+               name="holdTime" required type="text"/>
+      </mat-form-field>
+      <mat-form-field class="field_margin form_field w-50 mr-0" appearance="fill">
+        <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.nodeType'): ""}}</mat-label>
+        <mat-select [(ngModel)]="nodeSettings.type" class="form-control" name="nodeType"
+                    (selectionChange)="enoceanRelay($event)">
+          <mat-option *ngFor="let nodeType of getNodeTypes" [value]="nodeTypes.get(nodeType)">
+            {{nodeType}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    <mat-divider></mat-divider>
+    <p class="height-30 displayBlock">
+      <mat-slide-toggle (change)="enableHoldTimeOne($event)" [(ngModel)]="isEnableHoldTimeOne"
+                        class="side_form_toggle toggle_change width-215" name="holdTimeOne">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableDoubleHoldTime'): ""}}
+      </mat-slide-toggle>
+    </p>
+    <div>
+      <div [ngClass]="{'holdTimeOneEnabled': isEnableHoldTimeOne === true}" class="holdTimeOneDisabled marginTop-25">
+        <app-hold-time-one-relay></app-hold-time-one-relay>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <p>
+      <span
+        class="profile_headings">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.config.occupancySettings'): ""}}</span>
+    </p>
+    <p class="height-30 displayBlock">
+      <mat-slide-toggle [(ngModel)]="isChecked" name="pir" (change)="enablePir($event)"
+                        class="side_form_toggle toggle_change">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enablePir'): ""}}
+      </mat-slide-toggle>
+    </p>
+    <div>
+      <div class="pirSettingsDesable marginTop-25" [ngClass]="{'pirSettingsEnabled': isChecked === true}">
+        <app-pir-form></app-pir-form>
+      </div>
+    </div>
+    <span *ngIf="!isEnableHoldTimeOne">
+         <mat-divider></mat-divider>
+         <p>
+            <span
+              class="profile_headings"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.headings.luxSettings'): ""}}</span>
+         </p>
+         <div class="height-30 displayBlock">
+            <mat-slide-toggle [(ngModel)]="isCheckedLux" name="lux" (change)="enableLux($event)"
+                              class="side_form_toggle toggle_change">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableLux'): ""}}
+            </mat-slide-toggle>
+         </div>
+      </span>
+    <div>
+      <div class="luxSettingsDesable marginTop-25"
+           [ngClass]="{'luxSettingsEnabled': isCheckedLux === true}">
+        <app-lux-form></app-lux-form>
+      </div>
+    </div>
+    <mat-divider class="form_devide address" [ngClass]="{'addressEnabled': isEnoceanRelay === true}"></mat-divider>
+    <p class="address" [ngClass]="{'addressEnabled': isEnoceanRelay === true}">
+      <span
+        class="profile_headings"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.headings.switchSettings'): ""}}</span>
+    </p>
+    <p class="address" [ngClass]="{'addressEnabled': isEnoceanRelay === true}" class="height-30 displayBlock">
+      <mat-slide-toggle [(ngModel)]="isCheckedSwitch" name="switch" (change)="enableSwitch($event)"
+                        class="side_form_toggle toggle_change">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableSwitch'): ""}}
+      </mat-slide-toggle>
+    </p>
+    <div class="address displayInlineBlock marginTop-20"
+         [ngClass]="{'addressEnabled': isEnoceanRelay === true}">
+      <div class="switchSettingsdesable marginTop-25 paddingBottom-35"
+           [ngClass]="{'switchSettingsEnabled': isCheckedSwitch === true}">
+        <app-switch-form></app-switch-form>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <p>
+      <span
+        class="profile_headings">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.config.bandSettings'): ""}}</span>
+    </p>
+    <p class="height-30 displayBlock">
+      <mat-slide-toggle [(ngModel)]="isCheckedBand" name="band" (change)="enableBand($event)"
+                        class="side_form_toggle toggle_change">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableBand'): ""}}
+      </mat-slide-toggle>
+    </p>
+    <div>
+      <div class="bandSettingsdisable marginTop-25"
+           [ngClass]="{'bandSettingsEnabled': isCheckedBand === true}">
+        <app-band-settings></app-band-settings>
+      </div>
+    </div>
+  </form>
+</mat-card-content>
