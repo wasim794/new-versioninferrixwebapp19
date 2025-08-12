@@ -1,0 +1,35 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.common.heading.filterNodes'): ""}}
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button mat-raised-button class="Top_Save_Button" (click)="filterNodes() " align="end">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}
+    </button>
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="form_cards form_edit_card">
+  <p class="spaceTopModule">
+    <mat-form-field class="form_field name_field" appearance="fill">
+      <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.fields.placeholder.nodeType'): ""}}</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let nodeType of nodeTypes" [value]="nodeType"
+                    (onSelectionChange)="setNodeTypeToModel($event, nodeType.type)">{{nodeType.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="form_field name_field" appearance="fill">
+      <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Address'): ""}}</mat-label>
+      <input matInput class="form-control" id="address" [(ngModel)]="nodesModel.address"
+             name="address" type="text">
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-slide-toggle class="toggle_change"
+                      [(ngModel)]="nodesModel.status">  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status'): ""}}
+    </mat-slide-toggle>
+  </p>
+</mat-card-content>

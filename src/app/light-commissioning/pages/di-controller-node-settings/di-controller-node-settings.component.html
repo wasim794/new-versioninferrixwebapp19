@@ -1,0 +1,132 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ?
+      UIDICTIONARY.get('ui.lightCommissioning.heading.profileSetting.digitalInputController'): ""}}
+      <small *ngIf="digitalControllerTitle">{{digitalControllerNode.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+</mat-card>
+
+<mat-card-content class="form_cards form_edit_card diControllers">
+  <form>
+    <table width="100%" class="table_form small_device">
+      <tr>
+        <td>
+          <mat-form-field class="form_field name_field">
+            <mat-label>{{UIDICTIONARY ?
+              UIDICTIONARY.get('ui.lightCommissioning.table.fields.placeholder.Address'): ""}}</mat-label>
+            <input matInput class="form-control" [(ngModel)]="digitalControllerNode.address" id="address"
+                   minlength="1"
+                   name="address" required type="text">
+          </mat-form-field>
+        </td>
+      </tr>
+
+      <mat-divider class="divider_all"></mat-divider>
+      <tr>
+        <span
+          class="profile_headings headnodes">{{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.profile.headings.nodeSettings'): ""}}</span>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ?
+              UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.site'): ""}}</mat-label>
+            <mat-select [(ngModel)]="nodeSettings.site" class="form-control" name="site">
+              <mat-option *ngFor="let site of siteNameMapping" [value]="site.key">
+                {{site.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+
+        <td>
+          <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ?
+              UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.building'): ""}}</mat-label>
+            <mat-select [(ngModel)]="nodeSettings.building" class="form-control" name="building">
+              <mat-option *ngFor="let building of buildingNameMapping" [value]="building.key">
+                {{building.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ?
+              UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.floor'): ""}}</mat-label>
+            <mat-select [(ngModel)]="nodeSettings.floor" class="form-control" name="floor">
+              <mat-option *ngFor="let floor of floorNameMapping" [value]="floor.key">
+                {{floor.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ?
+              UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.room'): ""}}</mat-label>
+            <mat-select [(ngModel)]="nodeSettings.room" class="form-control" name="room">
+              <mat-option *ngFor="let room of roomNameMapping" [value]="room.key">
+                {{room.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ?
+              UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.zone'): ""}}</mat-label>
+            <mat-select [(ngModel)]="nodeSettings.zone" class="form-control" name="zone">
+              <mat-option *ngFor="let zone of zoneNameMapping" [value]="zone.key">
+                {{zone.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ?
+              UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.groups'): ""}}</mat-label>
+            <mat-select [(ngModel)]="nodeSettings.group" class="form-control" name="group">
+              <mat-option *ngFor="let group of groupNameMapping" [value]="group.key">
+                {{group.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <mat-divider class="divider_all"></mat-divider>
+      <tr>
+        <span
+          class="profile_headings">{{UIDICTIONARY ?
+          UIDICTIONARY.get('ui.lightCommissioning.profile.config.digitalInputSettings'): ""}}</span>
+      </tr>
+      <tr class="displayBlock height-30">
+        <td>
+          <mat-slide-toggle [(ngModel)]="isGpioEnabled" name="gpio"
+                            class="side_form_toggle toggle_change">
+            {{UIDICTIONARY ?
+            UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableDigitalInput'): ""}}
+          </mat-slide-toggle>
+        </td>
+      </tr>
+      <tr class="displayInlineBlock width-60">
+        <table class="gpioSettingsDisabled marginTop-25"
+               [ngClass]="{'gpioSettingsEnabled': isGpioEnabled === true}">
+          <app-gpio-settings></app-gpio-settings>
+        </table>
+      </tr>
+      <mat-divider class="form_devide" class="visibilityHidden"></mat-divider>
+    </table>
+  </form>
+</mat-card-content>

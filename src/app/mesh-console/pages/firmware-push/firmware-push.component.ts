@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   standalone: true,
@@ -15,7 +16,7 @@ import { MatModuleModule } from '../../../common/mat-module';
 export class FirmwarePushComponent implements OnInit {
   UIDICTIONARY: any;
 
-  constructor(private router: Router,   public dictionaryService: DictionaryService,) { }
+  constructor(private router: Router, public commonService:CommonService ,  public dictionaryService: DictionaryService,) { }
 
   ngOnInit(): void {
     this.dictionaryService.getUIDictionary('meshConsole').subscribe(data=>{
@@ -37,6 +38,10 @@ this.getNodeStatus();
 
   OtabFile(){
 this.getOtabFile();
+  }
+
+  goBack(){
+    this.commonService.goBackHistory();
   }
 
 }

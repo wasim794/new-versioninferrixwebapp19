@@ -1,0 +1,167 @@
+<div class="">
+  <mat-divider class="form_devide" class="visibilityHidden"></mat-divider>
+
+    <mat-form-field class="w-50 form_field" appearance="fill">
+      <mat-label> {{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diOneOpen'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinOneOpen" class="form-control" name="pinOne">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-50 mr-0 form_field" appearance="fill">
+      <mat-label> {{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diOneClose'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinOneClose" class="form-control" name="pinTwo">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <div>
+    <mat-form-field class="w-50 form_field" appearance="fill">
+      <mat-label> {{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diOneGrade'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinOneGradeType" class="form-control" name="gradeType">
+        <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+          {{gradeType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50 mr-0" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diOneDimmingValue'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="gpioSettings.diPinOneDimValue" id="diPinOneDimValue"
+             name="dimValue"
+             placeholder="Enter here"
+             type="text">
+    </mat-form-field>
+  </div>
+  <mat-divider class=""></mat-divider>
+
+    <mat-form-field class="w-50 form_field marginTop-20" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diTwoOpen'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinTwoOpen" class="form-control" name="pinOne">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-50 mr-0 form_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diTwoClose'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinTwoClose" class="form-control" name="pinTwo">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <div>
+    <mat-form-field class="w-50 form_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diTwoGrade'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinTwoGradeType" class="form-control" name="gradeType">
+        <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+          {{gradeType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form_field w-50 mr-0" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diTwoDimmingValue'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="gpioSettings.diPinTwoDimValue" id="diPinTwoDimValue"
+             name="dimValue"
+             placeholder="Enter here"
+             type="text">
+    </mat-form-field>
+  </div>
+  <mat-divider class=""></mat-divider>
+
+
+    <mat-form-field class="w-50 form_field marginTop-20" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diThreeOpen'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinThreeOpen" class="form-control" name="pinOne">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-50 mr-0 form_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diThreeClose'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinThreeClose" class="form-control" name="pinTwo">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <div>
+    <mat-form-field class="w-50 form_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diThreeGrade'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinThreeGradeType" class="form-control" name="gradeType">
+        <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+          {{gradeType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form_field w-50 mr-0" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diThreeDimmingValue'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="gpioSettings.diPinThreeDimValue" id="diPinThreeDimValue"
+             name="dimValue"
+             placeholder="Enter here"
+             type="text">
+    </mat-form-field>
+  </div>
+  <mat-divider class=""></mat-divider>
+
+    <mat-form-field class="w-50 form_field marginTop-20" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diFourOpen'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinFourOpen" class="form-control" name="pinOne">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="w-50 mr-0 form_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diFourClose'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinFourClose" class="form-control" name="pinTwo">
+        <mat-option *ngFor="let pinType of actionTypes" [value]="pinType.value">
+          {{pinType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <div>
+    <mat-form-field class="w-50 form_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diFourGrade'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gpioSettings.diPinFourGradeType" class="form-control" name="gradeType">
+        <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+          {{gradeType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form_field w-50 mr-0" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.diFourDimmingValue'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="gpioSettings.diPinFourDimValue" id="diPinFourDimValue"
+             name="dimValue"
+             placeholder="Enter here"
+             type="text">
+    </mat-form-field>
+  </div>
+</div>

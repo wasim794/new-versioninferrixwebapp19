@@ -1,0 +1,41 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.sidebar.form.heading'): ""}}
+    </mat-card-title>
+    <span class="spacer"></span>
+    <button mat-raised-button class="Top_Save_Button" (click)="filterProfile() " align="end">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}
+
+    </button>
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="form_cards form_edit_card">
+  <form>
+    <table width="100%" class="table_form small_device">
+      <tr>
+        <div>
+          <mat-form-field class="field_margin form_field" appearance="fill">
+            <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.sidebar.fields.placeholder.selectProfileType'): ""}}</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let profileType of profileTypes" [value]="profileType"
+                          (onSelectionChange)="profileFilter($event, profileType.type)">{{profileType.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </tr>
+      <tr>
+        <td>
+          <mat-form-field class="form_field name_field" appearance="fill">
+            <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+            <input matInput class="form-control" [(ngModel)]="filter.name" id="name"
+                   name="name" type="text">
+
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </form>
+</mat-card-content>

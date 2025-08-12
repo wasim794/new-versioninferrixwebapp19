@@ -1,0 +1,50 @@
+<mat-divider class="form_devide visibilityHidden"></mat-divider>
+<form [formGroup]="form" class="switchForms">
+  <div formArrayName="switchSetting">
+    <div *ngFor="let contact of switchFormGroup.controls; let i = index;">
+      <div [formGroupName]="i" class="row">
+        <div>
+
+            <mat-form-field class="form_field name_field w-50" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+              <input matInput class="form-control" formControlName="name" id="name" name="name" type="text">
+            </mat-form-field>
+
+            <mat-form-field class="form_field name_field w-50" appearance="fill">
+              <mat-label>
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.fields.placeholder.Address'): ""}}
+              </mat-label>
+              <input matInput class="form-control" id="address" formControlName="address" name="address"
+                     placeholder="Enter here" type="text">
+            </mat-form-field>
+
+          <div>
+            <mat-form-field class="form_field name_field w-50 " appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.gradeType'): ""}}</mat-label>
+              <mat-select class="form-control" formControlName="gradeType">
+                <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+                  {{gradeType.key}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-slide-toggle formControlName="enable" name="admin" class="side_form_toggle toggle_change">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}
+            </mat-slide-toggle>
+
+            <button class="btn_remove" mat-mini-fab color="accent" (click)="removeSwitch(i)"
+                    aria-label="icon button with a remove icon">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions_btn">
+    <div class="addmores"><span (click)="addSwitch()"
+        class="adds">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.addMore'): ""}}</span>
+    </div>
+  </div>
+</form>

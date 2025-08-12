@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 // import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Observable, Subject, throwError} from 'rxjs';
@@ -31,7 +32,8 @@ export class CommonService {
     private dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private location: Location,
-    private env: EnvService) {
+    private env: EnvService,
+  private sanitizer: DomSanitizer) {
     this.userLoggedIn.next(false);
   }
 
@@ -109,6 +111,10 @@ export class CommonService {
   this.location.back();
 }
 
+getIconsBack(): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml('<i class="material-icons">arrow_back_ios_new</i>');
+  }
+
 
 
 
@@ -174,6 +180,7 @@ export class CommonService {
   getMenu(): Observable<MenuModel[]> {
     return this.http.get<MenuModel[]>(this.env.apiUrl + this.menu_url);
   }
+  
 
   get(param: string) {
 

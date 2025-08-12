@@ -1,0 +1,18 @@
+<span>
+  <mat-form-field class="form_field w-50" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.holdTimeOne'): ""}}
+    </mat-label>
+    <input matInput class="form-control" [(ngModel)]="nodeSettings.holdTimeOne" id="HTO" name="HTO"
+           placeholder="Enter here" type="text">
+  </mat-form-field>
+</span>
+
+<span class="w-50">
+  <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Dimming'): ""}} &nbsp;
+    &nbsp;<strong>{{dimmingValueOne}}</strong></mat-label> <br>
+  <input matInput class="form-control" [(ngModel)]="dimmingValueOne" id="dimmingValueTwo" name="dimmingValueOne"
+         hidden="true">
+
+  <mat-slider class="example-margin" [(ngModel)]="dimmingValueOne">
+  </mat-slider>
+</span>

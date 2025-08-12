@@ -3,6 +3,7 @@ import {MeshDiagnosticModel, MeshNodeInfoModel} from '../../shared/models';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {MeshConsoleService} from '../../shared/services';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { MatTableDataSource } from '@angular/material/table';
 import {CommonService} from '../../../services/common.service';
 import {FormGroup, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -11,21 +12,24 @@ import {MatDialog} from "@angular/material/dialog";
 import {UpdateNodeSettingsComponent} from '../../Component/update-node-settings/update-node-settings.component';
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angular-datetime-picker';
 
 @Component({
   standalone: true,
-  imports:[ CommonModule, MatModuleModule],
-  providers: [ CommonService, DictionaryService, MeshConsoleService ],
+  imports:[ CommonModule, MatModuleModule, OwlDateTimeModule,
+    OwlNativeDateTimeModule,],
+  providers: [ CommonService, DictionaryService, MeshConsoleService],
   selector: 'app-mesh-node',
   templateUrl: './mesh-node.component.html',
-  animations: [
+ animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
+
 export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   dataColumns: string[] = ['Address', 'Node Type', 'Manufacturer Name', 'Hardware Version', 'Application Version', 'WM Version'];
   meshNodeInfoModels: MeshNodeInfoModel[] = [];
@@ -33,8 +37,8 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
   limit = 10;
   offset = 0;
   pageSizeOptions: number[] = [10, 12, 16, 20];
-  dataSource = this.meshNodeInfoModels;
-  expandedElement!: MeshNodeInfoModel | null;
+  dataSource = new MatTableDataSource<MeshNodeInfoModel>([]);
+  expandedElement: MeshNodeInfoModel | null = null;
   isNeighbors: boolean = false;
   isBoot: boolean = false;
   isEvent: boolean = false;
@@ -78,9 +82,10 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
     this.getMeshNodesData(param)
   }
 
-  getMeshNodesData(params: string): void {
+  getMeshNodesData(params: any): void {
     this.subs.add(this.service.getMeshNodesData(params).subscribe((data) => {
       this.meshNodeInfoModels = data;
+      console.log(this.meshNodeInfoModels);
     }));
   }
 
@@ -103,7 +108,7 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
 
   }
 
-  rebootNode(element: MeshNodeInfoModel, row: string){
+  rebootNode(element: any, row: any){
     this.subs.add(this.service.rebootNode(element.address).subscribe((data) => {
       this.commonService.notification(this.successNode);
     }));
@@ -157,4 +162,10 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
     this.detailUrl(element).then(r => console.log(r));
   }
 
+  goBack(){
+    this.commonService.goBackHistory();
+  }
+
 }
+
+

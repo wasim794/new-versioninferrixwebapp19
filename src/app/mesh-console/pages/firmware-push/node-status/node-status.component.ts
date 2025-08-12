@@ -363,5 +363,9 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
     this.getNodeStatus(param);
   }
 
+  goBack() {
+    this.location.back();
+  }
+
 
 }

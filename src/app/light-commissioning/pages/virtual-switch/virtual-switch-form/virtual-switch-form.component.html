@@ -1,0 +1,64 @@
+<mat-card class="form_cards">
+  <mat-toolbar
+    class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title matCardTitles">
+      {{UIDICTIONARY ?
+      UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.heading'): ""}}
+      <small *ngIf="virtualSwitchTitle">{{model.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+</mat-card>
+
+<mat-card-content class="form_cards form_edit_card">
+  <div [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li *ngFor="let error of vsError">{{error.property}} : {{error.message}}</li>
+    </mat-card>
+  </div>
+  <form class="topSpacingForm">
+
+    <mat-form-field appearance="fill" class="field_margin form_field lightAllMargin w-50">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="model.name" name="name" type="text" required>
+    </mat-form-field>
+
+    <mat-form-field class="form_field name_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.fields.placeholder.UID'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="model.uid" matInput name="uid" readonly>
+    </mat-form-field>
+
+    <div>
+    <mat-form-field appearance="fill" class="field_margin form_field lightAllMargin w-50">
+      <mat-label> {{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.fields.placeholder.grade'): ""}}</mat-label>
+      <mat-select [(ngModel)]="gradeName" class="form-control" name="grade"
+                  (selectionChange)="gradeUpdate()">
+        <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+          {{gradeType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+    <mat-form-field *ngIf="gradeData" appearance="fill" class="field_margin form_field w-50">
+      <mat-label>{{gradeName}}</mat-label>
+
+      <mat-select [(ngModel)]="gradeSelected" class="form-control" name="site">
+        <mat-option *ngFor="let grade of gradeMapping" [value]="grade.key">
+          {{grade.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-raised-button class="saveButton" (click)="save() " *ngIf="!isEdit"
+             >{{UIDICTIONARY ?
+        (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
+      </button>
+      <button mat-raised-button class="Top_Update_Button updateButton" (click)="update()" *ngIf="isEdit"
+             >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+      </button>
+    </div>
+  </form>
+</mat-card-content>

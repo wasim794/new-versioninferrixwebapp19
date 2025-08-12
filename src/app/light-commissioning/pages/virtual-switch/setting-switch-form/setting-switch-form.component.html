@@ -1,0 +1,66 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.heading') : ""}}
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+</mat-card>
+
+<mat-card-content class="form_cards form_edit_card virtualSwitchMain">
+  <div [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li *ngFor="let error of settingError">{{error.property}} : {{error.message}}</li>
+    </mat-card>
+  </div>
+  <form class="topSpacingForm">
+    <div class="topMargin">
+      <mat-radio-group (change)="selectTab($event.value)" class="matRadioButton" aria-label="Select an option">
+        <mat-radio-button checked value="1">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.OffOn') : ""}}
+        </mat-radio-button>
+        <mat-radio-button value="2">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.Dimming') : ""}}
+        </mat-radio-button>
+        <mat-radio-button value="3">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Auto') : ""}}
+        </mat-radio-button>
+      </mat-radio-group>
+      <!--on off start        -->
+      <span class="spanPadding mt-10" [hidden]="!onOffValueRadio">
+        <mat-slide-toggle [(ngModel)]="onOffValue" name="onOffValue" class="side_form_toggle toggle_change">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.echo.off') : ""}}
+          <mat-icon class="settingArrow">settings_ethernet</mat-icon>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.echo.on') : ""}}
+        </mat-slide-toggle>
+      </span>
+      <!-- Dim start        -->
+      <span class="spanPadding" [hidden]="!dimValueRadio">
+        <mat-slider class="matSliderAll marginLeft-10" [max]="100" [min]="0" [step]="10" [thumbLabel]="true" [(ngModel)]="virtualControlModel.dimValue" name="dimValue">
+        </mat-slider>
+        <mat-slide-toggle [(ngModel)]="virtualControlModel.autoMode" class="side_form_toggle toggle_change" name="autoMode">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.echo.off') : ""}}
+          <mat-icon class="settingArrow">settings_ethernet</mat-icon>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Auto') : ""}}
+        </mat-slide-toggle>
+      </span>
+      <!--Auto        -->
+      <span class="spanPadding" [hidden]="!autoValueRadio">
+        <mat-slide-toggle [(ngModel)]="virtualControlModel.autoMode" class="side_form_toggle toggle_change" name="autoMode">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.echo.off') : ""}}
+          <mat-icon class="settingArrow">settings_ethernet</mat-icon>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Auto') : ""}}
+        </mat-slide-toggle>
+      </span>
+    </div>
+    <div class="button-group">
+      <button mat-raised-button class="Save_Button pushFormData switchPushButton" (click)="pushData(xid)">
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}
+      </button>
+      <button class="cancel_button addCancelButton" mat-button mat-dialog-close>
+        {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close') | uppercase) : ""}}
+      </button>
+    </div>
+  </form>
+</mat-card-content>

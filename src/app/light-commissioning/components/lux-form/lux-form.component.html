@@ -1,0 +1,67 @@
+<mat-divider class="form_devide visibilityHidden"></mat-divider>
+<div class="example-container containerLux">
+  <p>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.minimum'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="luxSettings.luxMin" id="luxMin"
+             name="luxMin" placeholder="Enter here" type="text"/>
+    </mat-form-field>
+
+    <mat-form-field class="form_field w-50 mr-0" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.maximum'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="luxSettings.luxMax" id="luxmax"
+             name="luxmax" placeholder="Enter here" type="text"/>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.lowerThreshold'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="luxSettings.luxLowerThreshold"
+             id="luxLowerThreshold" name="luxLowerThreshold" placeholder="Enter here" type="text"/>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="enableAddress" class="field_margin form_field name_field"
+                    appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableGrade'): ""}}</mat-label>
+      <mat-select [(ngModel)]="luxSettings.gradeType" class="form-control" name="publishType">
+        <mat-option *ngFor="let gradeType of gradeTypes" [value]="gradeType.value">
+          {{gradeType.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field *ngIf="enableAddress" class="form_field name_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.fields.placeholder.name'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="luxSettings.name" id="luxName"
+             name="luxName" placeholder="Enter here" type="text"/>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="enableAddress" class="form_field name_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.table.fields.placeholder.Address'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="luxSettings.address" id="address"
+             name="address" placeholder="Enter here" type="text"/>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field *ngIf="isThresholdMaxAndMin" class="form_field name_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.thresholdMax'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="luxSettings.thresholdMax" id="thresholdMax"
+             name="thresholdMax" placeholder="Enter here" type="text"/>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isThresholdMaxAndMin" class="form_field name_field" appearance="fill">
+      <mat-label>{{UIDICTIONARY ?
+        UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.thresholdMin'): ""}}</mat-label>
+      <input matInput class="form-control" [(ngModel)]="luxSettings.thresholdMin" id="thresholdMin"
+             name="thresholdMin" placeholder="Enter here" type="text"/>
+    </mat-form-field>
+  </p>
+</div>

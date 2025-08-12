@@ -1,0 +1,73 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.heading'): ""}}</span>
+      <div class="containerInfo">
+        <mat-form-field appearance="standard">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+          <input matInput (keyup.enter)="applyFilter($event)">
+          <mat-icon (click)="applyFilter($event)" class="Input_search"  matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+
+  <div fxFlex="22%" class="cardSpacing" *ngFor="let virtualSwitch of virtualSwitches">
+    <mat-card class="mat-card all_card lightControllerCars matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName allResponsiveText">{{virtualSwitch.name}}</mat-card-title>
+
+        <div class="pushButton topMargin">
+          <button (click)="setting(virtualSwitch)" mat-raised-button class="saveButton"><mat-icon>settings_applications</mat-icon>
+          </button>
+        </div>
+
+      </mat-card-header>
+      <mat-card-content class="cardSpacings">
+
+      </mat-card-content>
+
+      <mat-card-actions class="mat_right_icons marginCardsIcons">
+        <mat-icon aria-hidden="false" class="allIcons" aria-label="edit icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+                  (click)="edit(virtualSwitch)">
+          edit
+        </mat-icon>
+
+        <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                  (click)="delete(virtualSwitch.xid, virtualSwitch.name)">
+          delete
+        </mat-icon>
+      </mat-card-actions>
+
+    </mat-card>
+  </div>
+</div>
+
+<div  class="pagination_fixed" *ngIf="service.total > 6">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="service.total" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit
+                 (page)="getNext($event)"></mat-paginator>
+</div>
+
+<mat-drawer-container class="container-size sidebar_position" autosize disableClose>
+  <mat-drawer #virtualSwitch class="sidenav singleSidebars"  mode="push" position="end">
+    <mat-icon  class="allCloseOptions">close</mat-icon>
+    <button mat-raised-button class="Save_Button cancelAllData top-54" (click) = "virtualSwitchClose()">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+<app-virtual-switch-form (virtualSwitchClose)="virtualSwitchClose()"></app-virtual-switch-form>
+  </mat-drawer>
+</mat-drawer-container>
+
+<div class="addIcon">
+  <mat-icon mat-button (click)="openSidebarVirtual()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.virtualSwitch'): ''}}">library_add</mat-icon>
+  </div>

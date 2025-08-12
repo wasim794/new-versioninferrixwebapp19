@@ -1,0 +1,78 @@
+<mat-card class="form_cards mainContainerFormPush">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.heading'): ""}} </mat-card-title>
+  </mat-toolbar>
+  <mat-card-content class="form_cards form_edit_card">
+
+    <form  class="formPushProfile">
+      <mat-slide-toggle (change)="enableInputs($event.checked)" [(ngModel)]="_profilePush.lightCommissioningProfilePushEnabled"  class="side_form_toggle toggle_change singleToggle"
+                            name="lightCommissioningProfilePushEnabled">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.button.enabled'): ""}}
+      </mat-slide-toggle>
+      <div [ngClass]="{'disabled': !hideShowDiv}">
+
+        <mat-form-field class="form_field" appearance="fill" >
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.fields.placeholder.hour'): ""}}</mat-label>
+          <input matInput class="form-control" [(ngModel)]="_profilePush.lightCommissioningProfilePushScheduleHour"
+                 name="lightCommissioningProfilePushScheduleHour" required type="number" [min]="1">
+
+        </mat-form-field>
+        <mat-form-field class="form_field marginLeft-10" appearance="fill" >
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.fields.placeholder.minute'): ""}}</mat-label>
+          <input matInput class="form-control"   name="lightCommissioningProfilePushScheduleMin"
+                 [(ngModel)]="_profilePush.lightCommissioningProfilePushScheduleMin" required type="number" [min]="1">
+        </mat-form-field>
+
+        <mat-form-field class="form_field marginLeft-10" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.fields.placeholder.second'): ""}}</mat-label>
+          <input matInput class="form-control"
+                 [(ngModel)]="_profilePush.lightCommissioningProfilePushScheduleSec" name="lightCommissioningProfilePushScheduleSec" required type="number" [min]="1">
+        </mat-form-field>
+
+        <div>
+          <mat-form-field class="form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.fields.placeholder.afterExecute'): ""}}</mat-label>
+            <input matInput class="form-control"
+                   [(ngModel)]="_profilePush.lightCommissioningProfilePushScheduleAfterExecute" name="lightCommissioningProfilePushScheduleAfterExecute" required type="number" [min]="1">
+          </mat-form-field>
+
+          <mat-form-field class="form_field marginLeft-10" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.fields.placeholder.sleepTimeAfterFirstRun'): ""}}</mat-label>
+            <input matInput class="form-control"
+                   [(ngModel)]="_profilePush.lightCommissioningProfilePushScheduleSleepTimeFirstRun"  name="lightCommissioningProfilePushScheduleSleepTimeFirstRun" required type="number" [min]="1">
+          </mat-form-field>
+        </div>
+
+          <mat-form-field class="form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.fields.placeholder.sleepTimeAfterRetry'): ""}}</mat-label>
+            <input matInput class="form-control"
+                   [(ngModel)]="_profilePush.lightCommissioningProfilePushScheduleSleepTimeRetryRun" name="lightCommissioningProfilePushScheduleSleepTimeRetryRun" required type="number" [min]="1">
+          </mat-form-field>
+
+          <mat-form-field class="form_field marginLeft-10" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.fields.placeholder.holdTime'): ""}}</mat-label>
+            <input matInput class="form-control" [(ngModel)]="_profilePush.lightCommissioningProfilePushHoldTime"
+                   name="lightCommissioningProfilePushHoldTime" required type="number" [min]="1">
+          </mat-form-field>
+
+        <div>
+          <mat-slide-toggle [(ngModel)]="_profilePush.lightCommissioningProfilePushToDownNodes" class="side_form_toggle toggle_change singleToggle"
+                            name="lightCommissioningProfilePushToDownNodes">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.push'): ""}}
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeStatus.Down'): ""}}
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus').substring(0,4): ""}}
+          </mat-slide-toggle>
+          <mat-form-field  class="form_field filterNodesInput" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.common.heading.filterNodes'): ""}}</mat-label>
+            <input matInput class="form-control" [min]="1" [(ngModel)]="_profilePush.lightCommissioningProfilePushNodesFilter"
+                   name="lightCommissioningProfilePushNodesFilter" required type="text">
+          </mat-form-field>
+        </div>
+      </div>
+        <button  mat-raised-button (click)="_profilePushSave()" class="Save_Button">
+          {{"Profile Push"}}
+        </button>
+    </form>
+  </mat-card-content>
+</mat-card>

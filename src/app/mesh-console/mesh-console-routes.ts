@@ -50,4 +50,9 @@ export const meshConsoleRoutes: Routes = [
     loadComponent: () =>
       import('./pages/firmware-push/node-status/node-status.component').then(m => m.NodeStatusComponent),
   },
+  {
+    path: 'firmware-push/otap-file', // Matches /datasource/firmware-push/node-status
+    loadComponent: () =>
+      import('./pages/firmware-push/otap-file/otap-file.component').then(m => m.OtapFileComponent),
+  },
 ];

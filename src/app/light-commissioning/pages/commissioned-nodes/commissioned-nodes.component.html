@@ -1,0 +1,289 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.cards.commissionedNodes'): ""}}</span>
+      <div class="containerInfo containerInfoCenter">
+
+
+        <div class="containerInfo containerInfoCenter">
+          <mat-form-field class="topSearchBoxes">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.address'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+            <input (keyup.enter)="filterDiscovered($event)" [(ngModel)]="searchDiscovered" matInput name="searchDiscovered">
+            <mat-icon class="Input_search" (click)="filterDiscovered($event)" matSuffix> search</mat-icon>
+          </mat-form-field>
+        </div>
+        <mat-slide-toggle [(ngModel)]="offsite" aria-hidden="false" aria-label="error_outline icon"
+                          class="info_position side_form_toggle toggle_change" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.action.offsiteMode'): ''}}"
+                          (change)="offsiteChange()">
+        </mat-slide-toggle>
+        <mat-icon class="info_position" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.action.cancelButton.hover.clearFilter'): ''}}" aria-hidden="false" aria-label="error_outline icon"
+                  (click)="clearFilter()">
+          cancel
+        </mat-icon>
+        &nbsp;<mat-icon class="info_position" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.action.refreshButton.hover.refreshTable'): ''}}" aria-hidden="false" aria-label="error_outline icon"
+                        (click)="refreshCommissionedNodes()">
+        sync
+      </mat-icon>
+        <mat-icon aria-hidden="false"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.dataPurge.informationAlarmsPurge').substring(0,11): ''}}" class="info_position" aria-label="error_outline icon">
+          error_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container cardlayout mainCardsPanel cardLayoutStyle" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="0.5% grid" fxLayoutAlign="left">
+  <div fxFlex="17%" class="card_margin">
+    <mat-card class="mat-card all_card" [ngStyle]="cardOneCss">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Commissioned'): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="cardSpacings">
+        <dl>
+          <dt><b> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Total'): ""}}:</b> {{nodeStats?.total ?? 0}}
+          </dt>
+          <dt><b> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Commissioned'): ""}}:</b>
+            {{nodeStats?.commissioned ?? 0}}</dt>
+          <dt><b> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Discovered'): ""}}:</b>
+            {{nodeStats?.discovered ?? 0}}</dt>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="17%" class="card_margin">
+    <mat-card class="mat-card all_card" [ngStyle]="cardTwoCss">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus'): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="cardSpacings">
+        <dl>
+          <dt><b> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeStatus.Up'): ""}}:</b> {{nodeStats?.up ?? 0}}
+          </dt>
+          <dt><b> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeStatus.Down'): ""}}:</b>
+            {{nodeStats?.down ?? 0}}</dt>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="17%" class="card_margin">
+    <mat-card class="mat-card all_card" [ngStyle]="cardThreeCss">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.nodeType'): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="cardSpacings">
+        <dl>
+          <dt><b> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.node.ledNodes'): ""}}
+            :</b> {{nodeStats?.ledController ?? 0}}</dt>
+          <dt><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.node.relayNodes'): ""}}
+            :</b> {{nodeStats?.relayController ?? 0}}</dt>
+          <dt><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.node.diNodes'): ""}}
+            :</b> {{nodeStats?.diController ?? 0}}</dt>
+          <dt><b> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.node.wristBands'): ""}}
+            :</b> {{nodeStats?.mokoBand ?? 0}}</dt>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="17%" class="card_margin">
+    <mat-card class="mat-card all_card" [ngStyle]="cardFourCss">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeRole'): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="cardSpacings">
+        <dl>
+          <dt><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeType.normal') : ""}}
+            :</b> {{nodeStats?.normal ?? 0}}</dt>
+          <dt><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeType.sink'): ""}}
+            :</b> {{nodeStats?.sink ?? 0}}</dt>
+          <dt><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeType.enocean'): ""}}
+            :</b> {{nodeStats?.enocean ?? 0}}</dt>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="17%" class="card_margin">
+    <mat-card class="mat-card all_card" [ngStyle]="cardFiveCss">
+      <mat-card-header>
+        <mat-card-title class="card_title">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.action.offsiteMode'): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="cardSpacings">
+        <dl>
+          <dt *ngIf="offsite"><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Offsite'): ""}}</b>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.enable'): ""}}</dt>
+          <dt *ngIf="!offsite"><b>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Offsite'): ""}}</b>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.disabled'): ""}}</dt>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="100%" class="main_db">
+    <div class="container-size OverflowScroll">
+      <table mat-table [dataSource]="nodes" class="mat-elevation-z8 addCn tableHeader40 width-100" matSort
+             (matSortChange)="sortingCommissionedNodes($event)">
+        <ng-container matColumnDef="S.No." class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces" *matHeaderCellDef>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.SNo'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReduces" *matCellDef="let element; let i = index;">{{i + 1}}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Node Type" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReducesTwo" *matHeaderCellDef
+                           mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.nodeType'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReducesTwo" *matCellDef="let element">
+            <img *ngIf="element.nodeType === 'LIGHT_CONTROLLER_V4.NODE'" class="img_all"
+                 src="assets/images/0-10V-dimming.png" alt="0-10V Controller"/>
+            <img *ngIf="element.nodeType === 'LIGHT_RELAY_CONTROLLER.NODE'" class="img_all"
+                 src="assets/images/relay.png" alt="Relay Controller"/>
+            <img *ngIf="element.nodeType === 'LIGHT_DI_CONTROLLER.NODE'" class="img_all"
+                 src="assets/images/digital-input.png" alt="Di Controller Controller"/>
+            <img *ngIf="element.nodeType === 'MOKO_BAND.NODE'" class="img_all" src="assets/images/wrist-band.png"
+                 alt="Wrist Band"/>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Address" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces" *matHeaderCellDef mat-sort-header>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Address'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReduces" *matCellDef="let element"> {{element.address}}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Status" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces" *matHeaderCellDef mat-sort-header>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Status'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReduces" *matCellDef="let element">
+            <div *ngIf="element.status === false; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+              <div [ngStyle]="{'color':'red'}">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeStatus.Down') : ""}}</div>
+            </ng-template>
+            <ng-template #elseBlock>
+              <div [ngStyle]="{'color':'green'}">
+                {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeStatus.Up'): ""}}</div>
+            </ng-template>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Profiles" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef mat-sort-header>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Profiles'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize" *matCellDef="let element">
+            <mat-form-field class="field_margin form_field">
+              <mat-select [(ngModel)]="element.profileSelected" (selectionChange)="profileChange($event.value)"
+                          class="form-control" name="publishType">
+                <mat-option *ngFor="let profile of profiles" [value]="profile.xid">
+                  {{profile.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Off/On" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces  justifyContentCenter"
+                           *matHeaderCellDef>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.OffOn'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReduces justifyContentCenter"
+                    *matCellDef="let element; let i = index;">
+            <mat-slide-toggle [(ngModel)]="element.onOff" (change)="nodeEnableDisable(element)"
+                              class="side_form_toggle toggle_change">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Dimming" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize justifyContentCenter" *matHeaderCellDef>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Dimming'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize" *matCellDef="let element; let i = index;">
+            <label class="values-label">{{element.dimValue}}</label>
+            <mat-slider class="matSliderAll" [(ngModel)]="element.dimValue" (change)="nodeDim($event, element)">
+            </mat-slider>
+          </mat-cell>
+        </ng-container>
+
+        <!-- auto start -->
+        <ng-container matColumnDef="Auto" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces justifyContentCenter"
+                           *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Auto'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReduces justifyContentCenter"
+                    *matCellDef="let element; let i = index;">
+            <mat-slide-toggle [(ngModel)]="element.profile.nodeSettings.autoMode" (change)="autoMode(element)"
+                              class="side_form_toggle toggle_change">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Actions" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}</mat-header-cell>
+          <mat-cell class="commonReducesSize" *matCellDef="let element">
+            <li *ngIf="!offsite" (click)="pushProfileToNode(element)" title="Push Profile">
+              <mat-icon>file_upload</mat-icon>
+            </li>
+            <li (click)="pirInterrupt(true, element)" title="pir interrupt enable">
+              <mat-icon>close_fullscreen</mat-icon></li>
+            <li (click)="pirInterrupt(false, element)" title="pir interrupt disable">
+              <mat-icon class="custom-cross-icon">close_fullscreen</mat-icon></li>
+            <li (click)="applyProfileToNode(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.apply'): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.cards.profile'): ''}}">
+              <mat-icon>save</mat-icon>
+            </li>
+            <li (click)="readNode( element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.readCommunity').substring(0,4): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeTypes').substring(0,4): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.cards.profile'): ''}}">
+              <mat-icon> description</mat-icon>
+            </li>
+            <li (click)="resetNode(element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.resetLimit').substring(0,5): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus').substring(0,4): ''}}">
+              <mat-icon>undo</mat-icon>
+            </li>
+            <li *ngIf="!offsite" (click)="readCommission( element)" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.read'): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.cards.settings'): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.from'): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus').substring(0,4): ''}}">
+              <mat-icon>chrome_reader_mode</mat-icon>
+            </li>
+            <li title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.removeDevice').substring(0,6): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus').substring(0,4): ''}}" (click)="deleteNode(element)">
+              <mat-icon>delete</mat-icon>
+            </li>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="totalNodes > limit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="totalNodes" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit (page)="getNext($event)"></mat-paginator>
+</div>
+<mat-drawer-container class="container-size sidebar_position" autosize disableClose>
+  <mat-drawer #commissindrawer class="sidenav addnew_drawer_sidebar" mode="push" position="end">
+    <mat-icon (click)="closeAllSidebar()" class="allCloseOptions">close</mat-icon>
+    <template #dynamicLoadComponent>
+    </template>
+
+  </mat-drawer>
+</mat-drawer-container>
+<mat-drawer-container class="container-size sidebar_position" autosize disableClose>
+  <mat-drawer #filterSidebar class="sidenav addnew_drawer_sidebar filterProfileSidebar"
+              [ngClass]="status ? 'success' : 'danger'" mode="push" position="end">
+    <mat-icon (click)="closeAllSidebar()" class="allCloseOptions">close</mat-icon>
+    <app-filter-nodes [commissioned]="true"></app-filter-nodes>
+  </mat-drawer>
+</mat-drawer-container>

@@ -3,8 +3,8 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
+      <mat-icon class="allArrowBack" [innerHTML]="commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
+       
       </mat-icon>
       <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.ota.file.heading'): ""}}</span>
       <input type="file" class="file-input mr-10" (change)="uploadFirmware($event)" #fileUpload hidden>
