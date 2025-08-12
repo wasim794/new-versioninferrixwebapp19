@@ -1,1 +1,1 @@
-export * from './light-commissioning.module';
+export * from './light-commissioning.routes';

@@ -55,4 +55,6 @@ export const meshConsoleRoutes: Routes = [
     loadComponent: () =>
       import('./pages/firmware-push/otap-file/otap-file.component').then(m => m.OtapFileComponent),
   },
+
+  
 ];

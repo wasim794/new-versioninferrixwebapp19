@@ -48,6 +48,11 @@ export const routes: Routes = [
   loadChildren: () => import('./alert/alert-list.routes').then(m => m.alertListRoutes),
  },
 
+ {
+  path:'light',
+  canActivate: [AuthGuard],
+  loadChildren: () => import('./light-commissioning/light-commissioning.routes').then(m => m.lightCommissioningRoutes),
+ },
   {
     path: 'scheduler',
     canActivate: [AuthGuard],
