@@ -1,10 +1,11 @@
-<mat-card class="form_cards">
+<mat-card class="form_cards ruleSetTollBar">
   <!-- Title of an Card -->
   <mat-toolbar class="mat-toolbar_all">
     <mat-card-title
       class="sidebar_form_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.heading.ruleSet'): ""}} </mat-card-title>
+       <button mat-raised-button mat-dialog-close class="saveButton ruleSetCancelButton">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
   </mat-toolbar>
-  <button mat-raised-button mat-dialog-close class="Save_Button cancelSc">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+ 
 
   <mat-card-content class="form_cards form_edit_card">
     <div [hidden]="!messageError">
@@ -49,12 +50,16 @@
       <div class="layout-field">
         <div *ngIf="!schedulerButtonsView then saveButton else updateButton"></div>
         <ng-template #saveButton>
-          <button mat-raised-button class="saveButton"
-                  [mat-dialog-close] (click)="setRule($event)">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+          <button matfab class="saveButton"
+                  [mat-dialog-close] (click)="setRule($event)">
+                  <mat-icon>save</mat-icon>
+                  {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
         </ng-template>
         <ng-template #updateButton>
-          <button mat-raised-button (click)="updateRule($event)"
-                  [mat-dialog-close] class="updateButton">{{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+          <button matfab (click)="updateRule($event)"
+                  [mat-dialog-close] class="updateButton saveButton">
+                  <mat-icon>save_as</mat-icon>
+                  {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
         </ng-template>
       </div>
     </form>

@@ -5,10 +5,14 @@
       <small *ngIf="alertDetailCon">{{alertDetail.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button mat-raised-button class="buttonSaveAll bacnetUpdate" (click)="saveAlert() " *ngIf="!isEdit"
-            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
-    <button mat-raised-button class="alertUpdateButton bacnetUpdate buttonUpdateAll" (click)="updateAlert()" *ngIf="isEdit"
-            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+    <button matfab class="toolbarSaveButton bacnetUpdate saveButton" (click)="saveAlert() " *ngIf="!isEdit"
+            align="end">
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
+    <button matfab class="toolbarUpdateButton bacnetUpdate saveButton" (click)="updateAlert()" *ngIf="isEdit"
+            align="end">
+            <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
   </mat-toolbar>
   <mat-card-content class="form_cards form_edit_card">
     <div [hidden]="!messageError">
@@ -82,7 +86,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+              <button mat-mini-fab class="addAddressIcon marginLeft-20"aria-label="icon-button with a add icon"  (click)="addAddress()"
                       title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
                 <mat-icon>add</mat-icon>
               </button>
@@ -94,7 +98,7 @@
                 <input [(ngModel)]="emailAddress " id="emailAddress" matInput name="emailAddress"
                        placeholder="Enter email">
               </mat-form-field>
-              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+              <button mat-mini-fab aria-label="icon-button with a add icon" class="addAddressIcon marginLeft-20" (click)="addAddress()"
                       title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
                 <mat-icon>add</mat-icon>
               </button>
@@ -108,7 +112,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+              <button mat-mini-fab aria-label="icon-button with a add icon" class="addAddressIcon marginLeft-20" (click)="addAddress()"
                       title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
                 <mat-icon>add</mat-icon>
               </button>
@@ -120,7 +124,7 @@
                        placeholder="Enter phone Number">
               </mat-form-field>
 
-              <button mat-mini-fab aria-label="icon-button with a add icon" class="marginLeft-20" (click)="addAddress()"
+              <button mat-mini-fab aria-label="icon-button with a add icon" class="addAddressIcon marginLeft-20" (click)="addAddress()"
                       title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.email.addAddress'): ''}}">
                 <mat-icon>add</mat-icon>
               </button>

@@ -1,4 +1,4 @@
-<mat-card class="form_cards copyPublisherMain">
+<mat-card class="form_cards copyPublisherMain ruleSetTollBar">
   <mat-toolbar class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.copy'): ""}}
@@ -37,8 +37,8 @@
         </mat-slide-toggle>
 
       <div class="actionButtonsAll publisherCopyButton">
-        <button mat-raised-button class="saveButton" (click)="saveCopyData(xid)">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.copy') | uppercase) : ""}}</button>
-        <button mat-raised-button class="Save_Button cancelAllButtons" mat-dialog-close>
+        <button matfab class="copyButton" (click)="saveCopyData(xid)">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.copy') | uppercase) : ""}}</button>
+        <button mat-raised-button class="saveButton publisherCancel" mat-dialog-close>
           {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
         </button>
       </div>

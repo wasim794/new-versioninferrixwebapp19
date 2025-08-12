@@ -7,7 +7,7 @@
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.eventHandler'): ""}}</span>
       <div class="selectMenuFonts">
-        <mat-form-field>
+        <mat-form-field class="mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventHandler.dropDown.placeholder'): ""}}</mat-label>
           <mat-select>
             <mat-option (onSelectionChange)="addEventHandler($event)" *ngFor="let type of handlerTypes"
