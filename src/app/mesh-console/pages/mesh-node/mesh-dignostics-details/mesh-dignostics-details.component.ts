@@ -45,7 +45,7 @@ export class MeshDignosticsDetailsComponent extends UnsubscribeOnDestroyAdapter 
   UIDICTIONARY : any;
 
   constructor(private route: ActivatedRoute, private router: Router, public dictionaryService: DictionaryService,
-              private meshDiagnostic:MeshDiagnosticDataService,private dialog: MatDialog, private _commonService: CommonService) {super(); }
+              private meshDiagnostic:MeshDiagnosticDataService,private dialog: MatDialog, public _commonService: CommonService) {super(); }
 
   ngOnInit(): void {
      this.dictionaryService.getUIDictionary('meshConsole').subscribe(data=>{
@@ -140,5 +140,7 @@ export class MeshDignosticsDetailsComponent extends UnsubscribeOnDestroyAdapter 
     });
   }
 
-
+ goBack() {
+    this._commonService.goBackHistory();
+  }
 }

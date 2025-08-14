@@ -58,7 +58,7 @@ export class BacnetComponent extends UnsubscribeOnDestroyAdapter implements OnIn
   constructor(
     private resolver: ComponentFactoryResolver,
     public _service: BacnetService,
-    private commonService: CommonService,
+    public commonService: CommonService,
     private dialog: MatDialog,
     public dictionaryService: DictionaryService, private changeDetectorRef: ChangeDetectorRef
   ) {
@@ -163,6 +163,11 @@ export class BacnetComponent extends UnsubscribeOnDestroyAdapter implements OnIn
       }
     }));
   }
+
+   goBack() {
+    this.commonService.goBackHistory();
+  }
+
 
 }
 

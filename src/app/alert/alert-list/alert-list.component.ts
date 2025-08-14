@@ -37,7 +37,7 @@ export class AlertListComponent extends UnsubscribeOnDestroyAdapter implements O
   UIDICTIONARY : any;
 
 
-  constructor(private alertService: AlertService, public dictionaryService: DictionaryService, private dialog: MatDialog, private commonService: CommonService, private resolver: ComponentFactoryResolver) {
+  constructor(private alertService: AlertService, public dictionaryService: DictionaryService, private dialog: MatDialog, public commonService: CommonService, private resolver: ComponentFactoryResolver) {
     super();
     // fetching alert data after save, to update the card
     this.subscription = this.alertService.getAfterAlertSave().subscribe(data => {
@@ -143,4 +143,9 @@ export class AlertListComponent extends UnsubscribeOnDestroyAdapter implements O
       }
     }
   }
+
+    goBack() {
+    this.commonService.goBackHistory();
+  }
+
 }

@@ -12,18 +12,18 @@
       <div class=" uploadFileInputUpdate containerInfo containerInfoCenter">
         <ul><li>
 
-          <button mat-mini-fab color="primary" class="upload-btn"  (click)="fileUpload.click()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.fileName').substring(0,4): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.upload'): ''}}">
+          <button mat-mini-fab color="primary" class="upload-btn addAddressIcon"  (click)="fileUpload.click()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.fileName').substring(0,4): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.upload'): ''}}">
 
             <mat-icon class="iconPosition">attach_file</mat-icon>
           </button></li><li>
-          <button mat-mini-fab color="primary" class="upload-btn" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.button.startStack'): ''}}"  [disabled]="!isStackRunning" (click)="startStack()" >
+          <button mat-mini-fab color="primary" class="upload-btn addAddressIcon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.button.startStack'): ''}}"  [disabled]="!isStackRunning" (click)="startStack()" >
             <mat-icon class="iconPosition">check_circle_outline</mat-icon>
           </button></li><li style="border-right: 0px;"><button mat-mini-fab color="primary" [disabled]="isStackRunning" (click)="stopStack()"
-                                    class="upload-btn" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.button.stopStack'): ''}}" >
+                                    class="upload-btn addAddressIcon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.button.stopStack'): ''}}" >
           <mat-icon class="iconPosition">stop</mat-icon>
         </button></li>
         </ul>
-          <mat-form-field>
+          <mat-form-field class="mt-10">
             <mat-label>{{UIDICTIONARY ?
               UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
             <input matInput (input)="applyFilter($event)">

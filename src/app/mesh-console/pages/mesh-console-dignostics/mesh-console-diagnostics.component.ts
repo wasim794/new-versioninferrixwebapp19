@@ -113,5 +113,7 @@ export class MeshConsoleDiagnosticsComponent extends UnsubscribeOnDestroyAdapter
     }));
   }
 
-
+  goBack() {
+    this.commonService.goBackHistory();
+  }
 }

@@ -273,4 +273,5 @@ export class WatchlistListComponent extends UnsubscribeOnDestroyAdapter implemen
       this.getWatchList(this.watchListLimit, this.offset);
     }
   }
+  
 }
