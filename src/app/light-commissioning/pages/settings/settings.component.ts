@@ -3,7 +3,7 @@ import {SettingsService, ExcelImportService, ProfileService} from '../../shared/
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import {BacnetPublisherSettingsSummaryModel} from '../../shared/model';
 import {MatDialog} from '@angular/material/dialog';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import {BacnetDataSourceModel} from "../../../datasource/components/banet-mstp";
 import {ProfilepushsystemComponent} from "../profilepushsystem/profilepushsystem.component";
@@ -11,29 +11,34 @@ import {BacnetService, BacnetLocalDeviceModel} from '../../../bacnet';
 import {ProfilePushSettingsModel} from '../../shared/model';
 import {MatSidenav} from '@angular/material/sidenav';
 import {saveAs} from 'file-saver';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule , ProfilepushsystemComponent],
+  providers: [SettingsService, ExcelImportService, ProfileService, DictionaryService],
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: []
 })
 export class SettingsComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
 
-  public publisherModel: BacnetPublisherSettingsSummaryModel;
-  public localNetworkNumber: string;
-  bacnetModel: BacnetLocalDeviceModel<any>[];
+  public publisherModel:any= BacnetPublisherSettingsSummaryModel;
+  public localNetworkNumber!: string;
+  bacnetModel!: BacnetLocalDeviceModel<any>[];
   bacnetDS: BacnetDataSourceModel = new BacnetDataSourceModel();
   ProfilePushSettings:any= new ProfilePushSettingsModel();
-  localDevice : string;
-  fileName: string;
-  profileTypes = [];
-  selectedFile: File;
+  localDevice! : string;
+  fileName!: string;
+  profileTypes: any = [];
+  selectedFile!: File;
   isReadOnly: boolean = true;
   publishedBacnetMsg="Published on BACnet successfully";
   fileUpload="Uploading files to the process";
   UIDICTIONARY:any;
-  @ViewChild('drawerPushSetting') public sideNav: MatSidenav;
+  @ViewChild('drawerPushSetting') public sideNav!: MatSidenav;
   constructor(
     private _service: SettingsService,
     public dialog: MatDialog,
@@ -79,7 +84,7 @@ export class SettingsComponent extends UnsubscribeOnDestroyAdapter implements On
     }));
   }
 
-  addProfile(event, componentType) {
+  addProfile(event: any, componentType: any) {
     if (event.source.selected) {
      if(event.source.value.type==='LIGHT_CONTROLLER.PROFILE'){
        this.isReadOnly=false;
@@ -91,8 +96,8 @@ export class SettingsComponent extends UnsubscribeOnDestroyAdapter implements On
 
 
   delete() {
-    this._commonService.openConfirmDialog('Are you sure , you want to delete.....? ', name)
-      .afterClosed().subscribe(response => {
+    this._commonService.openConfirmDialog('Are you sure , you want to delete.....? ', this.publisherModel.name)
+      .afterClosed().subscribe((response: any) => {
       if (response) {
         this.subs.add(this._service.deletePublisher()
           .subscribe((model) => {
@@ -102,7 +107,7 @@ export class SettingsComponent extends UnsubscribeOnDestroyAdapter implements On
     });
   }
 
-  onFileSelected(event) {
+  onFileSelected(event: any) {
       this.selectedFile = event.target.files[0];
       this.fileName = this.selectedFile.name;
   }
@@ -116,11 +121,11 @@ export class SettingsComponent extends UnsubscribeOnDestroyAdapter implements On
     });
   }
 
-  profilePushSettings(event){
+  profilePushSettings(event: any){
    this.sideNav.open();
   }
 
-  closeSidebar(event){
+  closeSidebar(event: any){
     this.sideNav.close();
   }
 }

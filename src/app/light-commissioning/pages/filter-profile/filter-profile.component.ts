@@ -2,19 +2,24 @@ import {Component, OnInit} from '@angular/core';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {ProfileService} from '../../shared/service';
 import {FilterModel, NodesFilterModel} from '../../shared/model';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-filter-profile',
   templateUrl: './filter-profile.component.html',
   styleUrls: []
 })
 export class FilterProfileComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   frControllerProfileError: any = [];
-  profileTypes = [];
+  profileTypes: any = [];
   profileFilterModel = new NodesFilterModel();
-  filter = {} as FilterModel;
+  filter: any = {} as FilterModel;
   public UIDICTIONARY:any;
 
   constructor(private profileService: ProfileService, public dictionaryService: DictionaryService, private commonService: CommonService) {
@@ -34,7 +39,7 @@ export class FilterProfileComponent extends UnsubscribeOnDestroyAdapter implemen
     }));
   }
 
-  profileFilter(event, profileType) {
+  profileFilter(event: any, profileType: any) {
     if (event.source.selected) {
       this.filter.definition = profileType;
     }

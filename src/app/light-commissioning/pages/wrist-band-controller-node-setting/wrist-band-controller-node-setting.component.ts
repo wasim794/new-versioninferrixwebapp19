@@ -4,8 +4,13 @@ import {NodeService} from '../../shared/service';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {WristBandNodeModel, WristBandSettingsModel} from '../../shared/model';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [NodeService, DictionaryService],
   selector: 'app-wrist-band-controller-node-setting',
   templateUrl: './wrist-band-controller-node-setting.component.html',
   styleUrls: []

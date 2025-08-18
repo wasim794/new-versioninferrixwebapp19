@@ -25,30 +25,35 @@ import { CommonService } from '../../../services/common.service';
 import { UnsubscribeOnDestroyAdapter } from '../../../common';
 import { NodesFilterModel, ProfileJsonDataModel } from '../../shared/model';
 import { DataPointModel } from "../../../core/models/dataPoint";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, FilterProfileComponent],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-lightsettings',
   templateUrl: './profiles.component.html',
   styleUrls: []
 })
 export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  @ViewChild('profileCreatorSidebar') public profileCreatorSidebar: MatSidenav;
-  @ViewChild('profileCreatorSidebars') public profileCreatorSidebars: MatSidenav;
-  @ViewChild('dynamicLoadComponent', { read: ViewContainerRef }) entry: ViewContainerRef;
-  @ViewChild(LedControllerProfileComponent) profileFormComponent: LedControllerProfileComponent;
-  @ViewChild(DigitalInputControllerProfileComponent) LedControllerProfileComponent: DigitalInputControllerProfileComponent;
+  @ViewChild('profileCreatorSidebar') public profileCreatorSidebar!: MatSidenav;
+  @ViewChild('profileCreatorSidebars') public profileCreatorSidebars!: MatSidenav;
+  @ViewChild('dynamicLoadComponent', { read: ViewContainerRef }) entry!: ViewContainerRef;
+  @ViewChild(LedControllerProfileComponent) profileFormComponent!: LedControllerProfileComponent;
+  @ViewChild(DigitalInputControllerProfileComponent) LedControllerProfileComponent!: DigitalInputControllerProfileComponent;
 
-  totalProfiles: number;
+  totalProfiles: any;
   pageSizeOptions: number[] = [8, 12, 16, 20];
   profiles: ProfileJsonDataModel[] = [];
   private componentRef: any;
   limit = 12;
   offset = 0;
   errorMsg: any;
-  profileDetail: ProfileJsonDataModel;
+  profileDetail:any = ProfileJsonDataModel;
   profileToDelete: any;
   publishers: any;
-  profileTypes = [];
+  profileTypes: any = [];
   componentType: any;
   status = false;
   sortingType = 'default';
@@ -58,8 +63,8 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
   displayedColumns: string[] = ['select', 'position', 'name', 'actions'];
   dataSources: any = new MatTableDataSource<ProfileJsonDataModel>();
   selection = new SelectionModel<string>(true, []);
-  private sortingProperty: string;
-  searches: string;
+  private sortingProperty: any;
+  searches: any;
   public UIDICTIONARY: any;
 
   constructor(
@@ -101,7 +106,7 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     });
   }
 
-  filterPublisher(event) {
+  filterPublisher(event: any) {
     if  (event.key === "Enter" || event.type === "click") {
         const param = 'like(name,%2A' + this.searches + '%2A)';
         this.profileService.get(param).subscribe(data => {
@@ -112,7 +117,7 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     }
   }
 
-  sortingCommissionedNodes(event) {
+  sortingCommissionedNodes(event: any) {
     if (event.direction !== '') {
       this.sortingType = event.direction;
       this.sortingProperty = event.active.trim().toLowerCase();
@@ -131,11 +136,11 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     return numSelected === numRows;
   }
 
-  isChecked(node: DataPointModel): boolean {
+  isChecked(node: any): boolean {
     return this.selection.isSelected(node.xid);
   }
 
-  addDataPointXid(event, dataPoint) {
+  addDataPointXid(event: any, dataPoint: any) {
     if (event.checked) {
       this.selection.select(dataPoint.xid);
     } else {
@@ -148,14 +153,14 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
       this.selection.clear();
       return;
     }
-    this.dataSources.forEach(value =>
+    this.dataSources.forEach((value: any) =>
       this.selection.select(value.xid)
     );
   }
 
-  componentLoaded(componentType) {
+  componentLoaded(componentType: any) {
     this.entry.clear();
-    const factories = {
+    const factories: any = {
       'LIGHT_CONTROLLER.PROFILE': LedControllerProfileComponent,
       'RELAY_CONTROLLER.PROFILE': RelayControllerProfileComponent,
       'DIGITAL_INPUT_CONTROLLER.PROFILE': DigitalInputControllerProfileComponent,
@@ -167,8 +172,8 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     if (component) {
       const factory = this.resolver.resolveComponentFactory(component);
       this.componentRef = this.entry.createComponent(factory);
-      this.componentRef.instance.notifyParent.subscribe(data => this.closeAllSidebar(data));
-      this.componentRef.instance.notifyParent.subscribe(data => this.getProfiles(this.limit, this.offset));
+      this.componentRef.instance.notifyParent.subscribe((data: any) => this.closeAllSidebar(data));
+      this.componentRef.instance.notifyParent.subscribe((data: any) => this.getProfiles(this.limit, this.offset));
     }
   }
 
@@ -178,14 +183,14 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     }));
   }
 
-  getProfiles(limit, offset) {
-    this.subs.add(this.profileService.getAllProfiles(limit, offset).subscribe(data => {
+  getProfiles(limit: any, offset: any) {
+    this.subs.add(this.profileService.getAllProfiles(limit, offset).subscribe((data: any) => {
       this.totalProfiles = data['total'];
       this.dataSources = data['items'];
     }, err => this.errorMsg = err));
   }
 
-  addProfile(event, componentType) {
+  addProfile(event: any, componentType: any) {
     this.getDictionaryUI();
     if (event.source.selected) {
       this.profileService.profileXid = null;
@@ -194,7 +199,7 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     }
   }
 
-  showProfileDetail(profile) {
+  showProfileDetail(profile: any) {
     this.componentType = profile.jsonData.jsonDataType;
     this.componentLoaded(this.componentType);
     this.profileCreatorSidebar.open();
@@ -202,19 +207,19 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     this.profileService.setProfileXid(this.profileDetail.xid);
   }
 
-  copyProfile(profile) {
+  copyProfile(profile: any) {
     this.subs.add(this.profileService.copyProfile(profile.xid).subscribe(data => {
       this.profileService.setSaveProfile(data);
       this.commonService.notification(this.applySuccessMessage);
       this.getProfiles(this.limit, this.offset);
     }, error => {
-      error.result.message.forEach(value =>
+      error.result.message.forEach((value: any) =>
         this.commonService.notification(value.message)
       );
     }));
   }
 
-  deleteProfile(profile) {
+  deleteProfile(profile: any) {
     this.profileToDelete = profile;
     this.subs.add(this.commonService.openConfirmDialog('Are you sure, you want to delete?', profile.name).afterClosed().subscribe(response => {
       if (response) {
@@ -226,13 +231,13 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     }));
   }
 
-  getNext(event) {
+  getNext(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     this.getProfiles(limit, this.offset);
   }
 
-  closeAllSidebar(event) {
+  closeAllSidebar(event: any) {
     this.profileCreatorSidebar.close();
     this.profileCreatorSidebars.close();
     this.getProfiles(this.limit, this.offset);

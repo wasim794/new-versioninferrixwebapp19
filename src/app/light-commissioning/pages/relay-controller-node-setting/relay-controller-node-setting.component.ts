@@ -25,8 +25,13 @@ import {NodeService, ProfileService} from '../../shared/service';
 import {JsonDataService} from '../../../core/services';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {Common} from '../../shared';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [ CommonModule, MatModuleModule, BandSettingsComponent, HoldTimeOneRelayComponent, HoldTimeTwoComponent, LuxFormComponent, PirFormComponent, SwitchFormComponent],
+  providers: [NodeService, ProfileService, DictionaryService],
   selector: 'app-relay-controller-node-setting',
   templateUrl: './relay-controller-node-setting.component.html',
   styleUrls: []
@@ -46,23 +51,23 @@ export class RelayControllerNodeSettingComponent extends UnsubscribeOnDestroyAda
   bandSettings = {} as BandSettingsModel;
   gradeSettingsMap = {} as GradeSettingsMapModel[];
   gradeJsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
+  siteNameMapping!: IntStringPairModel[];
+  buildingNameMapping!: IntStringPairModel[];
+  floorNameMapping!: IntStringPairModel[];
+  roomNameMapping!: IntStringPairModel[];
+  zoneNameMapping!: IntStringPairModel[];
+  groupNameMapping!: IntStringPairModel[];
   isEnableHoldTimeOne = false;
   isEnableHoldTimeTwo = false;
   isDisplayLux = false;
   nodeTypes = Common.nodeTypes;
   public controllerNodeTitle:boolean=false;
-  @ViewChild(PirFormComponent) pirFormComponent: PirFormComponent;
-  @ViewChild(LuxFormComponent) luxFormComponent: LuxFormComponent;
-  @ViewChild(SwitchFormComponent) switchFormComponent: SwitchFormComponent;
-  @ViewChild(BandSettingsComponent) bandSettingsComponent: BandSettingsComponent;
-  @ViewChild(HoldTimeOneRelayComponent) holdTimeOneRelayComponent: HoldTimeOneRelayComponent;
-  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent: HoldTimeTwoComponent;
+  @ViewChild(PirFormComponent) pirFormComponent!: PirFormComponent;
+  @ViewChild(LuxFormComponent) luxFormComponent!: LuxFormComponent;
+  @ViewChild(SwitchFormComponent) switchFormComponent!: SwitchFormComponent;
+  @ViewChild(BandSettingsComponent) bandSettingsComponent!: BandSettingsComponent;
+  @ViewChild(HoldTimeOneRelayComponent) holdTimeOneRelayComponent!: HoldTimeOneRelayComponent;
+  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent!: HoldTimeTwoComponent;
   nodeXid: any;
   UIDICTIONARY:any;
 

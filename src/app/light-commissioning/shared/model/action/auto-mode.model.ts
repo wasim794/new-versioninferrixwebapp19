@@ -1,4 +1,4 @@
 export class AutoModeModel {
-  address: number;
-  enable: boolean;
+  address!: number;
+  enable!: boolean;
 }

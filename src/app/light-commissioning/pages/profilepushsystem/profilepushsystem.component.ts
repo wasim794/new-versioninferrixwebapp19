@@ -12,13 +12,18 @@ import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import {ProfilePushSettingsModel} from '../../shared/model';
 import {SystemSettingService} from '../../../core/services';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [SystemSettingService, DictionaryService, CommonService],
   selector: 'app-profilepushsystem',
   templateUrl: './profilepushsystem.component.html'
 })
 export class ProfilepushsystemComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  hideShowDiv:boolean;
+  hideShowDiv!:boolean;
   _profilePush:any = new ProfilePushSettingsModel();
   save = "push successfully";
   @Output() closeSidebar = new EventEmitter<any>();
@@ -39,7 +44,7 @@ export class ProfilepushsystemComponent extends UnsubscribeOnDestroyAdapter impl
   }
 
 
-  enableInputs(checked){
+  enableInputs(checked: any){
     checked===true?this.hideShowDiv=true:this.hideShowDiv=false;
 
   }

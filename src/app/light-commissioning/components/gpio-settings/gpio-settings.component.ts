@@ -3,9 +3,14 @@ import {ProfileService} from '../../shared/service';
 import {GpioSettingsModel} from '../../shared/model';
 import {DictionaryService} from "../../../core/services";
 import {action_Types, grade_Types} from '../../../common';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-gpio-settings',
   templateUrl: './gpio-settings.component.html',
   styleUrls: []

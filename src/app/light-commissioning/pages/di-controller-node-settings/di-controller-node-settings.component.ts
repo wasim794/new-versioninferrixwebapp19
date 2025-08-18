@@ -13,8 +13,13 @@ import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/u
 import {IntStringPairModel} from '../../../core/models';
 import {JsonDataService} from '../../../core/services';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, GpioSettingsComponent],
+  providers: [NodeService, ProfileService, DictionaryService],
   selector: 'app-read-commissioned-node-di-settings',
   templateUrl: './di-controller-node-settings.component.html',
   styleUrls: []
@@ -27,13 +32,13 @@ export class DiControllerNodeSettingsComponent extends UnsubscribeOnDestroyAdapt
   gpioSettings = {} as GpioSettingsModel;
   gradeSettingsMap = {} as GradeSettingsMapModel[];
   gradeJsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
-  @ViewChild(GpioSettingsComponent) gpioSettingsComponent: GpioSettingsComponent;
+  siteNameMapping!: IntStringPairModel[];
+  buildingNameMapping!: IntStringPairModel[];
+  floorNameMapping!: IntStringPairModel[];
+  roomNameMapping!: IntStringPairModel[];
+  zoneNameMapping!: IntStringPairModel[];
+  groupNameMapping!: IntStringPairModel[];
+  @ViewChild(GpioSettingsComponent) gpioSettingsComponent!: GpioSettingsComponent;
   nodeXid: any;
   public UIDICTIONARY:any;
   public digitalControllerTitle:boolean = false;

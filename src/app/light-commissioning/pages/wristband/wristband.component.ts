@@ -12,26 +12,31 @@ import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import {WristBandProfile, WristBandProfileModel, WristBandSettingsModel} from '../../shared/model';
 import {ProfileService} from '../../shared/service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-wristband',
   templateUrl: './wristband.component.html',
   styleUrls: []
 })
 export class WristbandComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  readPermission = [];
-  editPermission = [];
+  readPermission: any = [];
+  editPermission: any = [];
   permissions = [];
   wristBandProfile = {} as WristBandProfileModel;
   jsonData = {} as WristBandProfile;
   wristBandSettings = {} as WristBandSettingsModel;
-  isEdit: boolean;
+  isEdit!: boolean;
   saveSuccessMsg = 'is saved successfully';
   updateSuccessMsg = 'is updated successfully';
   wristControllerProfileError: any = [];
   @Output() profileCreatorSidebar = new EventEmitter;
   @Output() notifyParent: EventEmitter<any> = new EventEmitter();
-  public messageError: boolean;
+  public messageError!: boolean;
   public UIDICTIONARY:any;
   public wristBandProfileTitle:boolean=false;
 

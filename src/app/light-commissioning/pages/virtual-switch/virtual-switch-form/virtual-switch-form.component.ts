@@ -4,27 +4,32 @@ import {IntStringPairModel} from '../../../../core/models';
 import {JsonDataService} from '../../../../core/services';
 import {UnsubscribeOnDestroyAdapter} from '../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {VirtualSwitchService} from '../../../shared/service';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../../services/common.service';
 import {DictionaryService} from "../../../../core/services/dictionary.service";
 import {grade_Types} from '../../../../common/static-data/static-data';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [VirtualSwitchService, DictionaryService],
   selector: 'app-virtual-switch-form',
   templateUrl: './virtual-switch-form.component.html',
   styleUrls: []
 })
 export class VirtualSwitchFormComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  gradeData: boolean;
-  model: VirtualSwitchModel;
+  gradeData!: boolean;
+  model!: VirtualSwitchModel;
 
   gradeName = 'Site';
-  gradeSelected: number;
-  vsError = [];
-  errorMsg: string;
-  gradeMapping: IntStringPairModel[];
+  gradeSelected!: number;
+  vsError: any = [];
+  errorMsg!: any;
+  gradeMapping!: IntStringPairModel[];
   @Output() virtualSwitchClose = new EventEmitter<any>();
-  @Input() buttonsView;
-  isEdit: boolean;
+  @Input() buttonsView: boolean = false;
+  isEdit!: boolean;
   virtualSwitchTitle: boolean = false;
   saveSuccessMsg = 'Saved successfully';
   updateSuccessMsg = 'Updated successfully';
@@ -33,13 +38,13 @@ export class VirtualSwitchFormComponent extends UnsubscribeOnDestroyAdapter impl
 
   gradeSettingsMap = {} as GradeSettingsMapModel[];
   gradeJsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
-  public messageError: boolean;
+  siteNameMapping!: IntStringPairModel[];
+  buildingNameMapping!: IntStringPairModel[];
+  floorNameMapping!: IntStringPairModel[];
+  roomNameMapping!: IntStringPairModel[];
+  zoneNameMapping!: IntStringPairModel[];
+  groupNameMapping!: IntStringPairModel[];
+  public messageError!: boolean;
 
   constructor(
     private jsonDataService: JsonDataService,

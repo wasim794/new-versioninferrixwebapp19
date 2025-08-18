@@ -25,17 +25,22 @@ import {ProfileService} from '../../shared/service';
 import {JsonDataService} from '../../../core/services';
 import {RelayControllerProfileModel} from '../../shared/model/relay-controller-profile.model';
 import {RelayControllerProfile} from '../../shared/model/relay-controller-profile';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, BandSettingsComponent, HoldTimeOneRelayComponent, HoldTimeTwoComponent, LuxFormComponent, PirFormComponent, SwitchFormComponent],
+  providers: [ProfileService, DictionaryService, JsonDataService],
   selector: 'app-relay-controller-profile',
   templateUrl: './relay-controller-profile.component.html',
   styleUrls: []
 })
 export class RelayControllerProfileComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
 
-  readPermission = [];
-  editPermission = [];
-  permissions = [];
+  readPermission: any = [];
+  editPermission: any = [];
+  permissions: any = [];
   isChecked = false;
   isCheckedLux = false;
   isCheckedSwitch = false;
@@ -45,22 +50,22 @@ export class RelayControllerProfileComponent extends UnsubscribeOnDestroyAdapter
   isEnableHoldTimeTwo = false;
   isDisplayLux = false;
   relayControllerProfile = {} as RelayControllerProfileModel;
-  jsonData = {} as RelayControllerProfile;
-  nodeSettings = {} as NodeSettingsModel;
-  pirSettings = {} as PirSettingsModel;
-  luxSettings = {} as LuxSettingsModel;
-  switchSettings = {} as SwitchSettingsModel;
-  bandSettings = {} as BandSettingsModel;
-  gradeSettingsMap = {} as GradeSettingsMapModel[];
-  gradeJsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
-  public messageError: boolean;
-  isEdit: boolean;
+  jsonData: any = {} as RelayControllerProfile;
+  nodeSettings: any = {} as NodeSettingsModel;
+  pirSettings: any = {} as PirSettingsModel;
+  luxSettings: any = {} as LuxSettingsModel;
+  switchSettings: any = {} as SwitchSettingsModel;
+  bandSettings: any = {} as BandSettingsModel;
+  gradeSettingsMap: any = {} as GradeSettingsMapModel[];
+  gradeJsonData: any = {} as GradeSettingsMap;
+  siteNameMapping!: IntStringPairModel[];
+  buildingNameMapping!: IntStringPairModel[];
+  floorNameMapping!: IntStringPairModel[];
+  roomNameMapping!: IntStringPairModel[];
+  zoneNameMapping!: IntStringPairModel[];
+  groupNameMapping!: IntStringPairModel[];
+   messageError!: boolean;
+  isEdit!: boolean;
   saveSuccessMsg = 'is saved successfully';
   updateSuccessMsg = 'is updated successfully';
   UIDICTIONARY:any;
@@ -72,12 +77,12 @@ export class RelayControllerProfileComponent extends UnsubscribeOnDestroyAdapter
     .set('Enocean Relay', 1)
     .set('Sink Node', 2);
 
-  @ViewChild(PirFormComponent) pirFormComponent: PirFormComponent;
-  @ViewChild(HoldTimeOneRelayComponent) holdTimeOneRelayComponent: HoldTimeOneRelayComponent;
-  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent: HoldTimeTwoComponent;
-  @ViewChild(LuxFormComponent) luxFormComponent: LuxFormComponent;
-  @ViewChild(SwitchFormComponent) switchFormComponent: SwitchFormComponent;
-  @ViewChild(BandSettingsComponent) bandSettingsComponent: BandSettingsComponent;
+  @ViewChild(PirFormComponent) pirFormComponent!: PirFormComponent;
+  @ViewChild(HoldTimeOneRelayComponent) holdTimeOneRelayComponent!: HoldTimeOneRelayComponent;
+  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent!: HoldTimeTwoComponent;
+  @ViewChild(LuxFormComponent) luxFormComponent!: LuxFormComponent;
+  @ViewChild(SwitchFormComponent) switchFormComponent!: SwitchFormComponent;
+  @ViewChild(BandSettingsComponent) bandSettingsComponent!: BandSettingsComponent;
   inputFormControl = new FormControl('', [
     Validators.required,
   ]);
@@ -107,7 +112,7 @@ export class RelayControllerProfileComponent extends UnsubscribeOnDestroyAdapter
   }
 
   getGradeMappingSetting() {
-    this.subs.add(this.jsonDataService.getJsonData('definition=GRADE.MAPPING').subscribe(data => {
+    this.subs.add(this.jsonDataService.getJsonData('definition=GRADE.MAPPING').subscribe((data: any) => {
       this.gradeSettingsMap = data['items'];
       this.gradeJsonData = this.gradeSettingsMap[0].jsonData;
       this.siteNameMapping = this.gradeSettingsMap[0].jsonData.siteNameMapping;
@@ -332,21 +337,21 @@ export class RelayControllerProfileComponent extends UnsubscribeOnDestroyAdapter
     }, 10000);
   }
 
-  enableLux(event) {
+  enableLux(event: any) {
     this.isCheckedLux = event.checked;
     if (this.isEdit) {
       this.luxFormComponent.setLuxModel(this.relayControllerProfile.jsonData.luxSettings);
     }
   }
 
-  enablePir(event) {
+  enablePir(event: any) {
     this.isChecked = event.checked;
     if (this.isEdit) {
       this.pirFormComponent.setPirModel(this.relayControllerProfile.jsonData.pirSettings);
     }
   }
 
-  enableHoldTimeOne(event) {
+  enableHoldTimeOne(event: any) {
     this.isEnableHoldTimeOne = event.checked;
     this.luxFormComponent.enableHoldTimeOne(this.isEnableHoldTimeOne);
     this.isDisplayLux = !!event.checked;
@@ -357,21 +362,21 @@ export class RelayControllerProfileComponent extends UnsubscribeOnDestroyAdapter
   }
 
 
-  enableSwitch(event) {
+  enableSwitch(event: any) {
     this.isCheckedSwitch = event.checked;
     if (this.isEdit) {
       this.switchFormComponent.setSwitchModel(this.relayControllerProfile.jsonData.switchSettings);
     }
   }
 
-  enableBand(event) {
+  enableBand(event: any) {
     this.isCheckedBand = event.checked;
     if (this.isEdit) {
       this.bandSettingsComponent.setBandModel(this.relayControllerProfile.jsonData.bandSettings);
     }
   }
 
-  enoceanRelay(event) {
+  enoceanRelay(event: any) {
     this.isEnoceanRelay = event.value === this.nodeTypes.get('Enocean Relay');
     this.luxFormComponent.enableAddressField(this.isEnoceanRelay && !this.isEnableHoldTimeOne);
   }

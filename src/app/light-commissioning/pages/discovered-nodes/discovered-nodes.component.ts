@@ -1,7 +1,7 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 import {NodeService, ProfileService} from '../../shared/service';
-import {JsonDataModel} from 'src/app/common/model/jsonDataModel';
+import {JsonDataModel} from '../../../common/model/jsonDataModel';
 import {
   AutoModeModel,
   ControllerNodeModel,
@@ -9,49 +9,54 @@ import {
   NodeStatsModel,
   UserControlModel
 } from '../../shared/model';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {FormControl} from '@angular/forms';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {FilterNodesComponent} from '..';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, FilterNodesComponent],
+  providers: [NodeService, ProfileService, DictionaryService],
   selector: 'app-tab-discovered-nodes',
   templateUrl: './discovered-nodes.component.html',
   styleUrls: []
 })
 
 export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  @ViewChild('profileCreatorSidebar') public profileCreatorSidebar: MatSidenav;
-  @ViewChild('filterSidebar') public filterSidebar: MatSidenav;
-  @ViewChild('dynamicLoadComponent', {read: ViewContainerRef}) entry: ViewContainerRef;
+  @ViewChild('profileCreatorSidebar') public profileCreatorSidebar!: MatSidenav;
+  @ViewChild('filterSidebar') public filterSidebar!: MatSidenav;
+  @ViewChild('dynamicLoadComponent', {read: ViewContainerRef}) entry!: ViewContainerRef;
 
   isNodeOn = new FormControl();
   private componentRef: any;
   commissioned = false;
-  nodes: ControllerNodeModel[];
-  profiles: JsonDataModel[];
+  nodes!: ControllerNodeModel[];
+  profiles!: JsonDataModel[];
   userControlModel = {} as UserControlModel;
   nodesFilter = new NodesFilterModel();
   nodesModels = {} as NodesModel;
   searchDiscovered: any;
-  profileXid: string;
+  profileXid!: string;
   applySuccessMessage = 'Profile Applied Successfully';
-  totalNodes: number;
+  totalNodes!: number;
   limit = 10;
   offset = 0;
   pageSizeOptions: number[] = [12, 16, 20];
   status = false;
   sortingType = 'default';
-  sortingProperty: string;
-  offsite: boolean;
-  nodeStats: NodeStatsModel;
+  sortingProperty!: string;
+  offsite!: boolean;
+  nodeStats!: NodeStatsModel;
   cardOneCss: any;
   cardTwoCss: any;
   cardThreeCss: any;
   cardFourCss: any;
   cardFiveCss: any;
-  isAutoMode: boolean;
+  isAutoMode!: boolean;
   public UIDICTIONARY:any;
   private disableMsg="Automode Disable";
 
@@ -72,9 +77,9 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
   }
 
   displayedColumns: string[] = ['S.No.', 'Node Type', 'Address', 'Status', 'Profiles', 'Off/On', 'Dimming', 'Auto', 'Actions'];
-  checked: boolean;
+  checked!: boolean;
 
-  createComponent(componentType) {
+  createComponent(componentType: any) {
     this.entry.clear();
     if (componentType === 'FILTER_NODES') {
       const factory = this.resolver.resolveComponentFactory(FilterNodesComponent);
@@ -98,8 +103,8 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
   }
 
 
-  getNodes(limit, offSet) {
-    this.subs.add(this.nodeService.getNodes(limit, offSet, this.commissioned, this.sortingType, this.sortingProperty).subscribe(data => {
+  getNodes(limit: any, offSet: any) {
+    this.subs.add(this.nodeService.getNodes(limit, offSet, this.commissioned, this.sortingType, this.sortingProperty).subscribe((data: any) => {
       this.totalNodes = data.total;
       this.nodes = data.items;
 
@@ -119,7 +124,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
   }
 
 // Todo need to fix this, as every time isNodeOn is false
-  nodeOnOff(node) {
+  nodeOnOff(node: any) {
     this.userControlModel.address = node.address;
     if (node.onOff) {
       this.userControlModel.dimValue = 100;
@@ -138,7 +143,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
     }));
   }
 
-  nodeDim(event, node) {
+  nodeDim(event: any, node: any) {
     this.userControlModel.address = node.address;
     this.userControlModel.dimValue = event.value;
     node.onOff = this.userControlModel.dimValue > 0;
@@ -148,11 +153,11 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
     }));
   }
 
-  profileChange(event) {
+  profileChange(event: any) {
     this.profileXid = event;
   }
 
-  applyProfileToNode(node) {
+  applyProfileToNode(node: any) {
     this.subs.add(this.nodeService.applyProfileToNode(node.xid, this.profileXid).subscribe(data => {
       this.commonService.notification(data.responseMessage);
       this.getNodes(this.limit, this.offset);
@@ -161,7 +166,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
   }
 
 
-  getNext(event) {
+  getNext(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     this.getNodes(limit, this.offset);
@@ -185,7 +190,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
     this.getNodes(this.limit, this.offset);
   }
 
-  sortingDiscoveredNodes(event) {
+  sortingDiscoveredNodes(event: any) {
     if (event.direction !== '') {
       this.sortingType = event.direction;
       this.sortingProperty = event.active.trim().toLowerCase();
@@ -195,7 +200,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
       this.getNodes(this.limit, this.offset);
     }
   }
-  filterDiscovered(event) {
+  filterDiscovered(event: any) {
     if (this.searchDiscovered) {
       const encodedSearchValue = encodeURIComponent(this.searchDiscovered);
       this.nodesModels.address = encodedSearchValue;
@@ -223,13 +228,14 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
     }));
   }
 
-  deleteNode(element) {
+  deleteNode(element: any) {
     this.commonService.openConfirmDialog('Are you sure , you want to delete.....?',
-      element.address).afterClosed().subscribe(response => {
+      element.address).afterClosed().subscribe((response: any) => {
       if (response) {
     this.subs.add(this.nodeService.delete(element.xid).subscribe((data) => {
       this.commonService.notification('Node ' + data.name + ' is deleted');
     }));
+    return true;
       } else {
         return false;
       }
@@ -244,7 +250,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
     this.cardFiveCss = {'background': 'darkslategrey', 'color': '#ffffff'};
   }
 
-  autoMode(element) {
+  autoMode(element: any) {
     const model = new AutoModeModel();
     model.enable = this.isAutoMode;
     model.address = element.address;

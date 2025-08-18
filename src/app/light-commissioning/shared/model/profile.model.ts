@@ -6,16 +6,16 @@ import {SwitchSettingsModel} from './settings/switch-settings.model';
 import {GpioSettingsModel} from './settings/gpio-settings.model';
 
 export class ProfileModel {
-  jsonDataType: string;
-  nodeSettings: NodeSettingsModel;
-  pirSettingsEnabled: boolean;
-  pirSettings: PirSettingsModel;
-  luxSettingsEnabled: boolean;
-  luxSettings: LuxSettingsModel;
-  enoceanSwitchEnabled: boolean;
-  switchSettings: SwitchSettingsModel;
-  bandSettingsEnabled: boolean;
-  bandSettings: BandSettingsModel;
-  gpioSettingsEnabled: boolean;
-  gpioSettings: GpioSettingsModel;
+  jsonDataType!: string;
+  nodeSettings!: NodeSettingsModel;
+  pirSettingsEnabled!: boolean;
+  pirSettings!: PirSettingsModel;
+  luxSettingsEnabled!: boolean;
+  luxSettings!: LuxSettingsModel;
+  enoceanSwitchEnabled!: boolean;
+  switchSettings!: SwitchSettingsModel;
+  bandSettingsEnabled!: boolean;
+  bandSettings!: BandSettingsModel;
+  gpioSettingsEnabled!: boolean;
+  gpioSettings!: GpioSettingsModel;
 }

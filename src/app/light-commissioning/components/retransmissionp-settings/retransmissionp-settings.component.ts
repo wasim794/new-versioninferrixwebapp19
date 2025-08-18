@@ -2,8 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {BandSettingsModel, RetransmissionSettingsModel} from '../../shared/model';
 import {ProfileService} from '../../shared/service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-retransmissionp-settings',
   templateUrl: './retransmissionp-settings.component.html'
 })
