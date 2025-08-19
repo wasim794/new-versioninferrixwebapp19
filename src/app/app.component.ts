@@ -9,6 +9,7 @@ import { fromEvent, Observable, Subscription } from 'rxjs';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthenticationService } from './authentication/service';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   timedOut = false;
   lastPing?: Date = undefined;
   subscriptions: Subscription[] = [];
+
   // inject services
   private router = inject(Router);
   private idle = inject(Idle);
@@ -37,17 +39,21 @@ export class AppComponent implements OnInit, OnDestroy {
   private commonService = inject(CommonService);
   private jwtHelper = inject(JwtHelperService);
   private authenticationService = inject(AuthenticationService);
+
   constructor() {
-    // :white_check_mark: Idle configuration (30m inactivity logout)
+    // ✅ Idle configuration (30m inactivity logout)
     this.idle.setIdle(1795); // ~29.9 minutes
     this.idle.setTimeout(5); // 5s after idle reached
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
     this.idle.onIdleEnd.subscribe(() => this.reset());
     this.idle.onTimeout.subscribe(() => this.logout());
-    // :white_check_mark: Keepalive ping every 15s
+
+    // ✅ Keepalive ping every 15s
     this.keepalive.interval(15);
     this.keepalive.onPing.subscribe(() => (this.lastPing = new Date()));
-    // :white_check_mark: Start/stop idle watcher based on login status
+
+    // ✅ Start/stop idle watcher based on login status
     this.commonService.getUserLoggedIn().subscribe((userLoggedIn) => {
       if (userLoggedIn) {
         this.idle.watch();
@@ -57,33 +63,39 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   reset() {
     this.idle.watch();
     this.timedOut = false;
   }
+
   logout() {
     this.commonService.setUserLoggedIn(false);
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
+
   ngOnInit() {
-    // :white_check_mark: Dynamic header/footer visibility
+    // ✅ Dynamic header/footer visibility
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.headerFooter = event.url !== '/login' && event.url !== '/';
       }
     });
-    // :white_check_mark: Track online/offline events
+
+    // ✅ Track online/offline events
     const onlineEvent: Observable<Event> = fromEvent(window, 'online');
     const offlineEvent: Observable<Event> = fromEvent(window, 'offline');
+
     this.subscriptions.push(
       onlineEvent.subscribe((e) => {
         if (e.type === 'online') {
           this.commonService.notification('You are internet connected');
-          // :white_check_mark: DO NOT force navigate to login here (was causing random logout)
+          // ✅ DO NOT force navigate to login here (was causing random logout)
         }
       })
     );
+
     this.subscriptions.push(
       offlineEvent.subscribe((e) => {
         if (e.type === 'offline') {
@@ -93,6 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
       })
     );
   }
+
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.idle.stop();
