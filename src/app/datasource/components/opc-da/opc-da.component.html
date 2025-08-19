@@ -46,7 +46,7 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataSource.field.anchorNode'): ""}}
           </mat-slide-toggle>
           <mat-form-field *ngIf="visibility"
-                          class="form_field w-50 marginTop marginLeft-20" appearance="fill">
+                          class="form_field w-50 marginTop locationInputBox" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataSource.field.location'): ""}}</mat-label>
             <input matInput [(ngModel)]="OpcDatasource.location"
                    name="location" type="text">

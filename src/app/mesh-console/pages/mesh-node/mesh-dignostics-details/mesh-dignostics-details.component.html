@@ -44,7 +44,7 @@
      fxLayoutAlign="left">
   <div fxFlex="100%" class="main_db meshTableContainer">
     <div class="container-size OverflowScroll addCommonPageTable meshConsoleTables">
-      <table id="scrollingTables" mat-table [dataSource]="dataSource"  multiTemplateDataRows class="mat-elevation-z8 meshTable diagnosticTableHeader width-100">
+      <table border="1" id="scrollingTables" mat-table [dataSource]="dataSource"  multiTemplateDataRows class="mat-elevation-z8 meshTable diagnosticTableHeader width-100">
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.address') : ""}} </th>
           <td class="perticularRows"  mat-cell *matCellDef="let element">{{element.address}} </td>

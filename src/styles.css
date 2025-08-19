@@ -9866,5 +9866,9 @@ mat-drawer.mat-drawer.drawer_sidebar.systemSettingsSidebar.mat-drawer-end.mat-dr
   .diagnosticsWidthSize{
     width: 1100px;
   }
+
+  .locationInputBox{
+    margin-left:97px ;
+  }
 /* .................. */
 

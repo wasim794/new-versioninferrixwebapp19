@@ -1,4 +1,5 @@
-<mat-toolbar class="mat-toolbar_all ">
+<div class="ruleSetTollBar">
+<mat-toolbar class="mat-toolbar_all">
   <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.heading'): ""}}
   </span>
   <mat-icon class="close-container" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}" mat-raised-button mat-dialog-close>close</mat-icon>
@@ -22,7 +23,6 @@
         </mat-select>
       </mat-form-field>
 
-
       <mat-form-field class="searchEventInput w-50" appearance="fill">
         <mat-label>
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.fields.placeholder.eventSourceType'): ""}}
@@ -42,7 +42,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
 
       <mat-form-field class="searchEventInput w-50" appearance="fill">
         <mat-label>
@@ -139,3 +138,4 @@
   </div>
 </mat-dialog-content>
 
+</div>
