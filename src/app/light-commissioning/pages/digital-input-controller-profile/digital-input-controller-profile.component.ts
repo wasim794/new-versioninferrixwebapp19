@@ -16,43 +16,48 @@ import {IntStringPairModel} from '../../../core/models';
 import {JsonDataService} from '../../../core/services';
 import {Common} from '../../shared';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, GpioSettingsComponent],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-led-controller-profile',
   templateUrl: './digital-input-controller-profile.component.html',
   styleUrls: []
 })
 export class DigitalInputControllerProfileComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   text = '';
-  readPermission = [];
-  editPermission = [];
+  readPermission: any = [];
+  editPermission: any = [];
   permissions = [];
   isChecked = false;
   isGpioEnabled = false;
   digitalControllerProfile = {} as DigitalControllerProfileModel;
-  jsonData = {} as DigitalControllerProfile;
-  nodeSettings = {} as NodeSettingsModel;
-  gpioSettings = {} as GpioSettingsModel;
-  gradeSettingsMap = {} as GradeSettingsMapModel[];
-  gradeJsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
-  isEdit: boolean;
+  jsonData: any = {} as DigitalControllerProfile;
+  nodeSettings: any = {} as NodeSettingsModel;
+  gpioSettings: any = {} as GpioSettingsModel;
+  gradeSettingsMap: any = {} as GradeSettingsMapModel[];
+  gradeJsonData: any = {} as GradeSettingsMap;
+  siteNameMapping!: IntStringPairModel[];
+  buildingNameMapping!: IntStringPairModel[];
+  floorNameMapping!: IntStringPairModel[];
+  roomNameMapping!: IntStringPairModel[];
+  zoneNameMapping!: IntStringPairModel[];
+  groupNameMapping!: IntStringPairModel[];
+  isEdit!: boolean;
   saveSuccessMsg = 'is saved successfully';
   updateSuccessMsg = 'is updated successfully';
   public UIDICTIONARY:any;
   public digitalControllerTitle: boolean= false;
   @Output() notifyParent: EventEmitter<any> = new EventEmitter();
-  @ViewChild(GpioSettingsComponent) gpioSettingsComponent: GpioSettingsComponent;
+  @ViewChild(GpioSettingsComponent) gpioSettingsComponent!: GpioSettingsComponent;
   inputFormControl = new FormControl('', [
     Validators.required,
   ]);
   diControllerProfileError: any = [];
-  public messageError: boolean;
+  public messageError!: boolean;
 
   constructor(
     private commonService: CommonService,
@@ -174,7 +179,7 @@ export class DigitalInputControllerProfileComponent extends UnsubscribeOnDestroy
     }));
   }
 
-  enableGpio(event) {
+  enableGpio(event: any) {
     this.isGpioEnabled = event.checked;
     if (this.isEdit) {
       this.gpioSettingsComponent.setGpioSettingsModel(this.digitalControllerProfile.jsonData.gpioSettings);

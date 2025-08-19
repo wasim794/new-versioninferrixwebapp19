@@ -95,7 +95,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./mesh-console/mesh-console-routes').then(m => m.meshConsoleRoutes),
   },
-
+ 
   {
     path: 'system-setting',
     canActivate: [AuthGuard],

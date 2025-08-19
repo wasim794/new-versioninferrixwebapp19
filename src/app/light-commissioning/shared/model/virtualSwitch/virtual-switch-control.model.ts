@@ -1,6 +1,6 @@
 export class VirtualSwitchControlModel {
-  autoMode: boolean;
-  dimValue: number;
+  autoMode!: boolean;
+  dimValue!: number;
 
   public constructor(model?: Partial<VirtualSwitchControlModel>) {
     if (model) {

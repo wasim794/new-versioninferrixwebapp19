@@ -13,7 +13,7 @@ export class VirtualSwitchService {
 
   private virtualSwitchUrl = '/v2/light-commissioning/virtual-switch';
   private virtualSwitchControlUrl = '/v2/light-commissioning/virtual-switch/control';
-  private _total: number;
+  private _total!: number;
 
   get total(): number {
     return this._total;

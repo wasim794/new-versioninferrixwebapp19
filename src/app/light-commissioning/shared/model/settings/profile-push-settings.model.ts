@@ -1,16 +1,16 @@
 import {DeviceStats} from '../stats/profilepush-node-stats.model';
 export class ProfilePushSettingsModel {
-  public lightCommissioningProfilePushScheduleHour: number;
-  public lightCommissioningProfilePushScheduleMin: number;
-  public lightCommissioningProfilePushScheduleSec: number;
-  public lightCommissioningProfilePushScheduleAfterExecute: number;
-  public lightCommissioningProfilePushEnabled: boolean;
-  public lightCommissioningProfilePushScheduleSleepTimeFirstRun: number;
-  public lightCommissioningProfilePushScheduleSleepTimeRetryRun: number;
-  public lightCommissioningProfilePushHoldTime: number;
-  public lightCommissioningProfilePushNodesFilter: number;
-  public lightCommissioningProfilePushToDownNodes: boolean;
-  public lightCommissioningProfilePushScheduleRuntimeStats:DeviceStats;
+  public lightCommissioningProfilePushScheduleHour!: number;
+  public lightCommissioningProfilePushScheduleMin!: number;
+  public lightCommissioningProfilePushScheduleSec!: number;
+  public lightCommissioningProfilePushScheduleAfterExecute!: number;
+  public lightCommissioningProfilePushEnabled!: boolean;
+  public lightCommissioningProfilePushScheduleSleepTimeFirstRun!: number;
+  public lightCommissioningProfilePushScheduleSleepTimeRetryRun!: number;
+  public lightCommissioningProfilePushHoldTime!: number;
+  public lightCommissioningProfilePushNodesFilter!: number;
+  public lightCommissioningProfilePushToDownNodes!: boolean;
+  public lightCommissioningProfilePushScheduleRuntimeStats!:DeviceStats;
 
   constructor(model?: Partial<ProfilePushSettingsModel>) {
     if (model) {

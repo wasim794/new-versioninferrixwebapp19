@@ -29,16 +29,21 @@ import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import {IntStringPairModel} from '../../../core/models';
 import {JsonDataService} from '../../../core/services';
 import {CURVE_DIM_TYPE} from "../../shared";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, BandSettingsComponent, HoldTimeOneComponent, HoldTimeTwoComponent, LuxFormComponent, PirFormComponent, SwitchFormComponent, RetransmissionpSettingsComponent],
+  providers: [ProfileService, DictionaryService, JsonDataService],
   selector: 'app-profile-form',
   templateUrl: './led-controller-profile.component.html',
   styleUrls: []
 })
 export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter implements OnInit, AfterViewInit {
-  readPermission = [];
-  editPermission = [];
-  permissions = [];
+  readPermission: any = [];
+  editPermission: any = [];
+  permissions: any = [];
   isChecked = false;
   isCheckedLux = false;
   isCheckedSwitch = false;
@@ -47,22 +52,22 @@ export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter i
   isEnableHoldTimeOne = false;
   isEnableHoldTimeTwo = false;
   controllerProfile = {} as ControllerProfileModel;
-  jsonData = {} as ControllerProfile;
-  nodeSettings = {} as NodeSettingsModel;
-  pirSettings = {} as PirSettingsModel;
-  luxSettings = {} as LuxSettingsModel;
-  switchSettings = {} as SwitchSettingsModel;
-  bandSettings = {} as BandSettingsModel;
-  reTransmissionSettings = {} as RetransmissionSettingsModel;
-  gradeSettingsMap = {} as GradeSettingsMapModel[];
-  gradeJsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
-  isEdit: boolean;
+  jsonData: any = {} as ControllerProfile;
+  nodeSettings: any = {} as NodeSettingsModel;
+  pirSettings: any = {} as PirSettingsModel;
+  luxSettings: any = {} as LuxSettingsModel;
+  switchSettings: any = {} as SwitchSettingsModel;
+  bandSettings: any = {} as BandSettingsModel;
+  reTransmissionSettings: any = {} as RetransmissionSettingsModel;
+  gradeSettingsMap: any = {} as GradeSettingsMapModel[];
+  gradeJsonData: any = {} as GradeSettingsMap;
+  siteNameMapping?: IntStringPairModel[];
+  buildingNameMapping?: IntStringPairModel[];
+  floorNameMapping?: IntStringPairModel[];
+  roomNameMapping?: IntStringPairModel[];
+  zoneNameMapping?: IntStringPairModel[];
+  groupNameMapping?: IntStringPairModel[];
+  isEdit?: boolean;
   saveSuccessMsg = 'is saved successfully';
   updateSuccessMsg = 'is updated successfully';
   public UIDICTIONARY:any;
@@ -75,16 +80,16 @@ export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter i
   curveDimTimeType = CURVE_DIM_TYPE;
   isThresholdMaxAndMin: boolean = false;
 
-  @ViewChild(PirFormComponent) pirFormComponent: PirFormComponent;
-  @ViewChild(HoldTimeOneComponent) holdTimeOneComponent: HoldTimeOneComponent;
-  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent: HoldTimeTwoComponent;
-  @ViewChild(LuxFormComponent) luxFormComponent: LuxFormComponent;
-  @ViewChild(SwitchFormComponent) switchFormComponent: SwitchFormComponent;
-  @ViewChild(RetransmissionpSettingsComponent) retransmissionSettingsComponent : RetransmissionpSettingsComponent;
+  @ViewChild(PirFormComponent) pirFormComponent!: PirFormComponent;
+  @ViewChild(HoldTimeOneComponent) holdTimeOneComponent!: HoldTimeOneComponent;
+  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent!: HoldTimeTwoComponent;
+  @ViewChild(LuxFormComponent) luxFormComponent!: LuxFormComponent;
+  @ViewChild(SwitchFormComponent) switchFormComponent!: SwitchFormComponent;
+  @ViewChild(RetransmissionpSettingsComponent) retransmissionSettingsComponent? : RetransmissionpSettingsComponent;
   @Output() closeAllSidebar = new EventEmitter<any>();
-  @ViewChild(BandSettingsComponent) bandSettingsComponent: BandSettingsComponent;
+  @ViewChild(BandSettingsComponent) bandSettingsComponent!: BandSettingsComponent;
   @Output() notifyParent: EventEmitter<any> = new EventEmitter();
-  public messageError: boolean;
+  public messageError?: boolean;
   public hideProfileTitle:boolean=false;
   @Output() dataSaved = new EventEmitter<any>();
 
@@ -353,49 +358,49 @@ export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter i
     }))
   }
 
-  enableLux(event) {
+  enableLux(event: any) {
     this.isCheckedLux = event.checked;
     if (this.isEdit) {
       this.luxFormComponent.setLuxModel(this.controllerProfile.jsonData.luxSettings);
     }
   }
 
-  enablePir(event) {
+  enablePir(event: any) {
     this.isChecked = event.checked;
     if (this.isEdit) {
       this.pirFormComponent.setPirModel(this.controllerProfile.jsonData.pirSettings);
     }
   }
 
-  enableHoldTimeOne(event) {
+  enableHoldTimeOne(event: any) {
     this.isEnableHoldTimeOne = event.checked;
     if (this.isEdit) {
       this.holdTimeOneComponent.setHoldTimeOne(this.controllerProfile.jsonData.nodeSettings);
     }
   }
 
-  enableHoldTimeTwo(event) {
+  enableHoldTimeTwo(event: any) {
     this.isEnableHoldTimeTwo = event.checked;
     if (this.isEdit) {
       this.holdTimeTwoComponent.setHoldTimeTwo(this.controllerProfile.jsonData.nodeSettings);
     }
   }
 
-  enableSwitch(event) {
+  enableSwitch(event: any) {
     this.isCheckedSwitch = event.checked;
     if (this.isEdit) {
       this.switchFormComponent.setSwitchModel(this.controllerProfile.jsonData.switchSettings);
     }
   }
 
-  enableBand(event) {
+  enableBand(event: any) {
     this.isCheckedBand = event.checked;
     if (this.isEdit) {
       this.bandSettingsComponent.setBandModel(this.controllerProfile.jsonData.bandSettings);
     }
   }
 
-  enoceanRelay(event) {
+  enoceanRelay(event: any) {
     this.isEnoceanRelay = (event.value === this.nodeTypes.get('Enocean Relay'));
     this.luxFormComponent.enableAddressField(this.isEnoceanRelay);
   }

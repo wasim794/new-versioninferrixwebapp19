@@ -1,13 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {GradeSettingsMap, GradeSettingsMapModel} from '../../shared/model';
 import {IntStringPairModel} from '../../../core/models';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {JsonDataService} from '../../../core/services';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, ReactiveFormsModule],
+  providers: [JsonDataService, DictionaryService, CommonService],
   selector: 'app-grade-mapping-settings',
   templateUrl: './grade-mapping-settings.component.html',
   styleUrls: []
@@ -27,30 +32,30 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
   public zoneGradeList: FormArray;
   public groupGradeList: FormArray;
 
-  isSaveEnable: boolean;
-  isUpdateEnable: boolean;
-  gradeSettingsMap = {} as GradeSettingsMapModel;
-  jsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
+  isSaveEnable!: boolean;
+  isUpdateEnable!: boolean;
+  gradeSettingsMap: any = {} as GradeSettingsMapModel;
+  jsonData: any = {} as GradeSettingsMap;
+  siteNameMapping!: IntStringPairModel[];
+  buildingNameMapping!: IntStringPairModel[];
+  floorNameMapping!: IntStringPairModel[];
+  roomNameMapping!: IntStringPairModel[];
+  zoneNameMapping!: IntStringPairModel[];
+  groupNameMapping!: IntStringPairModel[];
   saveMsg="Saved Successfully!";
   updateMsg = "Updated Successfully!";
-  siteIndexArray = [];
-  buildingIndexArray = [];
-  floorIndexArray = [];
-  roomIndexArray = [];
-  zoneIndexArray = [];
-  groupIndexArray = [];
+  siteIndexArray: any = [];
+  buildingIndexArray: any = [];
+  floorIndexArray: any = [];
+  roomIndexArray: any = [];
+  zoneIndexArray: any = [];
+  groupIndexArray: any = [];
   UIDICTIONARY:any;
   index = 1;
   readPermission = ['users', 'superadmin'];
   editPermission = ['users', 'superadmin'];
-  gradeError = [];
-  public messageError: boolean;
+  gradeError: any = [];
+  public messageError!: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -265,7 +270,7 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
     }
   }
 
-  createGradeMappingSetting(index): FormGroup {
+  createGradeMappingSetting(index: any): FormGroup {
     return this.fb.group({
       key: [index],
       value: [null],
@@ -274,7 +279,7 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
 
   showSiteMappingProperties() {
     if (this.gradeSettingsMap[0].jsonData.siteNameMapping) {
-      this.siteNameMapping = this.gradeSettingsMap[0].jsonData.siteNameMapping.sort((n1, n2) => n1.key - n2.key);
+      this.siteNameMapping = this.gradeSettingsMap[0].jsonData.siteNameMapping.sort((n1: any, n2: any) => n1.key - n2.key);
       if (this.siteNameMapping.length) {
         while (this.siteGradeList.length !== 0) {
           this.siteGradeList.removeAt(0);
@@ -289,7 +294,7 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
 
   showBuildingMappingProperties() {
     if (this.gradeSettingsMap[0].jsonData.buildingNameMapping) {
-      this.buildingNameMapping = this.gradeSettingsMap[0].jsonData.buildingNameMapping.sort((n1, n2) => n1.key - n2.key);
+      this.buildingNameMapping = this.gradeSettingsMap[0].jsonData.buildingNameMapping.sort((n1: any, n2: any) => n1.key - n2.key);
       if (this.buildingNameMapping.length) {
         while (this.buildingGradeList.length !== 0) {
           this.buildingGradeList.removeAt(0);
@@ -304,7 +309,7 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
 
   showFloorMappingProperties() {
     if (this.gradeSettingsMap[0].jsonData.floorNameMapping) {
-      this.floorNameMapping = this.gradeSettingsMap[0].jsonData.floorNameMapping.sort((n1, n2) => n1.key - n2.key);
+      this.floorNameMapping = this.gradeSettingsMap[0].jsonData.floorNameMapping.sort((n1: any, n2: any) => n1.key - n2.key);
       if (this.floorNameMapping.length) {
         while (this.floorGradeList.length !== 0) {
           this.floorGradeList.removeAt(0);
@@ -319,7 +324,7 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
 
   showRoomMappingProperties() {
     if (this.gradeSettingsMap[0].jsonData.roomNameMapping) {
-      this.roomNameMapping = this.gradeSettingsMap[0].jsonData.roomNameMapping.sort((n1, n2) => n1.key - n2.key);
+      this.roomNameMapping = this.gradeSettingsMap[0].jsonData.roomNameMapping.sort((n1: any, n2: any) => n1.key - n2.key);
       if (this.roomNameMapping.length) {
         while (this.roomGradeList.length !== 0) {
           this.roomGradeList.removeAt(0);
@@ -334,7 +339,7 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
 
   showZoneMappingProperties() {
     if (this.gradeSettingsMap[0].jsonData.zoneNameMapping) {
-      this.zoneNameMapping = this.gradeSettingsMap[0].jsonData.zoneNameMapping.sort((n1, n2) => n1.key - n2.key);
+      this.zoneNameMapping = this.gradeSettingsMap[0].jsonData.zoneNameMapping.sort((n1: any, n2: any) => n1.key - n2.key);
       if (this.zoneNameMapping.length) {
         while (this.zoneGradeList.length !== 0) {
           this.zoneGradeList.removeAt(0);
@@ -349,7 +354,7 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
 
   showGroupMappingProperties() {
     if (this.gradeSettingsMap[0].jsonData.groupNameMapping) {
-      this.groupNameMapping = this.gradeSettingsMap[0].jsonData.groupNameMapping.sort((n1, n2) => n1.key - n2.key);
+      this.groupNameMapping = this.gradeSettingsMap[0].jsonData.groupNameMapping.sort((n1: any, n2: any) => n1.key - n2.key);
       if (this.groupNameMapping.length) {
         while (this.groupGradeList.length !== 0) {
           this.groupGradeList.removeAt(0);
@@ -369,42 +374,42 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
     });
   }
 
-  removeSiteGrade(index) {
+  removeSiteGrade(index: any) {
     const model = this.siteGradeList.at(index).value;
     this.siteGradeList.removeAt(index);
     const idx = this.siteIndexArray.indexOf(model.key);
     this.siteIndexArray.splice(idx, 1);
   }
 
-  removeBuildingGrade(index) {
+  removeBuildingGrade(index: any) {
     const model = this.buildingGradeList.at(index).value;
     this.buildingGradeList.removeAt(index);
     const idx = this.buildingIndexArray.indexOf(model.key);
     this.buildingIndexArray.splice(idx, 1);
   }
 
-  removeFloorGrade(index) {
+  removeFloorGrade(index: any) {
     const model = this.floorGradeList.at(index).value;
     this.floorGradeList.removeAt(index);
     const idx = this.floorIndexArray.indexOf(model.key);
     this.floorIndexArray.splice(idx, 1);
   }
 
-  removeRoomGrade(index) {
+  removeRoomGrade(index: any) {
     const model = this.roomGradeList.at(index).value;
     this.roomGradeList.removeAt(index);
     const idx = this.roomIndexArray.indexOf(model.key);
     this.roomIndexArray.splice(idx, 1);
   }
 
-  removeZoneGrade(index) {
+  removeZoneGrade(index: any) {
     const model = this.zoneGradeList.at(index).value;
     this.zoneGradeList.removeAt(index);
     const idx = this.zoneIndexArray.indexOf(model.key);
     this.zoneIndexArray.splice(idx, 1);
   }
 
-  removeGroupGrade(index) {
+  removeGroupGrade(index: any) {
     const model = this.groupGradeList.at(index).value;
     this.groupGradeList.removeAt(index);
     const idx = this.groupIndexArray.indexOf(model.key);

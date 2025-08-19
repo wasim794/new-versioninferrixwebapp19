@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {EnvService} from "../../../core/services";
 import {HttpClient} from "@angular/common/http";
 
@@ -11,7 +11,7 @@ export class ExcelImportService {
 
   constructor(private http: HttpClient, private env: EnvService) {}
 
-  ledControllerImportExcelData(excelFile): Observable<any> {
+  ledControllerImportExcelData(excelFile: any): Observable<any> {
     return this.http.post(`${this.env.apiUrl}${this.ledControllerDataImport}`, excelFile);
   }
 }

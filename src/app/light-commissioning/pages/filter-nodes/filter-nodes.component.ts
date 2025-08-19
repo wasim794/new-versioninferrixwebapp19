@@ -3,10 +3,15 @@ import {NodeService} from '../../shared/service';
 import {NodesFilterModel, NodesModel} from '../../shared/model';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {JsonDataModel} from '../../../common/model/jsonDataModel';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [NodeService, DictionaryService],
   selector: 'app-filter-nodes',
   templateUrl: './filter-nodes.component.html',
   styleUrls: []
@@ -15,10 +20,10 @@ export class FilterNodesComponent extends UnsubscribeOnDestroyAdapter implements
 
   nodesFilter = new NodesFilterModel();
   nodesModel = {} as NodesModel;
-  nodeTypes = [];
-  disableClose: boolean;
-  profiles: JsonDataModel[];
-  @Input() commissioned: boolean;
+  nodeTypes: any = [];
+  disableClose!: boolean;
+  profiles!: JsonDataModel[];
+  @Input() commissioned!: boolean;
   public UIDICTIONARY:any;
 
   constructor(private nodeService: NodeService, public dictionaryService: DictionaryService, private commonService: CommonService) {
@@ -45,7 +50,7 @@ export class FilterNodesComponent extends UnsubscribeOnDestroyAdapter implements
     }));
   }
 
-  setNodeTypeToModel(event, nodeType) {
+  setNodeTypeToModel(event: any, nodeType: any) {
     if (event.source.selected) {
       this.nodesModel.definition = nodeType;
     }

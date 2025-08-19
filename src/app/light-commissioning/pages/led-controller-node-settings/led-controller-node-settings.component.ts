@@ -19,8 +19,13 @@ import {HoldTimeOneComponent} from '../../components/hold-time-one/hold-time-one
 import {HoldTimeTwoComponent} from '../../components/hold-time-two/hold-time-two.component';
 import {Common} from '../../shared';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, BandSettingsComponent, LuxFormComponent, PirFormComponent, SwitchFormComponent, HoldTimeOneComponent, HoldTimeTwoComponent],
+  providers: [NodeService, DictionaryService],
   selector: 'app-edit-commission',
   templateUrl: './led-controller-node-settings.component.html',
   styleUrls: []
@@ -32,29 +37,29 @@ export class ReadCommissionedNodeSettingsComponent extends UnsubscribeOnDestroyA
   isEnoceanRelay = false;
   isBandChecked = false;
   controllerNodeModel = {} as ControllerNodeModel;
-  profile = {} as ControllerProfile;
-  nodeSettings = {} as NodeSettingsModel;
-  pirSettings = {} as PirSettingsModel;
-  luxSettings = {} as LuxSettingsModel;
-  switchSettings = {} as SwitchSettingsModel;
-  bandSettings = {} as BandSettingsModel;
-  gradeSettingsMap = {} as GradeSettingsMapModel[];
-  gradeJsonData = {} as GradeSettingsMap;
-  siteNameMapping: IntStringPairModel[];
-  buildingNameMapping: IntStringPairModel[];
-  floorNameMapping: IntStringPairModel[];
-  roomNameMapping: IntStringPairModel[];
-  zoneNameMapping: IntStringPairModel[];
-  groupNameMapping: IntStringPairModel[];
+  profile: any = {} as ControllerProfile;
+  nodeSettings: any = {} as NodeSettingsModel;
+  pirSettings: any = {} as PirSettingsModel;
+  luxSettings: any = {} as LuxSettingsModel;
+  switchSettings: any = {} as SwitchSettingsModel;
+  bandSettings: any = {} as BandSettingsModel;
+  gradeSettingsMap: any = {} as GradeSettingsMapModel[];
+  gradeJsonData: any = {} as GradeSettingsMap;
+  siteNameMapping!: IntStringPairModel[];
+  buildingNameMapping!: IntStringPairModel[];
+  floorNameMapping!: IntStringPairModel[];
+  roomNameMapping!: IntStringPairModel[];
+  zoneNameMapping!: IntStringPairModel[];
+  groupNameMapping!: IntStringPairModel[];
   isEnableHoldTimeOne = false;
   isEnableHoldTimeTwo = false;
   nodeTypes = Common.nodeTypes;
-  @ViewChild(PirFormComponent) pirFormComponent: PirFormComponent;
-  @ViewChild(LuxFormComponent) luxFormComponent: LuxFormComponent;
-  @ViewChild(SwitchFormComponent) switchFormComponent: SwitchFormComponent;
-  @ViewChild(BandSettingsComponent) bandSettingsComponent: BandSettingsComponent;
-  @ViewChild(HoldTimeOneComponent) holdTimeOneComponent: HoldTimeOneComponent;
-  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent: HoldTimeTwoComponent;
+  @ViewChild(PirFormComponent) pirFormComponent!: PirFormComponent;
+  @ViewChild(LuxFormComponent) luxFormComponent!: LuxFormComponent;
+  @ViewChild(SwitchFormComponent) switchFormComponent!: SwitchFormComponent;
+  @ViewChild(BandSettingsComponent) bandSettingsComponent!: BandSettingsComponent;
+  @ViewChild(HoldTimeOneComponent) holdTimeOneComponent!: HoldTimeOneComponent;
+  @ViewChild(HoldTimeTwoComponent) holdTimeTwoComponent!: HoldTimeTwoComponent;
   nodeXid: any;
   UIDICTIONARY:any;
 

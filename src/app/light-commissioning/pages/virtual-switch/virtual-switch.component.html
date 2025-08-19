@@ -8,7 +8,7 @@
       </mat-icon>
       <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.heading'): ""}}</span>
       <div class="containerInfo">
-        <mat-form-field appearance="standard">
+        <mat-form-field>
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
           <input matInput (keyup.enter)="applyFilter($event)">
           <mat-icon (click)="applyFilter($event)" class="Input_search"  matSuffix>search</mat-icon>

@@ -5,27 +5,32 @@ import {VirtualSwitchModel} from '../../shared/model';
 import {MatDialog} from '@angular/material/dialog';
 import {VirtualSwitchFormComponent} from './virtual-switch-form/virtual-switch-form.component';
 import {SettingSwitchFormComponent} from './setting-switch-form/setting-switch-form.component';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, VirtualSwitchFormComponent, SettingSwitchFormComponent],
+  providers: [VirtualSwitchService, DictionaryService],
   selector: 'app-virtual-switch',
   templateUrl: './virtual-switch.component.html',
   styleUrls: []
 })
 export class VirtualSwitchComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  dimValue: number;
-  status: boolean;
+  dimValue!: number;
+  status!: boolean;
   limit = 8;
   offset = 0;
   pageSizeOptions: number[] = [8, 16, 20];
   deleteMsg = "Delete Successfully";
-  @ViewChild('virtualSwitch') public virtualSwitch: MatSidenav;
-  @ViewChild('settingvirtualSwitch') public settingvirtualSwitch: MatSidenav;
-  @ViewChild(VirtualSwitchFormComponent) private virtualSwitchForm: VirtualSwitchFormComponent;
+  @ViewChild('virtualSwitch') public virtualSwitch!: MatSidenav;
+  @ViewChild('settingvirtualSwitch') public settingvirtualSwitch!: MatSidenav;
+  @ViewChild(VirtualSwitchFormComponent) private virtualSwitchForm!: VirtualSwitchFormComponent;
   tabIndex = 0;
-  virtualSwitches: VirtualSwitchModel[];
+  virtualSwitches!: VirtualSwitchModel[];
   public UIDICTIONARY:any;
 
   constructor(public service: VirtualSwitchService,
@@ -59,7 +64,7 @@ export class VirtualSwitchComponent extends UnsubscribeOnDestroyAdapter implemen
     this.getVirtualSwitches(param);
   }
 
-  getNext(event) {
+  getNext(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = 'limit(' + limit + ',' + this.offset + ')';
@@ -81,7 +86,7 @@ export class VirtualSwitchComponent extends UnsubscribeOnDestroyAdapter implemen
     this.getVirtualSwitches(param);
   }
 
-  delete(xid: string, name) {
+  delete(xid: any, name: any) {
     this._commonService.openConfirmDialog('Are you sure , you want to delete.....? ', name).afterClosed().subscribe(response => {
       if (response) {
         this.subs.add(this.service.delete(xid).subscribe(data => {
@@ -99,7 +104,7 @@ export class VirtualSwitchComponent extends UnsubscribeOnDestroyAdapter implemen
     });
   }
 
-  setting(virtualSwitch) {
+  setting(virtualSwitch: any) {
     this.dialog.open(SettingSwitchFormComponent, {
       height: '300px',
       width: '320px',

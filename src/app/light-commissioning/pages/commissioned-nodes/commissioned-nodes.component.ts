@@ -1,6 +1,6 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
-import {JsonDataModel} from 'src/app/common/model/jsonDataModel';
+import {JsonDataModel} from '../../../common/model/jsonDataModel';
 import {
   AutoModeModel,
   ControllerNodeModel,
@@ -8,7 +8,7 @@ import {
   NodeStatsModel,
   UserControlModel
 } from '../../shared/model';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../services/common.service';
 import {NodeService, ProfileService} from '../../shared/service';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {FilterNodesComponent} from '../filter-nodes/filter-nodes.component';
@@ -24,50 +24,55 @@ import {
 } from '../relay-controller-node-setting/relay-controller-node-setting.component';
 import {MatPaginator} from "@angular/material/paginator";
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, FilterNodesComponent],
+  providers: [NodeService, ProfileService, DictionaryService],
   selector: 'app-tab-commissioning',
   templateUrl: './commissioned-nodes.component.html',
   styleUrls: []
 })
 
 export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  @ViewChild('commissindrawer') public profileSidebar: MatSidenav;
-  @ViewChild('editcommissindrawer') public profileEditSidebar: MatSidenav;
-  @ViewChild('filterSidebar') public filterSidebar: MatSidenav;
-  @ViewChild('dynamicLoadComponent', {read: ViewContainerRef}) entry: ViewContainerRef;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('commissindrawer') public profileSidebar!: MatSidenav;
+  @ViewChild('editcommissindrawer') public profileEditSidebar!: MatSidenav;
+  @ViewChild('filterSidebar') public filterSidebar!: MatSidenav;
+  @ViewChild('dynamicLoadComponent', {read: ViewContainerRef}) entry!: ViewContainerRef;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   componentRef: any;
   commissioned = true;
-  nodes: ControllerNodeModel[];
+  nodes!: ControllerNodeModel[];
   nodeModel = {} as ControllerNodeModel;
-  profiles: JsonDataModel[];
+  profiles!: JsonDataModel[];
   userControlModel = {} as UserControlModel;
   nodesFilter = new NodesFilterModel();
   nodesModels = {} as NodesModel;
   searchDiscovered: any;
   sliderValue: any;
   resetSuccessMsg = 'Node Reset Successfully!';
-  profileXid: string;
+  profileXid!: string;
   applySuccessMessage = 'Profile Applied Successfully';
   pirIntrruptSuccessMessage = 'Successfully';
-  totalNodes: number;
+  totalNodes!: number;
   limit = 10;
   offset = 0;
   pageSizeOptions: number[] = [8, 12, 16, 20];
   displayedColumns: string[] = ['S.No.', 'Node Type', 'Address', 'Status', 'Profiles', 'Off/On', 'Dimming', 'Auto', 'Actions'];
-  checked: boolean;
+  checked!: boolean;
   status = false;
   sortingType = 'default';
-  sortingProperty: string;
-  offsite: boolean;
-  nodeStats: NodeStatsModel;
+  sortingProperty!: string;
+  offsite!: boolean;
+  nodeStats!: NodeStatsModel;
   cardOneCss: any;
   cardTwoCss: any;
   cardThreeCss: any;
   cardFourCss: any;
   cardFiveCss: any;
-  isAutoMode: boolean;
+  isAutoMode!: boolean;
   private disableMsg="Automode Disable";
   public UIDICTIONARY:any;
 
@@ -90,7 +95,7 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
 
   }
 
-  componentLoaded(componentType) {
+  componentLoaded(componentType: any) {
     this.entry.clear();
     if (componentType === 'LIGHT_CONTROLLER_V4.NODE') {
       const factory = this.resolver.resolveComponentFactory(ReadCommissionedNodeSettingsComponent);
@@ -126,15 +131,15 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     this.staticColor();
   }
 
-  getNodes(limit, offSet) {
-    this.subs.add(this.nodeService.getNodes(limit, offSet, this.commissioned, this.sortingType, this.sortingProperty).subscribe(data => {
+  getNodes(limit: any, offSet: any) {
+    this.subs.add(this.nodeService.getNodes(limit, offSet, this.commissioned, this.sortingType, this.sortingProperty).subscribe((data: any) => {
       this.nodes = data.items;
       this.totalNodes = data?.total ?? 0;
     }));
   }
 
 
-  filterDiscovered(event) {
+  filterDiscovered(event: any) {
     if (this.searchDiscovered) {
       const encodedSearchValue = encodeURIComponent(this.searchDiscovered);
       this.nodesModels.address = encodedSearchValue;
@@ -166,7 +171,7 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     }));
   }
 
-  nodeEnableDisable(node) {
+  nodeEnableDisable(node: any) {
     this.userControlModel.address = node.address;
     if (node.onOff) {
       this.userControlModel.dimValue = 100;
@@ -185,7 +190,7 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     }));
   }
 
-  nodeDim(event, node) {
+  nodeDim(event: any, node: any) {
     this.userControlModel.address = node.address;
     this.userControlModel.dimValue = event.value;
     node.onOff = this.userControlModel.dimValue > 0;
@@ -195,7 +200,7 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     }));
   }
 
-  readNode(node) {
+  readNode(node: any) {
     this.commonService.openConfirmDialog('Are you want to sure',
       node.address).afterClosed().subscribe(response => {
       if (response) {
@@ -207,13 +212,14 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
       this.profileSidebar.open();
       this.componentLoaded(node.nodeType);
     }));
+    return true;
       } else {
         return false;
       }
     });
   }
 
-  resetNode(node) {
+  resetNode(node: any) {
     this.commonService.openConfirmDialog('Are you sure , you want to',
       node.address).afterClosed().subscribe(response => {
       if (response) {
@@ -222,17 +228,18 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
       this.getNodes(this.limit, this.offset);
       this.getNodeStats();
     }));
+    return true;
       } else {
         return false;
       }
     });
   }
 
-  profileChange(event) {
+  profileChange(event: any) {
     this.profileXid = event;
   }
 
-  applyProfileToNode(node) {
+  applyProfileToNode(node: any) {
     this.commonService.openConfirmDialog('Are you sure you want to Apply',
       node.address).afterClosed().subscribe(response => {
       if (response) {
@@ -240,13 +247,14 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
       this.commonService.notification(this.applySuccessMessage);
       this.getNodes(this.limit, this.offset);
     }));
+    return true;
       } else {
         return false;
       }
     });
   }
 
-  pirInterrupt(enableDisable,node){
+  pirInterrupt(enableDisable: any, node: any){
     let enableMsg;
     enableDisable===true? enableMsg = 'enabled':enableMsg = 'disabled';
     this.subs.add(this.nodeService.enableDisablePir(enableDisable, node.xid).subscribe(data=>{
@@ -255,20 +263,21 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     }));
 
   }
-  readCommission(node) {
+  readCommission(node: any) {
     this.commonService.openConfirmDialog('Are you sure , you want to',
       node.address).afterClosed().subscribe(response => {
       if (response) {
     this.subs.add(this.nodeService.getNodeSettings(node.xid).subscribe(data => {
       this.commonService.notification('Node settings read request sent!');
     }));
+    return true;
       } else {
         return false;
       }
     });
   }
 
-  getNext(event) {
+  getNext(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     this.getNodes(limit, this.offset);
@@ -292,7 +301,7 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     this.filterSidebar.close();
   }
 
-  sortingCommissionedNodes(event) {
+  sortingCommissionedNodes(event: any) {
     if (event.direction !== '') {
       this.sortingType = event.direction;
       this.sortingProperty = event.active.trim().toLowerCase();
@@ -314,13 +323,14 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     }));
   }
 
-  pushProfileToNode(element) {
+  pushProfileToNode(element: any) {
     this.commonService.openConfirmDialog('Are you sure , you want to',
       element.address).afterClosed().subscribe(response => {
       if (response) {
     this.subs.add(this.nodeService.pushProfileToNode(element.xid).subscribe((data) => {
       this.commonService.notification(data.responseMessage);
     }));
+    return true;
       } else {
         this.getNodes(this.limit, this.offset);
         return false;
@@ -328,13 +338,14 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     });
   }
 
-  deleteNode(element) {
+  deleteNode(element: any) {
     this.commonService.openConfirmDialog('Are you sure , you want to delete.....?',
       element.address).afterClosed().subscribe(response => {
       if (response) {
     this.subs.add(this.nodeService.delete(element.xid).subscribe((data) => {
       this.commonService.notification('Node ' + data.name + ' is deleted');
     }));
+    return true;
       } else {
         return false;
       }
@@ -349,7 +360,7 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     this.cardFiveCss = {'background': 'darkslategrey', 'color': '#ffffff'};
   }
 
-  autoMode(element) {
+  autoMode(element: any) {
     const model = new AutoModeModel();
     model.enable = this.isAutoMode;
     model.address = element.address;

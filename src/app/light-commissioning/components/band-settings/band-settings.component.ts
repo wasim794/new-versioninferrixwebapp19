@@ -2,8 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {BandSettingsModel} from '../../shared/model';
 import {ProfileService} from '../../shared/service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module/mat-module.module';
 
 @Component({
+  standalone: true,
+  providers: [ProfileService, DictionaryService],
+  imports: [CommonModule, MatModuleModule],
   selector: 'app-band-settings',
   templateUrl: './band-settings.component.html',
   styleUrls: []

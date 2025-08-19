@@ -31,7 +31,7 @@ export class ProfileService {
   nodeSettings = {} as NodeSettingsModel;
   retransmissionSettings = {} as RetransmissionSettingsModel
   profileXid: any;
-  private _total: number;
+  private _total!: number;
 
   private updateSubject = new Subject<any>();
   private saveSubject = new Subject<any>();
@@ -60,7 +60,7 @@ export class ProfileService {
     return throwError('Some internal issue with making API Call ' + errorMessage);
   }
 
-  query(profileFilter: ProfileFilterModel): Observable<any> {
+  query(profileFilter: any): Observable<any> {
     let query = '?';
     if (Object.keys(profileFilter.filters).length < 1) {
       query = query + 'eq(';
@@ -102,7 +102,7 @@ export class ProfileService {
     return this.api.get(`${this.profileTypeUrl}`);
   }
 
-  setUpdateProfile(data) {
+  setUpdateProfile(data: any) {
     this.updateSubject.next(data);
   }
 
@@ -110,7 +110,7 @@ export class ProfileService {
     return this.updateSubject.asObservable();
   }
 
-  setSaveProfile(data) {
+  setSaveProfile(data: any) {
     this.saveSubject.next(data);
   }
 
@@ -130,7 +130,7 @@ export class ProfileService {
     return this.api.delete(`${this.profileUrl}/${profileXid}`);
   }
 
-  setProfileXid(xid) {
+  setProfileXid(xid: any) {
     this.profileXid = xid;
   }
 
@@ -139,48 +139,48 @@ export class ProfileService {
     return this.api.get(`${this.profileUrl}?and(or(eq(definition,LIGHT_CONTROLLER.PROFILE),eq(definition,DIGITAL_INPUT_CONTROLLER.PROFILE),eq(definition,RELAY_CONTROLLER.PROFILE),eq(definition,WRIST_BAND.PROFILE)),limit(${limit},${offset}))`);
   }
 
-  saveProfile(profileObject) {
+  saveProfile(profileObject: any): Observable<any> {
     return this.api.post(`${this.profileUrl}`, profileObject);
   }
 
-  updateProfile(updateProfileObject) {
+  updateProfile(updateProfileObject: any): Observable<any> {
     const xid = updateProfileObject.xid;
     return this.api.put(`${this.profileUrl}/${xid}`, updateProfileObject);
   }
 
-  setPirSettingModel(pirSetting) {
+  setPirSettingModel(pirSetting: any) {
     this.pirModel = pirSetting;
   }
 
-  setHoldTimeOneModel(nodeSetting) {
+  setHoldTimeOneModel(nodeSetting: any) {
     this.nodeSettings = nodeSetting;
   }
 
-  setHoldTimeTwoModel(nodeSetting) {
+  setHoldTimeTwoModel(nodeSetting: any) {
     this.nodeSettings = nodeSetting;
   }
 
-  setLuxSettingModel(luxSetting) {
+  setLuxSettingModel(luxSetting: any) {
     this.luxModel = luxSetting;
   }
 
-  setSwitchSettingModel(switchSettings) {
+  setSwitchSettingModel(switchSettings: any) {
     this.switchModel = switchSettings;
   }
 
-  setBandSettingModel(bandSettings) {
+  setBandSettingModel(bandSettings: any) {
     this.bandModel = bandSettings;
   }
 
-  setGpioSettingModel(gpioSetting) {
+  setGpioSettingModel(gpioSetting: any) {
     this.gpioModel = gpioSetting;
   }
 
-  setRetransmissionModel(retransmissionSettings) {
+  setRetransmissionModel(retransmissionSettings: any) {
     this.retransmissionSettings = retransmissionSettings;
   }
 
-  setProfileFilterSearch(data) {
+  setProfileFilterSearch(data: any) {
     this.filterResponse.next(data);
   }
 

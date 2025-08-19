@@ -37,7 +37,7 @@
       </span>
       <!-- Dim start        -->
       <span class="spanPadding" [hidden]="!dimValueRadio">
-        <mat-slider class="matSliderAll marginLeft-10" [max]="100" [min]="0" [step]="10" [thumbLabel]="true" [(ngModel)]="virtualControlModel.dimValue" name="dimValue">
+        <mat-slider class="matSliderAll marginLeft-10" [max]="100" [min]="0" [step]="10" [(ngModel)]="virtualControlModel.dimValue" name="dimValue">
         </mat-slider>
         <mat-slide-toggle [(ngModel)]="virtualControlModel.autoMode" class="side_form_toggle toggle_change" name="autoMode">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.echo.off') : ""}}

@@ -2,25 +2,30 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {VirtualSwitchControlModel} from '../../../shared/model';
 import {VirtualSwitchService} from '../../../shared/service';
-import {CommonService} from 'src/app/services/common.service';
+import {CommonService} from '../../../../services/common.service';
 import {DictionaryService} from "../../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [VirtualSwitchService, DictionaryService],
   selector: 'app-setting-switch-form',
   templateUrl: './setting-switch-form.component.html',
   styleUrls: []
 })
 export class SettingSwitchFormComponent implements OnInit {
-  onOffValue: boolean;
-  xid: string;
-  settingError = [];
-  errorMsg: string;
+  onOffValue!: boolean;
+  xid!: string;
+  settingError: any = [];
+  errorMsg!: string;
   saveSuccessMsg = 'Command Sent';
   public onOffValueRadio = true;
   public dimValueRadio = false;
   public autoValueRadio = false;
-  virtualControlModel: VirtualSwitchControlModel;
-  public messageError: boolean;
+  virtualControlModel!: VirtualSwitchControlModel;
+  public messageError!: boolean;
   public UIDICTIONARY:any;
 
   constructor(private service: VirtualSwitchService,
@@ -49,7 +54,7 @@ export class SettingSwitchFormComponent implements OnInit {
     }
   }
 
-  selectTab(selected): void {
+  selectTab(selected: any): void {
     if (selected === '1') {
       this.onOffValues();
     } else if (selected === '2') {

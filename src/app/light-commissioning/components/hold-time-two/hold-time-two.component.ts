@@ -2,8 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {NodeSettingsModel} from '../../shared/model';
 import {ProfileService} from '../../shared/service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-hold-time-two',
   templateUrl: './hold-time-two.component.html',
   styleUrls: []

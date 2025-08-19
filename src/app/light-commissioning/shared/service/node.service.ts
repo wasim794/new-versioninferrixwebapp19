@@ -25,7 +25,7 @@ export class NodeService {
   nodeStatsUrl = '/v2/light-commissioning/node/stats';
   pirEnableDisable = '/v2/light-commissioning/pir-interrupt/';
 
-  isNodeEdit: boolean;
+  isNodeEdit!: boolean;
   editNode = {} as AbstractNodeModel;
   private filterResponse = new Subject<any>();
   nodeXid: any;
@@ -35,26 +35,26 @@ export class NodeService {
   ) {
   }
 
-  setNodeXid(xid) {
+  setNodeXid(xid: any) {
     this.nodeXid = xid;
   }
 
   applyProfileToNode(xid: any, profileXid: any): Observable<any> {
-    return this.api.put(`${this.profileToNode}/${xid}/${profileXid}`, null);
+    return this.api.put(`${this.profileToNode}/${xid}/${profileXid}`, undefined);
   }
 
-  setNodeAfterEdit(nodes) {
+  setNodeAfterEdit(nodes: any) {
     this.editNode = nodes;
   }
 
-  setEdit(isEdit) {
+  setEdit(isEdit: any) {
     this.isNodeEdit = isEdit;
   }
 
 
 
 
-  getNodes(limit: any, offSet: any, commissioned: boolean, sortingType: string, sortProperty: string): Observable<any> {
+  getNodes(limit: any, offSet: any, commissioned: boolean, sortingType: string, sortProperty: string): any {
     if (sortingType === 'asc') {
       const url = `${this.node}?and(limit(${limit},${offSet}),commissioned=${commissioned},sort(${sortProperty}))`;
       return this.api.get(url);
@@ -65,9 +65,10 @@ export class NodeService {
       const url = `${this.node}?and(limit(${limit},${offSet}),commissioned=${commissioned})`;
       return this.api.get(url);
     }
+    
   }
 
-  query(filterModel: NodesFilterModel, commissioned): Observable<any> {
+  query(filterModel: any, commissioned: any): Observable<any> {
     let query = '?';
     if (Object.keys(filterModel.filters).length < 1) {
       query = query + 'eq(';
@@ -127,7 +128,7 @@ export class NodeService {
     return this.api.get(url);
   }
 
-  setFilterSearch(data) {
+  setFilterSearch(data: any) {
     this.filterResponse.next(data);
   }
 

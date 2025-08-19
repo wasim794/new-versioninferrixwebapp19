@@ -20,3 +20,4 @@ export * from './publisher.service';
 export * from './event-types.service';
 export * from './event-handler.service';
 export * from './api.service';
+export * from './json-data.service';

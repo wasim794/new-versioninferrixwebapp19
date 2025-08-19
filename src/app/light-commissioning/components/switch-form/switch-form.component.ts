@@ -1,18 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl, FormArray, FormBuilder} from '@angular/forms';
+import {FormGroup, FormControl, FormArray, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {SwitchSettingsModel, SwitchDataModel} from '../../shared/model';
 import {ProfileService} from '../../shared/service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import {grade_Types} from '../../../common/static-data/static-data';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, SwitchFormComponent, ReactiveFormsModule],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-switch-form',
   templateUrl: './switch-form.component.html',
   styleUrls: []
 })
 export class SwitchFormComponent implements OnInit {
   switchSettings = {} as SwitchSettingsModel;
-  switchDataModels: SwitchDataModel[];
+  switchDataModels!: SwitchDataModel[];
   SwitchData = {} as SwitchDataModel;
   public form: FormGroup;
   public switchList: FormArray;
@@ -49,7 +54,7 @@ export class SwitchFormComponent implements OnInit {
   }
 
   // remove switch from group
-  removeSwitch(index) {
+  removeSwitch(index: any) {
     this.switchList.removeAt(index);
   }
 

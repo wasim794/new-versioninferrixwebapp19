@@ -3,8 +3,13 @@ import {LuxSettingsModel} from '../../shared/model';
 import {ProfileService} from '../../shared/service';
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import {grade_Types} from "../../../common/static-data/static-data";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [ProfileService, DictionaryService],
   selector: 'app-lux-form',
   templateUrl: './lux-form.component.html',
   styleUrls: []
@@ -27,11 +32,11 @@ export class LuxFormComponent implements OnInit {
      });
   }
 
-  enableAddressField(enable) {
+  enableAddressField(enable:any) {
     this.enableAddress = enable;
   }
 
-  enableHoldTimeOne(enable) {
+  enableHoldTimeOne(enable: any) {
     this.isHoldTimeOne = enable;
   }
 

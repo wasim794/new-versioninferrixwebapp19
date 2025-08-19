@@ -7,9 +7,9 @@
     </mat-card-title>
     <span class="spacer"></span>
     <button mat-raised-button class="Top_Save_Button bacnetUpdate topRightButton" (click)="saveProfile() " *ngIf="!isEdit"
-            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) :"" }}</button>
+            >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) :"" }}</button>
     <button mat-raised-button class="Top_Update_Button bacnetUpdate relayButtonAlign" (click)="updateProfile()" *ngIf="isEdit"
-            align="end">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+            >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
   </mat-toolbar>
 </mat-card>
 <mat-card-content class="form_cards form_edit_card matAllCardContents">
