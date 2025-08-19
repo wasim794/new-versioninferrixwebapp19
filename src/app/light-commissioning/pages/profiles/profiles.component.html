@@ -6,8 +6,8 @@
         <i class="fa fa-chevron-left"></i>
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.heading.profileSetting'): ""}}</span>
-      <div class="leftDropdowns">
-        <mat-form-field class="field_margin">
+      <div class="leftDropdowns mt-10">
+        <mat-form-field class="field_margin mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.selectToAddProfile'): ""}}</mat-label>
           <mat-select>
             <mat-option *ngFor="let profileType of profileTypes" [value]="profileType"
@@ -16,7 +16,7 @@
         </mat-form-field>
       </div>
       <div class="containerInfo">
-        <mat-form-field>
+        <mat-form-field class="mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
           <input (keyup)="filterPublisher($event)" [(ngModel)]="searches" matInput name="searchPublisher">
           <mat-icon class="Input_search" (click)="filterPublisher($event)" matSuffix>search</mat-icon>
@@ -33,19 +33,19 @@
      fxLayoutAlign="left">
   <div fxFlex="100%" class="card_margin"
       >
-    <table  mat-table [dataSource]="dataSources" class="mat-elevation-z8"
+    <table border="1"  mat-table [dataSource]="dataSources" class="mat-elevation-z8 dataSources"
             matSort (matSortChange)="sortingCommissionedNodes($event)">
 
       <!-- Checkbox Column -->
 
 
       <ng-container  matColumnDef="select">
-        <th  mat-header-cell *matHeaderCellDef>
+        <th  mat-header-cell *matHeaderCellDef class="perticularHeader">
           <mat-checkbox class="containerAlign" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()">
           </mat-checkbox>
         </th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" class="perticularHeader">
           <mat-checkbox class="containerAlign" (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
                         [checked]="isChecked(element)">
           </mat-checkbox>
@@ -54,19 +54,19 @@
 
       <!-- Position Column -->
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'):""}}</th>
-        <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}} </td>
+        <th mat-header-cell *matHeaderCellDef class="perticularHeader"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'):""}}</th>
+        <td mat-cell *matCellDef="let element; let i = index;" class="perticularHeader">{{i + 1}} </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container  matColumnDef="name">
-        <th style="width: 60%" mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'):""}} </th>
-        <td style="width: 60%"  mat-cell *matCellDef="let element" (click)="showProfileDetail(element)" > {{element.name}} </td>
+        <th  mat-header-cell *matHeaderCellDef class="perticularHeader"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'):""}} </th>
+        <td  class="perticularHeader"  mat-cell *matCellDef="let element" (click)="showProfileDetail(element)" > {{element.name}} </td>
       </ng-container>
       <!-- Symbol Column -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
-        <td  mat-cell *matCellDef="let element">
+        <th mat-header-cell *matHeaderCellDef class="perticularHeader"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}} </th>
+        <td  mat-cell *matCellDef="let element" class="perticularHeader">
           <mat-card-actions class="mat_right_icons iconAlignItem">
 
             <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"

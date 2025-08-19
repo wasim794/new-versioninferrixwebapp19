@@ -2469,8 +2469,8 @@ left: 90px;
   left: auto;
   right: 35%;
   font-weight: bold;
-  margin-top: -12px;
-  background: #ffffff;
+  margin-top: -26px;
+  background: #f9f9f9;
   font-size: 15px;
   font-family: "Poppins-Regular";
 }
@@ -7448,8 +7448,8 @@ form{
   left: auto;
   right: 40%;
   font-weight: bold;
-  margin-top: -12px;
-  background: #ffffff;
+  margin-top: -26px;
+  background: #f9f9f9;
   font-size: 15px;
   font-family: "Poppins-Regular";
 }

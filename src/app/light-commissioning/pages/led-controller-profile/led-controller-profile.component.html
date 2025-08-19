@@ -8,11 +8,15 @@
       <small *ngIf="hideProfileTitle">{{controllerProfile.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button (click)="saveProfile()" *ngIf="!isEdit" align="end" class="Top_Save_Button bacnetUpdate topRightButton"
-            mat-raised-button>{{UIDICTIONARY ?
+    <button (click)="saveProfile()" *ngIf="!isEdit" align="end" class="toolbarSaveButton bacnetUpdate saveButton"
+            matfab>
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ?
       (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase):""}}</button>
-    <button (click)="updateProfile()" *ngIf="isEdit" align="end" class="Top_Update_Button bacnetUpdate toolbarUpdateButton"
-            mat-raised-button>{{UIDICTIONARY ?
+    <button (click)="updateProfile()" *ngIf="isEdit" align="end" class="toolbarUpdateButton bacnetUpdate saveButton"
+            mat-raised-button>
+            <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ?
       (UIDICTIONARY.get('ui.core.common.button.update') | uppercase):""}}
     </button>
   </mat-toolbar>

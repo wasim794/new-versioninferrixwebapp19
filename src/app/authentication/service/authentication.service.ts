@@ -29,9 +29,7 @@ export class AuthenticationService {
           this.setToken(result.token);
           return true;
         }),
-        catchError(error => {
-          return throwError(() => error);
-        })
+        catchError(error => throwError(() => error))
       );
   }
 
@@ -58,34 +56,35 @@ export class AuthenticationService {
 
   get loggedIn(): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
-
     const token = this.getToken();
     return !!token && !this.jwtHelper.isTokenExpired(token);
   }
 
   getToken(): string | null {
-    if (isPlatformBrowser(this.platformId)) return null;
-    const token = localStorage.getItem('access_token');
-    return token ? JSON.parse(token) : null;
+    if (!isPlatformBrowser(this.platformId)) return null;
+    return localStorage.getItem('access_token'); // ✅ direct string
   }
 
   private setToken(token: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('access_token', JSON.stringify(token));
-//       this.setTokenRefreshTimer(token);
+      localStorage.setItem('access_token', token); // ✅ no JSON.stringify
+      this.setTokenRefreshTimer(token);
     }
   }
 
-//   private setTokenRefreshTimer(token: string): void {
-//     if (!isPlatformBrowser(this.platformId)) return;
-//
-//     const expiration = this.jwtHelper.getTokenExpirationDate(token);
-//     if (!expiration) return;
-//
-//     const timeout = expiration.getTime() - Date.now() - (60 * 1000); // Refresh 1 minute before expiration
-//
-//     setTimeout(() => {
-//       this.refreshToken().subscribe();
-//     }, timeout);
-//   }
+  private setTokenRefreshTimer(token: string): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const expiration = this.jwtHelper.getTokenExpirationDate(token);
+    if (!expiration) return;
+
+    const timeout = expiration.getTime() - Date.now() - (60 * 1000);
+    if (timeout > 0) {
+      setTimeout(() => {
+        this.refreshToken().subscribe({
+          error: () => this.logout()
+        });
+      }, timeout);
+    }
+  }
 }

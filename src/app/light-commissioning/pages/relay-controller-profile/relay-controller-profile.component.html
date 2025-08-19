@@ -6,10 +6,14 @@
       <small *ngIf="relayControllerProfileTitle">{{relayControllerProfile.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button mat-raised-button class="Top_Save_Button bacnetUpdate topRightButton" (click)="saveProfile() " *ngIf="!isEdit"
-            >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) :"" }}</button>
-    <button mat-raised-button class="Top_Update_Button bacnetUpdate relayButtonAlign" (click)="updateProfile()" *ngIf="isEdit"
-            >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+    <button matfab class="toolbarSaveButton bacnetUpdate saveButton" (click)="saveProfile() " *ngIf="!isEdit"
+            >
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) :"" }}</button>
+    <button matfab class="toolbarUpdateButton bacnetUpdate saveButton" (click)="updateProfile()" *ngIf="isEdit"
+            >
+            <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
   </mat-toolbar>
 </mat-card>
 <mat-card-content class="form_cards form_edit_card matAllCardContents">
@@ -116,7 +120,7 @@
     <mat-divider></mat-divider>
     <p class="height-30 displayBlock">
       <mat-slide-toggle (change)="enableHoldTimeOne($event)" [(ngModel)]="isEnableHoldTimeOne"
-                        class="side_form_toggle toggle_change width-215" name="holdTimeOne">
+                        class="side_form_toggle toggle_change width-235" name="holdTimeOne">
         {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.enableDoubleHoldTime'): ""}}
       </mat-slide-toggle>
     </p>
@@ -125,7 +129,7 @@
         <app-hold-time-one-relay></app-hold-time-one-relay>
       </div>
     </div>
-    <mat-divider></mat-divider>
+    <mat-divider class="marginTop-20"></mat-divider>
     <p>
       <span
         class="profile_headings">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.config.occupancySettings'): ""}}</span>
@@ -142,7 +146,7 @@
       </div>
     </div>
     <span *ngIf="!isEnableHoldTimeOne">
-         <mat-divider></mat-divider>
+         <mat-divider class="marginTop-20"></mat-divider>
          <p>
             <span
               class="profile_headings"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.headings.luxSettings'): ""}}</span>
@@ -178,7 +182,7 @@
         <app-switch-form></app-switch-form>
       </div>
     </div>
-    <mat-divider></mat-divider>
+    <mat-divider class="marginTop-20"></mat-divider>
     <p>
       <span
         class="profile_headings">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.config.bandSettings'): ""}}</span>
