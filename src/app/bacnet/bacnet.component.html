@@ -2,9 +2,8 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
-      </mat-icon>
+   <mat-icon class="allArrowBack" [innerHTML]="commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
+    </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.localDevice'): ""}}</span>
       <div class="containerInfo">
         <mat-form-field class="topSearchBoxes mt-10">

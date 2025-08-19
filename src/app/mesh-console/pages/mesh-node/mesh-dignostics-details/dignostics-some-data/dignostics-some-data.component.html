@@ -1,4 +1,4 @@
-<mat-card class="form_cards modelRemainShow">
+<mat-card class="form_cards modelRemainShow diagnosticsHeader">
   <mat-toolbar
     class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title">
@@ -31,8 +31,7 @@
   </table>
 
 
-
-  <table id="scrollingTable"  class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="bootDataDetails">
+  <table id="scrollingTable"  class="mat-elevation-z8 diagnosticsWidthSize diagnosticTableHeader  scrollTable " *ngIf="bootDataDetails">
     <tr>
       <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.field.role') : ""}}</th>
       <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootCount') : ""}}</th>
@@ -90,7 +89,7 @@
   </table>
 
 
-  <table id="scrollingTable" class="mat-elevation-z8 meshTable diagnosticTableHeader width-100 scrollTable" *ngIf="cbmacDataDetails">
+  <table id="scrollingTable" class="mat-elevation-z8 meshTable diagnosticTableHeader diagnosticsWidthSize scrollTable" *ngIf="cbmacDataDetails">
     <tr>
       <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBroadcastLlMembersPending') : ""}}</th>
       <th>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.cbmacBroadcastLeMembersPending') : ""}}</th>

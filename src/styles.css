@@ -9856,5 +9856,15 @@ mat-drawer.mat-drawer.drawer_sidebar.systemSettingsSidebar.mat-drawer-end.mat-dr
     margin-left: 10px;
 
   }
+
+  .diagnosticsHeader{
+    padding: 10px !important;
+    border-radius: 0px !important;
+   
+  }
+
+  .diagnosticsWidthSize{
+    width: 1100px;
+  }
 /* .................. */
 

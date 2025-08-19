@@ -2,9 +2,8 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
-      </mat-icon>
+      <mat-icon class="allArrowBack" [innerHTML]="_commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
+    </mat-icon>
       <span> {{"Diagnostics Detail"}}</span>
       <div class="containerInfo">
         <span [hidden]="!firstData">
@@ -29,11 +28,11 @@
         <button (click)="showHide('dateFilter')" *ngIf="!filterButton" mat-raised-button class="dateFilter" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.dateFormat').substring(0,4) : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.valueFilter').substring(5,12) : ''}}" color="accent"><i class="material-icons">filter_alt</i></button>
 
         <span [hidden]="!secondData">
-          <mat-form-field>
+          <mat-form-field class="mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search') : ""}}</mat-label>
           <input matInput [(ngModel)]="numbers" (keyup.enter)="applyFilter($event)" placeholder="search limit" #input>
           <mat-icon (click)="applyFilter($event)" class="Input_search" matSuffix>search</mat-icon>
-            <i class="material-icons highLightRemove" (click)="closeThisFunction()">highlight_remove</i>
+            <i class="material-icons highLightRemove mt-10" (click)="closeThisFunction()">highlight_remove</i>
         </mat-form-field>
 </span>
         <button (click)="showHide('searchFilter')" *ngIf="!filterButtonTwo" mat-raised-button class="dateFilter" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.eventDetector.field.highLimit').substring(4,11) : ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.valueFilter').substring(5,12) : ''}}" color="accent"><i class="material-icons">search</i></button>
@@ -59,7 +58,7 @@
           <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.nodeType') : ""}} </th>
           <td mat-cell *matCellDef="let element"> {{element.nodeType}} </td>
         </ng-container>
-        <ng-container matColumnDef="bootData">
+        <ng-container matColumnDef="bootData" >
           <th mat-header-cell *matHeaderCellDef>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.diagnostics.bootData') : ""}}  </th>
           <td mat-cell *matCellDef="let element">  <button mat-raised-button style="margin-right: 12px"
                                                            (click)="getTooltipText(element,'bootData')"
