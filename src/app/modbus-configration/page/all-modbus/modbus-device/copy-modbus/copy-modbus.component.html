@@ -1,0 +1,24 @@
+<mat-card class="form_cards">
+  <mat-toolbar class="mat-toolbar_all">
+    <mat-card-title class="sidebar_form_title"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.copy'): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.dataBit').substring(0,4): ""}}</mat-card-title>
+  </mat-toolbar>
+  <div class="copyMainContainer">
+    <form>
+        <mat-form-field class="form_field" appearance="fill">
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.placeholder.name'): ""}}</mat-label>
+          <input matInput name="name" type="text" [(ngModel)]="copyName" required>
+        </mat-form-field>
+
+      <div>
+        <mat-form-field class="form_field" appearance="fill">
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.placeholder.type'): ""}}</mat-label>
+          <input matInput name="copyType" type="text" [(ngModel)]="copyType" required>
+        </mat-form-field>
+      </div>
+      <div class="actionButtonsAll marginRight-20">
+        <button mat-raised-button class="saveButton mr-20" (click)="CopyData(id)">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.copy')|  uppercase) : ""}}</button>
+        <button mat-raised-button class="cancelAllButtons mr-20" mat-dialog-close> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel')|  uppercase) : ""}} </button>
+      </div>
+    </form>
+  </div>
+</mat-card>

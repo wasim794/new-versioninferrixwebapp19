@@ -1,0 +1,115 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar
+    class="mat-toolbar_all">
+    <mat-card-title class="sidebar_form_title">
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.heading'): ""}}</span>
+    <small *ngIf="modbusAttr">{{modbusDeviceAttributes.name}}</small>
+    </mat-card-title>
+    <span class="spacer"></span>
+  </mat-toolbar>
+  <div *ngFor="let error of ListError" [hidden]="!messageError">
+    <mat-card class="validation-error">
+      <li>{{error.property}} : {{error.message}}</li>
+    </mat-card>
+  </div>
+  <form  class="modbusDeviceForm">
+    <mat-form-field class="form_field  w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.placeholder.id'): ""}}</mat-label>
+      <input matInput class="form-control"  [(ngModel)]="modbusDeviceAttributes.id" name="id" required
+             type="text">
+    </mat-form-field>
+    <mat-form-field class="form_field w-50 ml-30" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.placeholder.xid'): ""}}</mat-label>
+      <input matInput  [(ngModel)]="modbusDeviceAttributes.xid" class="inputBoxHeight" name="xid" type="text" required >
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.placeholder.name'): ""}}</mat-label>
+      <input matInput [(ngModel)]="modbusDeviceAttributes.name" name="name"   required>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50 ml-30" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.permissions'): ""}}</mat-label>
+      <mat-select matInput name="readPermission" [(ngModel)]="readPermission" multiple  required>
+        <mat-option *ngFor="let read of editPermission" [value]="read">{{read}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.placeholder.type'): ""}}</mat-label>
+      <input matInput type="text" [(ngModel)]="modbusDeviceAttributes.type" name="type"  required>
+    </mat-form-field>
+    <mat-form-field class="form_field ml-30 w-50" appearance="fill">
+      <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.numberOfPoints'): ""}}</mat-label>
+      <input matInput type="text" [(ngModel)]="modbusDeviceAttributes.pointsCount" name="pointsCount"  required>
+    </mat-form-field>
+    <mat-slide-toggle [(ngModel)]="modbusDeviceAttributes.writeable"  name="writeable" class="side_form_toggle toggle_change allToggls TW-50"
+    >
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.writeable'): ""}}
+    </mat-slide-toggle>
+  <mat-divider class="modbusDeviceDividers"></mat-divider>
+    <span class="queryDataSpan">{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.queryData'): ""}}</span>
+  <mat-form-field class="form_field  w-50 mt-10" appearance="fill">
+    <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.functionCode'): ""}}</mat-label>
+    <mat-select matInput [(ngModel)]="modbusQueryData.functionCode" name="functionCode" required>
+      <mat-option *ngFor="let code of functionCodes" [value]="code.key">{{code.value}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="form_field ml-30 w-50" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.startAddress'): ""}}</mat-label>
+    <input matInput type="text" [(ngModel)]="modbusQueryData.startAdd" name="startAdd"   required>
+  </mat-form-field>
+  <mat-form-field class="form_field w-50" appearance="fill">
+    <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.length'): ""}}</mat-label>
+    <input matInput type="text" [(ngModel)]="modbusQueryData.length" name="length"  required>
+  </mat-form-field>
+
+    <mat-divider class="modbusDeviceDividers mt-10"></mat-divider>
+    <span class="queryDataSpan">{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.pointDetails'): ""}}</span>
+    <form [formGroup]="detailNameForm">
+      <div formArrayName="detailNameSetting">
+        <div *ngFor="let contact of FormGroups.controls; let i = index;">
+          <div [formGroupName]="i" class="row">
+      <mat-grid-list class="itemsList" cols="2" rowHeight="2:1.7">
+        <mat-grid-tile class="registerAddress">
+          <mat-form-field appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.placeholder.registerAddress'): ""}}</mat-label>
+            <textarea matInput type="text" class="registerAddressInput"  pattern="[0-9\.]+" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46" formControlName="key" name="key"  ></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+
+            <mat-form-field class="mt-10 marginLeft-10" appearance="fill">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.pointName'): ""}}</mat-label>
+              <input matInput type="text" formControlName="pointName" name="pointName">
+            </mat-form-field>
+
+            <mat-form-field class="maxWidth-23 marginLeft-10" appearance="fill">
+              <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.pointSize'): ""}}
+              </mat-label>
+              <mat-select matInput name="pointSize" formControlName="pointSize">
+                <mat-option *ngFor="let data of pointSize" [value]="data.key">{{data.value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="maxWidth-23 marginLeft-10" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.dataType'): ""}}</mat-label>
+              <mat-select matInput name="dataType" formControlName="dataType">
+                <mat-option *ngFor="let data of DataTypes" [value]="data.key">{{data.value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-icon class="commonAddMoreAlls add-plus-btn  marginLeft-10" *ngIf="i > 0" (click)="removeField(i)">highlight_remove</mat-icon>
+          </div>
+        </div>
+      </div>
+    </form>
+     <mat-icon class="commonAddMoreAlls add-plus-btn addIcons" (click)="addField()">add_circle</mat-icon>
+<br>
+    <button mat-raised-button  *ngIf="!isEdit" align="end" class="updateButton" (click)="updateDeviceList()">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update')|  uppercase) : ""}}
+    </button>
+    <button *ngIf="isEdit" (click)="save()" mat-raised-button class="saveButton"
+            align="end"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save')|  uppercase) : ""}}</button>
+  </form>
+</mat-card>

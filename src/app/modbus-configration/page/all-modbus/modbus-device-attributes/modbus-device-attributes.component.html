@@ -1,0 +1,130 @@
+<div class="headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.heading'): ""}}</span>
+      <div class="containerInfo">
+
+        <button mat-raised-button class="deleteAllButtons" *ngIf="deleteAllButtons">
+          <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon">
+            folder_delete
+          </mat-icon></button>
+        <!--refresh page if session storage function-->
+        <!--          <mat-icon class="info_position refreshIcons" *ngIf="removeAllButtons" (click)="refreshData()" title="Refresh Items" aria-hidden="false" aria-label="error_outline icon">-->
+        <!--            refresh-->
+        <!--          </mat-icon>-->
+        <!--End refresh page if session storage function-->
+
+        <mat-icon class="info_position refreshIcons"  (click)="refreshItemData()" title="Refresh Items" aria-hidden="false" aria-label="error_outline icon">
+          refresh
+        </mat-icon>
+
+        <mat-form-field class="topSearchBoxes">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+          <input matInput (keyup.enter)="applyFilter($event)" placeholder="search" #input>
+          <mat-icon (click)="applyFilter($event)" class="Input_search"  matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-toolbar>
+
+  </div>
+</div>
+<div class="width-100 matMaintainableContains" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="100%" class="card_margin">
+    <table  mat-table [dataSource]="dataSources" class="mat-elevation-z8 dataSources"
+            matSort (matSortChange)="sortingData($event)">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell  *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (change)="$event ? addDataPointXid($event, element) : null" (click)="$event.stopPropagation()"
+                        [checked]="isChecked(element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </th>
+        <td mat-cell *matCellDef="let element; let i = index;">{{ paginator.pageIndex * paginator.pageSize + i + 1 }}  </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container  matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.placeholder.name'): ""}} </th>
+        <td  mat-cell *matCellDef="let element" > {{element.name}} </td>
+      </ng-container>
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="actions">
+        <th class="modbusTableWidth"  mat-header-cell *matHeaderCellDef> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}  </th>
+        <td class="modbusTableWidth" mat-cell *matCellDef="let element">
+          <mat-card-actions class="mat_right_icons">
+
+            <mat-icon aria-hidden="false" class="allIcons" id="all_icons_one" aria-label="edit icon"
+                   (click)="showUpdate(element)"   title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.edit'): ''}}"
+                    >
+              edit
+            </mat-icon>
+            <mat-icon aria-hidden="false" class="allIcons"  aria-label="edit icon"
+                      (click)="copyData(element)"   title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.copy'): ''}}"
+            >
+              file_copy
+            </mat-icon>
+
+            <mat-icon (click)="delete(element)" aria-hidden="false" class="allIcons" aria-label="delete icon"
+                      title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+                     >
+              delete
+            </mat-icon>
+          </mat-card-actions></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="selection.toggle(row)">
+      </tr>
+    </table>
+</div>
+</div>
+
+<div class="pagination_fixed">
+<!--  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="modbusDeviceAttributesService.total" [pageSizeOptions]="pageSizeOptions"-->
+<!--                 [pageSize]=limit (page)="getNext($event)"></mat-paginator>-->
+
+  <mat-paginator
+    class="pagination_all"
+    [pageIndex]=0
+    [length]="modbusDeviceAttributesService.total"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="limit"
+    showFirstLastButtons
+    (page)="getNext($event)"
+  ></mat-paginator>
+</div>
+
+<mat-drawer-container class="sidebar_position" autosize disableClose>
+  <mat-drawer #modbusDeviceAttr class="singleSidebars" mode="push" position="end">
+    <mat-icon class=" allCloseOptions " aria-hidden="false" id="datasource_side" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.event.button.close'): ''}}"
+              aria-label="close icon">
+      close
+    </mat-icon>
+    <button mat-raised-button class="cancelAllData top-54" (click)="sidebarclose($event)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}
+    </button>
+   <app-modbus-attribute-form (closeSidebar)="sidebarclose($event)"></app-modbus-attribute-form>
+  </mat-drawer>
+</mat-drawer-container>
+
+<!-- end here -->
+<div  class="addIcon allAddIconFixed">
+  <mat-icon mat-button  (click)="deviceSidebar()"  title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.title.add.deviceConfig').substring(0,10): ''}}" >library_add</mat-icon>
+</div>
