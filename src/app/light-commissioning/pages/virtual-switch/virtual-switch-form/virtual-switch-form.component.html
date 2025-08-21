@@ -18,20 +18,20 @@
   </div>
   <form class="topSpacingForm">
 
-    <mat-form-field appearance="fill" class="field_margin form_field lightAllMargin w-50">
+    <mat-form-field appearance="fill" class="form_field w-50">
       <mat-label>{{UIDICTIONARY ?
         UIDICTIONARY.get('ui.core.common.fields.name'): ""}}</mat-label>
       <input matInput class="form-control" [(ngModel)]="model.name" name="name" type="text" required>
     </mat-form-field>
 
-    <mat-form-field class="form_field name_field w-50" appearance="fill">
+    <mat-form-field class="form_field  w-50 marginLeft-20" appearance="fill">
       <mat-label>{{UIDICTIONARY ?
         UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.fields.placeholder.UID'): ""}}</mat-label>
       <input matInput class="form-control" [(ngModel)]="model.uid" matInput name="uid" readonly>
     </mat-form-field>
 
     <div>
-    <mat-form-field appearance="fill" class="field_margin form_field lightAllMargin w-50">
+    <mat-form-field appearance="fill" class="field_margin   w-50">
       <mat-label> {{UIDICTIONARY ?
         UIDICTIONARY.get('ui.lightCommissioning.virtualSwitch.fields.placeholder.grade'): ""}}</mat-label>
       <mat-select [(ngModel)]="gradeName" class="form-control" name="grade"
@@ -52,12 +52,16 @@
       </mat-select>
     </mat-form-field>
     <div>
-      <button mat-raised-button class="saveButton" (click)="save() " *ngIf="!isEdit"
-             >{{UIDICTIONARY ?
+      <button matfab class="saveButton" (click)="save() " *ngIf="!isEdit"
+             >
+             <mat-icon>save</mat-icon>
+             {{UIDICTIONARY ?
         (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : "" }}
       </button>
-      <button mat-raised-button class="Top_Update_Button updateButton" (click)="update()" *ngIf="isEdit"
-             >{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+      <button matfab class="Top_Update_Button updateButton saveButton" (click)="update()" *ngIf="isEdit"
+             >
+             <mat-icon>save_as</mat-icon>
+             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
       </button>
     </div>
   </form>

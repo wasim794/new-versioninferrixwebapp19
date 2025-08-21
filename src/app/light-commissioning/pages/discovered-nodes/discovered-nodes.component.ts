@@ -258,4 +258,8 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
       this.commonService.notification(this.disableMsg);
 
   }
+
+    goBack(){
+  this.commonService.goBackHistory();
+}
 }

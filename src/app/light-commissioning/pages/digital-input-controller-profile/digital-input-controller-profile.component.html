@@ -8,14 +8,18 @@
       <small *ngIf="digitalControllerTitle">{{digitalControllerProfile.name}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button mat-raised-button class="Top_Save_Button bacnetUpdate topRightButton" (click)="saveProfile() "
+    <button matfab class="toolbarSaveButton bacnetUpdate saveButton" (click)="saveProfile() "
             *ngIf="!isEdit"
-            align="end">{{UIDICTIONARY ?
+            align="end">
+            <mat-icon>save</mat-icon>
+            {{UIDICTIONARY ?
       (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}
     </button>
-    <button mat-raised-button class="Top_Update_Button bacnetUpdate toolbarUpdateButton" (click)="updateProfile()"
+    <button matfab class="toolbarUpdateButton bacnetUpdate saveButton" (click)="updateProfile()"
             *ngIf="isEdit"
-            align="end">{{UIDICTIONARY ?
+            align="end">
+            <mat-icon>save_as</mat-icon>
+            {{UIDICTIONARY ?
       (UIDICTIONARY.get('ui.core.common.button.update') | uppercase): ""}}
     </button>
   </mat-toolbar>

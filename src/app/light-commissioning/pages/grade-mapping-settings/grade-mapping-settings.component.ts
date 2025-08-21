@@ -419,4 +419,8 @@ export class GradeMappingSettingsComponent extends UnsubscribeOnDestroyAdapter i
   findMissingIndexArray(arrIndex: number[], max: number, min: number): number[] {
     return Array.from(Array(max - min), (v, k) => k + min).filter(idx => !arrIndex.includes(idx)).sort((n1, n2) => n1 - n2);
   }
+
+    goBack(){
+  this.commonService.goBackHistory();
+}
 }

@@ -2,8 +2,8 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
+     <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
+         <i class="material-icons">arrow_back_ios_new</i>
       </mat-icon>
       <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.cards.commissionedNodes'): ""}}</span>
       <div class="containerInfo containerInfoCenter">
@@ -37,8 +37,8 @@
 </div>
 <div class="container cardlayout mainCardsPanel cardLayoutStyle" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
      fxLayoutGap="0.5% grid" fxLayoutAlign="left">
-  <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card" [ngStyle]="cardOneCss">
+  <div fxFlex="17%" class="card_margin marginLeft-20">
+    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardOneCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Commissioned'): ""}}</mat-card-title>
@@ -56,7 +56,7 @@
     </mat-card>
   </div>
   <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card" [ngStyle]="cardTwoCss">
+    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardTwoCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus'): ""}}</mat-card-title>
@@ -72,7 +72,7 @@
     </mat-card>
   </div>
   <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card" [ngStyle]="cardThreeCss">
+    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardThreeCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.nodeType'): ""}}</mat-card-title>
@@ -92,7 +92,7 @@
     </mat-card>
   </div>
   <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card" [ngStyle]="cardFourCss">
+    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardFourCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeRole'): ""}}</mat-card-title>
@@ -110,7 +110,7 @@
     </mat-card>
   </div>
   <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card" [ngStyle]="cardFiveCss">
+    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardFiveCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.action.offsiteMode'): ""}}</mat-card-title>

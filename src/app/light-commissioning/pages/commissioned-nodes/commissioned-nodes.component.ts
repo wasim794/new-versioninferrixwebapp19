@@ -367,6 +367,11 @@ export class CommissionedNodesComponent extends UnsubscribeOnDestroyAdapter impl
     element.isAutoMode == true ? this.nodeService.sendAutoMode(element.xid, model).subscribe((data) => this.commonService.notification(data.responseMessage)):
       this.commonService.notification(this.disableMsg);
   }
+
+  goBack(){
+  this.commonService.goBackHistory();
+}
+
 }
 
 

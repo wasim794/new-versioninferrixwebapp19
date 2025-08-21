@@ -1,4 +1,4 @@
-<mat-card class="form_cards">
+<mat-card class="form_cards ruleSetTollBar">
   <!-- Title of an Card -->
   <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title">
@@ -37,7 +37,7 @@
       </span>
       <!-- Dim start        -->
       <span class="spanPadding" [hidden]="!dimValueRadio">
-        <mat-slider class="matSliderAll marginLeft-10" [max]="100" [min]="0" [step]="10" [(ngModel)]="virtualControlModel.dimValue" name="dimValue">
+        <mat-slider class="matSliderAll" [max]="100" [min]="0" [step]="10" [(ngModel)]="virtualControlModel.dimValue" name="dimValue">
         </mat-slider>
         <mat-slide-toggle [(ngModel)]="virtualControlModel.autoMode" class="side_form_toggle toggle_change" name="autoMode">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.echo.off') : ""}}
@@ -55,10 +55,10 @@
       </span>
     </div>
     <div class="button-group">
-      <button mat-raised-button class="Save_Button pushFormData switchPushButton" (click)="pushData(xid)">
+      <button mat-raised-button class="saveButton pushFormData addressButtonStyle" (click)="pushData(xid)">
         {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.push') | uppercase) : ""}}
       </button>
-      <button class="cancel_button addCancelButton" mat-button mat-dialog-close>
+      <button class="virtualSwitchClose addCancelButton addressButtonStyle" mat-button mat-dialog-close>
         {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close') | uppercase) : ""}}
       </button>
     </div>

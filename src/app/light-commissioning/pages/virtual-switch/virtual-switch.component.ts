@@ -106,10 +106,14 @@ export class VirtualSwitchComponent extends UnsubscribeOnDestroyAdapter implemen
 
   setting(virtualSwitch: any) {
     this.dialog.open(SettingSwitchFormComponent, {
-      height: '300px',
+      height: '350px',
       width: '320px',
       data: {virtualSwitch: virtualSwitch},
       disableClose: true
     });
   }
+
+      goBack(){
+  this._commonService.goBackHistory();
+}
 }

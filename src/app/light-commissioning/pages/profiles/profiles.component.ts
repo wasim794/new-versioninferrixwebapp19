@@ -242,4 +242,9 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     this.profileCreatorSidebars.close();
     this.getProfiles(this.limit, this.offset);
   }
+
+    goBack(){
+  this.commonService.goBackHistory();
+}
+
 }
