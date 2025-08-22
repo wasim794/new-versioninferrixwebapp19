@@ -57,20 +57,20 @@
           </mat-form-field>
 
         <div>
-          <mat-slide-toggle [(ngModel)]="_profilePush.lightCommissioningProfilePushToDownNodes" class="side_form_toggle toggle_change singleToggle"
+          <mat-slide-toggle [(ngModel)]="_profilePush.lightCommissioningProfilePushToDownNodes" class="side_form_toggle toggle_change singleToggle marginRight-10"
                             name="lightCommissioningProfilePushToDownNodes">
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.push'): ""}}
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeStatus.Down'): ""}}
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus').substring(0,4): ""}}
           </mat-slide-toggle>
-          <mat-form-field  class="form_field filterNodesInput" appearance="fill">
+          <mat-form-field  class="form_field filterNodesInput marginRight-10" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.common.heading.filterNodes'): ""}}</mat-label>
             <input matInput class="form-control" [min]="1" [(ngModel)]="_profilePush.lightCommissioningProfilePushNodesFilter"
                    name="lightCommissioningProfilePushNodesFilter" required type="text">
           </mat-form-field>
         </div>
       </div>
-        <button  mat-raised-button (click)="_profilePushSave()" class="Save_Button">
+        <button  mat-raised-button (click)="_profilePushSave()" class="saveButton addressButtonStyle">
           {{"Profile Push"}}
         </button>
     </form>

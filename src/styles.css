@@ -318,7 +318,7 @@ body {
 }
 .profilePushRead{
 margin-bottom:10px;
-  }
+}
 
 .pushPin{
   margin-top:30px;
@@ -6103,6 +6103,8 @@ mat-dialog-content.searchEventMain {
   padding-top: 3px;
   background-color: #e8e5e5;
   padding-left: 17px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding-bottom: 2px;
   width: 327px;
   height: 115px;
@@ -9911,7 +9913,21 @@ min-width: 550px !important;
 }
 
 .profilePushCardNew{
-  min-height: 100px !important;
+  min-height: 319px !important;
+  width: 390px !important;
+}
+
+.pushPinIcon{
+  margin-bottom: 100px;
+}
+
+.profilePushInputRead{
+  min-height: 115px;
+
+}
+
+.settingsInputAntenna{
+margin-left: 140px;
 }
 /* .................. */
 

@@ -14,13 +14,13 @@
      fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
   <div fxFlex="25%" class="cardSpacing">
-    <mat-card class="meshMainCardNew  matCardAll marginTop-20">
+    <mat-card class="meshMainCardNew profilePushCardNew matCardAll marginTop-20">
       <mat-card-header>
         <mat-card-title
           class="cardTitleName allResponsiveText"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeSettings.heading.bacnetPublish'): ""}}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="cardSpacings addSettingsCards settingCardAlign">
-        <mat-form-field class="form_field bacNetFields" appearance="fill">
+        <mat-form-field class="form_field bacNetFields marginTop-20 marginLeft-10" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.localDevice'): ""}}</mat-label>
           <mat-select [(ngModel)]="localNetworkNumber" class="form-control" name="publishType">
             <mat-option *ngFor="let model of bacnetModel" [value]="model.id">
@@ -28,7 +28,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div title="This is readOnly" class="inputRead">
+        <div title="This is readOnly" class="inputRead marginRight-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeSettings.heading.bacnetPublish'): ""}}</mat-label>
           <ul>
             <li>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeSettings.cards.param.lightNodes'): ""}}
@@ -49,7 +49,7 @@
         </mat-icon>
 
       </mat-card-actions>
-      <mat-icon aria-hidden="false" class="allIcons  settingsCardsIcons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
+      <mat-icon aria-hidden="false" class="allIcons" aria-label="delete icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.delete'): ''}}"
                 (click)="delete()">
         delete
       </mat-icon>
@@ -57,13 +57,13 @@
   </div>
 
   <div fxFlex="25%" class="cardSpacing">
-    <mat-card class="meshMainCardNew  matCardAll marginTop-20">
+    <mat-card class="meshMainCardNew  matCardAll profilePushCardNew marginTop-20" >
       <mat-card-header>
         <mat-card-title
           class="cardTitleName allResponsiveText">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.uploadExcel'): ""}}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="cardSpacings addSettingsCards settingCardAlign">
-        <mat-form-field class="form_field bacNetFields" appearance="fill">
+        <mat-form-field class="form_field bacNetFields marginTop-20 marginLeft-10" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profile.fields.placeholder.selectToAddProfile'): ""}}</mat-label>
           <mat-select  class="form-control" name="publishType">
             <mat-option *ngFor="let profileType of profileTypes" [value]="profileType"
@@ -94,15 +94,16 @@
     </mat-card>
   </div>
   <div fxFlex="25%" class="cardSpacing">
-    <mat-card class="meshMainCardNew  matCardAll marginTop-20 profilePushCardNew">
+    <mat-card class="mat-card  lightSettingsCards matCardAll profilePushCardNew marginTop-20 marginLeft-20">
       <mat-card-header>
         <mat-card-title
           class="cardTitleName allResponsiveText">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.profilePush.heading'): ""}}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content class="cardSpacings settingCardAlign profilePushRead">
-        <i class="material-icons iconsSettingsMat">settings_input_antenna</i>
+          <mat-card-content class="settingsInputAntenna">
+        <i class="material-icons iconsSettingsMat ">settings_input_antenna</i>
       </mat-card-content>
-      <div title="This is readOnly" class="inputRead profilePushRead">
+      </mat-card-header>
+      
+      <div title="This is readOnly" class="inputRead profilePushInputRead">
         <mat-label>{{"Profile Push Scheduler"}}</mat-label>
         <ul>
           <li>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Commissioned'): ""}}
@@ -136,7 +137,7 @@
         </ul>
       </div>
       <mat-card-actions class="mat_right_icons  settingsCardsIcons">
-        <mat-icon  aria-hidden="false" class="allIcons pushPin" aria-label="edit icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.push'): ''}}"
+        <mat-icon  aria-hidden="false" class="allIcons pushPinIcon" aria-label="edit icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.push'): ''}}"
                   (click)="profilePushSettings($event)">
           push_pin
         </mat-icon>
