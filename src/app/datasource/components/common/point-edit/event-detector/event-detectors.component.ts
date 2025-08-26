@@ -101,7 +101,7 @@ export class EventDetectorsComponent implements OnInit {
   constructor(public dictionaryService: DictionaryService, private commonService: CommonService, private resolver: ComponentFactoryResolver, private _configurationService: ConfigurationService,
               private _WebSocketService: WebsocketService, private eventDetectorService: EventDetectorService,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    this.token = JSON.parse(localStorage.getItem('access_token')!);
+    this.token = (localStorage.getItem('access_token'));
 
   }
 

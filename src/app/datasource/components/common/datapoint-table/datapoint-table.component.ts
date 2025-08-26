@@ -36,7 +36,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
   currentDatapointIndex: any;
   websocket_URL = '/point-value?token=';
   websocket: any;
-  token: string;
+  token: any;
   dataPointData: any;
   nodata: any;
   private endDate: any;
@@ -68,7 +68,7 @@ export class DatapointTableComponent extends UnsubscribeOnDestroyAdapter {
     private _pointValueService: PointValueService,
     public datepipe: DatePipe) {
     super();
-    this.token = JSON.parse(localStorage.getItem('access_token')!);
+    this.token = (localStorage.getItem('access_token'));
     this.subscription = this.datasourceService.getReloadedDatapoint().subscribe(data => {
       this.reloadDatapoint(data['data']);
     });

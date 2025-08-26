@@ -32,7 +32,7 @@ import { MatModuleModule } from '../../../../common/mat-module';
 export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   websocket_URL = '/mesh-scratchpad-status?token=';
   websocket: any;
-  token: string;
+  token: any;
   displayedColumnsResponse: string[] = ['nodeType', 'address', 'timestamp','storedScratchpadLength', 'storedScratchpadCrc', 'storedScratchpadSequenceNumber', 'storedScratchpadType',
     'storedScratchpadStatus', 'processedScratchpadLength','processedScratchpadCrc','processedScratchpadSequenceNumber','processedFirmwareAreaId',
     'firmwareVersion','applicationProcessedScratchPadLength','applicationProcessedScratchPadCrc','applicationProcessedScratchPadSequenceNumber',
@@ -78,7 +78,7 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
               private _WebSocketService: WebsocketService,
               public dictionaryService: DictionaryService, private location: Location) {
     super();
-    this.token = JSON.parse(localStorage.getItem('access_token')!).token;
+    this.token = (localStorage.getItem('access_token'));
   }
 
   ngOnInit(): void {

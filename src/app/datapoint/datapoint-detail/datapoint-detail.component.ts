@@ -42,7 +42,7 @@ export class DatapointDetailComponent implements OnInit {
   time = 'Date-Time';
   dataValue = 'Data-Value';
   websocket: any;
-  token: string;
+  token: any;
   dataPointData: any;
   epochDateFrom: any;
   epochDateTo: any;
@@ -87,7 +87,7 @@ export class DatapointDetailComponent implements OnInit {
               public dictionaryService: DictionaryService,
               private route: ActivatedRoute, private usersService: UsersService,
               private eventService: EventsService, private _configurationService: ConfigurationService, private resolver: ComponentFactoryResolver, private commonService: CommonService) {
-   this.token = JSON.parse(localStorage.getItem('access_token')!);
+   this.token = (localStorage.getItem('access_token'));
 
 
   }

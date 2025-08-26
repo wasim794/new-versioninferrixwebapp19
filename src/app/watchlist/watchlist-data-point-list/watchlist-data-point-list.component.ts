@@ -47,7 +47,7 @@ export class WatchlistDataPointListComponent extends UnsubscribeOnDestroyAdapter
   private dataSourceDataPoint                  : any[] | undefined;
   websocket_URL                                = '/point-value?token=';
   websocket                                    : any;
-  token!: string;
+  token!: any;
   socketDataPoint                              : any;
   dataPointData                                : any;
   setViewIcons                                 : boolean = false;
@@ -61,7 +61,7 @@ export class WatchlistDataPointListComponent extends UnsubscribeOnDestroyAdapter
      private _configurationService: ConfigurationService,
     private _WebSocketService: WebsocketService, public datepipe: DatePipe) {
     super();
-    this.token = JSON.parse(localStorage.getItem('access_token')!);
+    this.token = (localStorage.getItem('access_token'));
   }
 
   ngOnInit() {

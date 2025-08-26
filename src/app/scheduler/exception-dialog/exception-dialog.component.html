@@ -28,10 +28,10 @@
         </mat-form-field>
       </div>
 
-      <mat-card class="demo-inline-calendar-card">
+      <mat-card class="demo-inline-calendar-card exceptionCalender">
         <mat-calendar [(selected)]="selected"></mat-calendar>
       </mat-card>
-      <mat-divider class="matDividerBar"></mat-divider>
+      <!-- <mat-divider class="matDividerBar"></mat-divider> -->
       <h1 class="allOrText">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.heading.or'): ""}}</h1>
       <h2 class="textDateRange">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.scheduler.heading.chooseDateRange'): ""}}</h2>
       <mat-form-field appearance="fill" class="matInputDialog">

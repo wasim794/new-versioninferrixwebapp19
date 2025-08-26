@@ -26,7 +26,7 @@ export class SchedulerComponent extends UnsubscribeOnDestroyAdapter implements O
   public schedulerFormSetComponent!: SchedulerFormSetComponent;
   @ViewChild(CalendarComponent)
   public calendarComponent!: CalendarComponent;
-  token: string;
+  token: any;
   errorMsg!: any;
   Schedulers: any = [];
   values!: string;
@@ -42,7 +42,7 @@ export class SchedulerComponent extends UnsubscribeOnDestroyAdapter implements O
   constructor(public commonService: CommonService, public dictionaryService: DictionaryService, private schedulerService: SchedulerService
   ) {
     super();
-    this.token = JSON.parse(localStorage.getItem('access_token')!).token;
+    this.token = (localStorage.getItem('access_token'));
 
   }
 

@@ -52,7 +52,7 @@ export class WatchlistListComponent extends UnsubscribeOnDestroyAdapter implemen
   watchListName!: string;
   errorMsg!: string;
   websocket_URL = '/point-value?token=';
-  token!: string | null;
+  token!: any;
   dataPointData: any;
   info = new commonHelp();
   buttons!: boolean;
@@ -93,7 +93,7 @@ export class WatchlistListComponent extends UnsubscribeOnDestroyAdapter implemen
 
   constructor() {
     super();
-    this.token = JSON.parse(localStorage.getItem('access_token')!).token;
+    this.token = (localStorage.getItem('access_token'));
   }
 
   ngOnInit() {

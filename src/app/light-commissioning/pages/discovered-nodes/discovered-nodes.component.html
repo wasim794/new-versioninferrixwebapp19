@@ -40,7 +40,7 @@
 <div class="container cardlayout mainCardsPanel width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
      fxLayoutGap="0.5% grid" fxLayoutAlign="left">
   <div fxFlex="17%" class="card_margin marginLeft-20">
-    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardOneCss">
+    <mat-card class="mat-card all_card newMatCardNodes cardOneCss" [ngStyle]="cardOneCss">
       <mat-card-header>
         <mat-card-title
           class="card_title">{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.Commissioned'): ""}}</mat-card-title>
@@ -57,7 +57,7 @@
     </mat-card>
   </div>
   <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardTwoCss">
+    <mat-card class="mat-card all_card newMatCardNodes cardTwoCss" [ngStyle]="cardTwoCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeStatus'): ""}}</mat-card-title>
@@ -73,7 +73,7 @@
     </mat-card>
   </div>
   <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardThreeCss">
+    <mat-card class="mat-card all_card newMatCardNodes cardThreeCss" [ngStyle]="cardThreeCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeTypes'): ""}}</mat-card-title>
@@ -92,8 +92,8 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardFourCss">
+  <div fxFlex="17%" class="card_margin"> 
+    <mat-card class="mat-card all_card newMatCardNodes cardFourCss" [ngStyle]="cardFourCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.filter.nodeRole'): ""}}</mat-card-title>
@@ -111,7 +111,7 @@
     </mat-card>
   </div>
   <div fxFlex="17%" class="card_margin">
-    <mat-card class="mat-card all_card newMatCardNodes" [ngStyle]="cardFiveCss">
+    <mat-card class="mat-card all_card newMatCardNodes cardFiveCss" [ngStyle]="cardFiveCss">
       <mat-card-header>
         <mat-card-title class="card_title">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.action.offsiteMode'): ""}}</mat-card-title>
