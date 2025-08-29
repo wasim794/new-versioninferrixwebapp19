@@ -8,11 +8,11 @@
   </div>
 </div>
 
-<div class="container cardlayout stackMainContainer width-100 marginLeft-20"  *ngIf="!showBox" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
+<div class="container cardlayout stackMainContainer width-100 "  *ngIf="!showBox" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
      fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
   <div fxFlex="22%" class="cardpd">
-    <mat-card class="meshMatCardNew matCardAll" (click)="showValue($event)">
+    <mat-card class="meshMatCardNew matCardAll marginLeft-20" (click)="showValue($event)">
       <mat-card-header>
         <mat-card-title
           class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.wirelessQuality')}}</mat-card-title>
@@ -28,7 +28,7 @@
   </div>
 
   <div fxFlex="22%" class="cardpd ">
-    <mat-card class="meshMatCardNew matCardAll">
+    <mat-card class="meshMatCardNew matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title
           class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.systemMetric')}}</mat-card-title>
@@ -43,7 +43,7 @@
   </div>
 
   <div fxFlex="22%" class="cardpd">
-    <mat-card class="meshMatCardNew matCardAll">
+    <mat-card class="meshMatCardNew matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title
           class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.jvmMetrics')}}</mat-card-title>
@@ -59,7 +59,7 @@
   </div>
 
   <div fxFlex="22%" class="cardpd">
-    <mat-card class="meshMatCardNew matCardAll">
+    <mat-card class="meshMatCardNew matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title
           class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.databaseMetrics')}}</mat-card-title>
@@ -75,7 +75,7 @@
   </div>
 
   <div fxFlex="22%" class="cardpd">
-    <mat-card class="meshMatCardNew matCardAll">
+    <mat-card class="meshMatCardNew matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title
           class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.stackThreadMetrics')}}</mat-card-title>
@@ -91,7 +91,7 @@
   </div>
 
   <div fxFlex="22%" class="cardpd">
-    <mat-card class="meshMatCardNew matCardAll">
+    <mat-card class="meshMatCardNew matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title
           class="mat_titles">{{dictionaryService.uiDictionary.get('ui.stackMonitor.moduleMetrics')}}</mat-card-title>

@@ -269,9 +269,9 @@
                name="bbmd" [(ngModel)]="bacnetForeignDevice.timeToLiveSeconds" required type="timeToLiveSeconds">
       </mat-form-field>
       <br>
-      <button   class="addressButtonStyle saveButton" (click)="sendForeignDevice()" style="text-transform: uppercase" align="end"
+      <button   class="saveButton" (click)="sendForeignDevice()" style="text-transform: uppercase" align="end"
           
-              mat-raised-button> Send foreign device registration
+              matfab><i class="material-icons sendIcon">send</i> Send foreign device registration
       </button>
 
     </mat-tab>

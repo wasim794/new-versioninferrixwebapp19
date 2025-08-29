@@ -1,10 +1,11 @@
-
+<div class="ruleSetTollBar">
 <mat-toolbar class="mat-toolbar_all">
   <mat-card-title class="sidebar_form_title ">
     {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.dataPointProperties'): ""}}
   </mat-card-title>
   <mat-icon class="close-container" (click)="cancel()">close</mat-icon>
 </mat-toolbar>
+</div>
 <mat-dialog-content class="mat-typography mat-dialog_contents mat-dialog_contents_mat CustomAddDialog"
                     id="mat-dialog_contents_mat">
   <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex" (selectedTabChange)="selectTab($event.index)">

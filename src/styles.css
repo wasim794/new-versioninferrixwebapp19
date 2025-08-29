@@ -1378,6 +1378,7 @@ mat-cell.commonReducesSizesAll.singleData {
 .dataBinaryAllRadioMain {
   position: relative;
   top: 25px;
+  left: 20px;
 }
 
 .dataBinaryAllRadio {
@@ -9960,5 +9961,13 @@ margin-left: 140px;
   margin-right: 7px;
 }
 
+.sendIcon{
+  padding-right: 6px;
+  font-size: 20px;
+}
+.noButtonSetValue{
+  border-radius: 4px !important;
+  margin-bottom: 10px;
+}
 /* .................. */
 

@@ -5,7 +5,8 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import {FormArray, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
-
+import { CommonService } from '../../../services/common.service';
+import {DictionaryService} from "../../../core/services/dictionary.service";
 
 interface BacnetNode {
   name: string;
@@ -29,6 +30,7 @@ interface FlatNode {
   templateUrl: './bacnet-device-browser.component.html'
 })
 export class BacnetDeviceBrowserComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
+  UIDICTIONARY : any;
   private _transformer = (node: BacnetNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -52,7 +54,8 @@ export class BacnetDeviceBrowserComponent extends UnsubscribeOnDestroyAdapter im
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   public nodeTreeHide!:boolean;
 
-  constructor() {
+  constructor( public commonService: CommonService,public dictionaryService: DictionaryService,) {
+
     super();
     // Sample data structure - modify according to your BACnet device structure
     const TREE_DATA: BacnetNode[] = [
@@ -79,7 +82,12 @@ export class BacnetDeviceBrowserComponent extends UnsubscribeOnDestroyAdapter im
     this.dataSource.data = TREE_DATA;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  this.dictionaryService.getUIDictionary('core').subscribe(data=>{
+    this.UIDICTIONARY = this.dictionaryService.uiDictionary;
+   });
+
+  }
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
   
@@ -87,6 +95,11 @@ export class BacnetDeviceBrowserComponent extends UnsubscribeOnDestroyAdapter im
   dataHideShow(){
   this.nodeTreeHide=true;
   }
+
+    goBack() {
+    this.commonService.goBackHistory();
+  }
+
 }
 
 

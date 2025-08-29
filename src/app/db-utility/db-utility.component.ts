@@ -27,7 +27,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 export class DbUtilityComponent implements OnInit, AfterViewInit {
   selectedFilesColumns: string[] = ['S.No.', 'File Name', 'Action'];
   websocket_URL = '/temporary-resources?token=';
-  token: string;
+  token: any;
   listDbAll: any;
   databaseSettings = {} as DatabaseSettingsModel;
   databaseActions: any = {} as DatabaseActionsModel;
@@ -67,7 +67,7 @@ export class DbUtilityComponent implements OnInit, AfterViewInit {
               private dbUtilityService: DbUtilityService,
               private commonService: CommonService,
               private serverService: ServerService, private changeDetectorRef: ChangeDetectorRef) {
-    this.token = JSON.parse(localStorage.getItem('access_token')!).token;
+    this.token = (localStorage.getItem('access_token'));
   }
 
   ngOnInit() {

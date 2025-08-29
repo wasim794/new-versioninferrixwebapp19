@@ -1,4 +1,6 @@
-<h2 class="setHeadings content-container headingdlt mat-toolbar_all" mat-dialog-title>Enter a value to set:</h2>
+<div class="ruleSetTollBar">
+<h2 class="setHeadings content-container headingdlt mat-toolbar_all " mat-dialog-title>Enter a value to set:</h2>
+</div>
 <form>
   <mat-dialog-content class="dataBinaryAll">
     <ng-template #otherData>
@@ -16,7 +18,7 @@
     </mat-radio-group>
   </mat-dialog-content>
   <mat-dialog-actions class="setActionsvalue">
-    <button class="cancel_button" mat-button mat-dialog-close>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.no'): ""}}</button>
+    <button class="saveButton noButtonSetValue" mat-button mat-dialog-close>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.no'): ""}}</button>
     <button class="yes-container" (click)="updateSetValues()" mat-button [mat-dialog-close]="true">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.yes'): ""}}</button>
   </mat-dialog-actions>
 </form>
