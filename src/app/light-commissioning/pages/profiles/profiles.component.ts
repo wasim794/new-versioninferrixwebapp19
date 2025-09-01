@@ -73,7 +73,7 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
     private profileService: ProfileService,
     private dialog: MatDialog,
     public dictionaryService: DictionaryService,
-    private commonService: CommonService
+    public commonService: CommonService
   ) {
     super();
 

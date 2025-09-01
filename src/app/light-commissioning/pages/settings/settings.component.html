@@ -3,8 +3,7 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
+      <mat-icon class="allArrowBack" [innerHTML]="_commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.nodeSettings.heading.lightNodeSettings'): ""}}</span>
     </mat-toolbar>
@@ -102,7 +101,7 @@
         <i class="material-icons iconsSettingsMat ">settings_input_antenna</i>
       </mat-card-content>
       </mat-card-header>
-      
+
       <div title="This is readOnly" class="inputRead profilePushInputRead">
         <mat-label>{{"Profile Push Scheduler"}}</mat-label>
         <ul>

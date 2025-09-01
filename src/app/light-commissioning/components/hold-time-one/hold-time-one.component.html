@@ -8,11 +8,13 @@
 </span>
 
 <span class="w-50">
+
   <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.table.tableColumn.Dimming'): ""}} &nbsp;
     &nbsp;<strong>{{dimmingValueOne}}</strong></mat-label> <br>
   <input matInput class="form-control" [(ngModel)]="dimmingValueOne" id="dimmingValueTwo" name="dimmingValueOne"
          hidden="true">
 
-  <mat-slider class="example-margin" [(ngModel)]="dimmingValueOne">
+  <mat-slider  class="example-margin" >
+       <input matSliderThumb [(ngModel)]="dimmingValueOne">
   </mat-slider>
 </span>

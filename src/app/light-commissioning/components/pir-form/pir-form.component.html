@@ -9,7 +9,8 @@
 
       <input matInput class="form-control" [(ngModel)]="noMotionValue" id="noMotionValue" name="noMotionValue"
              hidden="true">
-      <mat-slider class="example-margin" [(ngModel)]="noMotionValue" (change)="noMotionChange($event)">
+      <mat-slider class="example-margin" >
+        <input matSliderThumb  [(ngModel)]="noMotionValue" (change)="noMotionChange($event)">
       </mat-slider>
     </span>
 
@@ -21,7 +22,8 @@
 
       <input matInput class="form-control" [(ngModel)]="motionValue" id="MotionValue" name="MotionValue" hidden="true">
 
-      <mat-slider class="example-margin" [(ngModel)]="motionValue">
+      <mat-slider class="example-margin" >
+         <input matSliderThumb  [(ngModel)]="motionValue">
       </mat-slider>
     </span>
   </div>

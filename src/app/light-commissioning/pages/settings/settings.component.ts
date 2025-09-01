@@ -43,7 +43,7 @@ export class SettingsComponent extends UnsubscribeOnDestroyAdapter implements On
     private _service: SettingsService,
     public dialog: MatDialog,
     public dictionaryService: DictionaryService,
-    private _commonService: CommonService,
+    public _commonService: CommonService,
     private bacnetService: BacnetService,
     private excelImport: ExcelImportService,
     private profileService: ProfileService,
@@ -128,4 +128,8 @@ export class SettingsComponent extends UnsubscribeOnDestroyAdapter implements On
   closeSidebar(event: any){
     this.sideNav.close();
   }
+  goBack(){
+    this._commonService.goBackHistory();
+  }
+
 }

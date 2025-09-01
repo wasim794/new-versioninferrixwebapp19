@@ -2,8 +2,7 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-     <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
-         <i class="material-icons">arrow_back_ios_new</i>
+      <mat-icon class="allArrowBack" [innerHTML]="commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.lightCommissioning.heading.profileSetting'): ""}}</span>
       <div class="leftDropdowns mt-10">
