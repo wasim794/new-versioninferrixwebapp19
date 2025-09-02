@@ -1,0 +1,92 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.configuration') : ""}}
+      </span>
+      <div class="containerInfo">
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container cardlayout modbusConfig" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
+     fxLayoutGap="0.5% grid"
+     fxLayoutAlign="left">
+  <div fxFlex="22%" class="card_margin allResponsiveCard" (click)="modbusConfig('attribute')">
+    <mat-card class="mat-card all_card matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName allResponsiveText modbusCardData">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.heading') : ""}}
+        </mat-card-title>
+        <mat-card-subtitle class="card_icon_right">
+          <mat-icon aria-hidden="false" aria-label="perm_data_setting icon">
+            attractions
+          </mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="22%" class="card_margin allResponsiveCard" (click)="modbusConfig('device')">
+    <mat-card class="mat-card all_card matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName allResponsiveText modbusCardData">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.heading') : ""}}
+        </mat-card-title>
+        <mat-card-subtitle class="card_icon_right">
+          <mat-icon aria-hidden="false" aria-label="perm_data_setting icon">
+            device_hub
+          </mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="22%" class="card_margin allResponsiveCard" (click)="modbusConfig('profile')">
+    <mat-card class="mat-card all_card matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName allResponsiveText">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.configuration') : ""}}
+        </mat-card-title>
+        <mat-card-subtitle class="card_icon_right">
+          <mat-icon>streetview</mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="22%" class="card_margin allResponsiveCard" (click)="modbusConfig('discovered')">
+    <mat-card class="mat-card all_card matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName allResponsiveText modbusCardData">
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.tables.controllerNodes') : ""}}
+        </mat-card-title>
+        <mat-card-subtitle class="card_icon_right">
+          <mat-icon aria-hidden="false" aria-label="perm_data_setting icon">
+            hive
+          </mat-icon>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+

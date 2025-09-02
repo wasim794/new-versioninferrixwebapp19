@@ -55,6 +55,10 @@ export const meshConsoleRoutes: Routes = [
     loadComponent: () =>
       import('./pages/firmware-push/otap-file/otap-file.component').then(m => m.OtapFileComponent),
   },
+  {
+    path:'modbus',
+    loadChildren: () => import('../modbus-configration/modbus-config-routes').then(m => m.modbusRoutes),
+  }
 
  
 

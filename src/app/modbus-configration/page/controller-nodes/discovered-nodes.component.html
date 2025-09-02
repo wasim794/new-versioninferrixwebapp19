@@ -1,0 +1,81 @@
+<div class="container headinglayout" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+  fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.tables.controllerNodes'): ""}}</span>
+      <div class="containerInfo containerInfoCenter">
+        <mat-form-field class="topSearchBoxes">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress').substring(4,12): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+          <input (keyup.enter)="filterDiscovered($event)" [(ngModel)]="searchDiscovered" matInput name="searchDiscovered">
+          <mat-icon class="Input_search" (click)="filterDiscovered($event)" matSuffix> search</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+<div class="container cardlayout mainCardsPanel cardLayoutStyle" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap
+  fxLayoutGap="0.5% grid" fxLayoutAlign="left">
+  <div fxFlex="100%" class="main_db mt-10">
+    <div class="container-size OverflowScroll">
+      <table [dataSource]="dataSource" mat-table class="mat-elevation-z8 tableHeader40 width-100"  matSort>
+        <ng-container matColumnDef="position">
+          <mat-header-cell class="tabl_heading commonSingleReduces pr-0" *matHeaderCellDef>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReducesTwo" *matCellDef="let element; let i = index;">{{i+1}}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.tables.controllerNodes').substring(0,10): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize" *matCellDef="let element">
+            {{element.name}}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="status">
+          <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef mat-sort-header>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.icon.hover.status'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize justifyContentCenter"   *matCellDef="let element; let i = index;">
+            <mat-slide-toggle [(ngModel)]="element.status" class="side_form_toggle toggle_change m-0 pb-0">
+            </mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef mat-sort-header>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize" *matCellDef="let element">
+              <mat-icon role="img" title="Data transfer" class="all_icons" (click)="dataTransfer(element)" data-mat-icon-type="font">
+                schedule_send
+              </mat-icon>
+            <mat-icon role="img" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.modbus.configuration.queryModel'): ''}}" class="all_icons" data-mat-icon-type="font" (click)="openDialog(element)">
+              low_priority </mat-icon>
+          <mat-icon *ngIf="element.commissioned==true" (click)="clearData(element)" role="img" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.clear'): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.dataSource').substring(0,4): ''}}" class="all_icons" data-mat-icon-type="font">
+            refresh </mat-icon>
+          <mat-icon (click)="startPollingAll(element)"  role="img" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.startOver').substring(0,5): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.polling'): ''}}" class="all_icons" data-mat-icon-type="font">
+            stop_circle </mat-icon>
+            <mat-icon (click)="stopPollingAll(element)"  role="img" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusSerial.stopBit').substring(0,4): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.polling'): ''}}" class="all_icons" data-mat-icon-type="font">
+              stop_screen_share </mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </table>
+    </div>
+  </div>
+
+</div>
+<div class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="modbusController.total" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit (page)="getNext($event)"></mat-paginator>
+</div>
