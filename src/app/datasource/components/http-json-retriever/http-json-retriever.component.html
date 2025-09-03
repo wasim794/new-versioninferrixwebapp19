@@ -110,7 +110,7 @@
       <p>
         <mat-slide-toggle class="side_form_toggle toggle_change  singleToggle marginLeft-10 "  [(ngModel)]="pointLocator.setPointName"  name="setPointName"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}} </mat-slide-toggle>
 
-        <mat-form-field class="form_field marginLeftAlign w-50" appearance="fill">
+        <mat-form-field class="form_field dataTypeHttpJson w-50" appearance="fill">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}</mat-label>
           <mat-select [(ngModel)]="pointLocator.dataType"
                       name="DataType">
