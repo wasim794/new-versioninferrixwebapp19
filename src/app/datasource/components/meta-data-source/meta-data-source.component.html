@@ -133,10 +133,10 @@
                     class="viewButton">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.viewSelectedItems'): ""}}</button>
             <p >
 
-       
+
                 <mat-label> </mat-label>
                 <textarea matInput autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="terminal"  rows="10" class="terminal" [(ngModel)]="metaPointLocatorModel.script" name="script"></textarea>
-          
+
 
             </p>
             <mat-error class="errorAllMSG"><div  *ngFor="let error of scriptError" [hidden]="!messageError">
@@ -220,7 +220,7 @@
                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
               </ng-template>
               <ng-template #updatePoint>
-                <button mat-raised-button class="Update_Button saveButton" (click)="updateDataPoint()">
+                <button matfab class="Update_Button saveButton" (click)="updateDataPoint()">
                    <mat-icon>save_as</mat-icon>
                   {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
                 </button>

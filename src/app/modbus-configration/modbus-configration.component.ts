@@ -17,7 +17,7 @@ export class ModbusConfigrationComponent implements OnInit {
   commonUrl = '/mesh-console/modbus/';
   UIDICTIONARY:any;
 
-  constructor(private router: Router, public dictionaryService: DictionaryService,) {
+  constructor(public commonService: CommonService,private router: Router, public dictionaryService: DictionaryService,) {
   }
 
   Profile = 'profile';
@@ -87,4 +87,9 @@ export class ModbusConfigrationComponent implements OnInit {
         break;
     }
   }
+
+  goBack() {
+    this.commonService.goBackHistory();
+  }
+
 }

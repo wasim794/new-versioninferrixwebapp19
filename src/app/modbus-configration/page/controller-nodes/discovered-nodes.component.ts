@@ -31,7 +31,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
   UIDICTIONARY:any;
 
   constructor(public dialog: MatDialog, public modbusController: ModbusControllerService,
-              public dictionaryService: DictionaryService, private commonService:CommonService) {
+              public dictionaryService: DictionaryService, public commonService:CommonService) {
     super();
   }
 
@@ -92,7 +92,9 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
       }
     });
   }
-
+  goBack() {
+    this.commonService.goBackHistory();
+  }
   getNext(event: any) {
     this.limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
@@ -153,7 +155,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
 export class ContentDialog extends UnsubscribeOnDestroyAdapter implements OnInit {
   public UIDICTIONARY: any;
   public command: any = new CommandModel();
-  constructor(private dictionaryService:DictionaryService, public dialogRef: MatDialogRef<ContentDialog>,
+  constructor(public commonService: CommonService, private dictionaryService:DictionaryService, public dialogRef: MatDialogRef<ContentDialog>,
               @Inject(MAT_DIALOG_DATA) public data: any, public modbusController: ModbusControllerService) {
     super();
   }
