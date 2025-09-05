@@ -6,30 +6,35 @@ import {CommonService} from '../../../../services/common.service';
 import {DictionaryService} from "../../../../core/services/dictionary.service";
 import {ConfigProfileComponent} from '../config-profile.component';
 import {ModbusQueryService} from "../../../service/modbus-query.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [ModbusQueryService, CommonService, DictionaryService],
   selector: 'app-config-form',
   templateUrl: './config-form.component.html',
   styleUrls: []
 })
 export class ConfigFormComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   @Output() sidebarClose: EventEmitter<any> = new EventEmitter<any>();
-  errorMsg: string;
+  errorMsg!: any;
   configList: any = new ModbusQueryModel();
   selectedData: any;
-  condition: boolean;
-  pollingCondition: boolean;
-  permissions: [];
+  condition!: boolean;
+  pollingCondition!: boolean;
+  permissions!: [];
   deviceTypeKey: any = [];
   atributeTypeKey: any = [];
-  readPermission: [];
-  editPermission: [];
-  isEdit: boolean;
-  configFormError = [];
+  readPermission!: [];
+  editPermission!: [];
+  isEdit!: boolean;
+  configFormError: any = [];
   saveSuccessMsg = 'Saved successfully';
   updateSuccessMsg = 'Updated successfully';
   UIDICTIONARY:any;
-  configListName:boolean;
+  configListName!:boolean;
 
   constructor(private modbusQueryService: ModbusQueryService, private commonService: CommonService, public dictionaryService: DictionaryService, public configpro: ConfigProfileComponent) {
     super();
@@ -50,7 +55,7 @@ export class ConfigFormComponent extends UnsubscribeOnDestroyAdapter implements 
     ));
   }
 
-  getConfigList(id) {
+  getConfigList(id: any) {
     this.subs.add(this.modbusQueryService.getById(id).subscribe(data => {
       this.configList = data;
       this.displayPermissions();
@@ -70,18 +75,18 @@ export class ConfigFormComponent extends UnsubscribeOnDestroyAdapter implements 
     this.editPermission = editPermission.split(',');
   }
 
-  getDeviceType(id) {
+  getDeviceType(id: any) {
     this.subs.add(this.modbusQueryService.getDeviceTypes().subscribe(data => {
         const obj = data;
-        this.deviceTypeKey = Object.keys(obj).map(key => ({type: key, value: obj[key]}));
+        // this.deviceTypeKey = Object.keys(obj).map(key => ({type: key, value: obj[key]}));
       },
     ));
   }
 
-  getAttributeType(key) {
+  getAttributeType(key: any) {
     this.subs.add(this.modbusQueryService.getDeviceTypeAttributes(key).subscribe(data => {
         const obj = data;
-        this.atributeTypeKey = Object.keys(obj).map(key => ({type: key, value: obj[key]}));
+        // this.atributeTypeKey = Object.keys(obj).map(key => ({type: key, value: obj[key]}));
       },
     ));
   }
@@ -101,7 +106,7 @@ export class ConfigFormComponent extends UnsubscribeOnDestroyAdapter implements 
     this.pollingCondition = true;
   }
 
-  getConfigListReset(id) {
+  getConfigListReset(id: any) {
     this.readPermission = [];
     this.editPermission = [];
     this.configList = new ModbusQueryModel();

@@ -2,13 +2,13 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {EnvService} from "../../core/services";
 import {throwError} from "rxjs";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {ArrayWithTotalModel} from "../../core/models";
 import {catchError, map} from "rxjs/operators";
 import {ModbusDeviceDetailsModel} from "../models";
 
 class ModbusDevice {
-  id: string;
+  id!: string;
 
   toJson() {
 
@@ -25,7 +25,7 @@ export class ModbusDeviceDetailService {
   ) {}
 
   private modbusDeviceUrl = '/v2/modbus/device';
-  private _total: number;
+  private _total!: number;
 
   get total(): number {
     return this._total;

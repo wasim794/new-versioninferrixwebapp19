@@ -4,14 +4,19 @@ import { ModbusDataModel } from "../../../../models";
 import { CommonService } from "../../../../../services/common.service";
 import { ModbusDeviceDetailService } from "../../../../service/modbus-device-detail.service";
 import {DictionaryService} from "../../../../../core/services/dictionary.service";
+import { CommonModule } from "@angular/common";
+import { MatModuleModule } from "../../../../../common/mat-module";
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [ModbusDeviceDetailService, CommonService, DictionaryService],
   selector: "app-copy-modbus",
   templateUrl: "./copy-modbus.component.html",
   styleUrls: [],
 })
 export class CopyModbusComponent implements OnInit {
-  model: ModbusDataModel;
+  model!: ModbusDataModel;
   id: any;
   @Output() addedSavedDatasource = new EventEmitter<any>();
   @Output() addedUpdatedDatasource = new EventEmitter<any>();
@@ -38,7 +43,7 @@ export class CopyModbusComponent implements OnInit {
     this.copyType = this.data.copyData.type;
   }
 
-  CopyData(xid) {
+  CopyData(xid: any) {
     let param = "";
     if (this.copyName) {
       param = param + "copyName=" + this.copyName;
@@ -65,7 +70,7 @@ export class CopyModbusComponent implements OnInit {
           );
           return;
         }
-        error.result.message.forEach((value) => {
+        error.result.message.forEach((value: any) => {
           const typeCopy = { nameType: this.copyType };
           const returnedTarget = Object.assign(value, typeCopy);
           this._commonService.notification(

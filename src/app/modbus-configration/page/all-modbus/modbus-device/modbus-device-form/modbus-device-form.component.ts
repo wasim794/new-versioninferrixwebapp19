@@ -9,12 +9,18 @@ import { UnsubscribeOnDestroyAdapter } from "../../../../../common/Unsubscribe-a
 import { CommonService } from "../../../../../services/common.service";
 import { ModbusDeviceDetailService } from "../../../../service/modbus-device-detail.service";
 import { ModbusDeviceAttributesService } from "../../../../service/modbus-device-attributes.service";
-import { FormArray, FormGroup, FormBuilder, FormControl } from "@angular/forms";
+import { FormArray, FormGroup, FormBuilder, FormControl, ReactiveFormsModule } from "@angular/forms";
 import { DictionaryService } from "../../../../../core/services/dictionary.service";
 import {forkJoin, Observable} from "rxjs";
 import { map, startWith } from "rxjs/operators";
+import { CommonModule } from "@angular/common";
+import { MatModuleModule } from "../../../../../common/mat-module";
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule, ReactiveFormsModule, MatChipsModule],
+  providers: [ModbusDeviceDetailService, CommonService, DictionaryService],
   selector: "app-modbus-device-form",
   templateUrl: "./modbus-device-form.component.html",
   styleUrls: [],
@@ -29,24 +35,24 @@ export class ModbusDeviceFormComponent
   readPermission = [];
   limit = 50;
   offset = 0;
-  public messageError: boolean;
+  public messageError!: boolean;
   public ListError: any;
   saveMessage = "Save Successfully";
   updateMessage = "Update Successfully";
   isEdit: boolean = false;
-  attributeValue = [];
+  attributeValue: any = [];
   modbusQueryData: any = new ModbusQueryData(<any>[]);
   modbusData: any = ModbusDataModel;
-  public detailNameForm: FormGroup;
+  public detailNameForm!: FormGroup;
   combinedObject: any;
   fields: any[] = [];
   options: any[] = [];
   myControl = new FormControl();
-  filteredOptions: Observable<any[]>;
+  filteredOptions!: Observable<any[]>;
   selectedOptions: any[] = [];
   private convertValueToString: any;
   UIDICTIONARY:any;
-  modbusDeviceName:boolean;
+  modbusDeviceName!:boolean;
 
   constructor(
     private commonService: CommonService,
@@ -103,7 +109,7 @@ export class ModbusDeviceFormComponent
     const objects = [option];
     // console.log(objects, this.modbusDevice.attributes);
 
-    const remainingIds = this.modbusDevice.attributes.filter(id => !objects.some(obj => obj.id === id));
+    const remainingIds = this.modbusDevice.attributes.filter((id: any) => !objects.some(obj => obj.id === id));
     // console.log(remainingIds);
     this.modbusDevice.attributes = remainingIds;
 
@@ -216,7 +222,7 @@ export class ModbusDeviceFormComponent
     );
   }
 
-  showData(event) {
+  showData(event: any) {
     this.isEdit = false;
     this.selectedOptions=[];
     this.subs.add(
@@ -234,7 +240,7 @@ export class ModbusDeviceFormComponent
     );
   }
 
-  addNewMain(event) {
+  addNewMain(event: any) {
     this.isEdit = true;
     this.modbusDeviceName = false;
     this.modbusDevice = new ModbusDeviceAttributesModel(<any>[]);

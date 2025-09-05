@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ModbusDeviceAttributesModel, ModbusQueryData, ModbusDataModel, ModbusQueryModel} from '../../../../models';
 import {UnsubscribeOnDestroyAdapter} from '../../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {CommonService} from '../../../../../services/common.service';
@@ -7,6 +7,8 @@ import {DATA_TYPES} from '../../../../../common/static-data/static-data';
 import {POINT_SIZE, FUNCTION_CODE} from '../../../../data/dropdown.data';
 import {ModbusDeviceAttributesService} from '../../../../../modbus-configration';
 import {DictionaryService} from "../../../../../core/services/dictionary.service";
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../../../common/mat-module';
 
 export interface IntStringPair {
   key: number;
@@ -14,19 +16,22 @@ export interface IntStringPair {
 }
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule, ReactiveFormsModule],
+  providers:[ModbusDeviceAttributesService, CommonService, DictionaryService],
   selector: 'app-modbus-attribute-form',
   templateUrl: './modbus-attribute-form.component.html',
   styleUrls: []
 })
 export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  public detailNameForm: FormGroup;
-  public listDataForm: FormArray
-  public detailKeyValuePair:IntStringPair[];
+  public detailNameForm:any= FormGroup;
+  public listDataForm!: FormArray
+  public detailKeyValuePair!:IntStringPair[];
   @Output() closeSidebar: EventEmitter<any> = new EventEmitter<any>();
   modbusDeviceAttributes: any = new ModbusDeviceAttributesModel(<any>[]);
   modbusQueryData: any = new ModbusQueryData(<any>[]);
   modbusData:any= ModbusDataModel;
-  QueryDataFunction: boolean;
+  QueryDataFunction!: boolean;
   fields: any[] = [];
   editPermission = [];
   readPermission = [];
@@ -34,14 +39,14 @@ export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter im
   pointSize = POINT_SIZE;
   functionCodes = FUNCTION_CODE;
   convertObjects:any;
-  public messageError: boolean;
+  public messageError!: boolean;
   public ListError: any;
   saveMessage  = "Save Successfully";
   updateMessage  = "Update Successfully";
   combinedObject:any;
   isEdit: boolean=false;
   arrayDataPush:any;
-  modbusAttr:boolean;
+  modbusAttr!:boolean;
   UIDICTIONARY:any;
 
   constructor( private fb: FormBuilder, private commonService: CommonService,
@@ -65,7 +70,7 @@ export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter im
     detailNameSetting: this.fb.array([this.createArrayForm(1)]),
   });
 }
-  createArrayForm(index): FormGroup {
+  createArrayForm(index: any): FormGroup {
     return this.fb.group({
       key:'',
       pointName: '',
@@ -104,10 +109,10 @@ export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter im
     this.PermissionToModel();
     this.detailKeyValuePair = this.detailNameForm.value.detailNameSetting;
     const obj = this.detailKeyValuePair;
-    const allObj = Object.keys(obj).map(key => ({key: obj[key].key, value: obj[key]}));
+    const allObj = Object.keys(obj).map((key:any) => ({key: obj[key].key, value: obj[key]}));
     this.convertObjects = allObj.reduce((acc, cur) => {
-    delete cur.value.key;
-    acc[cur.key] = cur.value;
+    // delete cur.value.key;
+    // acc[cur.key] = cur.value;
     this.combinedObject = Object.assign(acc);
     return acc;
     }, {});
@@ -124,7 +129,7 @@ export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter im
     }));
   }
 
-  showData(event){
+  showData(event: any){
     this.modbusAttr = true;
     this.arrayDataPush = [];
     this.appendForms();
@@ -158,10 +163,10 @@ export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter im
     this.PermissionToModel();
     this.detailKeyValuePair = this.detailNameForm.value.detailNameSetting;
     const obj = this.detailKeyValuePair;
-    const allObj = Object.keys(obj).map(key => ({key: obj[key].key, value: obj[key]}));
+    const allObj = Object.keys(obj).map((key: any) => ({key: obj[key].key, value: obj[key]}));
     this.convertObjects = allObj.reduce((acc, cur) => {
-      delete cur.value.key;
-      acc[cur.key] = cur.value;
+      // delete cur.value.key;
+      // acc[cur.key] = cur.value;
       this.combinedObject = Object.assign(acc);
       return acc;
     }, {});
@@ -185,7 +190,7 @@ export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter im
     }
   }
 
-  addNewMain(event) {
+  addNewMain(event: any) {
     this.isEdit = true;
     this.modbusAttr = false;
     this.modbusDeviceAttributes=new ModbusDeviceAttributesModel(<any>[]);
@@ -205,7 +210,7 @@ export class ModbusAttributeFormComponent extends UnsubscribeOnDestroyAdapter im
     }, 3000);
   }
 
-  queryData(e) {
+  queryData(e: any) {
     e.checked === true ? this.QueryDataFunction = true : this.QueryDataFunction = false;
   }
 

@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {EnvService} from "../../core/services";
 import {throwError} from "rxjs";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {ArrayWithTotalModel} from "../../core/models";
 import {catchError, map} from "rxjs/operators";
 import {ModbusDeviceAttributesModel} from "../models";
@@ -12,14 +12,14 @@ import {ModbusDeviceAttributesModel} from "../models";
 })
 export class ModbusDeviceAttributesService {
   pointDetails: any;
-  editPermission: string;
+  editPermission!: string;
   constructor(
     private http: HttpClient,
     private env: EnvService
   ) {}
 
   private modbusDeviceAttributeUrl = '/v2/modbus/device/attributes';
-  private _total: number;
+  private _total!: number;
 
   get total(): number {
     return this._total;
@@ -55,7 +55,7 @@ export class ModbusDeviceAttributesService {
     return this.http
     .get<ModbusDeviceAttributesModel>(`${this.env.apiUrl}${this.modbusDeviceAttributeUrl}/${id}`)}
 
-  public update(resource: Partial<any> & { toJson: () => ModbusDeviceAttributesModel }): Observable<ModbusDeviceAttributesModel> {
+  public update(resource: any): Observable<ModbusDeviceAttributesModel> {
     return this.http
     .put<ModbusDeviceAttributesModel>(`${this.env.apiUrl}${this.modbusDeviceAttributeUrl}/${resource.id}`, resource)
     .pipe(map((result) => new ModbusDeviceAttributesModel(result)), catchError(ModbusDeviceAttributesService.handleError));

@@ -47,18 +47,18 @@
       </mat-select>
     </mat-form-field>
     <br>
-    <mat-chip-list>
+    <!-- <mat-chip-list>
       <mat-chip *ngFor="let option of selectedOptions" (removed)="removeOption(option)">
         {{ option.name }}
         <button matChipRemove [attr.aria-label]="'remove ' + option">
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-chip>
-    </mat-chip-list>
+    </mat-chip-list> -->
     <br>
-    <button mat-raised-button *ngIf="!isEdit" align="end" class="updateButton" (click)="updateDeviceList()">
+    <button mat-raised-button *ngIf="!isEdit"  class="updateButton" (click)="updateDeviceList()">
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update')|  uppercase) : ""}}
     </button>
-    <button *ngIf="isEdit" (click)="save()" mat-raised-button class="saveButton" align="end"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save')|  uppercase) : ""}}</button>
+    <button *ngIf="isEdit" (click)="save()" mat-raised-button class="saveButton"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save')|  uppercase) : ""}}</button>
   </form>
 </mat-card>

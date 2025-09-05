@@ -16,6 +16,18 @@ export const modbusRoutes: Routes = [
   {
     path:'discovered',
     loadComponent: () => import('./page/controller-nodes/discovered-nodes.component').then(m => m.DiscoveredNodesComponent),
+  },
+  {
+    path:'attribute',
+    loadComponent: () => import('./page/all-modbus/modbus-device-attributes/modbus-device-attributes.component').then(m => m.ModbusDeviceAttributesComponent),
+  },
+  {
+    path:'device',
+    loadComponent: () => import('./page/all-modbus/modbus-device/modbus-device.component').then(m => m.ModbusDeviceComponent),
+  },
+  {
+    path:'profile',
+    loadComponent: () => import('./page/config-profile/config-profile.component').then(m => m.ConfigProfileComponent),
   }
   
 

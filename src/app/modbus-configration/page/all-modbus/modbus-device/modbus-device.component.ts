@@ -12,8 +12,13 @@ import { ModbusDeviceFormComponent } from "./modbus-device-form/modbus-device-fo
 import { CommonService } from "../../../../services/common.service";
 import { CopyModbusComponent } from "./copy-modbus/copy-modbus.component";
 import { MatDialog } from "@angular/material/dialog";
+import { CommonModule } from "@angular/common";
+import { MatModuleModule } from "../../../../common/mat-module";
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule ,ModbusDeviceFormComponent],
+  providers: [ModbusDeviceDetailService, CommonService, DictionaryService],
   selector: "app-modbus-device",
   templateUrl: "./modbus-device.component.html",
   styleUrls: [],
@@ -23,16 +28,16 @@ export class ModbusDeviceComponent
   implements OnInit
 {
   @ViewChild(ModbusDeviceFormComponent)
-  private modbusDevice: ModbusDeviceFormComponent;
+  private modbusDevice!: ModbusDeviceFormComponent;
   displayedColumns: string[] = ["select", "position", "name", "actions"];
   dataSources: any = new MatTableDataSource<ModbusDeviceDetailsModel>();
-  selection = new SelectionModel<string>(true, []);
-  @ViewChild('input') nameInput: ElementRef;
+  selection: any = new SelectionModel<string>(true, []);
+  @ViewChild('input') nameInput!: ElementRef;
   limit = 10;
   offset = 0;
   pageSizeOptions: number[] = [10, 12, 16, 20];
   copyMsg = "Copy Successfully";
-  @ViewChild("modbusDevice") public Sidebar: MatSidenav;
+  @ViewChild("modbusDevice") public Sidebar!: MatSidenav;
   private deleteMsg = "delete successful";
   UIDICTIONARY:any;
 
@@ -58,13 +63,13 @@ export class ModbusDeviceComponent
     this.modbusDevice.addNewMain(event);
   }
 
-  sidebarclose(event) {
+  sidebarclose(event: any) {
     this.Sidebar.close();
     const param = "limit(" + this.limit + "," + this.offset + ")&sort(+name)";
     this.getModbusDevice(param);
   }
 
-  getNext(event) {
+  getNext(event: any) {
     this.limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = "limit(" + this.limit + "," + this.offset + ")&sort(+name))";
@@ -79,12 +84,12 @@ export class ModbusDeviceComponent
     );
   }
 
-  showUpdate(event) {
+  showUpdate(event: any) {
     this.modbusDevice.showData(event);
     this.Sidebar.open();
   }
 
-  delete(element) {
+  delete(element: any) {
     this.commonService
       .openConfirmDialog("Would you like to delete", element.name)
       .afterClosed()
@@ -98,13 +103,14 @@ export class ModbusDeviceComponent
               this.commonService.notification(this.deleteMsg);
             })
           );
+          return true;
         } else {
           return false;
         }
       });
   }
 
-  applyFilter(event) {
+  applyFilter(event: any) {
     if (event.key === "Enter" || event.type === "click") {
       const filterValue = this.nameInput.nativeElement.value;
       let param;
@@ -126,7 +132,7 @@ export class ModbusDeviceComponent
       this.dataSources = data;
       return;
     }
-    this.dataSources = data.sort((a, b) => {
+    this.dataSources = data.sort((a: any, b: any) => {
       const isAsc = sort.direction === "asc";
       switch (sort.active) {
         case "name":
@@ -149,7 +155,7 @@ export class ModbusDeviceComponent
     return this.selection.isSelected(node.xid);
   }
 
-  addDataPointXid(event, dataPoint) {
+  addDataPointXid(event: any, dataPoint: any) {
     if (event.checked) {
       this.selection.select(dataPoint.xid);
     } else {
@@ -162,11 +168,11 @@ export class ModbusDeviceComponent
       .openConfirmDialog("Would you like to copy", params.name)
       .afterClosed()
       .subscribe((response) => {
-        if (response) {
-
-        } else {
-          return false;
-        }
+        // if (response) {
+        // return true;
+        // } else {
+        //   return false;
+        // }
 
         this.dialog
           .open(CopyModbusComponent, {
@@ -190,7 +196,7 @@ export class ModbusDeviceComponent
       this.selection.clear();
       return;
     }
-    this.dataSources.forEach((value) =>
+    this.dataSources.forEach((value: any) =>
       this.selection.select(value.xid)
     );
   }
