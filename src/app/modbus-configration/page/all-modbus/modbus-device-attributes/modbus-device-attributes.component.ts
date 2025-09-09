@@ -215,5 +215,8 @@ export class ModbusDeviceAttributesComponent extends UnsubscribeOnDestroyAdapter
     let param = 'limit(' + this.limit + ',' + this.offset + ')';
     this.getModbusAttributeDevice(param);
   }
+  goBack() {
+    this._commonService.goBackHistory();
+  }
 
 }

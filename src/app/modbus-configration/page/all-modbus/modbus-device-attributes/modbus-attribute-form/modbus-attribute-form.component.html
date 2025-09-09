@@ -72,17 +72,17 @@
         <mat-grid-tile class="registerAddress">
           <mat-form-field appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.placeholder.registerAddress'): ""}}</mat-label>
-            <textarea matInput type="text" class="registerAddressInput"  pattern="[0-9\.]+" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46" formControlName="key" name="key"  ></textarea>
+            <textarea matInput type="text" cols="38" rows="4"  pattern="[0-9\.]+" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46" formControlName="key" name="key"  ></textarea>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
 
-            <mat-form-field class="mt-10 marginLeft-10" appearance="fill">
+            <mat-form-field class="mt-10 marginLeft-10 modbusAttributeInput" appearance="fill">
               <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.pointName'): ""}}</mat-label>
               <input matInput type="text" formControlName="pointName" name="pointName">
             </mat-form-field>
 
-            <mat-form-field class="maxWidth-23 marginLeft-10" appearance="fill">
+            <mat-form-field class="maxWidth-23 marginLeft-10 modbusAttributeInput" appearance="fill">
               <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.pointSize'): ""}}
               </mat-label>
               <mat-select matInput name="pointSize" formControlName="pointSize">
@@ -90,7 +90,7 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="maxWidth-23 marginLeft-10" appearance="fill">
+            <mat-form-field class="maxWidth-23 marginLeft-10 modbusAttributeInput" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.dataType'): ""}}</mat-label>
               <mat-select matInput name="dataType" formControlName="dataType">
                 <mat-option *ngFor="let data of DataTypes" [value]="data.key">{{data.value}}</mat-option>
@@ -106,10 +106,13 @@
     </form>
      <mat-icon class="commonAddMoreAlls add-plus-btn addIcons" (click)="addField()">add_circle</mat-icon>
 <br>
-    <button mat-raised-button  *ngIf="!isEdit" align="end" class="updateButton" (click)="updateDeviceList()">
+    <button matfab  *ngIf="!isEdit" align="end" class="updateButton saveButton" (click)="updateDeviceList()">
+      <mat-icon>save_as</mat-icon>
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update')|  uppercase) : ""}}
     </button>
-    <button *ngIf="isEdit" (click)="save()" mat-raised-button class="saveButton"
-            align="end"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save')|  uppercase) : ""}}</button>
+    <button *ngIf="isEdit" (click)="save()" matfab class="saveButton"
+            align="end">
+      <mat-icon>save</mat-icon>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save')|  uppercase) : ""}}</button>
   </form>
 </mat-card>
