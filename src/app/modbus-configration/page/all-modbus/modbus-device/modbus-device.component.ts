@@ -200,4 +200,9 @@ export class ModbusDeviceComponent
       this.selection.select(value.xid)
     );
   }
+  goBack() {
+    this.commonService.goBackHistory();
+  }
+
+
 }
