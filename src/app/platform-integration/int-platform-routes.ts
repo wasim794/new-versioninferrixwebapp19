@@ -1,27 +1,3 @@
-// import {NgModule} from '@angular/core';
-// import {RouterModule, Routes} from '@angular/router';
-// import {
-//   MqttConfigurationComponent, ProvisionDevicesComponent,
-//   UnprovisionedDevicesComponent, ServerDetailListComponent
-// } from './pages';
-// import {DeviceProfileComponent} from './pages';
-
-// const routes: Routes = [
-//   {path: 'platform-integration/mqtt', component: MqttConfigurationComponent},
-//   {path: 'platform-integration/un-provision', component: UnprovisionedDevicesComponent},
-//   {path: 'platform-integration/provision', component: ProvisionDevicesComponent},
-//   {path: 'platform-integration/serverDetails', component: ServerDetailListComponent},
-//   {path: 'platform-integration/deviceConfiguration', component: DeviceProfileComponent}
-// ];
-
-// @NgModule({
-//   imports: [RouterModule.forChild(routes)],
-//   exports: [RouterModule]
-// })
-// export class IntPlatformRoutingModule {
-// }
-
-
 import { Routes } from '@angular/router';
 
 export const platformIntegrationRoutes: Routes = [
@@ -33,11 +9,7 @@ export const platformIntegrationRoutes: Routes = [
       {
         path: 'detail', // Matches /datasource/list
        loadComponent: () => import('./platform-integration.component').then(m => m.PlatformIntegrationComponent),
-      },
-    //   {
-    //     path: 'datapoint/detail', // Matches /datasource/datapoint/detail
-    //     loadComponent: () => import('../datapoint/datapoint-detail/datapoint-detail.component').then(m => m.DatapointDetailComponent),
-    //   },
+      }
     ],
   },
   {

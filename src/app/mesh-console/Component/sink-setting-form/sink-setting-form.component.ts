@@ -32,7 +32,7 @@ export class SinkSettingFormComponent extends UnsubscribeOnDestroyAdapter implem
   }
 
   ngOnInit(): void {
-    this.dictionaryService.getUIDictionary('meshConsole').subscribe();
+    
     this.subs.add(forkJoin([
       this._service.getRoles(),
       this._service.getAddress(),
@@ -46,7 +46,9 @@ export class SinkSettingFormComponent extends UnsubscribeOnDestroyAdapter implem
         this.channel = result[3].confirmMessage.attributeValue;
         this.role = result[4].confirmMessage.attributeValue;
         this.isStackRunning = true;
+        console.log(this.roles, this.address, this.network, this.channel, this.role);
       }));
+      this.dictionaryService.getUIDictionary('meshConsole').subscribe();
   }
 
   pushAddress(): void {
