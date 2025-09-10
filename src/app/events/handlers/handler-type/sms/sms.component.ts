@@ -32,7 +32,7 @@ import { MatModuleModule } from '../../../../common/mat-module';
 @Component({
   standalone: true,
   imports:[CommonModule, MatModuleModule, EventTypeTreeViewComponent, BasicFormComponent],
-  providers:[EventHandlerService, DictionaryService],
+  providers:[EventHandlerService, DictionaryService, CommonService, UsersService],
   selector: 'app-sms',
   templateUrl: './sms.component.html',
   styleUrls: []

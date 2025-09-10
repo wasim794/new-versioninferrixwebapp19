@@ -1,0 +1,52 @@
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+    fxLayoutAlign="center">
+    <div fxFlex="100%">
+        <mat-toolbar>
+            <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+                <i class="fa fa-chevron-left"></i>
+            </mat-icon>
+            <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.mqttConfiguration'): ""}}</span>
+        </mat-toolbar>
+    </div>
+</div>
+<div class="cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
+    fxLayoutAlign="left">
+    <div fxFlex="22%" class="card_margin" *ngFor="let list of listData">
+        <mat-card class="all_card matCardAll">
+            <mat-card-header>
+                <mat-card-title class="cardTitleName">{{list.userName}}</mat-card-title>
+                <div class="toggle_right toggle_change">
+                    <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+                                      (change)="mqttStatus($event)" [(ngModel)]="list.autoReconnect">
+                    </mat-slide-toggle>
+                </div>
+            </mat-card-header>
+            <mat-card-content>
+                <p></p>
+            </mat-card-content>
+            <mat-card-actions class="mat_right_icons">
+                <mat-icon aria-hidden="false" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}}" class="allIcons" aria-label="edit icon" (click)="mqttUser(list)">
+                    add
+                </mat-icon>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <div fxFlex="80%" [hidden]="!zeroRecods" class="card_margin dataMainEmpty">
+        <mat-card class="dataEmpty">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.messages.noRecordsAvailable'): ""}}</mat-card>
+    </div>
+</div>
+
+<mat-drawer-container class="sidebar_position" autosize disableClose>
+    <mat-drawer #mqttDrawer class="singleSidebars" mode="push" position="end">
+        <mat-icon class=" allCloseOptions" aria-hidden="false" id="datasource_side" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ''}}" (click)="allClose($event)"
+            aria-label="close icon">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ""}}
+        </mat-icon>
+        <button (click)="allClose($event)" mat-raised-button class="cancelAllData top-54">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase): ""}}
+        </button>
+        <app-mqtt-form (allClose)="allClose($event)">
+        </app-mqtt-form>
+    </mat-drawer>
+</mat-drawer-container>

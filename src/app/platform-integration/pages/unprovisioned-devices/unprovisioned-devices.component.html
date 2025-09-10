@@ -1,0 +1,102 @@
+<div class="container headinglayout mainProvisionGateway" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+  fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.unprovisionedDevices'): ""}} </span>
+      <div class="containerInfo">
+        <button mat-raised-button align="center" (click)="provisionGateway();" class="deviceProfileButton">
+          Provision Gateway
+        </button>
+        <mat-form-field>
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}} </mat-label>
+          <input matInput name="searchBacnetList" (keyup)="applyFilter($event)" placeholder="" #input
+            [(ngModel)]="search">
+          <mat-icon class="Input_search" (click)="applyFilter($event)" matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+        <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon">
+          info_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="container headinglayout secondGatewayMain" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+  fxLayoutAlign="center">
+
+  <div fxFlex="100%" class="main_db cardlayout">
+    <div class="container-size OverflowScroll">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 addCn tableHeader40 tableUnprovision" style="width:100%" matSort>
+        <ng-container matColumnDef="position" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces " *matHeaderCellDef style="max-width: 5% !important;">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReduces maxWidth-5" *matCellDef="let element; let i = index;" style="max-width: 5% !important;">
+            {{i + 1}}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="DeviceName" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReducesTwo maxWidth-85" *matHeaderCellDef
+            mat-sort-header style="max-width: 85% !important;">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.deviceName'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReducesTwo maxWidth-85" *matCellDef="let element" style="max-width: 85% !important;"> {{element.name}}
+
+          </mat-cell>
+        </ng-container>
+
+        <!-- Device type -->
+        <ng-container matColumnDef="DeviceType" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReducesTwo maxWidth-85" *matHeaderCellDef mat-sort-header style="max-width: 85% !important;">
+            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.placeholder.slBus.deviceType').substring(7)): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReducesTwo maxWidth-85" *matCellDef="let element" style="max-width: 85% !important;">
+            <input type="text"
+                   class="autoSearchInput"
+                   placeholder="Device Type"
+                   matInput
+                   [formControl]="myControl"
+                   (input)="onInputChange($event)"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+              <mat-option  *ngFor="let option of queryList" (onSelectionChange)="deviceChange(option, $event)" [value]="option.name">
+                {{ option.name }}
+              </mat-option>
+            </mat-autocomplete>
+
+
+          </mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Actions" class="rowMat">
+          <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces maxWidth-10" *matHeaderCellDef mat-sort-header style="max-width: 10% !important;">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}
+          </mat-header-cell>
+          <mat-cell class="commonReducesSize commonSingleReduces maxWidth-10" *matCellDef="let element" style="max-width: 10% !important;">
+            <button class="unprovisionButtons"  (click)="transferUnprovisionedData(element)" [disabled]="!isDisabled"
+                    title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.provisionedDevices').substring(0,9): ''}}" mat-fab  aria-label="low_priority icon">
+            <mat-icon class="allIcons"  matSuffix >
+              low_priority
+            </mat-icon>
+              </button>
+
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="service.total > limit" class="pagination_fixed unPrnPag">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="service.total" [pageSizeOptions]="pageSizeOptions"
+    [pageSize]=limit (page)="getNextPage($event)"></mat-paginator>
+</div>

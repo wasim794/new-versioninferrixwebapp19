@@ -58,6 +58,14 @@ export const meshConsoleRoutes: Routes = [
   {
     path:'modbus',
     loadChildren: () => import('../modbus-configration/modbus-config-routes').then(m => m.modbusRoutes),
+  },
+  {
+    path:'thermostat',
+    loadComponent: () => import('./pages/thermostat/thermostat.component').then(m => m.ThermostatComponent),
+  },
+  {
+    path:'tof',
+    loadComponent: () => import('./pages/tof/tof.component').then(m => m.TofComponent),
   }
 
  

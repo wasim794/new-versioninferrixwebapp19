@@ -1,0 +1,81 @@
+<mat-card class="form_cards">
+  <!-- Title of an Card -->
+  <mat-toolbar class="mat-toolbar_all">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.mqttConfiguration'): ""}}
+    </mat-card-title>
+    <span class="spacer"></span>
+
+  </mat-toolbar>
+</mat-card>
+<mat-card-content class="allFormedit">
+  <div id="errorMsg">
+    <mat-card class="validation-error">
+      <li *ngFor="let error of mqttListError">{{error.property}} : {{error.message}}</li>
+    </mat-card>
+  </div>
+  <form>
+    <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.clientId'): ""}}
+      </mat-label>
+      <input matInput [(ngModel)]="mqttConnections.clientId" class="form-control" name="clint_id" required>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.brokerUri'): ""}}
+      </mat-label>
+      <input matInput class="form-control" name="broken_Url" [(ngModel)]="mqttConnections.brokerUri" required>
+    </mat-form-field>
+    <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.username'): ""}}
+      </mat-label>
+      <input matInput [(ngModel)]="mqttConnections.userName" class="form-control" name="username" required>
+
+    </mat-form-field>
+    <mat-form-field class="form_field w-50" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.password'): ""}}
+      </mat-label>
+      <input matInput [(ngModel)]="mqttConnections.userPassword" class="form-control" type="password" name="password" required [maxLength]="20">
+    </mat-form-field>
+    <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.keepAliveInterval'): ""}}
+      </mat-label>
+      <input matInput  [(ngModel)]="mqttConnections.keepAliveInterval" class="form-control" name="interval" required type="text">
+
+    </mat-form-field>
+    <mat-form-field class="form_field w-50 " appearance="fill">
+      <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.connectionTimeout'): ""}}</mat-label>
+      <input matInput [(ngModel)]="mqttConnections.connectionTimeout" class="form-control" name="connection_timeout" required type="text">
+
+    </mat-form-field>
+    <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.topicFilters'): ""}}
+      </mat-label>
+      <input matInput [(ngModel)]="mqttConnections.topicFilters" class="form-control" type="topicfilter" name="topicfilter" required>
+    </mat-form-field>
+
+    <mat-slide-toggle name="auto_response" class="toggle_change w-50 marginLeft-10" [(ngModel)]="mqttConnections.autoReconnect">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.autoReconnect'): ""}}
+    </mat-slide-toggle>
+    <mat-slide-toggle name="close_session" class="toggle_change w-50 marginLeft-10" [(ngModel)]="mqttConnections.cleanSession">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.cleanSession'): ""}}
+    </mat-slide-toggle>
+    <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+      <mat-label>
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.qosType'): ""}}
+      </mat-label>
+      <mat-select [(ngModel)]="mqttConnections.qosType" class="form-control" name="qosType">
+        <mat-option *ngFor="let item of qosType" [value]="item.key">{{item.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+<br>
+    <button #saveButton mat-raised-button class="saveButton" (click)="saveMqtt()">
+      {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+    </button>
+  </form>
+</mat-card-content>

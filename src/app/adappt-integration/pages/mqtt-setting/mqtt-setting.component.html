@@ -1,0 +1,115 @@
+
+<mat-card class="form_cards">
+    <!-- Title of an Card -->
+    <mat-toolbar class="mat-toolbar_all">
+      <mat-card-title class="sidebar_form_title">{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.title.mqttConfiguration'): ""}} </mat-card-title>
+    </mat-toolbar>
+    <mat-card-content class=" ">
+      <form class="sidebar-form-style">
+        <div class="displayFlex ">
+              <mat-form-field class="form_field" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.brokerUrl'): ""}}</mat-label>
+                  <input matInput  [(ngModel)]="mqtt.brokerUri" name="brokerUri" type="text" >
+                </mat-form-field>
+
+                <mat-slide-toggle appearance="fill" class="toggle_change singlerightToggle minheight-36"
+                name="awsIot" [(ngModel)]="mqtt.awsIot"  (change)="useCertificate($event)">
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.useCertificate'): ""}}
+               </mat-slide-toggle>
+        </div>
+
+        <div class="displayFlex"  *ngIf="!showCertificate else certificates">
+          <mat-form-field class="form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.userName'): ""}}</mat-label>
+            <input matInput [(ngModel)]="mqtt.userName"  name="userName" type="text">
+          </mat-form-field>
+          <mat-form-field class="form_field marginLeft-10" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.password'): ""}}</mat-label>
+            <input matInput [(ngModel)]="mqtt.userPassword"  name="userPassword" type="password">
+          </mat-form-field>
+        </div>
+        <ng-template #certificates>
+            <div class="displayFlex">
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.x509CaCert'): ""}}</mat-label>
+              <textarea matInput [(ngModel)]="mqtt.x509CaCrt"  name="x509CaCrt" rows="10" cols="50"
+                        type="text"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="form_field marginLeft-10" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.x509ClientCert'): ""}}</mat-label>
+              <textarea matInput [(ngModel)]="mqtt.x509ClientCrt"  name="x509ClientCrt" type="text" rows="10"
+                        cols="50"></textarea>
+            </mat-form-field>
+          </div>
+
+            <mat-form-field class="form_field" appearance="fill">
+              <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.privateKey'): ""}}</mat-label>
+              <textarea matInput [(ngModel)]="mqtt.privateKey"  name="privateKey" type="text" rows="10"
+                        cols="50"></textarea>
+            </mat-form-field>
+
+        </ng-template>
+
+        <div class="displayFlex">
+            <mat-form-field class="form_field" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.publishTopic'): ""}}</mat-label>
+                <input matInput [(ngModel)]="mqtt.publishTopic"   name="publishTopic" type="text">
+              </mat-form-field>
+              <mat-form-field class="form_field marginLeft-10" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.subscribeTopic'): ""}}</mat-label>
+                <input matInput  [(ngModel)]="mqtt.subscribeTopic"   name="subscribeTopic" type="text">
+              </mat-form-field>
+        </div>
+        <div class="displayFlex">
+          <mat-form-field class="form_field" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.clientId'): ""}}</mat-label>
+            <input matInput [(ngModel)]="mqtt.clientId"  name="clientId" type="text">
+          </mat-form-field>
+          <mat-form-field class="form_field marginLeft-10" appearance="fill">
+            <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.topicFilter'): ""}}</mat-label>
+            <input matInput [(ngModel)]="mqtt.topicFilters"  name="topicFilters" type="text">
+          </mat-form-field>
+        </div>
+
+        <div class="displayFlex alignItemBaseline adapptMqttGap">
+        <mat-form-field class="form_field" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.keepAliveInterval'): ""}}</mat-label>
+          <input matInput [(ngModel)]="mqtt.keepAliveInterval" name="keepAliveInterval" type="text">
+        </mat-form-field>
+
+        <mat-form-field class="form_field" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.connectionTimeout'): ""}}</mat-label>
+          <input matInput [(ngModel)]="mqtt.connectionTimeout"  name="connectionTimeout" type="text">
+        </mat-form-field>
+        </div>
+        <mat-grid-list class="allGridcheckbox mb-0" cols="2" rowHeight="30px">
+          <mat-grid-tile class="mqttConnect">
+            <mat-slide-toggle appearance="fill" class="toggle_change" [(ngModel)]="mqtt.autoReconnect"
+                              name="autoReconnect">{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.autoReconnect'): ""}}
+            </mat-slide-toggle>
+          </mat-grid-tile>
+          <mat-grid-tile class="mqttConnect">
+
+            <mat-slide-toggle appearance="fill" class="toggle_change marginLeft-20"
+                              [(ngModel)]="mqtt.cleanSession"    name="cleanSession">
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.cleanSession'): ""}}
+            </mat-slide-toggle>
+
+          </mat-grid-tile>
+        </mat-grid-list>
+        <br>
+        <mat-form-field class="form_field max-width" appearance="fill">
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.qosType'): ""}}</mat-label>
+          <mat-select [(ngModel)]="mqtt.qosType"  class="form-control" name="qosType">
+            <mat-option *ngFor="let item of qosType" [value]="item.key">{{item.value}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="layout-field">
+        <button (click)="save()" mat-raised-button class="saveButton "
+        align="end"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase) : ""}}
+</button>
+</div>
+</form>
+</mat-card-content>
+ </mat-card>

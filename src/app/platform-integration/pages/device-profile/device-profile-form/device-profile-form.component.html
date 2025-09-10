@@ -1,0 +1,68 @@
+<mat-card class="form_cards">
+    <!-- Title of an Card -->
+    <mat-toolbar class="mat-toolbar_all">
+        <mat-card-title class=" matCardTitles">
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.deviceConfiguration'): ""}}
+           <small *ngIf="deviceTypesHide">{{deviceTypes.name}}</small>
+        </mat-card-title>
+        <span class="spacer"></span>
+    </mat-toolbar>
+</mat-card>
+<mat-card-content class="form_cards allFormedit">
+
+    <form>
+        <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+            <mat-label>
+
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
+            </mat-label>
+          <input matInput  class="form-control" [(ngModel)]="deviceTypes.name"
+                name="name" type="text" >
+        </mat-form-field>
+
+      <mat-form-field class="form_field w-50 marginLeft-20" appearance="fill">
+        <mat-label>
+          {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}}
+        </mat-label>
+        <mat-select name="type" [(ngModel)]="deviceTypes.type">
+          <mat-option *ngFor="let profileType of profileTypes" [value]="profileType.key">
+            {{profileType.value}} </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+        <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.cols.description'): ""}}
+            </mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5" name="description" [(ngModel)]="deviceTypes.description">{{deviceTypes.description}}</textarea>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 marginLeft-20"  appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.modbus.field.modbusIp.transportType'): ""}}
+            </mat-label>
+           <mat-select name="transportType" [(ngModel)]="deviceTypes.transportType">
+             <mat-option *ngFor="let deviceTransportType of deviceTransportTypes" [value]="deviceTransportType.key">
+               {{deviceTransportType.value}}
+             </mat-option>
+           </mat-select>
+        </mat-form-field>
+        <mat-form-field class="form_field w-50 ml-0" appearance="fill">
+            <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.provisionDeviceKey').substring(0,9): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.textRender.type'): ""}} </mat-label>
+           <mat-select name="provisionType" [(ngModel)]="deviceTypes.provisionType">
+             <mat-option *ngFor="let deviceProfileProvisionType of deviceProfileProvisionTypes" [value]="deviceProfileProvisionType.key">
+                {{deviceProfileProvisionType.value}}
+             </mat-option>
+           </mat-select>
+        </mat-form-field>
+   <br>
+        <button mat-raised-button  *ngIf="!isEdit" align="end" class="updateButton" (click)="updateDeviceList()">
+            {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+        </button>
+        <button mat-raised-button  *ngIf="isEdit" align="end" class="saveButton" (click)="saveDeviceList(mqttIntegration)">
+            {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+        </button>
+    </form>
+</mat-card-content>

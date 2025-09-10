@@ -26,6 +26,10 @@ export const settingsRoutes: Routes = [
   {
     path:'bacnet-device-browser',
     loadComponent: () => import('../bacnet/component/bacnet-device-browser/bacnet-device-browser.component').then(m => m.BacnetDeviceBrowserComponent),
+  },
+  {
+    path:'platform-integration',
+    loadChildren: () => import('../platform-integration/int-platform-routes').then(m => m.platformIntegrationRoutes),
   }
 
 ];

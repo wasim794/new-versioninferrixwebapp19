@@ -1,0 +1,79 @@
+<div class="container " fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.menu.systemSettings.adapptIntegration'): ""}}</span>
+    </mat-toolbar>
+  </div>
+</div>
+
+<div class="cardGap">
+ <!---Mqtt Section--->
+<div fxFlex="22%" class="card_margin">
+    <mat-card class="all_card matCardAll">
+      <mat-card-header>
+        <mat-card-title class="cardTitleName">{{userName}}</mat-card-title>
+        <div class="toggle_right toggle_change">
+          <mat-slide-toggle title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.points.status'): ''}}"
+                            (change)="mqttStatus($event)" [(ngModel)]="mqtt.autoReconnect">
+          </mat-slide-toggle>
+        </div>
+      </mat-card-header>
+      <mat-card-content class="text-center">
+        <mat-icon   class="card-icon-space-size adaptIconAlign " aria-hidden="false"
+        aria-label=" published_with_changes icon">call_split
+  </mat-icon>
+      </mat-card-content>
+      <mat-card-actions class="mat_right_icons">
+        <mat-icon role="img" aria-hidden="false" aria-label="datapoint icon" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.add'): ''}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.title.mqttConfiguration').substring(0,5): ''}}" class="mat-icon notranslate allIcons material-icons mat-icon-no-color" data-mat-icon-type="font" (click) = openSideBar() > add </mat-icon>
+    </mat-card-actions>
+    </mat-card>
+</div>
+
+
+<!---Provision Section-->
+<div fxFlex="22%" class="card_margin">
+    <mat-card class="all_card h-92 matCardAll">
+      <mat-card-header>
+        <mat-card-title class="mat-card-title cardTitleName">{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.title.provisionedDevices'): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="text-center">
+        <mat-icon  (click)="showPages('Provision')" class="card-icon-space-size mat-pointer addCardIconsize adapt-icon" style="color: #ff475d;">low_priority
+        </mat-icon>
+      </mat-card-content>
+      <mat-card-content class="meshMainContent">
+      </mat-card-content>
+    </mat-card>
+</div>
+
+<!--Unprovision Section--->
+<div fxFlex="22%" class="card_margin">
+    <mat-card class="all_card h-92 matCardAll">
+      <mat-card-header>
+        <mat-card-title class="mat-card-title cardTitleName">{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.title.unProvisionedDevices'): ""}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="text-center">
+      <mat-icon   (click)="showPages('Unprovisioned')" class="card-icon-space-size  adaptIconAlign" aria-hidden="false"
+      aria-label=" published_with_changes icon" style="    color: #305680;">devices_fold
+</mat-icon>
+    </mat-card-content>
+      <mat-card-content class="meshMainContent">
+      </mat-card-content>
+    </mat-card>
+</div>
+</div>
+
+<!--mqtt-setting sidebar-->
+<mat-drawer-container class="sidebar_position" autosize disableClose>
+  <mat-drawer #mqtt_setting_form class="sidenav paddingRight" mode="push" position="end">
+    <button mat-raised-button class="cancelAllData top-54" (click) = "sideBarClose(mqttSetting)">
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.httpSender.cancel') | uppercase) : ""}}
+    </button>
+    <app-mqtt-setting (sideBarCloses)="sideBarClose($event)">
+    </app-mqtt-setting>
+  </mat-drawer>
+
+</mat-drawer-container>

@@ -1,0 +1,80 @@
+<div class="container " fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+  <div fxFlex="100%" class="cursorPointer">
+    <mat-toolbar>
+      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}"  onclick="goBack()">
+        <i class="fa fa-chevron-left"></i>
+      </mat-icon>
+      <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.heading.unProvisionedDevices'): ""}}</span>
+      <div class="containerInfo">
+
+        <mat-form-field>
+
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
+          <input matInput name="search"  [(ngModel)]="search"  (keyup)="applyFilter($event)" placeholder="" #input>
+          <mat-icon class="Input_search" (click)="applyFilter($event)" matSuffix>search</mat-icon>
+        </mat-form-field>
+        &nbsp;
+        <mat-icon class="info_position" aria-hidden="false" aria-label="error_outline icon">
+          info_outline
+        </mat-icon>
+      </div>
+    </mat-toolbar>
+  </div>
+</div>
+
+
+<div class="container " fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+     fxLayoutAlign="center">
+     <div fxFlex="100%" class="main_db cardlayout">
+<div class="container-size OverflowScroll">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8  tableHeader40 mt-10 tableWidthAll"
+         matSort>
+    <ng-container matColumnDef="serialNumber" class="rowMat">
+      <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces" *matHeaderCellDef
+                       style="max-width: 5% !important;">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}
+      </mat-header-cell>
+      <mat-cell class="commonReducesSize commonSingleReduces" *matCellDef="let element; let i = index;"
+                style="max-width: 5% !important;">{{i + 1}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="DeviceName" class="rowMat">
+      <mat-header-cell class="tabl_heading commonReducesSize commonSingleReducesTwo" *matHeaderCellDef
+                       mat-sort-header style="max-width: 85% !important;">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.heading.deviceName'): ""}}
+      </mat-header-cell>
+      <mat-cell class="commonReducesSize commonSingleReducesTwo" *matCellDef="let element"
+                style="max-width: 85% !important;"> {{element.name}}
+
+      </mat-cell>
+    </ng-container>
+
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="action" class="rowMat">
+      <mat-header-cell class="tabl_heading commonReducesSize commonSingleReduces" *matHeaderCellDef mat-sort-header
+                       style="max-width: 10% !important;">
+        {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}
+      </mat-header-cell>
+      <mat-cell class="commonReducesSize commonSingleReduces" *matCellDef="let element"
+                style="max-width: 10% !important;">
+        <mat-icon class="allIcons" (click)="transferUnprovisionedData(element)" matSuffix title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.title.provisionedDevices').substring(0,9): ''}}">
+          low_priority
+        </mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+</div>
+</div>
+</div>
+
+<div *ngIf="_adappt.total > limit" class="pagination_fixed">
+  <mat-paginator class="pagination_all" [pageIndex]=0 [length]="_adappt.total" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]=limit (page)="getNextPage($event)"></mat-paginator>
+</div>

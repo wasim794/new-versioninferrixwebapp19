@@ -1,0 +1,39 @@
+<mat-card class="form_cards">
+  <mat-toolbar class="mat-toolbar_all">
+    <span class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.serverDetails'): ""}}  </span>
+  
+  </mat-toolbar>
+  <mat-card-content class="allFormedit">
+    <form class="serverDetails">
+      <div *ngFor="let error of serverError" [hidden]="!messageError">
+        <mat-card class="validation-error">
+          <li>{{error.message}}</li>
+        </mat-card>
+      </div>
+
+        <mat-form-field class="form_field w-100" appearance="fill" >
+          <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.username'): ""}}</mat-label>
+          <input  matInput name="emailSmtpPort"
+                  placeholder="username" [(ngModel)]="platformDetailsModel.username" required>
+        </mat-form-field>
+
+        <mat-form-field class="form_field w-100" appearance="fill" >
+          <mat-label>
+            {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.url'): ""}}
+          </mat-label>
+          <input  matInput name="emailSmtpHost"
+                 placeholder="Url" [(ngModel)]="platformDetailsModel.url" required>
+        </mat-form-field>
+
+        <mat-form-field class="form_field w-100" appearance="fill" >
+          <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.password'): ""}}</mat-label>
+          <input  matInput name="emailFromAddress" type="password"
+                 placeholder="password" [(ngModel)]="platformDetailsModel.password" required >
+        </mat-form-field>
+    </form>
+    <button #saveButton mat-raised-button class="saveButton" (click)="saveServerDetails()" >
+      {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+    </button>
+  </mat-card-content>
+</mat-card>
