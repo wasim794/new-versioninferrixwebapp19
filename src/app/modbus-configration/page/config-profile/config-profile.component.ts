@@ -34,7 +34,7 @@ export class ConfigProfileComponent extends UnsubscribeOnDestroyAdapter implemen
   deleteMsg = "Delete Successfully";
   UIDICTIONARY:any;
 
-  constructor(public modbusQuery: ModbusQueryService, private commonService: CommonService, public dictionaryService: DictionaryService) {
+  constructor(public modbusQuery: ModbusQueryService, public commonService: CommonService, public dictionaryService: DictionaryService) {
     super();
   }
 
@@ -118,4 +118,9 @@ export class ConfigProfileComponent extends UnsubscribeOnDestroyAdapter implemen
       this.configList = data;
     }));
   }
+
+  goBack() {
+    this.commonService.goBackHistory();
+  }
+
 }

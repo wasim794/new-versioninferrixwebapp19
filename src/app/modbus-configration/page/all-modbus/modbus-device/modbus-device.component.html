@@ -5,7 +5,7 @@
       </mat-icon>
       <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.device.heading'): ""}} </span>
       <div class="containerInfo">
-        <mat-form-field class="topSearchBoxes">
+        <mat-form-field class="topSearchBoxes mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
           <input matInput (keyup.enter)="applyFilter($event)" placeholder="search" #input>
           <mat-icon (click)="applyFilter($event)" class="Input_search" matSuffix>search</mat-icon>

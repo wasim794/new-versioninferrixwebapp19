@@ -33,7 +33,7 @@ export class ThermostatComponent extends UnsubscribeOnDestroyAdapter implements 
 
 
   constructor(private dictionaryService:DictionaryService, public thermostatService: ThermostatService,
-              private _commonService:CommonService, public dialog: MatDialog) {
+              public _commonService:CommonService, public dialog: MatDialog) {
     super();
   }
 
@@ -75,7 +75,9 @@ export class ThermostatComponent extends UnsubscribeOnDestroyAdapter implements 
 
     });
   }
-
+  goBack() {
+    this._commonService.goBackHistory();
+  }
 
 }
 
@@ -215,6 +217,7 @@ export class ContentDialog extends UnsubscribeOnDestroyAdapter implements OnInit
       this.dialogRef.close("success");
     }));
   }
+
 
 
 }

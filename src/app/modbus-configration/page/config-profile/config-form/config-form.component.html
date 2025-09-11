@@ -57,12 +57,14 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.field.oneTime'): ""}}
         </mat-slide-toggle>
 
-        <button #updateButton mat-raised-button class="Update_Button updateButton   mt-10 " (click)="updateConfigForm() "
+        <button #updateButton matfab class="saveButton updateButton   mt-10 " (click)="updateConfigForm() "
             *ngIf="isEdit">
+          <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
         </button>
-        <button #saveButton mat-raised-button class="saveButton  marginLeft-10 mt-10" (click)="saveConfigForm()" *ngIf="!isEdit">
-            {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
+        <button #saveButton matfab class="saveButton  marginLeft-10 mt-10" (click)="saveConfigForm()" *ngIf="!isEdit">
+          <mat-icon>save</mat-icon>
+          {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
         </button>
     </form>
 </mat-card-content>

@@ -6,7 +6,7 @@
       </mat-icon>
       <span> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.tables.controllerNodes'): ""}}</span>
       <div class="containerInfo containerInfoCenter">
-        <mat-form-field class="topSearchBoxes">
+        <mat-form-field class="topSearchBoxes mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress').substring(4,12): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
           <input (keyup.enter)="filterDiscovered($event)" [(ngModel)]="searchDiscovered" matInput name="searchDiscovered">
           <mat-icon class="Input_search" (click)="filterDiscovered($event)" matSuffix> search</mat-icon>
