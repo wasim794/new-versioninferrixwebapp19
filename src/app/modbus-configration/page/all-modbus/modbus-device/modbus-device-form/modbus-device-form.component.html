@@ -56,9 +56,12 @@
       </mat-chip>
     </mat-chip-list> -->
     <br>
-    <button mat-raised-button *ngIf="!isEdit"  class="updateButton" (click)="updateDeviceList()">
+    <button matfab *ngIf="!isEdit"  class="updateButton saveButton" (click)="updateDeviceList()">
+      <mat-icon>save_as</mat-icon>
       {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update')|  uppercase) : ""}}
     </button>
-    <button *ngIf="isEdit" (click)="save()" mat-raised-button class="saveButton"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save')|  uppercase) : ""}}</button>
+    <button *ngIf="isEdit" (click)="save()" matfab class="saveButton">
+      <mat-icon>save</mat-icon>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save')|  uppercase) : ""}}</button>
   </form>
 </mat-card>
