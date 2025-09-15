@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {MeshDiagnosticModel, MeshNodeInfoModel} from '../../shared/models';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
 import {MeshConsoleService} from '../../shared/services';
-import {DictionaryService} from "../../../core/services/dictionary.service";
+import {DictionaryService, WebsocketService} from "../../../core/services";
+import { ConfigurationService } from '../../../services/configuration.service';
+import { ObservableWebSocketService } from '../../../core/services';
 import { MatTableDataSource } from '@angular/material/table';
 import {CommonService} from '../../../services/common.service';
 import {FormGroup, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -18,7 +20,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from '@danielmoncada/angul
   standalone: true,
   imports:[ CommonModule, MatModuleModule, OwlDateTimeModule,
     OwlNativeDateTimeModule,],
-  providers: [ CommonService, DictionaryService, MeshConsoleService],
+  providers: [ CommonService, DictionaryService, MeshConsoleService, ConfigurationService, ObservableWebSocketService, WebsocketService],
   selector: 'app-mesh-node',
   templateUrl: './mesh-node.component.html',
  animations: [
@@ -46,11 +48,17 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
   dignoSticsDetails='/mesh-console/mesh-node/dignostics-detail';
   successNode='reboot Successfully';
   UIDICTIONARY : any;
+  token!: any;
+  websocket_URL = '/temporary-resources?token=';
+  private _configurationService = inject(ConfigurationService);
+  private observableWebSocketService = inject(ObservableWebSocketService);
+  websocketResponse: any;
 
   constructor(
     public service: MeshConsoleService,
     public dictionaryService: DictionaryService,
     public commonService:CommonService,
+    private _WebSocketService: WebsocketService,
     private router: Router,
     private dialog: MatDialog
   ) {
@@ -61,8 +69,29 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
       this.dictionaryService.getUIDictionary('meshConsole').subscribe(data=>{
       this.UIDICTIONARY = this.dictionaryService.uiDictionary;
     });
-    const param = 'limit(' + this.limit + ',' + this.offset + ')&sort(+address)';
-    this.getMeshNodesData(param);
+      this.token = (localStorage.getItem('access_token'));
+     this._WebSocketService.createWebSocket(this.websocket_URL + this.token);
+     this.getSocketNewAdded();
+    // const param = 'limit(' + this.limit + ',' + this.offset + ')&sort(+address)';
+    // this.getMeshNodesData(param);
+  }
+
+
+  private getSocketNewAdded(){
+     const message = {
+    "statuses": ["VIRGIN", "SCHEDULED", "RUNNING", "TIMED_OUT", "CANCELLED", "SUCCESS", "ERROR"],
+    "resourceTypes": ["MESH_CONTROLLER_PUBLISHER_START_STOP", "MESH_CONTROLLER_WIFI_START_STOP"],
+    "requestType": "SUBSCRIPTION"
+};
+    this._configurationService.connect(message);
+     this._WebSocketService.subscribeWebsocket().subscribe((data: any) => {
+      this.websocketResponse = JSON.parse(data);
+      console.log(this.websocketResponse);
+      if(this.websocketResponse?.messageType === 'RESPONSE'){
+        const param = 'limit(' + this.limit + ',' + this.offset + ')&sort(+address)';
+        this.getMeshNodesData(param);
+      }
+    });
   }
 
   getNextPage(event: any) {
@@ -140,6 +169,9 @@ export class MeshNodeComponent extends UnsubscribeOnDestroyAdapter implements On
     // Call backend to start or stop the controller
     this.subs.add(this.service.startStopMeshControllerPublisher(element.address, enable)
       .subscribe((data: any) => {
+        if (this.websocketResponse?.payload?.status === 'SUCCESS') {
+          console.log('WebSocket confirm message:', this.websocketResponse.payload.result.confirmMessage);
+        }
         this.commonService.notification(data.responseMessage);
         if(data.isComplete===true){
           element.meshNodeControllers = true;

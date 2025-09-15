@@ -65,7 +65,7 @@
               title="Start {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.meshController') : ''}}"
               (click)="startStopMeshController(element, true)"
               aria-label="Stop">
-              <mat-icon><i class="fa fa-play"></i></mat-icon>
+              <mat-icon><i class="material-icons">not_started</i></mat-icon>
             </button>
 
             <button *ngIf="element.nodeType==='Mesh Controller'" mat-icon-button title="Enable WIFI" (click)="enableDisableMeshController(element,'true')" aria-label="expand row">
