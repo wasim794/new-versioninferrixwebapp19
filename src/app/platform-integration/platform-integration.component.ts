@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {DictionaryService} from "../core/services/dictionary.service";
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../common/mat-module';
+import {CommonService} from '../services/common.service';
 
 @Component({
   standalone: true,
@@ -22,7 +23,7 @@ export class PlatformIntegrationComponent implements OnInit {
   navigateMessagesFalse = 'Navigation has failed!';
   UIDICTIONARY : any;
 
-  constructor(private router: Router, public dictionaryService: DictionaryService,) {
+  constructor( public commonService: CommonService,private router: Router, public dictionaryService: DictionaryService,) {
   }
 
   ngOnInit(): void {
@@ -88,6 +89,9 @@ export class PlatformIntegrationComponent implements OnInit {
 
   serverSidebar() {
     this.getServerSidebar();
+  }
+  goBack() {
+    this.commonService.goBackHistory();
   }
 
 

@@ -1,10 +1,12 @@
 
+<div class="ruleSetTollBar">
+
 <mat-toolbar class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row position-sticky">
   <mat-card-title class="sidebar_form_title">
     {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.modbus.configuration.queryModel'): ""}}
   </mat-card-title>
   <span class="spacer"></span>
-  <button mat-raised-button class="Top_Update_Button toolbarUpdateButton" [mat-dialog-close]="true" (click)="updateQuery()">
+  <button mat-raised-button class="Top_Update_Button toolbarUpdateButton addressButtonStyle" [mat-dialog-close]="true" (click)="updateQuery()">
     {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update')| uppercase) : ""}}
   </button>
   <button [mat-dialog-close]="true" (click)="allClose($event)" mat-raised-button class="Save_Button cancelAllData setTopCancel">
@@ -32,3 +34,4 @@
                   (page)="getNextPage($event)"></mat-paginator>
 </div>
 
+</div>

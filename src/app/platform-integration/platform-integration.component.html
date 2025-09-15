@@ -2,8 +2,7 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
+      <mat-icon class="allArrowBack" [innerHTML]="commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
       </mat-icon>
       <span>
         {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration'): ""}}
@@ -16,14 +15,14 @@
      fxLayoutAlign="left">
 
   <div fxFlex="22%" class="card_margin cursorPointer">
-    <mat-card class="all_card matCardAll">
+    <mat-card class="meshMatCardNew  matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title class="system_text ">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.mqttConfiguration'): ""}}
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="text-center">
-        <mat-icon class="platformCardMqtt" aria-hidden="false"
+        <mat-icon class="platformCardMqtt marginTop-20" aria-hidden="false"
                   aria-label=" published_with_changes icon" (click)="showMqttDetail()">
           call_split
         </mat-icon>
@@ -31,28 +30,28 @@
     </mat-card>
   </div>
   <div fxFlex="22%" class="card_margin">
-    <mat-card class="mat-card all_card matCardAll">
+    <mat-card class="meshMatCardNew  matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title class="system_text">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.provisionedDevices'): ""}}
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="text-center">
-        <mat-icon class="platformCardProvisioned"
+        <mat-icon class="platformCardProvisioned marginTop-20"
                   (click)="showProvisionDetail()">low_priority
         </mat-icon>
       </mat-card-content>
     </mat-card>
   </div>
   <div fxFlex="22%" class="card_margin">
-    <mat-card class="mat-card all_card matCardAll">
+    <mat-card class="meshMatCardNew  matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title class="system_text">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.unprovisionedDevices'): ""}}
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="text-center ">
-        <mat-icon class="platformCardUnprovisioned" aria-hidden="false"
+        <mat-icon class="platformCardUnprovisioned marginTop-20" aria-hidden="false"
                   aria-label=" published_with_changes icon"
                   (click)="showUnprovisionedDevices()">devices_fold
         </mat-icon>
@@ -60,14 +59,14 @@
     </mat-card>
   </div>
   <div fxFlex="22%" class="card_margin" (click)="serverSidebar()">
-    <mat-card class="mat-card all_card matCardAll">
+    <mat-card class="meshMatCardNew  matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title class="system_text">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.serverDetails'): ""}}
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="text-center">
-        <mat-icon class="platformServerDetails" aria-hidden="false"
+        <mat-icon class="platformServerDetails marginTop-20" aria-hidden="false"
                   aria-label=" published_with_changes icon" >connected_tv
         </mat-icon>
       </mat-card-content>
@@ -75,14 +74,14 @@
   </div>
 
   <div fxFlex="22%" class="card_margin">
-    <mat-card class="mat-card all_card matCardAll">
+    <mat-card class="meshMatCardNew  matCardAll marginLeft-20">
       <mat-card-header>
         <mat-card-title class="system_text">
           {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.deviceConfiguration'): ""}}
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="text-center">
-        <mat-icon class="platformCardConfiguration" aria-hidden="false"
+        <mat-icon class="platformCardConfiguration marginTop-20" aria-hidden="false"
                   aria-label=" published_with_changes icon"
                   (click)="showDeviceConfiguration()">view_timeline
         </mat-icon>

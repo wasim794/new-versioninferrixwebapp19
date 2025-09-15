@@ -24,7 +24,7 @@
           <mat-header-cell class="tabl_heading commonSingleReduces pr-0" *matHeaderCellDef>
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}
           </mat-header-cell>
-          <mat-cell class="commonReducesSize commonSingleReducesTwo" *matCellDef="let element; let i = index;">{{i+1}}
+          <mat-cell style="justify-content: center" class="commonReducesSize commonSingleReducesTwo" *matCellDef="let element; let i = index;">{{i+1}}
           </mat-cell>
         </ng-container>
 
@@ -32,7 +32,7 @@
         <ng-container matColumnDef="name">
           <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef mat-sort-header> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.modbusController.tables.controllerNodes').substring(0,10): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
           </mat-header-cell>
-          <mat-cell class="commonReducesSize" *matCellDef="let element">
+          <mat-cell style="justify-content: center" class="commonReducesSize" *matCellDef="let element">
             {{element.name}}
           </mat-cell>
         </ng-container>
@@ -52,7 +52,7 @@
           <mat-header-cell class="tabl_heading commonReducesSize" *matHeaderCellDef mat-sort-header>
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}
           </mat-header-cell>
-          <mat-cell class="commonReducesSize" *matCellDef="let element">
+          <mat-cell style="justify-content: center" class="commonReducesSize" *matCellDef="let element">
               <mat-icon role="img" title="Data transfer" class="all_icons" (click)="dataTransfer(element)" data-mat-icon-type="font">
                 schedule_send
               </mat-icon>
