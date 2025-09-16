@@ -2,19 +2,19 @@
   <mat-toolbar
     class="mat-toolbar mat-toolbar_all details-toolbar mat-toolbar-single-row">
     <mat-card-title class="sidebar_form_title">
-      {{dictionaryService.uiDictionary.get("ui.meshConsole.diagnostics.settings")}}
+      {{UIDICTIONARY ? dictionaryService.uiDictionary.get("ui.meshConsole.diagnostics.settings"): ""}}
     </mat-card-title>
   </mat-toolbar>
   <mat-card-content class="form_cards form_edit_card allFormedit">
     <form>
       <div id="messages">
         <mat-card class="validation-error" *ngIf="messages">
-          {{messages.confirmMessage.messageType}}: {{messages.confirmMessage.message}}
+          {{websocketResponse?.payload?.result?.confirmMessage?.messageType}}: {{websocketResponse?.payload?.result?.confirmMessage?.message}}
         </mat-card>
       </div>
 
         <mat-form-field style="width: 100%" appearance="fill">
-          <mat-label>{{dictionaryService.uiDictionary.get("ui.meshConsole.diagnostics.interval")}}</mat-label>
+          <mat-label>{{UIDICTIONARY ? dictionaryService.uiDictionary.get("ui.meshConsole.diagnostics.interval"): ""}}</mat-label>
           <mat-select required name="diagnosticInterval" [(ngModel)]="interval">
             <mat-option *ngFor="let interval of intervals;"
                         [value]="interval.key">{{interval.value}}
@@ -23,7 +23,7 @@
         </mat-form-field>
 
       <button mat-raised-button class="saveButton addressButtonStyle" (click)="pushInterval()">
-        {{dictionaryService.uiDictionary.get("ui.core.common.button.push")}}
+        {{UIDICTIONARY ? dictionaryService.uiDictionary.get("ui.core.common.button.push"): ""}}
       </button>
     </form>
   </mat-card-content>

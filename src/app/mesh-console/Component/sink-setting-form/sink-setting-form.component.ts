@@ -128,53 +128,62 @@ export class SinkSettingFormComponent extends UnsubscribeOnDestroyAdapter implem
     this.subs.add(this._service.setAddress(this.address).subscribe((data) => {
       this.messages = data;
       console.log(this.websocketResponse);
-      SinkSettingFormComponent.showMessages();
+      // SinkSettingFormComponent.showMessages();
     }));
   }
 
   pushNetwork(): void {
     this.subs.add(this._service.setNetwork(this.network).subscribe((data) => {
       this.messages = data;
-      SinkSettingFormComponent.showMessages();
+      // SinkSettingFormComponent.showMessages();
     }));
   }
 
   pushChannel(): void {
     this.subs.add(this._service.setChannel(this.channel).subscribe((data) => {
       this.messages = data;
-      SinkSettingFormComponent.showMessages();
+      // SinkSettingFormComponent.showMessages();
     }));
   }
 
   pushRole(): void {
     this.subs.add(this._service.setRole(this.role).subscribe((data) => {
       this.messages = data;
-      SinkSettingFormComponent.showMessages();
+      // SinkSettingFormComponent.showMessages();
     }));
   }
 
   startStack(): void {
     this.subs.add(this._service.startStack().subscribe((data) => {
       this.messages = data;
-      if (data.confirmMessage.messageType === 'SUCCESS') {
+      if(this.websocketResponse?.messageType === "NOTIFICATION"){
+         if (this.websocketResponse?.payload?.resourceType === "MESH_SINK_START") {
+        // console.log("Start here");
         this.isStackRunning = true;
       }
-      SinkSettingFormComponent.showMessages();
+      }
+      // SinkSettingFormComponent.showMessages();
     }));
   }
 
   stopStack(): void {
     this.subs.add(this._service.stopStack().subscribe((data) => {
       this.messages = data;
-      if (data.confirmMessage.messageType === 'SUCCESS') {
+      console.log(this.websocketResponse);
+      if(this.websocketResponse?.messageType === "NOTIFICATION"){
+
+      if (this.websocketResponse?.payload?.resourceType === "MESH_SINK_STOP") {
+        // console.log("Stop here");
         this.isStackRunning = false;
       }
-      SinkSettingFormComponent.showMessages();
+    }
+
+      // SinkSettingFormComponent.showMessages();
     }));
   }
 
   private static showMessages() {
-    // (<any>$('#messages')).show();
-    // (<any>$('#messages')).fadeOut(2000);
+    (<any>$('#messages')).show();
+    (<any>$('#messages')).fadeOut(2000);
   }
 }
