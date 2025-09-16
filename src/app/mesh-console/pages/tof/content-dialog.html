@@ -1,16 +1,19 @@
- <div class="mainDialogContainer">
+<div class="ruleSetTollBar">
+  <div class="mainDialogContainer">
     {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.content.confirmation'): ""}}
- </div>
- <p class="tofNodeAddress">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress'): ""}} : {{data.element.address}}</p>
+  </div>
+  <p class="tofNodeAddress">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress'): ""}} : {{data.element.address}}</p>
   <div class="confirmContainer">
     <mat-form-field class=""  appearance="fill">
       <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.meshConsole.field.tof.destinationAddress'): ""}} </mat-label>
-     <input type="targetAddress" [(ngModel)]="targetAddress" matInput />
+      <input type="targetAddress" [(ngModel)]="targetAddress" matInput />
     </mat-form-field>
   </div>
   <div class="deletesButton">
     <button [mat-dialog-close]="true" mat-flat-button class="removeButtons"
-           >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.no'): ""}}</button>
+    >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.no'): ""}}</button>
     <button mat-flat-button class="yesButtons" (click)="sendToTof()"
-            >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.yes'): ""}}</button>
+    >{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.yes'): ""}}</button>
   </div>
+
+</div>

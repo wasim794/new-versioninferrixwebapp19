@@ -40,6 +40,7 @@ export class DatapointsListComponent extends UnsubscribeOnDestroyAdapter impleme
   enableMessage = 'Enable Successfully';
   disableMessage= 'Disable Successfully';
   UIDICTIONARY : any;
+  deleteSuccessMsg = "is delete successfully";
 
   constructor(
     public _service: HttpSenderService,
@@ -60,16 +61,14 @@ export class DatapointsListComponent extends UnsubscribeOnDestroyAdapter impleme
     this.getDataPoints(param);
     this.dataSource.paginator = this.paginator;
     this.obs = this.dataSource.connect();
-  }
 
-  getDataPoints(param: any) {
-    this.httpSenderPointService.httpSenderPointModel.forEach(items=>{
-      this.setPublisher = items.publisherXid;
-    });
-    let params = param+'&like(publisherXid,%2A' + this.setPublisher + '%2A)';
-    this.httpSenderPointService.get(params).subscribe((data: any)=>{
-      this.dataSource.data = data;
-    });
+  }
+  getDataPoints(pushData: any) {
+    this.subs.add(this.httpSenderPointService.get(pushData).subscribe(data => {
+      this.httpSenderPointModel = data;
+      this.obs = data;
+
+    }));
   }
 
 
@@ -121,14 +120,29 @@ export class DatapointsListComponent extends UnsubscribeOnDestroyAdapter impleme
     this.router.navigate(['/datapoint/detail']);
   }
 
+  // remove(datapoint: any) {
+  //   this._commonService.openConfirmDialog('Are you want to delete ', datapoint.parameterName).afterClosed().subscribe(response => {
+  //     if (response) {
+  //       const index = this.httpSenderPointService.httpSenderPointModel.indexOf(datapoint);
+  //       this.httpSenderPointService.httpSenderPointModel.splice(index, 1);
+  //       this.dataSource.data = this.httpSenderPointService.httpSenderPointModel;
+  //     }
+  //   });
+  // }
+
   remove(datapoint: any) {
-    this._commonService.openConfirmDialog('Are you want to delete ', datapoint.parameterName).afterClosed().subscribe(response => {
+    this._commonService.openConfirmDialog('Are you want to delete ', datapoint.name).afterClosed().subscribe(response => {
       if (response) {
-        const index = this.httpSenderPointService.httpSenderPointModel.indexOf(datapoint);
-        this.httpSenderPointService.httpSenderPointModel.splice(index, 1);
-        this.dataSource.data = this.httpSenderPointService.httpSenderPointModel;
-      }
-    });
+        this.httpSenderPointModel.points = this.httpSenderPointModel.points.filter((item: any) => item.dataPointXid !== datapoint.dataPointXid);
+        this.subs.add(
+          this.httpSenderPointService
+            .delete(datapoint.xid)
+            .subscribe((data) => {
+              this._commonService.notification(
+                datapoint.name + " " + this.deleteSuccessMsg
+              );
+            }));
+      }});
   }
 
   changePublisherStatus(element: any, event: any) {

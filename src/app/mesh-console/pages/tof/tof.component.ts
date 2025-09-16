@@ -29,7 +29,7 @@ export class TofComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
   public tofTypesSensors ="DISTANCE_SENSOR.DS";
 
   constructor(public _tofService : TofService, private dictionaryService:DictionaryService,
-              public dialog: MatDialog, private _commonService:CommonService) {
+              public dialog: MatDialog, public _commonService:CommonService) {
     super();
   }
 
@@ -73,7 +73,9 @@ export class TofComponent extends UnsubscribeOnDestroyAdapter implements OnInit,
 
     });
   }
-
+  goBack() {
+    this._commonService.goBackHistory();
+  }
 }
 
 /*start second row*/

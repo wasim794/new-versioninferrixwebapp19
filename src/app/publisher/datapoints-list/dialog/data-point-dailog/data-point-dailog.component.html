@@ -1,8 +1,8 @@
-<div style="position: fixed">
+<div style="position: fixed" class="ruleSetTollBar">
 <mat-toolbar class="mat-toolbar_all">
   <span class="font_size">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.dataPoint'): ""}}</span>
   <span class="spacer"></span>
-  <mat-form-field class="dialogue_search">
+  <mat-form-field class="dialogue_search publisherPointDialog">
     <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
     <input (keyup)="filterDataPoints()" [(ngModel)]="searchDataPoint" matInput name="searchDataSource"
       placeholder="Search...">
@@ -40,7 +40,7 @@
   </div>
 </mat-dialog-content>
 <div mat-dialog-actions class="httpButtonsCenter">
-  <button class="cancel_button " mat-button
+  <button class="cancel_button httpCloseButton" mat-button
     [mat-dialog-close]>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.close') |  uppercase): ""}}</button>
   <button (click)="addPointToHttpModule()" class="Add_button " mat-raised-button>
     {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.add') |  uppercase): ""}}

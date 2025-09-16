@@ -1,3 +1,4 @@
+<div class="ruleSetTollBar">
 <h1 class="headingProvisionGateway">Provision Gateway Form</h1>
 <form class="mainContainerProvisionGatwaye">
   <mat-form-field appearance="outline" class="full-width">
@@ -25,8 +26,8 @@
   </mat-form-field>
 
   <div class="button-group">
-    <button mat-raised-button (click)="pushAndSave()" color="primary">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.push'): ""}}</button>
-    <button class="closeButtons"  mat-button mat-dialog-close>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ""}}</button>
+    <button mat-raised-button (click)="pushAndSave()" color="primary" class="addressButtonStyle provisionButtons">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.push'): ""}}</button>
+    <button class="closeButtons provisionButtons"  mat-button mat-dialog-close>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.close'): ""}}</button>
   </div>
 </form>
-
+</div>

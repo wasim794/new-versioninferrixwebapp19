@@ -31,7 +31,7 @@ export class MqttConfigurationComponent extends UnsubscribeOnDestroyAdapter impl
   UIDICTIONARY : any;
 
   constructor(private dialog: MatDialog,
-              private commonService: CommonService,
+              public commonService: CommonService,
               private platformIntegrationService: PlatformIntegrationService,
               private systemSettingService: SystemSettingService,
               public dictionaryService: DictionaryService,
@@ -75,6 +75,10 @@ export class MqttConfigurationComponent extends UnsubscribeOnDestroyAdapter impl
   allClose(event: any) {
     this.mqttDrawer.close();
     this.getNext(event);
+  }
+
+  goBack() {
+    this.commonService.goBackHistory();
   }
 }
 

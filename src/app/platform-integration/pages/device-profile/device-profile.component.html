@@ -1,17 +1,16 @@
-<div class="deviceProfileMains" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
+<div class="deviceProfileMains mainProvisionGateway" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%"
     fxLayoutAlign="center">
     <div fxFlex="100%">
         <mat-toolbar>
-            <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-                <i class="fa fa-chevron-left"></i>
-            </mat-icon>
+          <mat-icon class="allArrowBack" [innerHTML]="commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
+          </mat-icon>
             <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.deviceConfiguration'): ""}} </span>
 
           <div class="containerInfo">
             <button mat-raised-button align="center" class="deviceProfileButton" (click)="sinkThingsBoard()">
               Sync Now
             </button>
-            <mat-form-field>
+            <mat-form-field class="mt-10">
               <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
               <input matInput name="searchBacnetList" (keyup)="applyFilter($event)"  placeholder="" #input
                      >
@@ -39,7 +38,7 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}
           </mat-header-cell>
           <mat-cell class="commonReducesSize commonSingleReduces" *matCellDef="let element; let i = index;"
-                    style="max-width: 5% !important;">{{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
+                    style="max-width: 5% !important;justify-content: center">{{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
           </mat-cell>
         </ng-container>
 
@@ -50,7 +49,7 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
           </mat-header-cell>
           <mat-cell (click)="editOpenForm(element)" class="commonReducesSize commonSingleReducesTwo" *matCellDef="let element"
-                    style="max-width: 85% !important;"> {{element.name}}
+                    style="max-width: 85% !important;justify-content: center"> {{element.name}}
 
           </mat-cell>
         </ng-container>
@@ -62,7 +61,7 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.httpSender.table.description'): ""}}
           </mat-header-cell>
           <mat-cell class="commonReducesSize commonSingleReducesTwo" *matCellDef="let element"
-                    style="max-width: 85% !important;"> {{element.description}}
+                    style="max-width: 85% !important;justify-content: center"> {{element.description}}
 
           </mat-cell>
         </ng-container>
@@ -76,7 +75,7 @@
           <mat-cell class="commonReducesSize commonSingleReduces" *matCellDef="let element"
                     style="max-width: 10% !important;">
             <mat-icon (click)="editOpenForm(element)" class="allIcons"  matSuffix title="edit">edit</mat-icon>
-            <mat-icon (click)="deviceRemove(element)" class="allIcons"  matSuffix title="delete" >delete</mat-icon>
+            <mat-icon (click)="deviceRemove(element)" class="allIcons"  matSuffix title="delete" aria-hidden="false" >delete</mat-icon>
           </mat-cell>
         </ng-container>
 

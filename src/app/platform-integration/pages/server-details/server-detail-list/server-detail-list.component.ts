@@ -7,6 +7,7 @@ import {DictionaryService} from "../../../../core/services/dictionary.service";
 import { MatModuleModule } from '../../../../common/mat-module';
 import { CommonModule } from '@angular/common';
 import { ServerDetailsFormComponent } from '../server-details-form/server-details-form.component';
+import {CommonService} from '../../../../services/common.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ServerDetailListComponent extends UnsubscribeOnDestroyAdapter imple
   plateForms: any;
   UIDICTIONARY : any;
 
-  constructor(private platformIntegrationService: PlatformIntegrationService,
+  constructor(public commonService: CommonService,private platformIntegrationService: PlatformIntegrationService,
               public dictionaryService: DictionaryService,) {
     super();
   }
@@ -49,5 +50,7 @@ export class ServerDetailListComponent extends UnsubscribeOnDestroyAdapter imple
   serverSidebar(){
     this.serverDetailDrawer.open().then(r => console.log(r));
   }
-
+  goBack() {
+    this.commonService.goBackHistory();
+  }
 }
