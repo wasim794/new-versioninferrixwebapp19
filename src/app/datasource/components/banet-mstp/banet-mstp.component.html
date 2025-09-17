@@ -97,7 +97,7 @@
                 : {{error.message}}</li>
             </mat-card>
           </div>
-         <div class="formDataPoint">
+         <div class="">
 
             <mat-form-field class="form_field allInputsMargin w-50" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
@@ -174,7 +174,7 @@
                               name="enabled" [(ngModel)]="dataPoint.enabled">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
             </mat-slide-toggle>
-            <mat-slide-toggle *ngIf="setTables" class="toggle_change  dataSourcePointoggle"
+            <mat-slide-toggle *ngIf="setTables" class="toggle_change  "
                               name="settable" [(ngModel)]="bacnetDataPointModel.settable">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.dataPoint.settable'): ""}}
             </mat-slide-toggle>

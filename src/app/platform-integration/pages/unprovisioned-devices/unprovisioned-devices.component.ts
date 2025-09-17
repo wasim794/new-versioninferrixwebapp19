@@ -41,7 +41,7 @@ export class UnprovisionedDevicesComponent extends UnsubscribeOnDestroyAdapter i
 
   constructor(
     public dictionaryService: DictionaryService,public dialog: MatDialog,
-    private commonService: CommonService,
+    public commonService: CommonService,
     public service: PlatformIntegrationService,
     private systemSettingService: SystemSettingService
   ) {
@@ -102,7 +102,7 @@ export class UnprovisionedDevicesComponent extends UnsubscribeOnDestroyAdapter i
   }
 
   transferUnprovisionedData(event: any) {
-    
+
     // return;
     this.commonService.openConfirmDialog('Are you sure you want to send',
       event.name  + "'" + " to Provisioned Devices !").afterClosed().subscribe(response => {
@@ -146,7 +146,9 @@ export class UnprovisionedDevicesComponent extends UnsubscribeOnDestroyAdapter i
     });
   }
 
-
+  goBack() {
+    this.commonService.goBackHistory();
+  }
 
 }
 

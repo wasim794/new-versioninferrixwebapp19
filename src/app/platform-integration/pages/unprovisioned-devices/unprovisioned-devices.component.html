@@ -2,15 +2,14 @@
   fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
+      <mat-icon class="allArrowBack" [innerHTML]="commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
       </mat-icon>
       <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.unprovisionedDevices'): ""}} </span>
       <div class="containerInfo">
         <button mat-raised-button align="center" (click)="provisionGateway();" class="deviceProfileButton">
           Provision Gateway
         </button>
-        <mat-form-field>
+        <mat-form-field class="mt-10">
           <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}} </mat-label>
           <input matInput name="searchBacnetList" (keyup)="applyFilter($event)" placeholder="" #input
             [(ngModel)]="search">
@@ -96,7 +95,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="service.total > limit" class="pagination_fixed unPrnPag">
+<div *ngIf="service.total > limit" class="pagination_fixed ">
   <mat-paginator class="pagination_all" [pageIndex]=0 [length]="service.total" [pageSizeOptions]="pageSizeOptions"
     [pageSize]=limit (page)="getNextPage($event)"></mat-paginator>
 </div>

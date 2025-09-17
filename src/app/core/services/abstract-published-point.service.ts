@@ -33,6 +33,7 @@ export abstract class AbstractPublishedPointService<T extends AbstractPublisherP
     .get<ArrayWithTotalModel<any>>(url)
     .pipe(map((result) => {
       this._total = result.total;
+      console.log("servece pub", result);
       return result.items.map((i) => i);
     }));
   }

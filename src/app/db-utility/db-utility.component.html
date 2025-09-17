@@ -37,7 +37,7 @@
     <mat-card-title class="backupSettingHead">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.backupSettings') : ""}}
     </mat-card-title>
-    
+
 
       <mat-form-field appearance="fill" class="utilityNameFields w-50">
         <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fileCount') : ""}}</mat-label>
@@ -63,7 +63,7 @@
       </mat-slide-toggle>
       <button matfab class="Top_Save_Button dbUtilitySaveButton" align="end"
               (click)="saveBackupSetting()">
-            
+
               {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
     </div>
   </form>

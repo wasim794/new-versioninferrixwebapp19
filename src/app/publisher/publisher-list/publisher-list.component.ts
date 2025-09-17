@@ -156,7 +156,7 @@ export class PublisherListComponent extends UnsubscribeOnDestroyAdapter implemen
       this.totalPublisher = this.abstractPublished.total;
       this.publishers = data;
       this.dataSources = data;
-      // console.log(data);
+      console.log(data);
       const savedPageIndex = localStorage.getItem('currentPageIndex');
       const savedPageSize = localStorage.getItem('currentPageSize');
       if (savedPageIndex !== null && savedPageSize !== null) {
@@ -219,6 +219,7 @@ export class PublisherListComponent extends UnsubscribeOnDestroyAdapter implemen
 
   publisherSavedAction(event:any) {
     const param = 'limit(' + this.limit + ',' + this.offset + ')';
+    console.log("test",this.getAllPublisher(param))
     this.getAllPublisher(param);
     this.publisherSideNav.close();
   }
@@ -253,6 +254,7 @@ export class PublisherListComponent extends UnsubscribeOnDestroyAdapter implemen
 
 
   getPublisherNextPage(event: any) {
+
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = 'limit(' + limit + ',' + this.offset + ')';

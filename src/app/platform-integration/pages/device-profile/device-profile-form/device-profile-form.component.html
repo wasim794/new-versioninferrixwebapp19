@@ -58,10 +58,12 @@
            </mat-select>
         </mat-form-field>
    <br>
-        <button mat-raised-button  *ngIf="!isEdit" align="end" class="updateButton" (click)="updateDeviceList()">
+        <button matfab  *ngIf="!isEdit" align="end" class="updateButton saveButton" (click)="updateDeviceList()">
+          <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
         </button>
-        <button mat-raised-button  *ngIf="isEdit" align="end" class="saveButton" (click)="saveDeviceList(mqttIntegration)">
+        <button matfab  *ngIf="isEdit" align="end" class="saveButton" (click)="saveDeviceList(mqttIntegration)">
+          <mat-icon>save</mat-icon>
             {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
         </button>
     </form>

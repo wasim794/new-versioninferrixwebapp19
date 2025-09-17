@@ -74,7 +74,8 @@
       </mat-select>
     </mat-form-field>
 <br>
-    <button #saveButton mat-raised-button class="saveButton" (click)="saveMqtt()">
+    <button #saveButton matfab class="saveButton" (click)="saveMqtt()">
+      <mat-icon>save</mat-icon>
       {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
     </button>
   </form>

@@ -36,7 +36,7 @@ export class DeviceProfileComponent extends UnsubscribeOnDestroyAdapter implemen
   UIDICTIONARY : any;
 
   constructor(private dialog: MatDialog,
-              private commonService: CommonService,
+              public commonService: CommonService,
               public platformIntegrationService: PlatformIntegrationService,
               public dictionaryService: DictionaryService,) {
     super();
@@ -117,6 +117,10 @@ export class DeviceProfileComponent extends UnsubscribeOnDestroyAdapter implemen
   editOpenForm(element: any){
     this.deviceDrawer.open();
     this.deviceConfigurationFormComponent.getDeviceListByKey(element);
+  }
+
+  goBack() {
+    this.commonService.goBackHistory();
   }
 
 }

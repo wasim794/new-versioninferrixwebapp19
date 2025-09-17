@@ -86,7 +86,7 @@ export class DatapointDetailComponent implements OnInit {
               private _userCommentsService: UserCommentsService,
               public dictionaryService: DictionaryService,
               private route: ActivatedRoute, private usersService: UsersService,
-              private eventService: EventsService, private _configurationService: ConfigurationService, private resolver: ComponentFactoryResolver, private commonService: CommonService) {
+              private eventService: EventsService, private _configurationService: ConfigurationService, private resolver: ComponentFactoryResolver, public commonService: CommonService) {
    this.token = (localStorage.getItem('access_token'));
 
 
@@ -338,4 +338,8 @@ export class DatapointDetailComponent implements OnInit {
       this.pieChartDateWise();
     }
   }
+  goBack() {
+    this.commonService.goBackHistory();
+  }
+
 }

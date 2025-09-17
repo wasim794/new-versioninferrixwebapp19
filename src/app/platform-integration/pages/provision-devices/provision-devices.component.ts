@@ -34,7 +34,7 @@ export class ProvisionDevicesComponent extends UnsubscribeOnDestroyAdapter imple
 
   constructor(
     public dictionaryService: DictionaryService,
-    private commonService: CommonService,
+    public commonService: CommonService,
     public service: PlatformIntegrationService
   ) {
     super();
@@ -92,7 +92,9 @@ export class ProvisionDevicesComponent extends UnsubscribeOnDestroyAdapter imple
     });
   }
 
-
+  goBack() {
+    this.commonService.goBackHistory();
+  }
 }
 
 

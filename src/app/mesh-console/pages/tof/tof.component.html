@@ -2,13 +2,12 @@
      fxLayoutAlign="center">
   <div fxFlex="100%">
     <mat-toolbar>
-      <mat-icon class="allArrowBack" onclick="goBack()">
-        <i class="fa fa-chevron-left"></i>
+      <mat-icon class="allArrowBack" [innerHTML]="_commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
       </mat-icon>
       <span>{{"TOF Sensors"}} </span>
 
       <div class="containerInfo">
-        <mat-form-field>
+        <mat-form-field class="mt-10">
           <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.search'): ""}}</mat-label>
           <input matInput name="searchBacnetList"   placeholder="" #input
           >
@@ -36,7 +35,7 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}}
           </mat-header-cell>
           <mat-cell class="commonReducesSize " *matCellDef="let element; let i = index;"
-                    style="max-width: 5% !important;">{{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
+                    style="max-width: 5% !important;justify-content: center">{{ (paginator.pageIndex * paginator.pageSize) + i + 1 }}
           </mat-cell>
         </ng-container>
 
@@ -47,7 +46,7 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress'): ""}}
           </mat-header-cell>
           <mat-cell  class="commonReducesSize " *matCellDef="let element"
-          > {{element.address}}
+          style="justify-content: center"> {{element.address}}
 
           </mat-cell>
         </ng-container>
@@ -59,7 +58,7 @@
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
           </mat-header-cell>
           <mat-cell class="commonReducesSize " *matCellDef="let element"
-          > {{element.name}}
+                    style="justify-content: center"> {{element.name}}
 
           </mat-cell>
         </ng-container>
@@ -70,7 +69,7 @@
           >
             {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.actions'): ""}}
           </mat-header-cell>
-          <mat-cell class="commonReducesSize " *matCellDef="let element"
+          <mat-cell class="commonReducesSize " *matCellDef="let element"  style="justify-content: center"
           >
             <mat-icon  class="allIcons" (click)="startActions(element, 'powerONOFF')"  matSuffix title="Data Transfer">schedule_send</mat-icon>
 

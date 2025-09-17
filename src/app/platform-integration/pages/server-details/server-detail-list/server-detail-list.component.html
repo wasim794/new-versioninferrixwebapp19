@@ -2,9 +2,8 @@
      fxLayoutAlign="center">
     <div fxFlex="100%">
         <mat-toolbar>
-            <mat-icon class="allArrowBack" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" onclick="goBack()">
-                <i class="fa fa-chevron-left"></i>
-            </mat-icon>
+          <mat-icon class="allArrowBack" [innerHTML]="commonService.getIconsBack()" title="{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.snmp.backToPointImport').substring(0,5): ''}}" (click)="goBack()">
+          </mat-icon>
             <span>{{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.serverDetails'): ""}} </span>
         </mat-toolbar>
     </div>
@@ -12,7 +11,7 @@
 <div class="cardlayout width-100" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5% grid"
      fxLayoutAlign="left">
     <div fxFlex="22%" class="card_margin" *ngFor="let data of plateForms">
-        <mat-card class="mat-card all_card matCardAll">
+        <mat-card class="meshMainCardNew all_card matCardAll">
             <mat-card-header>
                 <mat-card-title class="cardTitleName">{{data.username}}</mat-card-title>
                 <mat-card-subtitle class="card_icon_right">

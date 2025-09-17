@@ -2379,8 +2379,8 @@ left: 90px;
   .deviceProfileButton {
     margin-right: 20px;
     height: 50px;
-    background-color: #2c8e94; /* Matching blue color */
-    color: white; /* White text for contrast */
+    background-color: #2c8e94 !important; /* Matching blue color */
+    color: white !important; /* White text for contrast */
     font-weight: 600;
     padding: 10px 16px;
     font-size: 14px;
@@ -2388,6 +2388,7 @@ left: 90px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Minimal shadow for depth */
     text-transform: uppercase; /* Consistent text style */
     transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
   }
 
   .deviceProfileButton:hover {
@@ -5997,7 +5998,7 @@ mat-header-cell {
   font-size: 13px;
 }
 .httpSearch {
-  margin-left: 570px;
+  margin-left: 550px;
 }
 
 .httpTableHeight {
@@ -8084,7 +8085,8 @@ border-radius: 8px !important;
 }
 
 .httpButtonsCenter {
-  margin-left: 250px;
+ position: relative;
+  right: 230px;
 }
 
 .mainSystemSettingContainer {
@@ -9975,7 +9977,21 @@ margin-left: 140px;
 .modbusAttributeInput{
 width: 345px;
 }
+.provisionButtons{
+  border-radius: 4px !important;
+  color: white !important;
+  background-color: #305680 !important;
+}
 
+.publisherPointDialog{
+  margin-top: 20px;
+}
 
+.httpCloseButton{
+  background-color: #66899a !important;
+  border-radius: 4px !important;
+  color: white !important;
+  margin-bottom: 8px;
+}
 /* .................. */
 

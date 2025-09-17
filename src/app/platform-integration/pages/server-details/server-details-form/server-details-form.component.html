@@ -2,7 +2,7 @@
   <mat-toolbar class="mat-toolbar_all">
     <span class="sidebar_form_title">
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.platformIntegration.serverDetails'): ""}}  </span>
-  
+
   </mat-toolbar>
   <mat-card-content class="allFormedit">
     <form class="serverDetails">
@@ -32,7 +32,8 @@
                  placeholder="password" [(ngModel)]="platformDetailsModel.password" required >
         </mat-form-field>
     </form>
-    <button #saveButton mat-raised-button class="saveButton" (click)="saveServerDetails()" >
+    <button #saveButton matfab class="saveButton" (click)="saveServerDetails()" >
+      <mat-icon>save</mat-icon>
       {{UIDICTIONARY  ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}
     </button>
   </mat-card-content>
