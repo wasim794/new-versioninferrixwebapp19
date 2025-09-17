@@ -39,6 +39,11 @@ import { LightControllerV4Component } from '../components/light-controller-v4';
 import { LightDiControllerComponent } from '../components/light-di-controller';
 import { PeopleCountCameraComponent } from '../components/people-count-camera';
 import { CurrentSensorComponent } from '../components/current-sensor';
+import { PoeLightingComponent } from '../components/poe-lighting';
+import { BacnetIpNodeComponent, BacnetSerialNodeComponent, MetaDatasourceNodeComponent, ModbusIpNodeComponent, ModbusSerialNodeComponent, SnmpNodeComponent } from '../components/mesh-node';
+import { DustbinLevelComponent } from '../components/mesh-node/dustbin-level';
+import { PaperTowelLevelComponent } from '../components/mesh-node/paper-towel-level';
+import { SoapDispenserComponent } from '../components/mesh-node/soap-dispenser/soap-dispenser.component';
 
 
 
@@ -127,6 +132,16 @@ export class DatasourceEditComponent {
       'LIGHT_RELAY_CONTROLLER.DS': LightDiControllerComponent,
       'PEOPLE_COUNT_CAMERA.DS': PeopleCountCameraComponent,
       'CURRENT_SENSOR.DS': CurrentSensorComponent,
+      'POE_LIGHTING.DS': PoeLightingComponent,
+      'BACNET_IP_MESH_NODE.DS': BacnetIpNodeComponent,
+      'BACNET_MSTP_MESH_NODE.DS': BacnetSerialNodeComponent,
+      'DUSTBIN_LEVEL_SENSOR.DS': DustbinLevelComponent,
+      'META_MESH_NODE.DS': MetaDatasourceNodeComponent,
+      'MODBUS_IP_MESH_NODE.DS': ModbusIpNodeComponent,
+      'MODBUS_SERIAL_MESH_NODE.DS': ModbusSerialNodeComponent,
+      'PAPER_TOWEL_LEVEL_SENSOR.DS': PaperTowelLevelComponent,
+      'SNMP_MESH_NODE.DS': SnmpNodeComponent,
+      'SOAP_DISPENSER_SENSOR.DS': SoapDispenserComponent
     };
 
     const component = componentMapping[dataSourceType];

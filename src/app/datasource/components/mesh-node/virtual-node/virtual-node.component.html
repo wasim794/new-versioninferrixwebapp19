@@ -1,0 +1,120 @@
+<mat-card class="form_cards metaDataSources">
+  <mat-toolbar
+    class="mat-toolbar_all mat-toolbar details-toolbar mat-toolbar-single-row">
+    <mat-card-title class="sidebar_form_title">
+      {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.heading.datasource.virtualSwitch').substring(0,7): ""}} {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.placeholder.slBus.nodeAddress').substring(0,4): ""}}
+    </mat-card-title>
+  </mat-toolbar>
+  <div class="mat-content">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex">
+      <mat-tab label="Properties">
+        <p>
+          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}
+            </mat-label>
+            <input matInput name="name" [(ngModel)]="virtualNodeDatasource.name" type="text">
+          </mat-form-field>
+          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+            <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+            <input matInput
+                   name="xid" [(ngModel)]="virtualNodeDatasource.xid" class="datasourceBoxHeight" type="text" required readonly >
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+            <mat-label disabled> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.heading.permissions'): ""}}</mat-label>
+            <mat-select disabled name="editPermission" [(ngModel)]="editPermission" multiple >
+              <mat-option *ngFor="let read of readPermission" [value]="read">{{read}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <mat-divider class="dividerAllCommonFields"></mat-divider>
+        <br>
+        <p>
+          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.controllerAddress'): ""}}
+            </mat-label>
+            <input matInput disabled name="controllerAddress" [(ngModel)]="virtualNodeDatasource.controllerAddress"  type="text">
+          </mat-form-field>
+          <mat-form-field class="form_field modbusInputField marginTop" appearance="fill">
+            <mat-label>
+              {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.publisherId'): ""}}
+            </mat-label>
+            <input matInput disabled [(ngModel)]="virtualNodeDatasource.publisherId" name="publisherId"  type="text">
+          </mat-form-field>
+        </p>
+
+        <p>
+          <button  mat-raised-button (click)="updateDatasource()" class="updateButton">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}</button>
+        </p>
+      </mat-tab>
+      <mat-tab label="Points">
+        <div class="sidebar-form dataPointTabs" [hidden]="!dataPointHide">
+          <div>
+            <p>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.exportId'): ""}}</mat-label>
+                <input readonly matInput [(ngModel)]="dataPointModel.xid"
+                       name="xid" placeholder="xid" class="datasourceBoxHeight">
+              </mat-form-field>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.placeholder.name'): ""}}</mat-label>
+                <input matInput [(ngModel)]="dataPointModel.name"
+                       name="name" type="text" required placeholder="Name">
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.readPermission'): ""}}
+                </mat-label>
+                <mat-select disabled name="editPermission" [(ngModel)]="editPermission" multiple>
+                  <mat-option *ngFor="let read of readPermission" [value]="read">{{read}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.writePermission'): ""}}</mat-label>
+                <mat-select disabled name="setPermission" [(ngModel)]="setPermission" multiple>
+                  <mat-option *ngFor="let write of readPermission" [value]="write">{{write}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.dataType'): ""}}</mat-label>
+                <mat-select disabled name="dataType" [(ngModel)]="_virtualNodePointLocator.dataType">
+                  <mat-option *ngFor="let data of dataTypes" [value]="data.key">{{data.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>
+                  {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.attributeId'): ""}}
+                </mat-label>
+                <input disabled matInput [(ngModel)]="_virtualNodePointLocator.attributeId"
+                       name="attributeId" type="text" required placeholder="attributeId">
+              </mat-form-field>
+              <mat-form-field class="datapoint_field dataSourceAllInputs w-50" appearance="fill">
+                <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.fields.placeholder.type'): ""}}</mat-label>
+                <input disabled matInput [(ngModel)]="_virtualNodePointLocator.type"
+                       name="type" type="text" required placeholder="type">
+              </mat-form-field>
+            </p>
+
+            <div class="meshActionsButtons">
+              <button mat-raised-button class="Update_Button mupdateButton" (click)="updateDatapoint(dataPointModel)">
+                {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+              </button>
+              <button style="margin-left: 10px;" mat-raised-button (click)="cancelDataPoint()" class="cancel_button_new">{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.cancel') | uppercase) : ""}}</button>
+            </div>
+          </div>
+        </div>
+        <mat-divider class="dividerBorder"></mat-divider>
+        <app-datapoint-table (editPoint)="editDataPoint($event)">
+        </app-datapoint-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-card>
+
