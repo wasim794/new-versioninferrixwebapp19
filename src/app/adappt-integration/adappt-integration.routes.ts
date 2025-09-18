@@ -28,19 +28,21 @@ export const adapptsRoutes: Routes = [
         path: '', // Matches /datasource/list
         loadComponent: () => import('./adappt-integration.component').then(m => m.AdapptIntegrationComponent),
       },
+      
+      
       {
-        path: 'adapt/provision', // Matches /datasource/detail/:id
-        loadComponent: () => import('./pages/provision/provision.component').then(m => m.ProvisionComponent),
-      },
-      {
-        path: 'adapt/un-provision', // Matches /datasource/detail/:id
-        loadComponent: () => import('./pages/unprovision/unprovision.component').then(m => m.UnprovisionComponent),
-      },
-      {
-        path: 'adapt/mqtt-setting', // Matches /datasource/detail/:id
+        path: 'mqtt-setting', // Matches /datasource/detail/:id
         loadComponent: () => import('./pages/mqtt-setting/mqtt-setting.component').then(m => m.MqttSettingComponent),
       }
    
     ],
   },
+      {
+        path: 'provision', // Matches /datasource/detail/:id
+        loadComponent: () => import('./pages/provision/provision.component').then(m => m.ProvisionComponent),
+      },
+      {
+        path: 'un-provision', // Matches /datasource/detail/:id
+        loadComponent: () => import('./pages/unprovision/unprovision.component').then(m => m.UnprovisionComponent),
+      },
 ];
