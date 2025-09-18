@@ -4,16 +4,22 @@ import { Router } from '@angular/router';
 import { DictionaryService } from '../core/services/dictionary.service';
 import {CommonService} from '../services/common.service';
 import {UnsubscribeOnDestroyAdapter} from '../common';
-import {AdapptIntegrationService, MqttConfigurationModel} from '../adappt-integration';
+import {AdapptIntegrationService, MqttConfigurationModel, MqttSettingComponent} from '../adappt-integration';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../common/mat-module';
+
 
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule, MqttSettingComponent],
+  providers: [AdapptIntegrationService, CommonService, DictionaryService],
   selector: 'app-adapt-integration',
   templateUrl: './adappt-integration.component.html',
   styleUrls: []
 })
 export class AdapptIntegrationComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  @ViewChild('mqtt_setting_form') public mqttSetting: MatSidenav;
+  @ViewChild('mqtt_setting_form') public mqttSetting!: MatSidenav;
   public mqtt :MqttConfigurationModel = new MqttConfigurationModel();
   public userName:any;
   enableMessage = 'Enable Successfully';
@@ -47,18 +53,18 @@ export class AdapptIntegrationComponent extends UnsubscribeOnDestroyAdapter impl
   }
 
    getMqttData(){
-   this.subs.add(this._adappt.getMqttConfiguration().subscribe(data => {
+   this.subs.add(this._adappt.getMqttConfiguration().subscribe((data:any) => {
      this.mqtt.autoReconnect = data.autoReconnect;
    this.userName=data.userName;
    }));
    }
 
-  sideBarClose(mqttSetting){
+  sideBarClose(mqttSetting: any){
     this.mqttSetting.close();
     this.getMqttData();
   }
 
-  mqttStatus(event) {
+  mqttStatus(event: any) {
     this.subs.add(this._adappt.enableMqttConfiguration(event.checked).subscribe(data => {
       this.mqtt.autoReconnect===true?this._commonService.notification(this.enableMessage)
         :this._commonService.notification(this.disableMessage)

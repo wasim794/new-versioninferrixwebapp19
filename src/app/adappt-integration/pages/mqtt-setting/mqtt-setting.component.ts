@@ -1,16 +1,21 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import { DictionaryService } from 'src/app/core/services/dictionary.service';
+import { DictionaryService } from '../../../core/services/dictionary.service';
 import {QOS_TYPE} from "../../../publisher/components/mqtt/dropdown.data";
 import {CommonService} from '../../../services/common.service';
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import {MqttConfigurationModel, AdapptIntegrationService} from '../../../adappt-integration';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, MatModuleModule],
+  providers: [AdapptIntegrationService, CommonService, DictionaryService],
   selector: 'app-mqtt-setting',
   templateUrl: './mqtt-setting.component.html'
 })
 export class MqttSettingComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  public showCertificate: boolean;
+  public showCertificate!: boolean;
   public mqtt :MqttConfigurationModel = new MqttConfigurationModel();
   @Output() sideBarCloses = new EventEmitter<any>();
   saveSuccessMsg = 'is saved successfully';
@@ -27,7 +32,7 @@ export class MqttSettingComponent extends UnsubscribeOnDestroyAdapter implements
     this.getMqttData();
   }
   public qosType = QOS_TYPE;
-  useCertificate(event){
+  useCertificate(event: any){
        this.showCertificate =  event.checked;
   }
   getMqttData(){

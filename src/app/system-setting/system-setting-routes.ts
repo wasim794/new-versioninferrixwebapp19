@@ -30,7 +30,12 @@ export const settingsRoutes: Routes = [
   {
     path:'platform-integration',
     loadChildren: () => import('../platform-integration/int-platform-routes').then(m => m.platformIntegrationRoutes),
+  },
+  {
+    path:'adapt',
+    loadChildren: () => import('../adappt-integration/adappt-integration.routes').then(m => m.adapptsRoutes),
   }
+  
 
 ];
 

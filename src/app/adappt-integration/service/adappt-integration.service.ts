@@ -1,6 +1,6 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {EnvService} from "../../core/services";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {AbstractDatasourceModel} from "../../core/models/dataSource";
 import {ArrayWithTotalModel} from "../../core/models";
@@ -10,7 +10,7 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class AdapptIntegrationService {
   integrationUrl = 'v2/adappt-integration';
-  private _total: number;
+  private _total!: number;
 
   get total(): number {
     return this._total;

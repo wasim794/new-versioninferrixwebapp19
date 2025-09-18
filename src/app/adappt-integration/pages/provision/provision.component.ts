@@ -1,24 +1,29 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { DictionaryService } from 'src/app/core/services/dictionary.service';
+import { DictionaryService } from '../../../core/services/dictionary.service';
 import {CommonService} from '../../../services/common.service';
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
 import {AdapptIntegrationService} from '../../../adappt-integration';
 import {AbstractDatasourceModel} from "../../../core/models/dataSource";
 import {MatPaginator} from '@angular/material/paginator';
+import { CommonModule } from '@angular/common';
+import { MatModuleModule } from '../../../common/mat-module';
 
 @Component({
+  standalone: true,
+  imports:[CommonModule, MatModuleModule],
+  providers: [AdapptIntegrationService, CommonService, DictionaryService],
   selector: 'app-provision',
   templateUrl: './provision.component.html'
 })
 export class ProvisionComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   displayedColumns: string[] = ['serialNumber', 'DeviceName' , 'action'];
-  public dataSource: AbstractDatasourceModel<any>[];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  public dataSource!: AbstractDatasourceModel<any>[];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   limit = 10;
   offset = 0;
   pageSizeOptions: number[] = [10, 15, 20];
   search: any;
-  profileXid: number;
+  profileXid!: number;
   deleteMsg = "Delete Successfully";
   UIDICTIONARY : any;
 
@@ -39,14 +44,14 @@ export class ProvisionComponent extends UnsubscribeOnDestroyAdapter implements O
     }));
   }
 
-  getNextPage(event) {
+  getNextPage(event: any) {
     const limit = event.pageSize;
     this.offset = event.pageSize * event.pageIndex;
     const param = 'and(limit(' + limit + ',' + this.offset + '),sort(+name))';
     this.getProvisionalData(param);
   }
 
-  applyFilter(event) {
+  applyFilter(event: any) {
     if (event.key === "Enter" || event.type === "click") {
       if (this.search) {
         const param = 'and(limit(' + this.limit + ',' + this.offset + '),like(name,%2A' + this.search + '%2A))';
@@ -60,7 +65,7 @@ export class ProvisionComponent extends UnsubscribeOnDestroyAdapter implements O
     }
   }
 
-  delete(element) {
+  delete(element: any) {
     this._commonService.openConfirmDialog('Are you want to sure Reset',
       element.name).afterClosed().subscribe(response => {
       if (response) {
@@ -69,6 +74,7 @@ export class ProvisionComponent extends UnsubscribeOnDestroyAdapter implements O
         this.getProvisionalData(param);
         this._commonService.notification(this.deleteMsg);
       }));
+      return true;
     } else {
       return false;
     }
