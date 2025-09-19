@@ -57,7 +57,7 @@ export class DataSourceService {
   }
 
   public enableDisable(xid: string, params: boolean): Observable<AbstractDatasourceModel<any>> {
-    let url = `${this.env.apiUrl}${this.dataSourceEnableDisableUrl}/${xid}/?enabled=`+ params;
+    let url = `${this.env.apiUrl}${this.dataSourceEnableDisableUrl}/${xid}?enabled=`+ params;
     return this.http.patch<AbstractDatasourceModel<any>>(url, '');
   }
 

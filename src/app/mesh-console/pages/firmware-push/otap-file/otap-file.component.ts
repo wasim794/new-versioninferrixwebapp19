@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {MeshOtaService} from "../../../shared/services";
 import {UnsubscribeOnDestroyAdapter} from "../../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter";
 import {FileModel} from '../../../../core/models/files/file.model';
@@ -14,11 +14,13 @@ import { PageEvent } from '@angular/material/paginator';
 import { DictionaryService } from "../../../../core/services/dictionary.service";
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../../common/mat-module';
+import { ObservableWebSocketService, WebsocketService } from '../../../../core/services';
+import { ConfigurationService } from '../../../../services/configuration.service';
 
 @Component({
   standalone: true,
   imports: [ CommonModule, MatModuleModule],
-  providers: [MeshOtaService, CommonService, MeshSinkService, DictionaryService],
+  providers: [MeshOtaService, CommonService, MeshSinkService, DictionaryService,  ConfigurationService, ObservableWebSocketService, WebsocketService],
   selector: 'app-otap-file',
   templateUrl: './otap-file.component.html',
   styleUrls: []
@@ -39,6 +41,11 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
   deleteFile!:boolean;
   stackStop : any;
   UIDICTIONARY: any;
+   token!: any;
+  websocket_URL = '/temporary-resources?token=';
+  private _configurationService = inject(ConfigurationService);
+  private observableWebSocketService = inject(ObservableWebSocketService);
+  websocketResponse: any;
 
   @ViewChild(MatPaginatorModule) paginator!: MatPaginatorModule;
   activeAction: string = '';
@@ -50,6 +57,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
     public commonService:CommonService,
     public _service: MeshSinkService,
     public  dialog :MatDialog,
+     private _WebSocketService: WebsocketService,
     public dictionaryService: DictionaryService,
   ) {
     super();
@@ -59,13 +67,61 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
     this.dictionaryService.getUIDictionary('meshConsole').subscribe(data=>{
       this.UIDICTIONARY = this.dictionaryService.uiDictionary;
     });
-    const param = 'limit(' + this.limit + ',' + this.offset + ')';
-    this.getUploadedFirmware(param);
+    this.token = (localStorage.getItem('access_token'));
+     this._WebSocketService.createWebSocket(this.websocket_URL + this.token);
+     this.getSocketNewAdded();
+    
     this.clearScratchpad = true;
     this.deleteFile = true;
     this.dataSource.paginator = this.paginator;
     this.obs = this.dataSource.connect();
     this.applyFilter('');
+  }
+
+private getSocketNewAdded(){
+     const message = {
+    "statuses": ["VIRGIN", "SCHEDULED", "RUNNING", "TIMED_OUT", "CANCELLED", "SUCCESS", "ERROR"],
+    "resourceTypes": ["MESH_SINK_STOP", "MESH_SINK_START", "MESH_SCRATCHPAD_CLEAR", "MESH_SCRATCHPAD_TRANSFER"],
+    "requestType": "SUBSCRIPTION"
+};
+    this._configurationService.connect(message);
+     this._WebSocketService.subscribeWebsocket().subscribe((data: any) => {
+      this.websocketResponse = JSON.parse(data);
+      console.log(this.websocketResponse);
+      if(this.websocketResponse?.messageType === 'RESPONSE'){
+       const param = 'limit(' + this.limit + ',' + this.offset + ')';
+       this.getUploadedFirmware(param);
+      }
+if (this.websocketResponse?.payload?.status === 'SUCCESS' && this.websocketResponse?.payload?.result?.confirmMessage) {
+               
+         if(this.websocketResponse?.payload?.resourceType=="MESH_SINK_STOP"){
+        this.isStackRunning = true;
+        this.clearScratchpad = true;
+        this.startProcess = false;
+        this.transferProcess = false;
+        this.deleteFile = true;
+        this.commonService.notification("Stack Successfully Stopped");
+         }
+         if(this.websocketResponse?.payload?.resourceType=="MESH_SINK_START"){
+        this.isStackRunning = true;
+        this.clearScratchpad = true;
+        this.startProcess = false;
+        this.transferProcess = false;
+        this.deleteFile = true;
+        this.commonService.notification("Stack Successfully started");
+         }
+
+         if(this.websocketResponse?.payload?.resourceType=="MESH_SCRATCHPAD_CLEAR"){
+          this.commonService.notification(this.websocketResponse?.payload?.result?.confirmMessage?.messageType+':'+this.websocketResponse?.payload?.result?.confirmMessage?.message);
+         }
+         if(this.websocketResponse?.payload?.resourceType=="MESH_SCRATCHPAD_TRANSFER"){
+          this.commonService.notification(this.websocketResponse?.payload?.result?.confirmMessage?.messageType+':'+this.websocketResponse?.payload?.result?.confirmMessage?.message);
+         }
+
+         
+}
+
+    });
   }
 
 
@@ -120,14 +176,14 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
     this.subs.add(this._service.startStack().subscribe((data) => {
       this.stackStop = data;
       this.isStackRunning = false;
-      if (data.confirmMessage.messageType === 'SUCCESS') {
-        this.isStackRunning = true;
-        this.clearScratchpad = true;
-        this.startProcess = false;
-        this.transferProcess = false;
-        this.deleteFile = true;
-        this.commonService.notification(data.confirmMessage.message);
-      }
+      // if (data.confirmMessage.messageType === 'SUCCESS') {
+      //   this.isStackRunning = true;
+      //   this.clearScratchpad = true;
+      //   this.startProcess = false;
+      //   this.transferProcess = false;
+      //   this.deleteFile = true;
+      //   this.commonService.notification(data.confirmMessage.message);
+      // }
     }));
   }
 
@@ -135,15 +191,6 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
     this.subs.add(this._service.stopStack().subscribe((data) => {
       this.stackStop = data;
       this.isActive = false;
-      if (data.confirmMessage.messageType === 'SUCCESS') {
-        this.isStackRunning = true;
-        this.clearScratchpad = true;
-        this.startProcess = false;
-        this.transferProcess = false;
-        this.deleteFile = true;
-        this.commonService.notification("Stack Successfully Stopped");
-      }
-      OtapFileComponent.showMessages();
     }));
   }
 
@@ -151,7 +198,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
 
     this.subs.add(this.meshOtaService.clearSinkScratchpad().subscribe(data => {
 
-      this.commonService.notification(data.confirmMessage.message);
+      // this.commonService.notification(data.confirmMessage.message);
       this.clearScratchpad = event.filename;
       this.transferProcess = event.filename;
       this.deleteFile = true;
@@ -166,7 +213,7 @@ export class OtapFileComponent extends UnsubscribeOnDestroyAdapter implements On
     this.commonService.openConfirmDialog('Are you want to Transfer ', element.filename).afterClosed().subscribe(response => {
       if (response) {
         this.meshOtaService.transferFirmware(element.filename).subscribe(data => {
-          this.commonService.notification(data.confirmMessage.message);
+          // this.commonService.notification(data.confirmMessage.message);
           // this.getUploadedFirmware(param);
           this.clearScratchpad = true;
           this.startProcess = element.filename;
