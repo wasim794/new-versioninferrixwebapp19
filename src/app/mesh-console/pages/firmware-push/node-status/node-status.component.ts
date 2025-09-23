@@ -30,7 +30,8 @@ import { MatModuleModule } from '../../../../common/mat-module';
   ]
 })
 export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
-  websocket_URL = '/mesh-scratchpad-status?token=';
+  // websocket_URL = '/mesh-scratchpad-status?token='; old URL ADDED
+  websocket_URL = '/temporary-resources?token='; // new URL ADDED
   websocket: any;
   token: any;
   displayedColumnsResponse: string[] = ['nodeType', 'address', 'timestamp','storedScratchpadLength', 'storedScratchpadCrc', 'storedScratchpadSequenceNumber', 'storedScratchpadType',
@@ -85,13 +86,19 @@ export class NodeStatusComponent extends UnsubscribeOnDestroyAdapter implements 
     this.dictionaryService.getUIDictionary('meshConsole').subscribe(data=>{
       this.UIDICTIONARY = this.dictionaryService.uiDictionary;
     });
+    this._WebSocketService.createWebSocket(this.websocket_URL + this.token);
     const param = 'limit(' + this.limit + ',' + this.offset + ')';
     this.getNodeStatus(param);
 
   }
 
   getWebSocket() {
-    this._configurationService.connect(event);
+    const message = {
+    "statuses": ["VIRGIN", "SCHEDULED", "RUNNING", "TIMED_OUT", "CANCELLED", "SUCCESS", "ERROR"],
+    "resourceTypes": ["MESH_SCRATCHPAD_STATUS", "MESH_SCRATCHPAD_UPDATE", "MESH_SCRATCHPAD_START", "MESH_NON_LEGACY_UPDATE"],
+    "requestType": "SUBSCRIPTION"
+};
+    this._configurationService.connect(message);
     this._WebSocketService.subscribeWebsocket().subscribe(data => {
       const parseData = JSON.parse(data);
       parseData.payload.object.legacyUpdate===false?this.conditionFalse=true:this.conditionTrue=true;

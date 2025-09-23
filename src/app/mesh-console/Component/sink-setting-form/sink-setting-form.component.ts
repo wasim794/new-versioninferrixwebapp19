@@ -105,12 +105,12 @@ export class SinkSettingFormComponent extends UnsubscribeOnDestroyAdapter implem
         }
          if((this.websocketResponse.payload.result.confirmMessage.attributeName == "networkChannel")){
            console.log("Initial result", this.websocketResponse.payload.result.confirmMessage);
-           this.network = this.websocketResponse.payload.result.confirmMessage.attributeValue;
+           this.channel = this.websocketResponse.payload.result.confirmMessage.attributeValue;
         }
         
         if((this.websocketResponse.payload.result.confirmMessage.attributeName == "networkAddress")){
            console.log("Initial result", this.websocketResponse.payload.result.confirmMessage);
-           this.channel = this.websocketResponse.payload.result.confirmMessage.attributeValue;
+           this.network = this.websocketResponse.payload.result.confirmMessage.attributeValue;
         }
 
         if((this.websocketResponse.payload.result.confirmMessage.attributeName == "nodeRole")){
