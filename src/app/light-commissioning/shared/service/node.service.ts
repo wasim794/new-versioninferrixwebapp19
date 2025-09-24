@@ -110,6 +110,7 @@ export class NodeService {
     return this.api.put(`${this.nodeUserControl}/${xid}`, nodeObject);
   }
 
+  
   getNodeByXid(xid: any): Observable<any> {
     const url = `${this.node}/${xid}`;
     return this.api.get(url);
