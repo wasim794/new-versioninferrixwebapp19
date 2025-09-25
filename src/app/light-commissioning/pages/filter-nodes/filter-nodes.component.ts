@@ -11,7 +11,7 @@ import { MatModuleModule } from '../../../common/mat-module';
 @Component({
   standalone: true,
   imports: [CommonModule, MatModuleModule],
-  providers: [NodeService, DictionaryService],
+  providers: [NodeService, DictionaryService, CommonService],
   selector: 'app-filter-nodes',
   templateUrl: './filter-nodes.component.html',
   styleUrls: []

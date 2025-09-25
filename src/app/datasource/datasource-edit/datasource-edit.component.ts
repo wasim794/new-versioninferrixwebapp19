@@ -44,6 +44,7 @@ import { BacnetIpNodeComponent, BacnetSerialNodeComponent, MetaDatasourceNodeCom
 import { DustbinLevelComponent } from '../components/mesh-node/dustbin-level';
 import { PaperTowelLevelComponent } from '../components/mesh-node/paper-towel-level';
 import { SoapDispenserComponent } from '../components/mesh-node/soap-dispenser/soap-dispenser.component';
+import { VirtualSwitchComponent } from '../components/virtual-switch/virtual-switch.component';
 
 
 
@@ -141,7 +142,8 @@ export class DatasourceEditComponent {
       'MODBUS_SERIAL_MESH_NODE.DS': ModbusSerialNodeComponent,
       'PAPER_TOWEL_LEVEL_SENSOR.DS': PaperTowelLevelComponent,
       'SNMP_MESH_NODE.DS': SnmpNodeComponent,
-      'SOAP_DISPENSER_SENSOR.DS': SoapDispenserComponent
+      'SOAP_DISPENSER_SENSOR.DS': SoapDispenserComponent,
+      'VIRTUAL_SWITCH.DS': VirtualSwitchComponent,
     };
 
     const component = componentMapping[dataSourceType];

@@ -12,7 +12,7 @@ import {
 import {CommonService} from '../../../services/common.service';
 import {FormControl} from '@angular/forms';
 import {UnsubscribeOnDestroyAdapter} from '../../../common/Unsubscribe-adapter/unsubscribe-on-destroy-adapter';
-import {FilterNodesComponent} from '..';
+import {FilterNodesComponent} from '../filter-nodes/filter-nodes.component';
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
