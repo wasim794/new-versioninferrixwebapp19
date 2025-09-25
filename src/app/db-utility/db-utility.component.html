@@ -31,7 +31,7 @@
                 (click)="dbBackup()">{{processing===true ?
         UIDICTIONARY ===undefined ? "":UIDICTIONARY.get('ui.core.common.button.backup'):'Please wait...'}}</button>
     </p>
-    <mat-divider></mat-divider><span class="dbUtilityDevider">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.save') : ""}}
+    <mat-divider></mat-divider><span class="dbUtilityDevider allMatdividerColor">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.button.save') : ""}}
   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.fileCount').substring(0,4) : ""}}
   </span>
     <mat-card-title class="backupSettingHead">
@@ -67,7 +67,7 @@
               {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase) : ""}}</button>
     </div>
   </form>
-  <mat-divider class="modbusDeviceDividers"></mat-divider><span class="dbUtilityDevider">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.upload') : ""}}</span>
+  <mat-divider class="modbusDeviceDividers"></mat-divider><span class="dbUtilityDevider allMatdividerColor">{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.system.placeholder.upload') : ""}}</span>
   <mat-card-title class="backupSettingHead listingsRestore w-50">
    </mat-card-title>
   <input type="file" class="file-input mr-10" (change)="onFileSelected($event)" #fileUpload>
@@ -77,7 +77,7 @@
       <mat-icon>attach_file</mat-icon>
     </button>
   </div>
-  <mat-divider></mat-divider><span class="dbUtilityDevider">{{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.listData') : ""}}</span>
+  <mat-divider></mat-divider><span class="dbUtilityDevider allMatdividerColor">{{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.listData') : ""}}</span>
   <mat-card-title class="backupSettingHead listingsRestore">
     {{UIDICTIONARY ? UIDICTIONARY.get('ui.dbUtils.listingRestore') : ""}}</mat-card-title>
   <mat-hint align="start" [ngClass]="{'active': isRestart, 'disabled': !isRestart}">Restart after successfully restoring database</mat-hint><mat-icon matTooltip="Restart" class="dbRestore DbRestore" [ngClass]="{'active': isRestart, 'disabled': !isRestart}" (click)="restartStack()"><i class="material-icons">restart_alt</i></mat-icon>

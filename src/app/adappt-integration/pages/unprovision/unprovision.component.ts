@@ -28,7 +28,7 @@ export class UnprovisionComponent extends UnsubscribeOnDestroyAdapter implements
   UIDICTIONARY : any;
 
 
-  constructor(public dictionaryService:DictionaryService, private _commonService: CommonService,
+  constructor(public dictionaryService:DictionaryService, public _commonService: CommonService,
               public _adappt: AdapptIntegrationService) { super(); }
 
   ngOnInit(): void {
@@ -82,6 +82,8 @@ export class UnprovisionComponent extends UnsubscribeOnDestroyAdapter implements
       }
     });
   }
-
+  goBack() {
+    this._commonService.goBackHistory();
+  }
 }
 

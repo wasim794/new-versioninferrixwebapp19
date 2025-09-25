@@ -32,20 +32,20 @@
             <div class="displayFlex">
             <mat-form-field class="form_field" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.x509CaCert'): ""}}</mat-label>
-              <textarea matInput [(ngModel)]="mqtt.x509CaCrt"  name="x509CaCrt" rows="10" cols="50"
+              <textarea matInput [(ngModel)]="mqtt.x509CaCrt"  name="x509CaCrt" rows="5" cols="50"
                         type="text"></textarea>
             </mat-form-field>
 
             <mat-form-field class="form_field marginLeft-10" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.x509ClientCert'): ""}}</mat-label>
-              <textarea matInput [(ngModel)]="mqtt.x509ClientCrt"  name="x509ClientCrt" type="text" rows="10"
+              <textarea matInput [(ngModel)]="mqtt.x509ClientCrt"  name="x509ClientCrt" type="text" rows="5"
                         cols="50"></textarea>
             </mat-form-field>
           </div>
 
             <mat-form-field class="form_field" appearance="fill">
               <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.privateKey'): ""}}</mat-label>
-              <textarea matInput [(ngModel)]="mqtt.privateKey"  name="privateKey" type="text" rows="10"
+              <textarea matInput [(ngModel)]="mqtt.privateKey"  name="privateKey" type="text" rows="5"
                         cols="50"></textarea>
             </mat-form-field>
 
@@ -83,7 +83,7 @@
           <input matInput [(ngModel)]="mqtt.connectionTimeout"  name="connectionTimeout" type="text">
         </mat-form-field>
         </div>
-        <mat-grid-list class="allGridcheckbox mb-0" cols="2" rowHeight="30px">
+        <mat-grid-list class="autoConnectMqtt" cols="2" rowHeight="30px">
           <mat-grid-tile class="mqttConnect">
             <mat-slide-toggle appearance="fill" class="toggle_change" [(ngModel)]="mqtt.autoReconnect"
                               name="autoReconnect">{{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.autoReconnect'): ""}}
@@ -91,7 +91,7 @@
           </mat-grid-tile>
           <mat-grid-tile class="mqttConnect">
 
-            <mat-slide-toggle appearance="fill" class="toggle_change marginLeft-20"
+            <mat-slide-toggle appearance="fill" class="toggle_change cleanSessionToggle"
                               [(ngModel)]="mqtt.cleanSession"    name="cleanSession">
               {{UIDICTIONARY ? UIDICTIONARY.get('ui.adapptIntegration.placeholder.cleanSession'): ""}}
             </mat-slide-toggle>
@@ -106,8 +106,10 @@
           </mat-select>
         </mat-form-field>
         <div class="layout-field">
-        <button (click)="save()" mat-raised-button class="saveButton "
-        align="end"> {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase) : ""}}
+        <button (click)="save()" matfab class="saveButton "
+        align="end">
+          <mat-icon>save</mat-icon>
+          {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') | uppercase) : ""}}
 </button>
 </div>
 </form>

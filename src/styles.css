@@ -9993,5 +9993,21 @@ width: 345px;
   color: white !important;
   margin-bottom: 8px;
 }
+
+.provisionedDevicesColor{
+  color: #ff475d !important;
+}
+
+.autoConnectMqtt{
+  margin-left: 60px;
+}
+
+.cleanSessionToggle{
+  margin-left: 50px;
+}
+
+.allMatdividerColor{
+  background-color: #fbfafa !important;
+}
 /* .................. */
 

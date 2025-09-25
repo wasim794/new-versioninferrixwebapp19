@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { DictionaryService } from '../core/services/dictionary.service';
 import {CommonService} from '../services/common.service';
 import {UnsubscribeOnDestroyAdapter} from '../common';
-import {AdapptIntegrationService, MqttConfigurationModel, MqttSettingComponent} from '../adappt-integration';
+import {MqttConfigurationModel, MqttSettingComponent} from '../adappt-integration';
+import {AdapptIntegrationService} from '../adappt-integration/service/adappt-integration.service';
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../common/mat-module';
 
@@ -30,7 +31,7 @@ export class AdapptIntegrationComponent extends UnsubscribeOnDestroyAdapter impl
 
 
   constructor(public dictionaryService:DictionaryService , private router: Router,
-              private _adappt:AdapptIntegrationService,   private _commonService: CommonService,)  {  super(); }
+              private _adappt:AdapptIntegrationService,   public _commonService: CommonService,)  {  super(); }
 
   ngOnInit(): void {
     this.dictionaryService.getUIDictionary('adapptIntegration').subscribe(data=>{
@@ -71,5 +72,7 @@ export class AdapptIntegrationComponent extends UnsubscribeOnDestroyAdapter impl
 
     }));
   }
-
+  goBack() {
+    this._commonService.goBackHistory();
+  }
 }
