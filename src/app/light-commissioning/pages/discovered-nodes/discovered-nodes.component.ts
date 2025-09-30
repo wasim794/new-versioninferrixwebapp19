@@ -60,6 +60,7 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
   cardFiveCss: any;
   isAutoMode!: boolean;
   public UIDICTIONARY:any;
+  token: any;
   private disableMsg="Automode Disable";
       websocket_URL = '/temporary-resources?token=';
      private _configurationService = inject(ConfigurationService);
@@ -100,6 +101,9 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
       this.dictionaryService.getUIDictionary('lightCommissioning').subscribe(data=>{
        this.UIDICTIONARY = this.dictionaryService.uiDictionary;
        });
+       this.token = (localStorage.getItem('access_token'));
+       this._WebSocketService.createWebSocket(this.websocket_URL + this.token);
+
     this.getNodes(this.limit, this.offset);
     this.getProfiles();
     this.subs.add(this.nodeService.offsite(false, false).subscribe((data) => {
