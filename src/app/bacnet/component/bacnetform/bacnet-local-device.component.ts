@@ -34,7 +34,7 @@ export class BacnetLocalDeviceComponent extends UnsubscribeOnDestroyAdapter impl
   tabIndex = 0;
   serialPorts: string[] = [];
   networkInterfaces: NetworkInterfaceModel[] = [];
-  isEdit = false;
+  isEdit!: boolean;
   @Output() responsePublisherSave = new EventEmitter<any>();
   @Output() responsePublisherUpdate = new EventEmitter<any>();
   @Output() closeAllSidebar = new EventEmitter<void>();
@@ -94,6 +94,7 @@ export class BacnetLocalDeviceComponent extends UnsubscribeOnDestroyAdapter impl
   }
 
   newLocalDevice(type: string) {
+    this.isEdit = true;
     if (type === 'IP') {
       this.localDeviceModel = this.bacnetService.getDefaultIpDeviceModel();
       this.isIpModel = true;
@@ -107,6 +108,7 @@ export class BacnetLocalDeviceComponent extends UnsubscribeOnDestroyAdapter impl
   }
 
   saveLocalDevice() {
+
     if (!this.localDeviceModel.deviceName?.length) {
       this.timeOutFunction();
       this.bacnetError = [{ message: 'Device name is required' }];
@@ -154,11 +156,12 @@ export class BacnetLocalDeviceComponent extends UnsubscribeOnDestroyAdapter impl
   }
 
   getPubBacnet(xid: string) {
+
     this.subs.add(
       this.bacnetService.getById(xid).subscribe({
         next: (data) => {
-          this.localDeviceModel = data;
           this.isEdit = true;
+          this.localDeviceModel = data;
           this.isIpModel = this.localDeviceModel.type === 'IP';
           this.isMstpModel = this.localDeviceModel.type === 'MSTP';
           this.localDeviceModelHidesName = true;

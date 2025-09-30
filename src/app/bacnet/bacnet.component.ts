@@ -138,7 +138,7 @@ export class BacnetComponent extends UnsubscribeOnDestroyAdapter implements OnIn
     });
   }
 
-  editLocalDevice(model: BacnetLocalDeviceModel<any>) {
+  editLocalDevice(model: any) {
     this.bacnetSidebar.open();
     this.loadBacnet.editLocalDevice(model);
   }

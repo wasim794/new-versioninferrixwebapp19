@@ -6,15 +6,17 @@
       <small *ngIf="localDeviceModelHidesName">{{localDeviceModel.deviceName}}</small>
     </mat-card-title>
     <span class="spacer"></span>
-    <button (click)="saveLocalDevice()"  *ngIf="!isEdit" 
+    <button (click)="saveLocalDevice()"  *ngIf="isEdit"
             class="toolbarSaveButton bacnetUpdate saveButton"
             matFab>
             <mat-icon>save</mat-icon>
             {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase): "" }}
     </button>
-    <button (click)="updateLocalDevice()" *ngIf="isEdit" 
-            class="toolbarUpdateButton bacnetUpdate toolbarButton"
-            mat-raised-button>{{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
+    <button (click)="updateLocalDevice()" *ngIf="!isEdit"
+            class="toolbarUpdateButton bacnetUpdate saveButton"
+            matfab>
+      <mat-icon>save_as</mat-icon>
+      {{UIDICTIONARY ? (UIDICTIONARY.get('ui.core.common.button.update') | uppercase) : ""}}
     </button>
   </mat-toolbar>
 
@@ -270,7 +272,7 @@
       </mat-form-field>
       <br>
       <button   class="saveButton" (click)="sendForeignDevice()" style="text-transform: uppercase" align="end"
-          
+
               matfab><i class="material-icons sendIcon">send</i> Send foreign device registration
       </button>
 
