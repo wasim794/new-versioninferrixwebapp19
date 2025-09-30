@@ -29,8 +29,8 @@ export class ProfileService {
   bandModel = {} as BandSettingsModel;
   gpioModel = {} as GpioSettingsModel;
   nodeSettings = {} as NodeSettingsModel;
-  retransmissionSettings = {} as RetransmissionSettingsModel
-  profileXid: any;
+  retransmissionSettings?: RetransmissionSettingsModel;
+  public profileXid: any;
   private _total!: number;
 
   private updateSubject = new Subject<any>();
@@ -132,6 +132,7 @@ export class ProfileService {
 
   setProfileXid(xid: any) {
     this.profileXid = xid;
+    console.log("setProfileXid",this.profileXid);
   }
 
   getAllProfiles(limit: number, offset: number): Observable<any[]> {

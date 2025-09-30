@@ -40,7 +40,7 @@ import { MatModuleModule } from '../../../common/mat-module';
   templateUrl: './led-controller-profile.component.html',
   styleUrls: []
 })
-export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter implements OnInit, AfterViewInit {
+export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter implements OnInit {
   readPermission: any = [];
   editPermission: any = [];
   permissions: any = [];
@@ -108,15 +108,10 @@ export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter i
     });
     this.getPermissions();
     this.getGradeMappingSetting();
-
+    console.log("profile xid",this.profileService);
   }
 
 
-  ngAfterViewInit() {
-    if (this.profileService.profileXid) {
-      this.getProfile(this.profileService.profileXid);
-    }
-  }
 
   getGradeMappingSetting() {
     this.subs.add(this.jsonDataService.getJsonData('definition=GRADE.MAPPING').subscribe(data => {
@@ -139,6 +134,7 @@ export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter i
   }
 
   getProfile(profileXid: any) {
+    console.log("get Led controller", profileXid);
     this.isEdit = true;
     this.subs.add(this.profileService.getProfileByXid(profileXid).subscribe(data => {
       this.controllerProfile = data;
@@ -148,6 +144,7 @@ export class LedControllerProfileComponent extends UnsubscribeOnDestroyAdapter i
         this.isEnableHoldTimeOne = this.controllerProfile.jsonData.nodeSettings.enableHoldTimeOne;
         this.holdTimeOneComponent.setHoldTimeOne(this.controllerProfile.jsonData.nodeSettings);
       }
+      console.log("this.controllerProfile.jsonData.retransmissionSettings",this.controllerProfile.jsonData.retransmissionSettings);
       if(this.retransmissionSettingsComponent){
        this.retransmissionSettingsComponent.setRetransmissionModel(this.controllerProfile.jsonData.retransmissionSettings);
       }

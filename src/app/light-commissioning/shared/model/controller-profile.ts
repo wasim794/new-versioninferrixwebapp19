@@ -17,5 +17,6 @@ export interface ControllerProfile {
   bandSettingsEnabled: boolean;
   bandSettings: BandSettingsModel;
   retransMissionEnabled: boolean;
+  retransmissionSettingsEnabled: boolean;
   retransmissionSettings: RetransmissionSettingsModel;
 }

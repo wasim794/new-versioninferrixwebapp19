@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, inject, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
 import {NodeService, ProfileService} from '../../shared/service';
 import {JsonDataModel} from '../../../common/model/jsonDataModel';
@@ -16,11 +16,13 @@ import {FilterNodesComponent} from '../filter-nodes/filter-nodes.component';
 import {DictionaryService} from "../../../core/services/dictionary.service";
 import { CommonModule } from '@angular/common';
 import { MatModuleModule } from '../../../common/mat-module';
+import { ConfigurationService } from '../../../services/configuration.service';
+import { WebsocketService } from '../../../core/services';
 
 @Component({
   standalone: true,
   imports: [CommonModule, MatModuleModule, FilterNodesComponent],
-  providers: [NodeService, ProfileService, DictionaryService],
+  providers: [NodeService, ProfileService, DictionaryService, WebsocketService, ConfigurationService],
   selector: 'app-tab-discovered-nodes',
   templateUrl: './discovered-nodes.component.html',
   styleUrls: []
@@ -59,12 +61,17 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
   isAutoMode!: boolean;
   public UIDICTIONARY:any;
   private disableMsg="Automode Disable";
+      websocket_URL = '/temporary-resources?token=';
+     private _configurationService = inject(ConfigurationService);
+      // private observableWebSocketService = inject(ObservableWebSocketService);
+    websocketResponse: any;
 
   constructor(private resolver: ComponentFactoryResolver,
               private nodeService: NodeService,
               private commonService: CommonService,
               public dictionaryService: DictionaryService,
-              private profileService: ProfileService) {
+              private profileService: ProfileService,
+            private _WebSocketService: WebsocketService,) {
     super();
     this.subs.add(this.profileService.getSaveProfile().subscribe((data) => {
       this.profiles.push(data);
@@ -100,6 +107,34 @@ export class DiscoveredNodesComponent extends UnsubscribeOnDestroyAdapter implem
     }));
     this.getNodeStats();
     this.staticColor();
+    this.getSocketNewAdded();
+  }
+
+
+getSocketNewAdded(){
+     const message = {
+    "statuses": ["VIRGIN", "SCHEDULED", "RUNNING", "TIMED_OUT", "CANCELLED", "SUCCESS", "ERROR"],
+    "resourceTypes": ["RESET_LED_CONTROLLER", "LED_APPLY_PROFILE", "PUSH_NODE_SETTINGS", "AUTO_MODE"],
+    "requestType": "SUBSCRIPTION"
+};
+
+    this._configurationService.connect(message);
+     this._WebSocketService.subscribeWebsocket().subscribe((data: any) => {
+      this.websocketResponse = JSON.parse(data);
+      console.log(this.websocketResponse);
+      if(this.websocketResponse?.messageType === 'RESPONSE'){
+        console.log("Initial Response");
+         this.getNodes(this.limit, this.offset);
+        // console.log(this.websocketResponse.payload.result.confirmMessage);
+        
+      }
+      if (this.websocketResponse?.payload?.status === 'SUCCESS' && this.websocketResponse?.payload?.result?.confirmMessage) {
+            console.log('WebSocket confirm message:', this.websocketResponse.payload.result.confirmMessage);
+            // this.address = addressResponse?.confirmMessage?.attributeValue ?? null;
+            // Update other properties (network, channel, role) if service calls are added
+          this.commonService.notification(this.websocketResponse?.payload?.result?.confirmMessage?.messageType+':'+ this.websocketResponse?.payload?.result?.confirmMessage?.message);
+          }
+    });
   }
 
 
