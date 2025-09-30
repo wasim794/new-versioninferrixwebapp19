@@ -200,10 +200,15 @@ export class ProfilesComponent extends UnsubscribeOnDestroyAdapter implements On
   }
 
   showProfileDetail(profile: any) {
+    console.log("profile",profile, this.profileDetail.xid);
     this.componentType = profile.jsonData.jsonDataType;
     this.componentLoaded(this.componentType);
     this.profileCreatorSidebar.open();
     this.profileDetail = profile;
+    // console.log(this.profileDetail);
+    if (this.componentRef && this.componentRef.instance) {
+    this.componentRef.instance.getProfile(this.profileDetail.xid);
+  }
     this.profileService.setProfileXid(this.profileDetail.xid);
   }
 
