@@ -70,7 +70,7 @@ export class BacnetSenderComponent extends UnsubscribeOnDestroyAdapter implement
   NOTIFY_TYPES=NOTIFY_TYPE;
   alarmValues: any[] = [''];
   faultValues: any[] = [''];
-
+  public dataPointActions!: boolean;
   constructor(
     public dictionaryService: DictionaryService,
     private bacnetService: BacnetService,
@@ -129,10 +129,14 @@ export class BacnetSenderComponent extends UnsubscribeOnDestroyAdapter implement
 
   deviceChange(selectedOption: any, event: any): void {
     if (event.isUserInput) {
-      // console.log(selectedOption);
-      this.addDataPoint(selectedOption.xid);
-      // this.profileId = selectedOption.id;
-
+      this.selectionData = false;
+      this.showDataPointFields=true;
+      this.dataPointActions = true;
+      this.dataPointXID = selectedOption.xid;
+      this.showDataPointFields=true;
+      const param = 'limit(' + this.limit + ',' + this.offset + ')';
+      //return false;
+      this.getDataPoints(param);
     }
   }
 

@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { DictionaryService } from '../../../core/services/dictionary.service';
 import {CommonService} from '../../../services/common.service';
 import {UnsubscribeOnDestroyAdapter} from '../../../common';
-import {AdapptIntegrationService} from '../../../adappt-integration';
+import {AdapptIntegrationService} from '../../../adappt-integration/service/adappt-integration.service';
 import {AbstractDatasourceModel} from "../../../core/models/dataSource";
 import {MatPaginator} from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
@@ -27,7 +27,7 @@ export class ProvisionComponent extends UnsubscribeOnDestroyAdapter implements O
   deleteMsg = "Delete Successfully";
   UIDICTIONARY : any;
 
-  constructor(public dictionaryService:DictionaryService,  private _commonService: CommonService,
+  constructor(public dictionaryService:DictionaryService,  public _commonService: CommonService,
               public _adappt: AdapptIntegrationService) { super(); }
 
   ngOnInit(): void {
@@ -79,6 +79,10 @@ export class ProvisionComponent extends UnsubscribeOnDestroyAdapter implements O
       return false;
     }
   });
+  }
+
+  goBack() {
+    this._commonService.goBackHistory();
   }
 }
 
