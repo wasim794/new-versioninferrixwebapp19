@@ -52,14 +52,14 @@
                      placeholder="Enter CacheDiscardsize" required>
             </mat-form-field>
 
- 
+
 <mat-grid-list class="allGridcheckbox platformInteToggles marginTop-20" cols="2" rowHeight="30px">
               <mat-grid-tile class="mqttToggles ">
                 <mat-slide-toggle [(ngModel)]="integrationSenderModel.gateway" name="sendSnapshot" class="side_form_toggle toggle_change"
                 >
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.publisher.placeholder.gateway'): ""}}
                 </mat-slide-toggle>
-          
+
            </mat-grid-tile>
               <mat-grid-tile class="mqttToggles">
                 <mat-slide-toggle [(ngModel)]="integrationSenderModel.enabled" name="enabled" class="side_form_toggle toggle_change">
@@ -89,7 +89,7 @@
         </ng-template>
       </mat-tab>
 
-      <mat-tab label="Points" *ngIf="pointValues" >
+      <mat-tab label="Points" *ngIf="pointValues">
         <div [hidden]=!viewDataPoint>
           <mat-form-field class="searchWidth serchInput marginLeft-10" appearance="fill">
             <mat-label>{{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.dataPoints'): ""}}</mat-label>
@@ -203,7 +203,7 @@
         </div>
 
         <div class="mat-elevation-z8">
-          <mat-table mat-table  [dataSource]="dataSources" class="table_data dataPointsAllTable setValueWidth setAutoWidth px-0">
+          <mat-table mat-table  [dataSource]="dataSources" class="table_data dataPointsAllTable w-100 px-0">
             <ng-container matColumnDef="position">
               <mat-header-cell *matHeaderCellDef class="max50"> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.table.sno'): ""}} </mat-header-cell>
               <mat-cell *matCellDef="let element; let i = index;" class="max50">{{i + 1}}</mat-cell>
@@ -212,7 +212,7 @@
               <mat-header-cell *matHeaderCellDef class="cells_title">
                 {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.name'): ""}}
               </mat-header-cell>
-              <mat-cell class="table_data" *matCellDef="let element"
+              <mat-cell style="text-align:center;" class="table_data" *matCellDef="let element"
                         title="{{element.name}}"> {{element.name}} </mat-cell>
             </ng-container>
             <!-- name Column -->

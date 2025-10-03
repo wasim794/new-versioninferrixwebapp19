@@ -14,7 +14,7 @@
             {{UIDICTIONARY ?
       (UIDICTIONARY.get('ui.core.common.button.save') |  uppercase):""}}</button>
     <button (click)="updateProfile()" *ngIf="isEdit" align="end" class="toolbarUpdateButton bacnetUpdate saveButton"
-            mat-raised-button>
+            matfab>
             <mat-icon>save_as</mat-icon>
             {{UIDICTIONARY ?
       (UIDICTIONARY.get('ui.core.common.button.update') | uppercase):""}}

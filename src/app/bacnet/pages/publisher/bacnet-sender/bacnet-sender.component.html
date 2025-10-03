@@ -387,7 +387,7 @@
               <br>
             </div>
             <mat-divider class="mqqtDividers mt-10"></mat-divider>
-         
+
               <mat-form-field  class="searchBacnetBox">
                 <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.search'): ""}}</mat-label>
                 <input (keyup)="filtersPublisher($event)" [(ngModel)]="searchDatapoint"  matInput name="searchDatapoint"
@@ -414,7 +414,7 @@
                   <mat-header-cell *matHeaderCellDef class="cells_title httpTableHeight">
                     {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.bacnet.table.objectName'): ""}}
                   </mat-header-cell>
-                  <mat-cell *matCellDef="let element" class="table_data senderTableCell">{{element.objectName}} </mat-cell>
+                  <mat-cell style="text-align:center;" *matCellDef="let element" class="table_data senderTableCell">{{element.objectName}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="ObjectType" class="table_row">
                   <mat-header-cell *matHeaderCellDef class="cells_title httpTableHeight">

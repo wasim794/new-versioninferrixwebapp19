@@ -61,22 +61,22 @@
                 </mat-select>
               </mat-form-field>
             </p>
-      
-         
+
+
                 <mat-slide-toggle name="sendSnapshot" class="side_form_toggle toggle_change allToggls"
                                   [(ngModel)]="httpSenderModel.sendSnapshot">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.sendRegularSnapshot'): ""}}
                 </mat-slide-toggle>
-         
-          
+
+
 
                 <mat-slide-toggle name="enabled" class="side_form_toggle toggle_change  httpSenderToggle marginLeft-20"
                                   [(ngModel)]="httpSenderModel.enabled">
                   {{UIDICTIONARY ? UIDICTIONARY.get('ui.core.common.fields.enable'): ""}}
                 </mat-slide-toggle>
 
-             
-           
+
+
             <br>
 
             <mat-form-field class="field_margin form_field w-50" appearance="fill">

@@ -45,8 +45,8 @@
     >
       {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.writeable'): ""}}
     </mat-slide-toggle>
-  <mat-divider class="modbusDeviceDividers"></mat-divider>
-    <span class="queryDataSpan">{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.queryData'): ""}}</span>
+  <mat-divider class="modbusDeviceDividers "></mat-divider>
+    <span class="queryDataSpan allMatdividerColor">{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.queryData'): ""}}</span>
   <mat-form-field class="form_field  w-50 mt-10" appearance="fill">
     <mat-label> {{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.functionCode'): ""}}</mat-label>
     <mat-select matInput [(ngModel)]="modbusQueryData.functionCode" name="functionCode" required>
@@ -63,7 +63,7 @@
   </mat-form-field>
 
     <mat-divider class="modbusDeviceDividers mt-10"></mat-divider>
-    <span class="queryDataSpan">{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.pointDetails'): ""}}</span>
+    <span class="queryDataSpan allMatdividerColor">{{UIDICTIONARY ? UIDICTIONARY.get('ui.modbus.attributes.placeholder.pointDetails'): ""}}</span>
     <form [formGroup]="detailNameForm">
       <div formArrayName="detailNameSetting">
         <div *ngFor="let contact of FormGroups.controls; let i = index;">
